@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NZ 100% — Espace Membre E-Learning</title>
+<link rel="icon" type="image/png" href="assets/nz_logo_nav.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.12);
+  --glass-blur: 24px;
+  --glass-saturate: 180%;
+  --text-muted: rgba(255,255,255,0.55);
+  --text-secondary: rgba(255,255,255,0.75);
+  --radius-glass: 28px;
+  --radius-pill: 100px;
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Outfit', -apple-system, sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; line-height: 1.6; }
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+.glass { background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate)); border: 1px solid var(--glass-border); border-radius: var(--radius-glass); box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08); }
+.glass-strong { background: rgba(255,255,255,0.1); backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%); border: 1px solid rgba(255,255,255,0.18); border-radius: var(--radius-glass); box-shadow: 0 12px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12); }
+.glass-pill { background: rgba(255,255,255,0.08); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-pill); box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+
+/* TOP BAR */
+.topbar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.6); backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.topbar-left { display: flex; align-items: center; gap: 16px; }
+.topbar-logo { width: 32px; height: auto; }
+.topbar-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; }
+.topbar-back { font-size: 0.82rem; color: var(--text-muted); transition: var(--transition); padding: 6px 16px; border-radius: var(--radius-pill); }
+.topbar-back:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+.topbar-user { display: flex; align-items: center; gap: 12px; }
+.topbar-avatar { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; }
+.topbar-username { font-size: 0.85rem; font-weight: 500; }
+.topbar-logout { font-size: 0.75rem; color: var(--text-muted); cursor: pointer; transition: var(--transition); }
+.topbar-logout:hover { color: var(--white); }
+
+/* LAYOUT */
+.app-layout { display: flex; min-height: 100vh; padding-top: 62px; }
+
+/* SIDEBAR */
+.sidebar { width: 280px; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,0.06); padding: 32px 20px; position: sticky; top: 62px; height: calc(100vh - 62px); overflow-y: auto; }
+.sidebar-section { margin-bottom: 32px; }
+.sidebar-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted); margin-bottom: 12px; padding-left: 12px; }
+.sidebar-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 14px; font-size: 0.88rem; font-weight: 500; color: var(--text-secondary); transition: var(--transition); cursor: pointer; margin-bottom: 4px; }
+.sidebar-item:hover { background: rgba(255,255,255,0.06); color: var(--white); }
+.sidebar-item.active { background: rgba(255,255,255,0.1); color: var(--white); font-weight: 600; }
+.sidebar-item .si-icon { width: 32px; height: 32px; border-radius: 10px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+.sidebar-item.active .si-icon { background: rgba(255,255,255,0.15); }
+.sidebar-item .si-badge { margin-left: auto; font-size: 0.65rem; padding: 2px 8px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.1); color: var(--text-muted); }
+
+/* MAIN CONTENT */
+.main-content { flex: 1; padding: 40px 48px; min-width: 0; }
+
+/* LOGIN SCREEN */
+.login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 24px; }
+.login-card { width: 100%; max-width: 440px; padding: 48px 40px; text-align: center; }
+.login-card .login-logo { width: 80px; margin: 0 auto 24px; }
+.login-card h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; margin-bottom: 8px; letter-spacing: 0.05em; }
+.login-card .login-sub { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 36px; font-weight: 300; }
+.login-card .form-group { margin-bottom: 16px; text-align: left; }
+.login-card .form-group label { display: block; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 6px; }
+.login-card .form-group input { width: 100%; padding: 14px 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; color: var(--white); font-family: 'Outfit', sans-serif; font-size: 0.9rem; transition: var(--transition); outline: none; }
+.login-card .form-group input:focus { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); }
+.login-btn { width: 100%; padding: 16px; background: var(--white); color: var(--black); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; border-radius: var(--radius-pill); transition: var(--transition); margin-top: 12px; }
+.login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,255,255,0.15); }
+.login-toggle { margin-top: 20px; font-size: 0.82rem; color: var(--text-muted); }
+.login-toggle a { color: var(--white); font-weight: 600; cursor: pointer; text-decoration: underline; }
+.login-back { display: inline-block; margin-top: 20px; font-size: 0.82rem; color: var(--text-muted); transition: var(--transition); }
+.login-back:hover { color: var(--white); }
+
+/* DASHBOARD WELCOME */
+.dashboard-welcome { margin-bottom: 48px; }
+.dashboard-welcome h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 8px; }
+.dashboard-welcome p { color: var(--text-secondary); font-weight: 300; font-size: 1rem; }
+
+/* PROGRAM CARDS */
+.program-select-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin-bottom: 48px; }
+.program-select-card { padding: 28px 24px; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; }
+.program-select-card:hover { transform: translateY(-3px); background: rgba(255,255,255,0.1); }
+.program-select-card.active { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.12); }
+.program-select-card .psc-icon { font-size: 1.6rem; margin-bottom: 14px; }
+.program-select-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; margin-bottom: 6px; }
+.program-select-card p { font-size: 0.8rem; color: var(--text-muted); font-weight: 300; }
+
+/* COURSE CONTENT */
+.course-section { margin-bottom: 48px; }
+.course-section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; cursor: pointer; }
+.course-section-number { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: rgba(255,255,255,0.12); line-height: 1; width: 60px; flex-shrink: 0; }
+.course-section-info h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.03em; }
+.course-section-info p { font-size: 0.82rem; color: var(--text-muted); font-weight: 300; }
+.course-section-toggle { margin-left: auto; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: var(--transition); color: var(--text-muted); }
+.course-section.open .course-section-toggle { transform: rotate(180deg); }
+
+.course-items { display: none; padding-left: 76px; }
+.course-section.open .course-items { display: block; }
+
+.course-item { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 16px; margin-bottom: 8px; transition: var(--transition); cursor: pointer; border: 1px solid transparent; }
+.course-item:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+.course-item.active { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+
+.ci-icon { width: 42px; height: 42px; border-radius: 12px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.ci-icon.video { background: rgba(255,255,255,0.08); }
+.ci-icon.pdf { background: rgba(255,100,100,0.08); }
+.ci-icon.gift { background: rgba(100,255,150,0.08); }
+
+.ci-info h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 2px; }
+.ci-info span { font-size: 0.75rem; color: var(--text-muted); font-weight: 300; }
+
+.ci-status { margin-left: auto; width: 24px; height: 24px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; flex-shrink: 0; }
+.ci-status.done { background: var(--white); color: var(--black); border-color: var(--white); }
+
+/* VIDEO PLAYER */
+.video-player-area { margin-bottom: 40px; border-radius: var(--radius-glass); overflow: hidden; position: relative; background: #0a0a0a; }
+.video-player-area video { width: 100%; display: block; aspect-ratio: 16/9; object-fit: cover; }
+.video-player-overlay { position: absolute; bottom: 0; left: 0; right: 0; padding: 24px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); }
+.video-player-overlay h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; margin-bottom: 4px; }
+.video-player-overlay p { font-size: 0.82rem; color: var(--text-secondary); font-weight: 300; }
+
+/* PROGRESS BAR */
+.progress-bar-container { margin-bottom: 32px; }
+.progress-label { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.progress-label span { font-size: 0.78rem; color: var(--text-muted); }
+.progress-label strong { font-size: 0.78rem; color: var(--white); }
+.progress-track { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--white); border-radius: 3px; transition: width 0.6s ease; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .main-content { padding: 24px 20px; }
+  .course-items { padding-left: 0; }
+}
+
+/* GRAIN */
+body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 200px; }
+
+/* HIDE STATES */
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN SCREEN ═══════════════ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card glass-strong">
+    <img src="assets/nz_logo_hero.png" alt="NZ 100%" class="login-logo">
+    <h1>ESPACE MEMBRE</h1>
+    <p class="login-sub">Connectez-vous pour acc&eacute;der &agrave; vos programmes</p>
+    
+    <div id="loginForm">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="votre@email.com">
+      </div>
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" id="loginPassword" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;">
+      </div>
+      <button class="login-btn" onclick="doLogin()">Se connecter</button>
+      <p class="login-toggle">Pas encore inscrit ? <a onclick="showRegister()">Cr&eacute;er un compte</a></p>
+    </div>
+
+    <div id="registerForm" class="hidden">
+      <div class="form-group">
+        <label>Pr&eacute;nom</label>
+        <input type="text" id="regFirstname" placeholder="Votre pr&eacute;nom">
+      </div>
+      <div class="form-group">
+        <label>Nom</label>
+        <input type="text" id="regLastname" placeholder="Votre nom">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="regEmail" placeholder="votre@email.com">
+      </div>
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" id="regPassword" placeholder="Minimum 8 caract&egrave;res">
+      </div>
+      <button class="login-btn" onclick="doRegister()">Cr&eacute;er mon compte</button>
+      <p class="login-toggle">D&eacute;j&agrave; inscrit ? <a onclick="showLogin()">Se connecter</a></p>
+    </div>
+
+    <a href="index.html" class="login-back">&larr; Retour au site</a>
+  </div>
+</div>
+
+<!-- ═══════════════ DASHBOARD ═══════════════ -->
+<div id="dashboardScreen" class="hidden">
+
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="assets/nz_logo_nav.png" alt="NZ" class="topbar-logo">
+      <span class="topbar-title">NZ 100% E-LEARNING</span>
+      <a href="index.html" class="topbar-back">&larr; Site</a>
+    </div>
+    <div class="topbar-user">
+      <div class="topbar-avatar" id="userAvatar">M</div>
+      <span class="topbar-username" id="userName">Membre</span>
+      <span class="topbar-logout" onclick="doLogout()">D&eacute;connexion</span>
+    </div>
+  </div>
+
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Mon programme</div>
+        <div class="sidebar-item active" data-section="overview" onclick="showSection('overview')">
+          <div class="si-icon">&#127968;</div>
+          Tableau de bord
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Contenu</div>
+        <div class="sidebar-item" data-section="part1" onclick="showSection('part1')">
+          <div class="si-icon">&#127916;</div>
+          Partie 1 : Introduction
+          <span class="si-badge">3</span>
+        </div>
+        <div class="sidebar-item" data-section="part2" onclick="showSection('part2')">
+          <div class="si-icon">&#128170;</div>
+          Partie 2 : Programme Sportif
+          <span class="si-badge">4</span>
+        </div>
+        <div class="sidebar-item" data-section="part3" onclick="showSection('part3')">
+          <div class="si-icon">&#127822;</div>
+          Partie 3 : Nutrition
+          <span class="si-badge">2</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main-content">
+
+      <!-- ═══ OVERVIEW ═══ -->
+      <div id="sec-overview">
+        <div class="dashboard-welcome">
+          <h1>Bienvenue dans votre programme &#128170;</h1>
+          <p>S&eacute;lectionnez votre programme pour commencer votre transformation.</p>
+        </div>
+
+        <!-- Video Welcome -->
+        <div class="video-player-area" style="margin-bottom:40px;">
+          <video autoplay muted loop playsinline id="welcomeVideo">
+            <source src="assets/welcome_video.mp4" type="video/mp4">
+          </video>
+          <div class="video-player-overlay">
+            <h3>Bienvenue dans NZ 100%</h3>
+            <p>F&eacute;licitations pour votre inscription. La discipline commence maintenant.</p>
+          </div>
+        </div>
+
+        <!-- Program Selection -->
+        <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;margin-bottom:20px;letter-spacing:0.05em;">VOTRE PROGRAMME</h2>
+        <div class="program-select-grid">
+          <div class="program-select-card glass active" onclick="selectProgram(this, 'perte')">
+            <div class="psc-icon">&#128293;</div>
+            <h3>NZ PERTE DE POIDS</h3>
+            <p>Sport + alimentation pour des r&eacute;sultats</p>
+          </div>
+          <div class="program-select-card glass" onclick="selectProgram(this, 'masse')">
+            <div class="psc-icon">&#128170;</div>
+            <h3>NZ PRISE DE MASSE</h3>
+            <p>Force musculaire & mobilit&eacute;</p>
+          </div>
+          <div class="program-select-card glass" onclick="selectProgram(this, 'athle')">
+            <div class="psc-icon">&#9889;</div>
+            <h3>NZ ATHL&Eacute;TISME</h3>
+            <p>Performance sportive</p>
+          </div>
+          <div class="program-select-card glass" onclick="selectProgram(this, 'protection')">
+            <div class="psc-icon">&#128737;&#65039;</div>
+            <h3>NZ PROTECTION</h3>
+            <p>Pr&eacute;vention articulaire</p>
+          </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-bar-container">
+          <div class="progress-label"><span>Progression globale</span><strong>0%</strong></div>
+          <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <!-- ═══ PART 1 : INTRODUCTION ═══ -->
+      <div id="sec-part1" class="hidden">
+        <div class="dashboard-welcome">
+          <h1>PARTIE 1 : INTRODUCTION</h1>
+          <p>Bienvenue dans votre programme. D&eacute;couvrez les objectifs, le d&eacute;roul&eacute;, et recevez votre cadeau.</p>
+        </div>
+
+        <div class="course-section open">
+          <div class="course-section-header" onclick="toggleSection(this)">
+            <div class="course-section-number">01</div>
+            <div class="course-section-info">
+              <h2>Bienvenue & F&eacute;licitations</h2>
+              <p>Vid&eacute;o de bienvenue, objectifs et cadeau offert</p>
+            </div>
+            <div class="course-section-toggle">&#9660;</div>
+          </div>
+          <div class="course-items">
+            <div class="course-item active" onclick="playCourseVideo(this)">
+              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-info">
+                <h4>Vid&eacute;o de bienvenue</h4>
+                <span>Vid&eacute;o &bull; F&eacute;licitations et pr&eacute;sentation</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+            <div class="course-item" onclick="playCourseVideo(this)">
+              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-info">
+                <h4>Explication des objectifs & d&eacute;roul&eacute;</h4>
+                <span>Vid&eacute;o &bull; Ce que vous allez accomplir</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+            <div class="course-item">
+              <div class="ci-icon gift">&#127873;</div>
+              <div class="ci-info">
+                <h4>Cadeau offert</h4>
+                <span>T&eacute;l&eacute;chargeable &bull; Surprise de bienvenue</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+            <div class="course-item">
+              <div class="ci-icon pdf">&#128196;</div>
+              <div class="ci-info">
+                <h4>Fiches introductives</h4>
+                <span>PDF &bull; Guide de d&eacute;marrage</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Player Area -->
+        <div class="video-player-area" style="margin-top:32px;">
+          <video autoplay muted loop playsinline id="part1Video">
+            <source src="assets/welcome_video.mp4" type="video/mp4">
+          </video>
+          <div class="video-player-overlay">
+            <h3>Vid&eacute;o de bienvenue</h3>
+            <p>F&eacute;licitations pour votre inscription. Votre transformation commence ici.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PART 2 : PROGRAMME SPORTIF ═══ -->
+      <div id="sec-part2" class="hidden">
+        <div class="dashboard-welcome">
+          <h1>PARTIE 2 : PROGRAMME SPORTIF</h1>
+          <p>Vid&eacute;os de d&eacute;monstration technique et programme PDF complet sur 4 semaines.</p>
+        </div>
+
+        <div class="course-section open">
+          <div class="course-section-header" onclick="toggleSection(this)">
+            <div class="course-section-number">02</div>
+            <div class="course-section-info">
+              <h2>Pr&eacute;sentation & Exercices</h2>
+              <p>Sp&eacute;cificit&eacute;s sportives et d&eacute;monstrations techniques</p>
+            </div>
+            <div class="course-section-toggle">&#9660;</div>
+          </div>
+          <div class="course-items">
+            <div class="course-item active" onclick="playCourseVideo(this)">
+              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-info">
+                <h4>Pr&eacute;sentation des sp&eacute;cificit&eacute;s sportives</h4>
+                <span>Vid&eacute;o &bull; Approche et m&eacute;thodologie</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+            <div class="course-item" onclick="playCourseVideo(this)">
+              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-info">
+                <h4>Exercice 1 &mdash; D&eacute;monstration technique</h4>
+                <span>Vid&eacute;o &bull; Technique d&eacute;taill&eacute;e</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+            <div class="course-item" onclick="playCourseVideo(this)">
+              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-info">
+                <h4>Exercice 2 &mdash; D&eacute;monstration technique</h4>
+                <span>Vid&eacute;o &bull; Technique d&eacute;taill&eacute;e</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+            <div class="course-item" onclick="playCourseVideo(this)">
+              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-info">
+                <h4>Exercice 3 &mdash; D&eacute;monstration technique</h4>
+                <span>Vid&eacute;o &bull; Technique d&eacute;taill&eacute;e</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+            <div class="course-item">
+              <div class="ci-icon pdf">&#128196;</div>
+              <div class="ci-info">
+                <h4>Programme PDF complet &mdash; 4 semaines</h4>
+                <span>PDF &bull; S&eacute;ries, r&eacute;p&eacute;titions, planning A &agrave; Z</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PART 3 : PROGRAMME NUTRITION ═══ -->
+      <div id="sec-part3" class="hidden">
+        <div class="dashboard-welcome">
+          <h1>PARTIE 3 : ALIMENTATION</h1>
+          <p>Objectifs nutritionnels et plan alimentaire pour maximiser vos r&eacute;sultats.</p>
+        </div>
+
+        <div class="course-section open">
+          <div class="course-section-header" onclick="toggleSection(this)">
+            <div class="course-section-number">03</div>
+            <div class="course-section-info">
+              <h2>Programme Nutritionnel</h2>
+              <p>Objectifs, aliments &agrave; privil&eacute;gier et plan complet</p>
+            </div>
+            <div class="course-section-toggle">&#9660;</div>
+          </div>
+          <div class="course-items">
+            <div class="course-item active" onclick="playCourseVideo(this)">
+              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-info">
+                <h4>Pr&eacute;sentation des objectifs nutritionnels</h4>
+                <span>Vid&eacute;o &bull; Strat&eacute;gie alimentaire</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+            <div class="course-item">
+              <div class="ci-icon pdf">&#128196;</div>
+              <div class="ci-info">
+                <h4>Aliments &agrave; privil&eacute;gier vs aliments interdits</h4>
+                <span>PDF &bull; Liste compl&egrave;te</span>
+              </div>
+              <div class="ci-status"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+// Welcome video: limit to 20s loop
+const wVid = document.getElementById('welcomeVideo');
+if (wVid) wVid.addEventListener('timeupdate', () => { if (wVid.currentTime >= 20) wVid.currentTime = 0; });
+const p1Vid = document.getElementById('part1Video');
+if (p1Vid) p1Vid.addEventListener('timeupdate', () => { if (p1Vid.currentTime >= 20) p1Vid.currentTime = 0; });
+
+// Auth simulation
+function showLogin() {
+  document.getElementById('loginForm').classList.remove('hidden');
+  document.getElementById('registerForm').classList.add('hidden');
+}
+function showRegister() {
+  document.getElementById('loginForm').classList.add('hidden');
+  document.getElementById('registerForm').classList.remove('hidden');
+}
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value;
+  if (!email) return;
+  const name = email.split('@')[0];
+  enterDashboard(name);
+}
+
+function doRegister() {
+  const firstname = document.getElementById('regFirstname').value;
+  const lastname = document.getElementById('regLastname').value;
+  if (!firstname) return;
+  enterDashboard(firstname + ' ' + lastname);
+}
+
+function enterDashboard(name) {
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('dashboardScreen').classList.remove('hidden');
+  document.getElementById('userName').textContent = name;
+  document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+}
+
+function doLogout() {
+  document.getElementById('dashboardScreen').classList.add('hidden');
+  document.getElementById('loginScreen').classList.remove('hidden');
+}
+
+// Sections
+function showSection(id) {
+  // Hide all sections
+  document.querySelectorAll('[id^="sec-"]').forEach(el => el.classList.add('hidden'));
+  document.getElementById('sec-' + id).classList.remove('hidden');
+  // Active sidebar
+  document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
+  document.querySelector('.sidebar-item[data-section="' + id + '"]').classList.add('active');
+}
+
+// Toggle course section
+function toggleSection(header) {
+  header.closest('.course-section').classList.toggle('open');
+}
+
+// Select program
+function selectProgram(card, id) {
+  document.querySelectorAll('.program-select-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+}
+
+// Play course video (mark as active)
+function playCourseVideo(item) {
+  item.closest('.course-items').querySelectorAll('.course-item').forEach(i => i.classList.remove('active'));
+  item.classList.add('active');
+  // Mark as done
+  const status = item.querySelector('.ci-status');
+  if (status) { status.classList.add('done'); status.innerHTML = '&#10003;'; }
+}
+</script>
+</body>
+</html>
