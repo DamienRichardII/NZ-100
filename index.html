@@ -3,429 +3,510 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NZ 100% — More Discipline...</title>
+<title>NZ 100% — Coach Remise en Forme | Retour au Sport | Performance</title>
+<meta name="description" content="Mathieu Nzita — Coach sportif expert en remise en forme, retour au sport après blessure, et performance. Coaching personnalisé à Paris & Thiais (94).">
 <link rel="icon" type="image/png" href="assets/nz_logo_nav.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --black: #000000;
-  --white: #ffffff;
-  --glass-bg: rgba(255,255,255,0.06);
-  --glass-border: rgba(255,255,255,0.12);
-  --glass-blur: 24px;
-  --glass-saturate: 180%;
-  --text-muted: rgba(255,255,255,0.55);
-  --text-secondary: rgba(255,255,255,0.75);
-  --radius-glass: 28px;
-  --radius-pill: 100px;
-  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+:root{
+  --black:#000;--white:#fff;
+  --glass-bg:rgba(255,255,255,.055);
+  --glass-border:rgba(255,255,255,.11);
+  --text-muted:rgba(255,255,255,.5);
+  --text-secondary:rgba(255,255,255,.72);
+  --radius-glass:24px;--radius-pill:100px;
+  --transition:.4s cubic-bezier(.25,.46,.45,.94);
 }
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; }
-body { font-family: 'Outfit', -apple-system, sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; line-height: 1.6; }
-img { max-width: 100%; display: block; }
-a { text-decoration: none; color: inherit; }
-button { cursor: pointer; border: none; background: none; font-family: inherit; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;font-size:16px;-webkit-font-smoothing:antialiased;}
+body{font-family:'Outfit',-apple-system,sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;line-height:1.6;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px;}
+img{max-width:100%;display:block;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;border:none;background:none;font-family:inherit;}
 
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-glass);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.2);
-}
-.glass-strong {
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: var(--radius-glass);
-  box-shadow: 0 12px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12);
-}
-.glass-pill {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: var(--radius-pill);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
-}
+/* GLASS */
+.glass{background:var(--glass-bg);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--glass-border);border-radius:var(--radius-glass);}
+.glass-strong{background:rgba(255,255,255,.09);backdrop-filter:blur(40px) saturate(200%);-webkit-backdrop-filter:blur(40px) saturate(200%);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius-glass);}
+.glass-pill{background:rgba(255,255,255,.07);backdrop-filter:blur(20px) saturate(160%);-webkit-backdrop-filter:blur(20px) saturate(160%);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-pill);}
 
 /* NAV */
-.nav { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 1000; padding: 10px 8px; display: flex; align-items: center; gap: 4px; transition: var(--transition); }
-.nav-logo { width: 36px; height: auto; margin-right: 12px; }
-.nav a { padding: 8px 18px; font-size: 0.82rem; font-weight: 500; color: var(--text-secondary); border-radius: var(--radius-pill); transition: var(--transition); letter-spacing: 0.02em; white-space: nowrap; }
-.nav a:hover, .nav a.active { color: var(--white); background: rgba(255,255,255,0.1); }
-.nav-cta { padding: 8px 22px !important; background: var(--white) !important; color: var(--black) !important; font-weight: 600 !important; margin-left: 8px; }
-.nav-cta:hover { background: rgba(255,255,255,0.9) !important; transform: scale(1.03); }
-.nav-cta-outline { padding: 8px 22px !important; border: 1px solid rgba(255,255,255,0.4) !important; color: var(--white) !important; font-weight: 600 !important; margin-left: 4px; background: rgba(255,255,255,0.05) !important; }
-.nav-cta-outline:hover { background: rgba(255,255,255,0.12) !important; border-color: rgba(255,255,255,0.6) !important; }
-.nav-toggle { display: none; color: white; font-size: 1.5rem; padding: 8px; z-index: 1001; }
+.nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:1000;display:flex;align-items:center;gap:2px;padding:8px 12px;transition:var(--transition);white-space:nowrap;}
+.nav-logo{width:32px;height:auto;margin-right:10px;flex-shrink:0;}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+.nav-links a{font-size:.79rem;font-weight:500;color:var(--text-secondary);padding:7px 12px;border-radius:var(--radius-pill);transition:var(--transition);}
+.nav-links a:hover,.nav-links a.active{color:var(--white);background:rgba(255,255,255,.1);}
+.nav-cta{padding:8px 18px \!important;background:#fff \!important;color:#000 \!important;font-weight:700 \!important;font-size:.77rem \!important;margin-left:8px;flex-shrink:0;border-radius:var(--radius-pill);}
+.nav-cta:hover{background:rgba(255,255,255,.9) \!important;transform:translateY(-1px);}
+.nav-toggle{display:none;color:white;font-size:1.3rem;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.07);margin-left:auto;flex-shrink:0;}
+
+/* MOBILE NAV */
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .nav-toggle{display:flex;align-items:center;justify-content:center;}
+  .nav.mobile-open{flex-direction:column;top:0;left:0;right:0;transform:none;border-radius:0 0 22px 22px;padding:16px 20px 22px;background:rgba(0,0,0,.96);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);max-width:100%;width:100%;}
+  .nav.mobile-open .nav-links{display:flex;flex-direction:column;width:100%;gap:3px;}
+  .nav.mobile-open .nav-links a{display:block;text-align:center;padding:11px 18px;font-size:.9rem;}
+  .nav.mobile-open .nav-cta{margin-left:0;margin-top:7px;text-align:center;display:block;}
+  .nav.mobile-open .nav-toggle{margin-left:auto;}
+  .hero-title{font-size:clamp(3rem,16vw,6rem) \!important;}
+  .hero-brand-logo{width:80px \!important;}
+  .hero-slogan-main{font-size:clamp(3rem,16vw,6rem) \!important;}
+  .histoire-inner{grid-template-columns:1fr \!important;gap:32px;}
+  .histoire-image{aspect-ratio:16/9 \!important;}
+  .methode-steps{grid-template-columns:1fr 1fr \!important;}
+  .pourqui-grid,.services-grid,.temoignages-grid{grid-template-columns:1fr \!important;}
+  .cred-grid{grid-template-columns:repeat(2,1fr) \!important;}
+  .bilan-card{padding:36px 24px \!important;}
+  .footer-grid{grid-template-columns:1fr \!important;}
+  .hero-ctas{flex-direction:column;align-items:center;}
+}
+@media(max-width:480px){
+  .methode-steps{grid-template-columns:1fr \!important;}
+}
 
 /* HERO */
-.hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 120px 24px 80px; }
-.hero-video-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; opacity: 0.35; filter: brightness(0.7); }
-.hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.6) 100%), radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.5) 100%); }
-.hero-content { text-align: center; max-width: 900px; position: relative; z-index: 2; }
-.hero-logo-main { width: 320px; height: auto; margin: 0 auto 40px; opacity: 0; animation: scaleIn 1.2s 0.1s forwards; filter: drop-shadow(0 4px 24px rgba(0,0,0,0.6)); }
-.hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 10vw, 8rem); line-height: 0.9; letter-spacing: -0.02em; margin-bottom: 24px; opacity: 0; animation: fadeUp 1s 0.5s forwards; text-shadow: 0 4px 40px rgba(0,0,0,0.5); }
-.hero-title span { display: block; color: var(--text-muted); font-size: 0.5em; letter-spacing: 0.1em; }
-.hero-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; opacity: 0; animation: fadeUp 1s 0.7s forwards; }
-
-.btn-primary { padding: 16px 40px; background: var(--white); color: var(--black); font-weight: 700; font-size: 0.9rem; border-radius: var(--radius-pill); letter-spacing: 0.05em; text-transform: uppercase; transition: var(--transition); position: relative; overflow: hidden; }
-.btn-primary::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent, rgba(255,255,255,0.3), transparent); transform: translateX(-100%); transition: 0.6s; }
-.btn-primary:hover::after { transform: translateX(100%); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,255,255,0.15); }
-.btn-glass { padding: 16px 40px; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; transition: var(--transition); color: var(--white); }
-.btn-glass:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
-
-.scroll-indicator { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 2; opacity: 0; animation: fadeUp 1s 1s forwards; }
-.scroll-line { width: 1px; height: 60px; background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent); animation: scrollPulse 2s infinite; }
-@keyframes scrollPulse { 0% { opacity: 0; transform: scaleY(0); transform-origin: top; } 50% { opacity: 1; transform: scaleY(1); } 100% { opacity: 0; } }
-
-/* SECTIONS */
-section { padding: 120px 24px; position: relative; }
-.section-container { max-width: 1200px; margin: 0 auto; }
-.section-label { display: inline-flex; align-items: center; gap: 10px; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted); margin-bottom: 20px; }
-.section-label::before { content: ''; width: 24px; height: 1px; background: var(--text-muted); }
-.section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 6vw, 5rem); line-height: 0.95; margin-bottom: 24px; }
-.section-desc { font-size: 1.05rem; color: var(--text-secondary); max-width: 600px; font-weight: 300; line-height: 1.8; }
-.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s, transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.hero{position:relative;height:100vh;min-height:620px;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;text-align:center;}
+.hero-video-wrap{position:absolute;inset:0;z-index:0;}
+.hero-video-wrap video{width:100%;height:100%;object-fit:cover;object-position:center;opacity:1;}
+.hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(0,0,0,.82) 0%,rgba(0,0,0,.68) 40%,rgba(0,0,0,.92) 100%);}
+.hero-content{position:relative;z-index:2;padding:0 24px;display:flex;flex-direction:column;align-items:center;gap:0;}
+.hero-brand-logo{width:110px;height:auto;margin-bottom:20px;filter:brightness(1) drop-shadow(0 0 40px rgba(255,255,255,.25));}
+.hero-slogan-main{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,13vw,9rem);line-height:.92;letter-spacing:.06em;color:var(--white);text-shadow:0 2px 60px rgba(0,0,0,.6);}
+.hero-slogan-sep{width:60px;height:1px;background:rgba(255,255,255,.35);margin:18px auto;}
+.hero-slogan-sub{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.2rem,3.5vw,2rem);letter-spacing:.25em;color:rgba(255,255,255,.75);margin-bottom:40px;}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.btn-primary{display:inline-block;background:var(--white);color:var(--black);font-weight:700;font-size:.88rem;text-transform:uppercase;letter-spacing:.1em;padding:16px 36px;border-radius:var(--radius-pill);transition:var(--transition);}
+.btn-primary:hover{background:rgba(255,255,255,.9);transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,255,255,.15);}
+.btn-ghost{display:inline-block;color:var(--white);font-size:.88rem;font-weight:500;padding:15px 28px;border-radius:var(--radius-pill);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:var(--transition);}
+.btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-muted);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;animation:scrollbounce 2.2s infinite;}
+.hero-scroll-line{width:1px;height:30px;background:linear-gradient(to bottom,rgba(255,255,255,.45),transparent);}
+@keyframes scrollbounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
 
 /* MARQUEE */
-.photo-marquee { overflow: hidden; padding: 60px 0; position: relative; }
-.photo-marquee::before, .photo-marquee::after { content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none; }
-.photo-marquee::before { left: 0; background: linear-gradient(to right, var(--black), transparent); }
-.photo-marquee::after { right: 0; background: linear-gradient(to left, var(--black), transparent); }
-.marquee-track { display: flex; gap: 16px; animation: marqueeScroll 40s linear infinite; width: max-content; }
-.marquee-track img { width: 280px; height: 340px; object-fit: cover; border-radius: 16px; transition: transform 0.4s; flex-shrink: 0; }
-.marquee-track img:hover { transform: scale(1.03); }
-@keyframes marqueeScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.marquee-section{overflow:hidden;padding:24px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:1;}
+.marquee-track{display:flex;gap:14px;animation:marquee 26s linear infinite;width:max-content;}
+.marquee-section:hover .marquee-track{animation-play-state:paused;}
+.marquee-item{position:relative;width:180px;height:140px;border-radius:16px;overflow:hidden;flex-shrink:0;}
+.marquee-item img{width:100%;height:100%;object-fit:cover;object-position:top center;opacity:.65;transition:var(--transition);}
+.marquee-item:hover img{opacity:1;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-/* STORY */
-#story { background: linear-gradient(180deg, transparent, rgba(255,255,255,0.02), transparent); }
-.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
-.story-visual { position: relative; }
-.story-img-main { width: 100%; aspect-ratio: 3/4; object-fit: cover; border-radius: var(--radius-glass); transition: transform 0.6s; }
-.story-img-main:hover { transform: scale(1.02); }
-.story-img-float { position: absolute; width: 55%; aspect-ratio: 1; object-fit: cover; border-radius: 20px; bottom: -30px; right: -30px; border: 3px solid var(--black); transition: transform 0.6s; }
-.story-img-float:hover { transform: scale(1.05); }
-.story-stat-float { position: absolute; top: -20px; left: -20px; padding: 20px 28px; }
-.story-stat-float .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; line-height: 1; }
-.story-stat-float .stat-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; }
-.story-text-content h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; margin-bottom: 16px; }
-.story-text-content p { color: var(--text-secondary); font-weight: 300; line-height: 1.8; margin-bottom: 16px; font-size: 0.95rem; }
+/* SECTIONS */
+.section{padding:100px 24px;position:relative;z-index:1;}
+.section-inner{max-width:1100px;margin:0 auto;}
+.section-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.25em;color:var(--text-muted);margin-bottom:16px;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);line-height:1.05;letter-spacing:.03em;margin-bottom:16px;}
+.section-sub{font-size:.96rem;color:var(--text-secondary);font-weight:300;max-width:600px;line-height:1.75;}
 
-.timeline { margin-top: 100px; position: relative; padding-left: 40px; }
-.timeline::before { content: ''; position: absolute; left: 0; top: 0; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.2), transparent); }
-.timeline-item { position: relative; padding-bottom: 60px; }
-.timeline-item::before { content: ''; position: absolute; left: -44px; top: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--white); box-shadow: 0 0 12px rgba(255,255,255,0.4); }
-.timeline-year { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: var(--text-muted); margin-bottom: 8px; }
-.timeline-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
-.timeline-desc { color: var(--text-secondary); font-weight: 300; font-size: 0.9rem; line-height: 1.7; max-width: 500px; }
+/* CRÉDIBILITÉ */
+.cred-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);border-radius:var(--radius-glass);overflow:hidden;margin-top:48px;}
+.cred-item{background:#000;padding:32px 24px;text-align:center;}
+.cred-number{font-family:'Bebas Neue',sans-serif;font-size:3rem;letter-spacing:.02em;display:block;line-height:1;}
+.cred-label{font-size:.76rem;color:var(--text-muted);margin-top:6px;font-weight:400;}
+@media(max-width:1024px){.cred-grid{grid-template-columns:repeat(2,1fr);}}
 
-/* PHILOSOPHY */
-#philosophy { text-align: center; padding: 140px 24px; }
-.philosophy-quote { max-width: 800px; margin: 0 auto; padding: 60px 40px; position: relative; }
-.philosophy-quote blockquote { font-size: clamp(1.2rem, 2.5vw, 1.6rem); font-weight: 300; line-height: 1.8; color: var(--text-secondary); font-style: italic; }
-.philosophy-quote blockquote strong { color: var(--white); font-weight: 600; font-style: normal; }
-.philosophy-quote .quote-mark { font-family: 'Bebas Neue', sans-serif; font-size: 6rem; line-height: 1; color: rgba(255,255,255,0.1); position: absolute; top: 0; left: 20px; }
+/* POUR QUI */
+.pourqui-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:48px;}
+.pourqui-card{padding:32px;border-radius:var(--radius-glass);border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);transition:var(--transition);}
+.pourqui-card:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.16);transform:translateY(-3px);}
+.pq-icon{font-size:2rem;margin-bottom:16px;}
+.pq-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.04em;margin-bottom:10px;}
+.pq-desc{font-size:.87rem;color:var(--text-secondary);line-height:1.65;font-weight:300;}
 
-/* PROGRAMS */
-#programs .programs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 60px; }
-.program-card { padding: 36px 28px; transition: var(--transition); position: relative; overflow: hidden; }
-.program-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); opacity: 0; transition: var(--transition); }
-.program-card:hover::before { opacity: 1; }
-.program-card:hover { transform: translateY(-4px); background: rgba(255,255,255,0.1); box-shadow: 0 16px 48px rgba(0,0,0,0.5); }
-.program-icon { width: 52px; height: 52px; border-radius: 16px; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 24px; }
-.program-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; margin-bottom: 12px; }
-.program-card p { color: var(--text-secondary); font-size: 0.88rem; font-weight: 300; line-height: 1.7; }
-.program-tag { display: inline-block; margin-top: 16px; padding: 5px 14px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; border-radius: var(--radius-pill); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); }
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:48px;}
+.service-card{padding:36px;border-radius:var(--radius-glass);border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);transition:var(--transition);display:flex;flex-direction:column;gap:14px;}
+.service-card:hover{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.18);transform:translateY(-4px);}
+.service-card.featured{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.06);}
+.sc-number{font-family:'Bebas Neue',sans-serif;font-size:.82rem;letter-spacing:.22em;color:var(--text-muted);}
+.sc-title{font-family:'Bebas Neue',sans-serif;font-size:1.85rem;letter-spacing:.04em;line-height:1;}
+.sc-desc{font-size:.87rem;color:var(--text-secondary);line-height:1.65;font-weight:300;flex:1;}
+.sc-link{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;font-weight:600;color:var(--white);transition:var(--transition);}
+.sc-link:hover{gap:12px;}
 
-.elearning-structure { margin-top: 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.elearning-part { padding: 32px 24px; text-align: center; }
-.elearning-part .part-number { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: rgba(255,255,255,0.1); line-height: 1; margin-bottom: 12px; }
-.elearning-part h4 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; }
-.elearning-part p { font-size: 0.85rem; color: var(--text-secondary); font-weight: 300; line-height: 1.7; }
+/* MÉTHODE */
+.methode-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:48px;}
+@media(max-width:1024px){.methode-steps{grid-template-columns:repeat(3,1fr);}}
+.step-card{padding:26px 18px;border-radius:var(--radius-glass);border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.03);text-align:center;transition:var(--transition);}
+.step-card:hover{background:rgba(255,255,255,.06);transform:translateY(-4px);}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:.04em;opacity:.22;line-height:1;margin-bottom:8px;}
+.step-title{font-size:.87rem;font-weight:700;margin-bottom:8px;}
+.step-desc{font-size:.77rem;color:var(--text-muted);line-height:1.55;}
 
-/* PRICING */
-#pricing { background: linear-gradient(180deg, transparent, rgba(255,255,255,0.015), transparent); }
-.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 60px; }
-.price-card { padding: 40px 28px; text-align: center; transition: var(--transition); position: relative; }
-.price-card.featured { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); transform: scale(1.03); }
-.price-card.featured::before { content: 'POPULAIRE'; position: absolute; top: -1px; left: 50%; transform: translateX(-50%); padding: 5px 20px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; background: var(--white); color: var(--black); border-radius: 0 0 12px 12px; }
-.price-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.5); }
-.price-card.featured:hover { transform: scale(1.03) translateY(-4px); }
-.price-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.1em; color: var(--text-secondary); margin-bottom: 8px; }
-.price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; line-height: 1; margin-bottom: 4px; }
-.price-amount sup { font-size: 0.4em; vertical-align: super; }
-.price-desc { font-size: 0.82rem; color: var(--text-muted); font-weight: 300; margin-bottom: 28px; line-height: 1.6; min-height: 50px; }
-.price-features { list-style: none; text-align: left; margin-bottom: 32px; }
-.price-features li { padding: 10px 0; font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-.price-features li::before { content: '✓'; font-size: 0.75rem; font-weight: 700; color: var(--white); width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,0.1); flex-shrink: 0; }
-.price-cta { display: block; width: 100%; padding: 14px; border-radius: var(--radius-pill); font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; transition: var(--transition); text-align: center; }
-.price-card .price-cta { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: var(--white); }
-.price-card .price-cta:hover { background: rgba(255,255,255,0.15); }
-.price-card.featured .price-cta { background: var(--white); color: var(--black); border: none; }
-.price-card.featured .price-cta:hover { background: rgba(255,255,255,0.9); transform: scale(1.02); }
+/* HISTOIRE */
+.histoire-section{padding:80px 24px;position:relative;z-index:1;}
+.histoire-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.histoire-image{border-radius:var(--radius-glass);overflow:hidden;aspect-ratio:3/4;}
+.histoire-image img{width:100%;height:100%;object-fit:cover;}
+.histoire-quote{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,4vw,2.7rem);line-height:1.1;letter-spacing:.03em;margin:24px 0;border-left:3px solid rgba(255,255,255,.2);padding-left:20px;}
+.histoire-text{font-size:.91rem;color:var(--text-secondary);line-height:1.75;font-weight:300;margin-bottom:20px;}
 
-/* CONTACT */
-#contact .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 60px; align-items: start; }
-.contact-info h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; margin-bottom: 16px; }
-.contact-info p { color: var(--text-secondary); font-weight: 300; line-height: 1.8; margin-bottom: 32px; }
-.contact-detail { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
-.contact-detail-icon { width: 44px; height: 44px; border-radius: 14px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
-.contact-detail-text { font-size: 0.9rem; color: var(--text-secondary); }
-.contact-detail-text strong { display: block; color: var(--white); font-weight: 600; margin-bottom: 2px; }
-.contact-form { padding: 40px; }
-.form-group { margin-bottom: 20px; }
-.form-group label { display: block; font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 8px; }
-.form-group input, .form-group textarea, .form-group select { width: 100%; padding: 14px 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; color: var(--white); font-family: 'Outfit', sans-serif; font-size: 0.9rem; transition: var(--transition); outline: none; }
-.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.08); }
-.form-group textarea { resize: vertical; min-height: 120px; }
-.form-group select option { background: #111; color: var(--white); }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.form-submit { width: 100%; padding: 16px; background: var(--white); color: var(--black); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; border-radius: var(--radius-pill); transition: var(--transition); margin-top: 8px; }
-.form-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,255,255,0.15); }
+/* TÉMOIGNAGES */
+.temoignages-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.temoignage-card{padding:30px;border-radius:var(--radius-glass);border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);}
+.temo-stars{color:rgba(255,255,255,.55);font-size:.85rem;margin-bottom:14px;}
+.temo-text{font-size:.86rem;color:var(--text-secondary);line-height:1.65;font-weight:300;font-style:italic;margin-bottom:18px;}
+.temo-author{display:flex;align-items:center;gap:12px;}
+.temo-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.82rem;font-weight:700;flex-shrink:0;}
+.temo-name{font-size:.82rem;font-weight:600;}
+.temo-detail{font-size:.7rem;color:var(--text-muted);}
+
+/* BILAN */
+.bilan-section{padding:80px 24px;position:relative;z-index:1;}
+.bilan-card{max-width:800px;margin:0 auto;padding:56px 48px;text-align:center;border-radius:32px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);backdrop-filter:blur(32px) saturate(180%);-webkit-backdrop-filter:blur(32px) saturate(180%);}
+.bilan-badge{display:inline-block;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.22em;padding:5px 16px;border-radius:var(--radius-pill);background:rgba(255,255,255,.08);color:var(--text-muted);margin-bottom:20px;}
+.bilan-card h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.2rem);letter-spacing:.04em;margin-bottom:16px;}
+.bilan-card p{font-size:.93rem;color:var(--text-secondary);font-weight:300;max-width:480px;margin:0 auto 28px;line-height:1.75;}
+.bilan-details{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;}
+.bilan-detail{font-size:.79rem;color:var(--text-muted);}
+.bilan-detail strong{color:var(--white);}
 
 /* FOOTER */
-.footer { padding: 60px 24px 32px; border-top: 1px solid rgba(255,255,255,0.06); }
-.footer-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-.footer-logo { width: 40px; height: auto; opacity: 0.5; }
-.footer-text { font-size: 0.78rem; color: var(--text-muted); font-weight: 300; }
-.footer-links { display: flex; gap: 24px; }
-.footer-links a { font-size: 0.78rem; color: var(--text-muted); transition: var(--transition); }
-.footer-links a:hover { color: var(--white); }
+footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);position:relative;z-index:1;}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+@media(max-width:1024px){.footer-grid{grid-template-columns:1fr 1fr;}}
+.footer-brand .footer-logo{width:48px;margin-bottom:16px;}
+.footer-brand p{font-size:.8rem;color:var(--text-muted);line-height:1.75;max-width:220px;font-weight:300;}
+.footer-social{display:flex;gap:10px;margin-top:18px;}
+.footer-social a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.82rem;transition:var(--transition);}
+.footer-social a:hover{background:rgba(255,255,255,.12);}
+.footer-col h4{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--text-muted);margin-bottom:16px;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:8px;}
+.footer-col ul li a{font-size:.8rem;color:rgba(255,255,255,.5);transition:var(--transition);}
+.footer-col ul li a:hover{color:var(--white);}
+.footer-bottom{padding-top:24px;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
+.footer-copy{font-size:.7rem;color:var(--text-muted);}
+.footer-bottom-links{display:flex;gap:20px;}
+.footer-bottom-links a{font-size:.7rem;color:rgba(255,255,255,.3);transition:var(--transition);}
+.footer-bottom-links a:hover{color:var(--text-muted);}
 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes scaleIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+/* NAV SCROLLED */
+.nav.scrolled{background:rgba(0,0,0,.78);backdrop-filter:blur(32px) saturate(180%);-webkit-backdrop-filter:blur(32px) saturate(180%);border:1px solid rgba(255,255,255,.09);}
 
-@media (max-width: 900px) {
-  .story-grid { grid-template-columns: 1fr; gap: 40px; }
-  .story-visual { max-width: 400px; margin: 0 auto; }
-  .elearning-structure { grid-template-columns: 1fr; }
-  .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
-  .price-card.featured { transform: none; }
-  .price-card.featured:hover { transform: translateY(-4px); }
-  #contact .contact-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 768px) {
-  .nav a:not(.nav-cta):not(.nav-cta-outline) { display: none; }
-  .nav-toggle { display: block; }
-  .nav.mobile-open { flex-direction: column; top: 0; left: 0; right: 0; transform: none; border-radius: 0 0 var(--radius-glass) var(--radius-glass); padding: 16px 24px 24px; align-items: stretch; background: rgba(0,0,0,0.9); backdrop-filter: blur(40px); }
-  .nav.mobile-open a { display: block; text-align: center; padding: 12px; }
-  .nav.mobile-open .nav-cta, .nav.mobile-open .nav-cta-outline { margin-left: 0; margin-top: 4px; }
-  .form-row { grid-template-columns: 1fr; }
-  section { padding: 80px 20px; }
-  .marquee-track img { width: 200px; height: 260px; }
-}
-
-body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.025; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 200px; }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
+.reveal.visible{opacity:1;transform:none;}
 </style>
 </head>
 <body>
 
 <nav class="nav glass-pill" id="mainNav">
   <img src="assets/nz_logo_nav.png" alt="NZ" class="nav-logo">
-  <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu">&#9776;</button>
-  <a href="#story">Parcours</a>
-  <a href="#programs">Programmes</a>
-  <a href="#pricing">Tarifs</a>
-  <a href="#contact">Contact</a>
-  <a href="espace-membre.html" class="nav-cta-outline glass-pill">Inscription</a>
-  <a href="#pricing" class="nav-cta glass-pill">Commencer</a>
+  <button class="nav-toggle" onclick="toggleNav()">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html" class="active">Accueil</a>
+    <a href="remise-en-forme.html">Remise en forme</a>
+    <a href="retour-au-sport.html">Retour au sport</a>
+    <a href="performance.html">Performance</a>
+    <a href="coaching-basket.html">Coaching basket</a>
+    <a href="mon-histoire.html">Mon histoire</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta">R&eacute;server un bilan</a>
+  </div>
 </nav>
 
-<section class="hero" id="hero">
-  <video class="hero-video-bg" autoplay muted loop playsinline id="heroVideo">
-    <source src="assets/hero_video.mp4" type="video/mp4">
-  </video>
+<section class="hero">
+  <div class="hero-video-wrap">
+    <video autoplay muted loop playsinline preload="auto" poster="assets/IMG_3832.jpeg">
+      <source src="assets/hero_video.mp4" type="video/mp4">
+    </video>
+  </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <img src="assets/nz_logo_hero.png" alt="NZ 100%" class="hero-logo-main">
-    <h1 class="hero-title">MORE DISCIPLINE<span>La cl&eacute; de la libert&eacute;</span></h1>
-    <div class="hero-actions">
-      <a href="#programs" class="btn-primary">D&eacute;couvrir les programmes</a>
-      <a href="#story" class="btn-glass glass-pill">Mon histoire</a>
+    <img src="assets/nz_logo_hero.png" alt="NZ 100%" class="hero-brand-logo">
+    <h1 class="hero-slogan-main">MORE DISCIPLINE</h1>
+    <div class="hero-slogan-sep"></div>
+    <p class="hero-slogan-sub">La cl&eacute; de la libert&eacute;</p>
+    <div class="hero-ctas">
+      <a href="contact.html" class="btn-primary">R&eacute;server un bilan gratuit</a>
+      <a href="#services" class="btn-ghost">D&eacute;couvrir les accompagnements</a>
     </div>
   </div>
-  <div class="scroll-indicator"><div class="scroll-line"></div></div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    <span>Scroll</span>
+  </div>
 </section>
 
-<div class="photo-marquee">
-  <div class="marquee-track">
-    <img src="assets/IMG_0405.jpeg" alt="MSB">
-    <img src="assets/IMG_4890.jpeg" alt="BBD">
-    <img src="assets/IMG_3836.jpeg" alt="Training">
-    <img src="assets/IMG_2884.jpeg" alt="NZ">
-    <img src="assets/IMG_0621.jpeg" alt="Coach">
-    <img src="assets/IMG_5195.jpeg" alt="Boulazac">
-    <img src="assets/IMG_3832.jpeg" alt="Gym">
-    <img src="assets/DSC00010.jpeg" alt="Dipl&ocirc;me">
-    <img src="assets/IMG_4872.jpeg" alt="&Eacute;quipe">
-    <img src="assets/IMG_0405.jpeg" alt="MSB">
-    <img src="assets/IMG_4890.jpeg" alt="BBD">
-    <img src="assets/IMG_3836.jpeg" alt="Training">
-    <img src="assets/IMG_2884.jpeg" alt="NZ">
-    <img src="assets/IMG_0621.jpeg" alt="Coach">
-    <img src="assets/IMG_5195.jpeg" alt="Boulazac">
-    <img src="assets/IMG_3832.jpeg" alt="Gym">
-    <img src="assets/DSC00010.jpeg" alt="Dipl&ocirc;me">
-    <img src="assets/IMG_4872.jpeg" alt="&Eacute;quipe">
+<div class="marquee-section">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item"><img src="assets/IMG_3832.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/IMG_0405.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/IMG_3836.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/IMG_4652.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/IMG_4872.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/IMG_3832.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/IMG_0405.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/IMG_3836.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/IMG_4652.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/IMG_4872.jpeg" alt=""></div>
   </div>
 </div>
 
-<section id="story">
-  <div class="section-container">
-    <div class="reveal">
-      <span class="section-label">L'histoire</span>
-      <h2 class="section-title">FORG&Eacute; PAR<br>L'&Eacute;PREUVE</h2>
-      <p class="section-desc">Du P&ocirc;le Espoir au centre de formation du Mans, de la blessure au fauteuil roulant, jusqu'au titre de Champion de France &mdash; chaque &eacute;tape a construit la philosophie NZ 100%.</p>
+<section class="section" id="credibilite">
+  <div class="section-inner">
+    <p class="section-label reveal">Parcours &amp; r&eacute;sultats</p>
+    <h2 class="section-title reveal">Une expertise<br>construite sur le terrain.</h2>
+    <p class="section-sub reveal">P&ocirc;le Espoir, professionnel, blessures, retour &mdash; Mathieu a v&eacute;cu tout &ccedil;a. Il coache depuis ce v&eacute;cu.</p>
+    <div class="cred-grid reveal">
+      <div class="cred-item">
+        <span class="cred-number">+8</span>
+        <div class="cred-label">Ann&eacute;es de coaching</div>
+      </div>
+      <div class="cred-item">
+        <span class="cred-number">+150</span>
+        <div class="cred-label">Personnes accompagn&eacute;es</div>
+      </div>
+      <div class="cred-item">
+        <span class="cred-number">P&ocirc;le</span>
+        <div class="cred-label">Espoir basket &mdash; d&egrave;s 12 ans</div>
+      </div>
+      <div class="cred-item">
+        <span class="cred-number">Pro</span>
+        <div class="cred-label">Joueur haut niveau &bull; Boulazac</div>
+      </div>
     </div>
-    <div class="story-grid reveal">
-      <div class="story-visual">
-        <img src="assets/IMG_0547.jpeg" alt="Mathieu en action" class="story-img-main">
-        <img src="assets/42b36124-b9c3-49c4-8834-a5a540a80c61.jpeg" alt="R&eacute;&eacute;ducation" class="story-img-float glass">
-        <div class="story-stat-float glass-strong">
-          <div class="stat-number">15+</div>
-          <div class="stat-label">Ann&eacute;es de sport</div>
+  </div>
+</section>
+
+<section class="section" id="pourqui">
+  <div class="section-inner">
+    <p class="section-label reveal">Pour qui ?</p>
+    <h2 class="section-title reveal">Ce coaching est fait<br>pour toi si&hellip;</h2>
+    <div class="pourqui-grid">
+      <div class="pourqui-card glass reveal">
+        <div class="pq-icon">&#127939;</div>
+        <div class="pq-title">Tu veux te remettre en forme</div>
+        <p class="pq-desc">Tu as pris du poids, perdu la condition physique, tu veux retrouver de l&rsquo;&eacute;nergie et te sentir bien dans ton corps &mdash; sans r&eacute;gime ni programme g&eacute;n&eacute;rique.</p>
+      </div>
+      <div class="pourqui-card glass reveal">
+        <div class="pq-icon">&#129307;</div>
+        <div class="pq-title">Tu reprends apr&egrave;s une blessure</div>
+        <p class="pq-desc">Op&eacute;ration, longue coupure, peur de rechuter. Tu as besoin d&rsquo;un retour structur&eacute;, progressif et s&eacute;curis&eacute; pour retrouver confiance et sensations.</p>
+      </div>
+      <div class="pourqui-card glass reveal">
+        <div class="pq-icon">&#9889;</div>
+        <div class="pq-title">Tu vises de meilleures performances</div>
+        <p class="pq-desc">Tu t&rsquo;entra&icirc;nes d&eacute;j&agrave; mais tu veux passer un cap &mdash; explosivit&eacute;, force, coordination, endurance. Un vrai programme de performance personnalis&eacute;.</p>
+      </div>
+      <div class="pourqui-card glass reveal">
+        <div class="pq-icon">&#127936;</div>
+        <div class="pq-title">Tu joues au basket</div>
+        <p class="pq-desc">Basketteur amateur ou comp&eacute;titeur, sessions individuelles sur le terrain avec un coach qui a jou&eacute; au plus haut niveau. Thiais (94), 60&euro; la s&eacute;ance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="section-inner">
+    <p class="section-label reveal">Les accompagnements</p>
+    <h2 class="section-title reveal">Choisir son parcours.</h2>
+    <p class="section-sub reveal">Chaque accompagnement commence par un bilan gratuit pour construire quelque chose de sur-mesure.</p>
+    <div class="services-grid">
+      <a href="remise-en-forme.html" class="service-card glass reveal">
+        <div class="sc-number">01</div>
+        <div class="sc-title">Remise en forme</div>
+        <p class="sc-desc">Retrouver le corps que tu veux. Programme progressif, alimentation, habitudes, mental &mdash; une transformation compl&egrave;te et durable.</p>
+        <span class="sc-link">D&eacute;couvrir &rarr;</span>
+      </a>
+      <a href="retour-au-sport.html" class="service-card glass reveal">
+        <div class="sc-number">02</div>
+        <div class="sc-title">Retour au sport</div>
+        <p class="sc-desc">Reprendre apr&egrave;s une blessure ou une longue coupure. Un protocole s&eacute;curis&eacute; pour retrouver sensations, confiance et capacit&eacute;s physiques.</p>
+        <span class="sc-link">D&eacute;couvrir &rarr;</span>
+      </a>
+      <a href="performance.html" class="service-card glass reveal">
+        <div class="sc-number">03</div>
+        <div class="sc-title">Performance</div>
+        <p class="sc-desc">Passer un cap. Force, explosivit&eacute;, mobilit&eacute;, coordination. Pour les sportifs qui s&rsquo;entra&icirc;nent d&eacute;j&agrave; et veulent des r&eacute;sultats mesurables.</p>
+        <span class="sc-link">D&eacute;couvrir &rarr;</span>
+      </a>
+      <a href="coaching-basket.html" class="service-card glass featured reveal">
+        <div class="sc-number">04 &bull; Sp&eacute;cialit&eacute;</div>
+        <div class="sc-title">Coaching Basket</div>
+        <p class="sc-desc">Sessions individuelles sur le terrain. Technique, physique, mental. 60&euro; / s&eacute;ance &mdash; Thiais (94). Cr&eacute;neaux &agrave; 10h30, 12h15, 14h00, 15h45.</p>
+        <span class="sc-link">R&eacute;server une s&eacute;ance &rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="methode">
+  <div class="section-inner">
+    <p class="section-label reveal">La m&eacute;thode NZ</p>
+    <h2 class="section-title reveal">Comment &ccedil;a se passe.</h2>
+    <div class="methode-steps">
+      <div class="step-card glass reveal">
+        <div class="step-num">01</div>
+        <div class="step-title">Bilan gratuit</div>
+        <p class="step-desc">On analyse ton niveau, tes objectifs, ton historique. 30 minutes. Sans engagement.</p>
+      </div>
+      <div class="step-card glass reveal">
+        <div class="step-num">02</div>
+        <div class="step-title">Programme sur-mesure</div>
+        <p class="step-desc">Un plan construit pour toi, pas un programme g&eacute;n&eacute;rique. Adapt&eacute; &agrave; ta vie et tes contraintes.</p>
+      </div>
+      <div class="step-card glass reveal">
+        <div class="step-num">03</div>
+        <div class="step-title">Coaching actif</div>
+        <p class="step-desc">Entra&icirc;nements encadr&eacute;s, corrections en temps r&eacute;el, progression mesur&eacute;e semaine apr&egrave;s semaine.</p>
+      </div>
+      <div class="step-card glass reveal">
+        <div class="step-num">04</div>
+        <div class="step-title">Ajustements continus</div>
+        <p class="step-desc">Le programme &eacute;volue avec toi. Chaque feedback compte, chaque plateau est anticip&eacute;.</p>
+      </div>
+      <div class="step-card glass reveal">
+        <div class="step-num">05</div>
+        <div class="step-title">Autonomie durable</div>
+        <p class="step-desc">L&rsquo;objectif final : que tu n&rsquo;aies plus besoin de moi. Des habitudes ancr&eacute;es, un corps capable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="histoire-section" id="histoire">
+  <div class="histoire-inner">
+    <div class="histoire-image reveal">
+      <img src="assets/IMG_3836.jpeg" alt="Mathieu Nzita coach" loading="lazy">
+    </div>
+    <div class="histoire-content reveal">
+      <p class="section-label">Qui est Mathieu ?</p>
+      <blockquote class="histoire-quote">&ldquo;J&rsquo;ai &eacute;t&eacute; en fauteuil roulant &agrave; 15 ans. Puis Champion de France &agrave; 17.&rdquo;</blockquote>
+      <p class="histoire-text">P&ocirc;le Espoir d&egrave;s 12 ans, op&eacute;ration du genou &agrave; 15, 8 mois de r&eacute;&eacute;ducation &mdash; Mathieu a v&eacute;cu le pire et le meilleur du sport. Ce parcours l&rsquo;a rendu capable de comprendre chaque &eacute;tape que tu traverses : la peur, le doute, la progression, la victoire.</p>
+      <p class="histoire-text">Il ne coache pas depuis un livre. Il coache depuis ce qu&rsquo;il a v&eacute;cu.</p>
+      <a href="mon-histoire.html" class="btn-ghost">Lire son parcours complet &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="temoignages">
+  <div class="section-inner">
+    <p class="section-label reveal">Ce qu&rsquo;ils en disent</p>
+    <h2 class="section-title reveal">Des r&eacute;sultats r&eacute;els.</h2>
+    <div class="temoignages-grid">
+      <div class="temoignage-card glass reveal">
+        <div class="temo-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="temo-text">&ldquo;Avant Mathieu, j&rsquo;avais essay&eacute; 3 coachs diff&eacute;rents. Aucun ne m&rsquo;avait vraiment compris. Lui, il a su exactement o&ugrave; j&rsquo;&eacute;tais et o&ugrave; j&rsquo;avais besoin d&rsquo;aller. En 3 mois, j&rsquo;ai retrouv&eacute; une condition que je croyais perdue.&rdquo;</p>
+        <div class="temo-author">
+          <div class="temo-avatar">K</div>
+          <div><div class="temo-name">Karim B.</div><div class="temo-detail">Remise en forme &bull; 34 ans</div></div>
         </div>
       </div>
-      <div class="story-text-content">
-        <h3>L'&eacute;tincelle initiale</h3>
-        <p>D&egrave;s l'&acirc;ge de 5 ans, une &eacute;nergie d&eacute;bordante. Courir sans cesse, jusqu'&agrave; ce que le sport devienne le canal, l'exutoire, la structure.</p>
-        <h3>L'ascension vers l'&eacute;lite</h3>
-        <p>&Agrave; 12 ans, int&eacute;gration du prestigieux P&ocirc;le Espoir &Icirc;le-de-France au CREPS de Ch&acirc;tenay-Malabry. Puis le centre de formation du Mans Sarthe Basket.</p>
-        <h3>L'&eacute;preuve</h3>
-        <p>&Agrave; 15 ans, une op&eacute;ration majeure du genou brise l'&eacute;lan. Centre de r&eacute;&eacute;ducation, fauteuil roulant, et tout r&eacute;apprendre. 8 mois de combat silencieux. C'est l&agrave; que la philosophie "NZ 100%" commence &agrave; germer.</p>
-        <h3>Le retour</h3>
-        <p>Contre toute attente, retour fracassant &agrave; 17 ans. Contrat stagiaire pro, titre de Champion de France avec Le Mans, puis capitaine de l'&eacute;quipe espoir au Boulazac Basket Dordogne.</p>
+      <div class="temoignage-card glass reveal">
+        <div class="temo-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="temo-text">&ldquo;Op&eacute;r&eacute;e du genou, j&rsquo;avais peur de ne jamais retourner sur le terrain. Mathieu a structur&eacute; ma reprise &eacute;tape par &eacute;tape. 6 mois plus tard je joue &agrave; nouveau. Sa compr&eacute;hension des blessures est au-dessus de tout.&rdquo;</p>
+        <div class="temo-author">
+          <div class="temo-avatar">S</div>
+          <div><div class="temo-name">Sarah M.</div><div class="temo-detail">Retour au sport &bull; Basketteuse</div></div>
+        </div>
+      </div>
+      <div class="temoignage-card glass reveal">
+        <div class="temo-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="temo-text">&ldquo;Je pensais plafonner. Mathieu m&rsquo;a montr&eacute; que j&rsquo;avais des lacunes que je ne voyais m&ecirc;me pas. Explosive power, placement de pieds, lecture du jeu &mdash; mon niveau a clairement augment&eacute; en 2 mois.&rdquo;</p>
+        <div class="temo-author">
+          <div class="temo-avatar">T</div>
+          <div><div class="temo-name">Thomas L.</div><div class="temo-detail">Coaching basket &bull; Comp&eacute;titeur R3</div></div>
+        </div>
       </div>
     </div>
-    <div class="timeline reveal">
-      <div class="timeline-item"><div class="timeline-year">5 ANS</div><div class="timeline-title">Premiers pas dans le sport</div><div class="timeline-desc">L'&eacute;nergie d&eacute;bordante trouve son canal. Le basketball devient une passion.</div></div>
-      <div class="timeline-item"><div class="timeline-year">12 ANS</div><div class="timeline-title">P&ocirc;le Espoir &Icirc;le-de-France</div><div class="timeline-desc">Int&eacute;gration de l'antichambre du haut niveau au CREPS de Ch&acirc;tenay-Malabry.</div></div>
-      <div class="timeline-item"><div class="timeline-year">15 ANS</div><div class="timeline-title">L'&eacute;preuve &mdash; Op&eacute;ration du genou</div><div class="timeline-desc">Peignage du tendon. Fauteuil roulant. 8 mois de reconstruction.</div></div>
-      <div class="timeline-item"><div class="timeline-year">17 ANS</div><div class="timeline-title">Champion de France &mdash; Le Mans</div><div class="timeline-desc">Retour fracassant, contrat stagiaire pro, titre de champion. L'aventure continue &agrave; Boulazac.</div></div>
-      <div class="timeline-item"><div class="timeline-year">19 ANS</div><div class="timeline-title">Blessure &agrave; la hanche & transformation</div><div class="timeline-desc">Reconstruction &agrave; Capbreton. Introspection profonde. Choix de la transmission.</div></div>
-      <div class="timeline-item"><div class="timeline-year">AUJOURD'HUI</div><div class="timeline-title">NZ 100% &mdash; La mission</div><div class="timeline-desc">Il ne joue plus pour lui, il fait gagner les autres.</div></div>
-    </div>
   </div>
 </section>
 
-<section id="philosophy">
-  <div class="section-container">
-    <div class="philosophy-quote glass reveal">
-      <span class="quote-mark">&ldquo;</span>
-      <blockquote>La discipline n'est pas une contrainte, c'est <strong>la cl&eacute; de la libert&eacute;</strong>. C'est la capacit&eacute; &agrave; se lever quand on n'en a pas envie, &agrave; r&eacute;p&eacute;ter les efforts quand personne ne regarde, et &agrave; maintenir le cap malgr&eacute; les obstacles qui diff&eacute;rencie <strong>ceux qui r&ecirc;vent de ceux qui r&eacute;alisent</strong>.</blockquote>
+<section class="bilan-section">
+  <div class="bilan-card reveal">
+    <span class="bilan-badge">Point de d&eacute;part</span>
+    <h2>Le bilan gratuit.<br>Sans engagement.</h2>
+    <p>30 minutes pour analyser ta situation, tes objectifs et d&eacute;finir ensemble le meilleur parcours pour toi.</p>
+    <div class="bilan-details">
+      <span class="bilan-detail"><strong>Gratuit</strong> &bull; 0&euro;</span>
+      <span class="bilan-detail"><strong>Dur&eacute;e</strong> &bull; 30 min</span>
+      <span class="bilan-detail"><strong>Format</strong> &bull; En ligne ou pr&eacute;sentiel</span>
     </div>
+    <a href="contact.html" class="btn-primary">R&eacute;server mon bilan &rarr;</a>
   </div>
 </section>
 
-<section id="programs">
-  <div class="section-container">
-    <div class="reveal">
-      <span class="section-label">Programmes</span>
-      <h2 class="section-title">VOTRE<br>TRANSFORMATION</h2>
-      <p class="section-desc">Des programmes complets en e-learning : vid&eacute;os, PDF, suivi nutritionnel. Con&ccedil;us pour des r&eacute;sultats concrets.</p>
-    </div>
-    <div class="programs-grid reveal">
-      <div class="program-card glass"><div class="program-icon">&#128293;</div><h3>NZ Perte de Poids</h3><p>Pour les s&eacute;dentaires qui stagnent et cherchent une garantie de r&eacute;sultat.</p><span class="program-tag">Hommes & Femmes</span></div>
-      <div class="program-card glass"><div class="program-icon">&#128170;</div><h3>NZ Prise de Masse</h3><p>D&eacute;veloppement de la force musculaire, protection articulaire et mobilit&eacute;.</p><span class="program-tag">Hommes & Femmes</span></div>
-      <div class="program-card glass"><div class="program-icon">&#9889;</div><h3>NZ Athl&eacute;tisme</h3><p>Pour jeunes et adultes souhaitant &eacute;voluer dans leur performance sportive.</p><span class="program-tag">Hommes & Femmes</span></div>
-      <div class="program-card glass"><div class="program-icon">&#128737;&#65039;</div><h3>NZ Protection Articulaire</h3><p>Sp&eacute;cifique pour personnes &acirc;g&eacute;es, en situation de handicap ou en r&eacute;&eacute;ducation.</p><span class="program-tag">Tous publics</span></div>
-    </div>
-    <div class="elearning-structure reveal">
-      <div class="elearning-part glass"><div class="part-number">01</div><h4>Introduction</h4><p>Vid&eacute;o de bienvenue, objectifs, cadeau offert & fiches introductives PDF.</p></div>
-      <div class="elearning-part glass"><div class="part-number">02</div><h4>Programme Sportif</h4><p>Vid&eacute;os d&eacute;taill&eacute;es par exercice, programme PDF complet sur 4 semaines.</p></div>
-      <div class="elearning-part glass"><div class="part-number">03</div><h4>Programme Nutrition</h4><p>Objectifs nutritionnels en vid&eacute;o, aliments &agrave; privil&eacute;gier vs interdits.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="pricing">
-  <div class="section-container">
-    <div class="reveal" style="text-align:center;">
-      <span class="section-label" style="justify-content:center;">Tarifs</span>
-      <h2 class="section-title">INVESTISSEZ<br>EN VOUS</h2>
-      <p class="section-desc" style="margin:0 auto;">Choisissez l'offre qui correspond &agrave; vos objectifs.</p>
-    </div>
-    <div class="pricing-grid reveal">
-      <div class="price-card glass"><div class="price-name">Programme &agrave; l'unit&eacute;</div><div class="price-amount">299<sup>&euro;</sup></div><div class="price-desc">1 programme au choix</div><ul class="price-features"><li>1 programme complet</li><li>Vid&eacute;os HD illimit&eacute;es</li><li>Programme PDF</li><li>Plan nutritionnel</li></ul><a href="#contact" class="price-cta">Choisir</a></div>
-      <div class="price-card glass"><div class="price-name">Pack Duo</div><div class="price-amount">399<sup>&euro;</sup></div><div class="price-desc">Acc&egrave;s &agrave; 2 programmes au choix</div><ul class="price-features"><li>2 programmes complets</li><li>Vid&eacute;os HD illimit&eacute;es</li><li>Programmes PDF</li><li>Plans nutritionnels</li></ul><a href="#contact" class="price-cta">Choisir</a></div>
-      <div class="price-card glass featured"><div class="price-name">Pack NZ Fitness</div><div class="price-amount">499<sup>&euro;</sup></div><div class="price-desc">Les 4 programmes complets</div><ul class="price-features"><li>4 programmes complets</li><li>Vid&eacute;os HD illimit&eacute;es</li><li>Tous les PDF inclus</li><li>Tous les plans nutritionnels</li></ul><a href="#contact" class="price-cta">Choisir</a></div>
-      <div class="price-card glass"><div class="price-name">Pack NZ Premium</div><div class="price-amount">987<sup>&euro;</sup></div><div class="price-desc">E-Learning + accompagnement 1:1</div><ul class="price-features"><li>Pack NZ Fitness complet</li><li>4 programmes personnalis&eacute;s</li><li>Accompagnement 1:1</li><li>1 suivi/semaine sur 2 mois</li></ul><a href="#contact" class="price-cta">Choisir</a></div>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="section-container">
-    <div class="reveal"><span class="section-label">Contact</span><h2 class="section-title">PR&Ecirc;T &Agrave;<br>COMMENCER ?</h2></div>
-    <div class="contact-grid reveal">
-      <div class="contact-info">
-        <h3>Parlons de vos objectifs</h3>
-        <p>Que vous soyez d&eacute;butant ou athl&egrave;te confirm&eacute;, Mathieu vous accompagne vers la meilleure version de vous-m&ecirc;me.</p>
-        <div class="contact-detail"><div class="contact-detail-icon">&#9993;&#65039;</div><div class="contact-detail-text"><strong>Email</strong>mathieunzita60@gmail.com</div></div>
-        <div class="contact-detail"><div class="contact-detail-icon">&#128179;</div><div class="contact-detail-text"><strong>Paiement s&eacute;curis&eacute;</strong>Stripe & PayPal accept&eacute;s</div></div>
-        <div class="contact-detail"><div class="contact-detail-icon">&#128241;</div><div class="contact-detail-text"><strong>R&eacute;seaux sociaux</strong>@nz100percent</div></div>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/nz_logo_nav.png" alt="NZ 100%" class="footer-logo">
+        <p>Coach sportif expert en remise en forme, retour au sport et performance. Bas&eacute; &agrave; Thiais (94), interventions sur Paris.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram">&#128247;</a>
+          <a href="#" aria-label="TikTok">&#127925;</a>
+          <a href="#" aria-label="YouTube">&#9654;</a>
+        </div>
       </div>
-      <form class="contact-form glass-strong" onsubmit="handleSubmit(event)">
-        <div class="form-row"><div class="form-group"><label>Pr&eacute;nom</label><input type="text" placeholder="Votre pr&eacute;nom" required></div><div class="form-group"><label>Nom</label><input type="text" placeholder="Votre nom" required></div></div>
-        <div class="form-group"><label>Email</label><input type="email" placeholder="votre@email.com" required></div>
-        <div class="form-group"><label>Programme souhait&eacute;</label><select required><option value="" disabled selected>S&eacute;lectionnez un programme</option><option>NZ Perte de Poids</option><option>NZ Prise de Masse</option><option>NZ Athl&eacute;tisme</option><option>NZ Protection Articulaire</option><option>Pack Duo</option><option>Pack NZ Fitness</option><option>Pack NZ Premium</option></select></div>
-        <div class="form-group"><label>Message</label><textarea placeholder="D&eacute;crivez vos objectifs..."></textarea></div>
-        <button type="submit" class="form-submit">Envoyer le message</button>
-      </form>
+      <div class="footer-col">
+        <h4>Accompagnements</h4>
+        <ul>
+          <li><a href="remise-en-forme.html">Remise en forme</a></li>
+          <li><a href="retour-au-sport.html">Retour au sport</a></li>
+          <li><a href="performance.html">Performance</a></li>
+          <li><a href="coaching-basket.html">Coaching basket</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Mathieu</h4>
+        <ul>
+          <li><a href="mon-histoire.html">Mon histoire</a></li>
+          <li><a href="tarifs.html">Tarifs</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="espace-membre.html">Espace membre</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:mathieunzita60@gmail.com">mathieunzita60@gmail.com</a></li>
+          <li><a href="contact.html">WhatsApp</a></li>
+          <li><a href="#">Thiais (94) &bull; Paris</a></li>
+          <li><a href="contact.html" style="color:rgba(255,255,255,.85);font-weight:600;">R&eacute;server un bilan &rarr;</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="footer-content">
-    <img src="assets/nz_logo_nav.png" alt="NZ" class="footer-logo">
-    <p class="footer-text">&copy; 2025 NZ 100% &mdash; More Discipline. Tous droits r&eacute;serv&eacute;s.</p>
-    <div class="footer-links"><a href="#hero">Accueil</a><a href="#programs">Programmes</a><a href="#pricing">Tarifs</a><a href="#contact">Contact</a><a href="espace-membre.html">Espace Membre</a></div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 NZ 100% &mdash; Mathieu Nzita. Tous droits r&eacute;serv&eacute;s.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Mentions l&eacute;gales</a>
+        <a href="#">Confidentialit&eacute;</a>
+        <a href="#">CGV</a>
+      </div>
+    </div>
   </div>
 </footer>
 
 <script>
-const heroVid = document.getElementById('heroVideo');
-if (heroVid) heroVid.addEventListener('timeupdate', () => { if (heroVid.currentTime >= 30) heroVid.currentTime = 0; });
-
-const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => { if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 100); observer.unobserve(entry.target); } });
-}, { threshold: 0.15 });
-reveals.forEach(el => observer.observe(el));
-
-const nav = document.getElementById('mainNav');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 80) { nav.style.background = 'rgba(0,0,0,0.6)'; nav.style.backdropFilter = 'blur(30px) saturate(180%)'; }
-  else { nav.style.background = ''; nav.style.backdropFilter = ''; }
-});
-
-const sections = document.querySelectorAll('section[id]');
-window.addEventListener('scroll', () => {
-  const scrollY = window.scrollY + 200;
-  sections.forEach(section => {
-    const top = section.offsetTop, height = section.offsetHeight, id = section.getAttribute('id');
-    const link = nav.querySelector('a[href="#' + id + '"]');
-    if (link) { if (scrollY >= top && scrollY < top + height) link.classList.add('active'); else link.classList.remove('active'); }
+var nav=document.getElementById('mainNav');
+window.addEventListener('scroll',function(){
+  if(window.scrollY>60){nav.classList.add('scrolled');}else{nav.classList.remove('scrolled');}
+},{passive:true});
+function toggleNav(){
+  nav.classList.toggle('mobile-open');
+  nav.querySelector('.nav-toggle').innerHTML=nav.classList.contains('mobile-open')?'&#10005;':'&#9776;';
+}
+document.querySelectorAll('.nav-links a').forEach(function(link){
+  link.addEventListener('click',function(){
+    nav.classList.remove('mobile-open');
+    nav.querySelector('.nav-toggle').innerHTML='&#9776;';
   });
 });
+var reveals=document.querySelectorAll('.reveal');
+var revObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}
+  });
+},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+reveals.forEach(function(r){revObs.observe(r);});
 
-function toggleNav() { nav.classList.toggle('mobile-open'); }
-nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('mobile-open')));
-
-function handleSubmit(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('.form-submit');
-  btn.textContent = '\u2713 Message envoy\u00e9 !'; btn.style.background = 'rgba(255,255,255,0.15)'; btn.style.color = '#fff';
-  setTimeout(() => { btn.textContent = 'Envoyer le message'; btn.style.background = ''; btn.style.color = ''; e.target.reset(); }, 3000);
-}
 </script>
 </body>
 </html>

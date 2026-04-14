@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Mathieu Nzita Coach</title>
+<meta name="description" content="Contactez Mathieu Nzita pour réserver votre bilan ou votre accompagnement. Remise en forme, retour au sport, performance, coaching basket.">
+<link rel="icon" type="image/png" href="assets/nz_logo_nav.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--black:#000;--white:#fff;--glass-bg:rgba(255,255,255,.055);--glass-border:rgba(255,255,255,.11);--text-muted:rgba(255,255,255,.5);--text-secondary:rgba(255,255,255,.72);--radius-glass:24px;--radius-pill:100px;--transition:.4s cubic-bezier(.25,.46,.45,.94)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Outfit',-apple-system,sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;line-height:1.6}
+img{max-width:100%;display:block}a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;background:none;font-family:inherit}
+.glass{background:var(--glass-bg);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--glass-border);border-radius:var(--radius-glass)}
+.glass-strong{background:rgba(255,255,255,.09);backdrop-filter:blur(40px) saturate(200%);-webkit-backdrop-filter:blur(40px) saturate(200%);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius-glass)}
+.glass-pill{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-pill)}
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:1000;padding:8px 6px;display:flex;align-items:center;gap:2px;transition:var(--transition);max-width:1100px;width:calc(100% - 32px)}
+.nav-logo{width:32px;height:auto;margin-right:10px;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1}
+.nav a{padding:7px 13px;font-size:.76rem;font-weight:500;color:rgba(255,255,255,.72);border-radius:var(--radius-pill);transition:var(--transition);letter-spacing:.01em;white-space:nowrap}
+.nav a:hover,.nav a.active{color:#fff;background:rgba(255,255,255,.1)}
+.nav-cta{padding:9px 20px \!important;background:#fff \!important;color:#000 \!important;font-weight:700 \!important;font-size:.76rem \!important;margin-left:8px;flex-shrink:0}
+.nav-cta:hover{background:rgba(255,255,255,.9) \!important;transform:scale(1.02)}
+.nav-toggle{display:none;color:white;font-size:1.3rem;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.07);margin-left:auto}
+.page-header{position:relative;overflow:hidden;padding:160px 24px 100px;text-align:center;}
+.page-header-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.42;filter:brightness(.55);}
+.page-header-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(to bottom,rgba(0,0,0,.72) 0%,rgba(0,0,0,.5) 40%,rgba(0,0,0,.85) 100%);}
+.page-header-content{position:relative;z-index:2;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-bottom:20px;opacity:0;animation:fadeUp 1s .3s forwards}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:26px;height:1px;background:rgba(255,255,255,.3)}
+.page-header-content h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,7rem);line-height:.9;opacity:0;animation:fadeUp 1s .5s forwards}
+.page-header-content p{font-size:clamp(.9rem,1.7vw,1.05rem);color:rgba(255,255,255,.65);font-weight:300;max-width:580px;margin:20px auto 0;line-height:1.82;opacity:0;animation:fadeUp 1s .7s forwards}
+section{padding:80px 24px;position:relative}
+.section-container{max-width:1100px;margin:0 auto}
+.section-label{display:inline-flex;align-items:center;gap:10px;font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-bottom:16px}
+.section-label::before{content:'';width:20px;height:1px;background:rgba(255,255,255,.5)}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s,transform .75s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* CONTACT LAYOUT */
+.contact-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:60px;align-items:start}
+.contact-info{}
+.contact-info h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,3rem);line-height:.95;margin-bottom:18px}
+.contact-info p{color:rgba(255,255,255,.65);font-weight:300;line-height:1.82;font-size:.93rem;margin-bottom:32px}
+.contact-details{display:flex;flex-direction:column;gap:16px;margin-bottom:36px}
+.contact-detail-item{display:flex;gap:16px;align-items:flex-start}
+.contact-detail-icon{width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.contact-detail-text h4{font-size:.85rem;font-weight:700;margin-bottom:3px}
+.contact-detail-text p{font-size:.83rem;color:rgba(255,255,255,.55);font-weight:300;line-height:1.5}
+.contact-shortcuts{display:flex;flex-direction:column;gap:10px}
+.contact-shortcut{padding:16px 20px;display:flex;align-items:center;gap:14px;transition:var(--transition);text-decoration:none;color:#fff}
+.contact-shortcut:hover{background:rgba(255,255,255,.1);transform:translateX(4px)}
+.shortcut-icon{font-size:1.3rem;flex-shrink:0}
+.shortcut-text h4{font-size:.88rem;font-weight:700;margin-bottom:2px}
+.shortcut-text p{font-size:.78rem;color:rgba(255,255,255,.45);font-weight:300}
+.shortcut-arrow{margin-left:auto;color:rgba(255,255,255,.3);font-size:.9rem}
+
+/* FORM */
+.contact-form-wrap{padding:36px 40px}
+.form-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;margin-bottom:6px}
+.form-subtitle{font-size:.85rem;color:rgba(255,255,255,.5);font-weight:300;margin-bottom:28px;line-height:1.6}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:7px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:13px;color:#fff;font-family:'Outfit',sans-serif;font-size:.9rem;transition:var(--transition);outline:none;-webkit-appearance:none}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.08)}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-group select option{background:#111;color:#fff}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.25)}
+.form-submit{width:100%;padding:17px;background:#fff;color:#000;font-weight:700;font-size:.88rem;text-transform:uppercase;letter-spacing:.08em;border-radius:var(--radius-pill);transition:var(--transition);font-family:'Outfit',sans-serif;margin-top:8px}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,255,255,.18)}
+.form-note{font-size:.74rem;color:rgba(255,255,255,.32);text-align:center;margin-top:12px;line-height:1.6}
+.form-success{text-align:center;padding:40px 20px;display:none}
+.form-success.visible{display:block}
+.form-success-icon{font-size:3.5rem;margin-bottom:14px}
+.form-success h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;margin-bottom:10px}
+.form-success p{color:rgba(255,255,255,.6);font-size:.9rem;font-weight:300;line-height:1.75}
+
+/* FOOTER */
+.footer{padding:72px 24px 36px;border-top:1px solid rgba(255,255,255,.06);background:#0a0a0a}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:52px}
+.footer-brand .footer-logo{width:36px;margin-bottom:18px;opacity:.72}
+.footer-brand-name{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.05em;margin-bottom:13px}
+.footer-tagline{font-size:.84rem;color:rgba(255,255,255,.5);font-weight:300;line-height:1.8;max-width:270px;margin-bottom:22px}
+.footer-socials{display:flex;gap:9px}
+.footer-social{width:36px;height:36px;border-radius:11px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:.88rem;transition:var(--transition)}
+.footer-social:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.footer-col h4{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.5);margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-col ul li a{font-size:.84rem;color:rgba(255,255,255,.52);transition:var(--transition);font-weight:300}
+.footer-col ul li a:hover{color:#fff}
+.footer-contact-item{display:flex;align-items:center;gap:9px;font-size:.82rem;color:rgba(255,255,255,.52);margin-bottom:9px;font-weight:300}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid rgba(255,255,255,.05);flex-wrap:wrap;gap:14px}
+.footer-copy{font-size:.74rem;color:rgba(255,255,255,.5);font-weight:300}
+.footer-legal{display:flex;gap:22px}
+.footer-legal a{font-size:.74rem;color:rgba(255,255,255,.5);transition:var(--transition)}
+.footer-legal a:hover{color:#fff}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:200px}
+@media(max-width:900px){.contact-layout{grid-template-columns:1fr;gap:40px}}
+@media(max-width:768px){.nav-links{display:none}.nav-toggle{display:flex;align-items:center;justify-content:center}.nav.mobile-open{flex-direction:column;top:0;left:0;right:0;transform:none;border-radius:0 0 22px 22px;padding:16px 20px 22px;background:rgba(0,0,0,.94);backdrop-filter:blur(40px);max-width:100%;width:100%}.nav.mobile-open .nav-links{display:flex;flex-direction:column;width:100%;gap:3px}.nav.mobile-open .nav-links a{display:block;text-align:center;padding:11px 18px}.nav.mobile-open .nav-cta{margin-left:0;margin-top:7px;text-align:center}section{padding:60px 20px}.contact-form-wrap{padding:28px 22px}.footer-top{grid-template-columns:1fr;gap:26px}.footer-bottom{flex-direction:column;text-align:center}}
+@media(max-width:480px){.form-row-2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav class="nav glass-pill" id="mainNav">
+  <img src="assets/nz_logo_nav.png" alt="NZ" class="nav-logo">
+  <button class="nav-toggle" onclick="toggleNav()">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="remise-en-forme.html">Remise en forme</a>
+    <a href="retour-au-sport.html">Retour au sport</a>
+    <a href="performance.html">Performance</a>
+    <a href="coaching-basket.html">Coaching basket</a>
+    <a href="mon-histoire.html">Mon histoire</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="contact.html" class="active">Contact</a>
+    <a href="contact.html" class="nav-cta glass-pill">R&eacute;server un bilan</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <video class="page-header-video" autoplay muted loop playsinline poster="assets/IMG_3832.jpeg"><source src="assets/hero_video.mp4" type="video/mp4"></video>
+  <div class="page-header-overlay"></div>
+  <div class="page-header-content">
+  <div class="hero-eyebrow">Passe &agrave; l'action</div>
+  <h1>PR&Ecirc;T &Agrave;<br>COMMENCER ?</h1>
+</div>
+  </div>
+
+<section>
+  <div class="section-container">
+    <div class="contact-layout">
+      <div class="contact-info reveal">
+        <span class="section-label">Coordonn&eacute;es</span>
+        <h2>RESTONS<br>EN CONTACT</h2>
+        <p>Que tu veuilles retrouver ta forme, reprendre le sport, progresser physiquement ou r&eacute;server un coaching basket &mdash; je te r&eacute;ponds rapidement avec une proposition claire.</p>
+        <div class="contact-details">
+          <div class="contact-detail-item">
+            <div class="contact-detail-icon">&#9993;&#65039;</div>
+            <div class="contact-detail-text">
+              <h4>Email</h4>
+              <p>mathieunzita60@gmail.com</p>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="contact-detail-icon">&#128241;</div>
+            <div class="contact-detail-text">
+              <h4>WhatsApp</h4>
+              <p>Disponible sur demande — r&eacute;ponse rapide</p>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="contact-detail-icon">&#128205;</div>
+            <div class="contact-detail-text">
+              <h4>Zone d'intervention</h4>
+              <p>Thiais (94) &mdash; &Icirc;le-de-France</p>
+            </div>
+          </div>
+          <div class="contact-detail-item">
+            <div class="contact-detail-icon">&#128336;</div>
+            <div class="contact-detail-text">
+              <h4>D&eacute;lai de r&eacute;ponse</h4>
+              <p>Sous 24h en semaine</p>
+            </div>
+          </div>
+        </div>
+        <div class="contact-shortcuts">
+          <a href="coaching-basket.html" class="contact-shortcut glass">
+            <span class="shortcut-icon">🏀</span>
+            <div class="shortcut-text">
+              <h4>R&eacute;server un coaching basket</h4>
+              <p>60 € la s&eacute;ance &mdash; cr&eacute;neau sur demande</p>
+            </div>
+            <span class="shortcut-arrow">&rarr;</span>
+          </a>
+          <a href="tarifs.html" class="contact-shortcut glass">
+            <span class="shortcut-icon">💶</span>
+            <div class="shortcut-text">
+              <h4>Voir tous les tarifs</h4>
+              <p>Bilan, accompagnements, coaching basket</p>
+            </div>
+            <span class="shortcut-arrow">&rarr;</span>
+          </a>
+          <a href="mon-histoire.html" class="contact-shortcut glass">
+            <span class="shortcut-icon">👤</span>
+            <div class="shortcut-text">
+              <h4>D&eacute;couvrir le parcours</h4>
+              <p>Pourquoi Mathieu est l&eacute;gitime pour te coacher</p>
+            </div>
+            <span class="shortcut-arrow">&rarr;</span>
+          </a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="contact-form-wrap glass-strong">
+          <div class="form-title">Envoie ta demande</div>
+          <p class="form-subtitle">Remplis ce formulaire et je te r&eacute;ponds sous 24h avec une proposition adapt&eacute;e &agrave; ton profil.</p>
+          <form id="contactForm" onsubmit="handleSubmit(event)">
+            <div class="form-row-2">
+              <div class="form-group"><label>Pr&eacute;nom *</label><input type="text" placeholder="Ton pr&eacute;nom" required></div>
+              <div class="form-group"><label>Nom *</label><input type="text" placeholder="Ton nom" required></div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group"><label>Email *</label><input type="email" placeholder="ton@email.com" required></div>
+              <div class="form-group"><label>T&eacute;l&eacute;phone / WhatsApp</label><input type="tel" placeholder="06 XX XX XX XX"></div>
+            </div>
+            <div class="form-group"><label>Service souhait&eacute; *</label>
+              <select required>
+                <option value="" disabled selected>Ce qui t'int&eacute;resse</option>
+                <option>Bilan Forme &amp; Performance (gratuit)</option>
+                <option>Coaching Remise en forme</option>
+                <option>Coaching Retour au sport</option>
+                <option>Coaching Performance</option>
+                <option>Coaching Basket individuel</option>
+                <option>Autre demande</option>
+              </select>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group"><label>Objectif principal</label>
+                <select>
+                  <option value="" disabled selected>Ton objectif</option>
+                  <option>Retrouver ma forme</option>
+                  <option>Reprendre le sport apr&egrave;s arr&ecirc;t</option>
+                  <option>Progresser physiquement</option>
+                  <option>Travailler ma technique basket</option>
+                  <option>Pr&eacute;paration physique basketball</option>
+                  <option>Retour au jeu apr&egrave;s blessure</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              <div class="form-group"><label>Niveau actuel</label>
+                <select>
+                  <option value="" disabled selected>Ton niveau</option>
+                  <option>S&eacute;dentaire / Inactif</option>
+                  <option>Loisir / D&eacute;butant</option>
+                  <option>Amateur r&eacute;gulier</option>
+                  <option>Club r&eacute;gional / D&eacute;partemental</option>
+                  <option>Club national</option>
+                  <option>Semi-pro / Pro</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group"><label>Disponibilit&eacute;s (jours / moments)</label><input type="text" placeholder="Ex : samedi matin, soir en semaine..."></div>
+            <div class="form-group"><label>Ton message *</label><textarea placeholder="D&eacute;cris ta situation, tes objectifs, tes contraintes, tes questions... Plus c'est pr&eacute;cis, mieux je pourrai te r&eacute;pondre." required></textarea></div>
+            <button type="submit" class="form-submit">Envoyer ma demande</button>
+            <p class="form-note">R&eacute;ponse sous 24h &mdash; Sans engagement &mdash; Mathieu te r&eacute;pond personnellement</p>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">&#9989;</div>
+            <h3>Message envoy&eacute; \!</h3>
+            <p>Mathieu a bien re&ccedil;u ta demande et te r&eacute;pondra sous <strong>24h</strong> avec une proposition adapt&eacute;e &agrave; ton profil. Garde un &oelig;il sur ta bo&icirc;te mail ou ton WhatsApp.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/nz_logo_nav.png" alt="NZ" class="footer-logo">
+        <div class="footer-brand-name">Mathieu Nzita</div>
+        <p class="footer-tagline">Coaching remise en forme, performance et retour au sport. Sp&eacute;cialit&eacute; basket.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social">&#128247;</a>
+          <a href="#" class="footer-social">&#127925;</a>
+          <a href="#" class="footer-social">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="remise-en-forme.html">Remise en forme</a></li>
+          <li><a href="retour-au-sport.html">Retour au sport</a></li>
+          <li><a href="performance.html">Performance</a></li>
+          <li><a href="coaching-basket.html">Coaching basket</a></li>
+          <li><a href="mon-histoire.html">Mon histoire</a></li>
+          <li><a href="tarifs.html">Tarifs</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">&#9993;&#65039; mathieunzita60@gmail.com</div>
+        <div class="footer-contact-item">&#128241; Disponible via WhatsApp</div>
+        <div class="footer-contact-item">&#128205; Thiais (94) &mdash; &Icirc;le-de-France</div>
+        <div class="footer-contact-item">&#128336; R&eacute;ponse sous 24h</div>
+      </div>
+      <div class="footer-col">
+        <h4>Accompagnements</h4>
+        <ul>
+          <li><a href="contact.html">Bilan Forme &amp; Performance</a></li>
+          <li><a href="remise-en-forme.html">Coaching remise en forme</a></li>
+          <li><a href="retour-au-sport.html">Coaching retour au sport</a></li>
+          <li><a href="performance.html">Coaching performance</a></li>
+          <li><a href="coaching-basket.html">Coaching basket individuel</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 Mathieu Nzita &mdash; Tous droits r&eacute;serv&eacute;s.</p>
+      <div class="footer-legal"><a href="#">Mentions l&eacute;gales</a><a href="#">Confidentialit&eacute;</a><a href="#">CGV</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+const reveals=document.querySelectorAll(".reveal");
+const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add("visible"),i*80);observer.unobserve(entry.target)}})},{threshold:.1});
+reveals.forEach(el=>observer.observe(el));
+const nav=document.getElementById("mainNav");
+window.addEventListener("scroll",()=>{if(window.scrollY>60){nav.style.background="rgba(0,0,0,0.72)";nav.style.backdropFilter="blur(32px)"}else{nav.style.background="";nav.style.backdropFilter=""}});
+function toggleNav(){nav.classList.toggle("mobile-open");nav.querySelector(".nav-toggle").innerHTML=nav.classList.contains("mobile-open")?"&#10005;":"&#9776;";}
+nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("mobile-open");nav.querySelector(".nav-toggle").innerHTML="&#9776;";}));
+function handleSubmit(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('.form-submit');
+  btn.disabled=true;btn.textContent='Envoi en cours...';
+  setTimeout(()=>{
+    e.target.style.display='none';
+    document.getElementById('formSuccess').classList.add('visible');
+  },1200);
+}
+</script>
+</body>
+</html>

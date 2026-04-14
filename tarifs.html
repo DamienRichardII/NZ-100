@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarifs — Mathieu Nzita Coach</title>
+<meta name="description" content="Tarifs des accompagnements Mathieu Nzita. Bilan, coaching remise en forme, performance, retour au sport et coaching basket individuel.">
+<link rel="icon" type="image/png" href="assets/nz_logo_nav.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--black:#000;--white:#fff;--glass-bg:rgba(255,255,255,.055);--glass-border:rgba(255,255,255,.11);--text-muted:rgba(255,255,255,.5);--text-secondary:rgba(255,255,255,.72);--radius-glass:24px;--radius-pill:100px;--transition:.4s cubic-bezier(.25,.46,.45,.94)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Outfit',-apple-system,sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;line-height:1.6}
+img{max-width:100%;display:block}a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;background:none;font-family:inherit}
+.glass{background:var(--glass-bg);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--glass-border);border-radius:var(--radius-glass)}
+.glass-strong{background:rgba(255,255,255,.09);backdrop-filter:blur(40px) saturate(200%);-webkit-backdrop-filter:blur(40px) saturate(200%);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius-glass)}
+.glass-pill{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-pill)}
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:1000;padding:8px 6px;display:flex;align-items:center;gap:2px;transition:var(--transition);max-width:1100px;width:calc(100% - 32px)}
+.nav-logo{width:32px;height:auto;margin-right:10px;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1}
+.nav a{padding:7px 13px;font-size:.76rem;font-weight:500;color:rgba(255,255,255,.72);border-radius:var(--radius-pill);transition:var(--transition);letter-spacing:.01em;white-space:nowrap}
+.nav a:hover,.nav a.active{color:#fff;background:rgba(255,255,255,.1)}
+.nav-cta{padding:9px 20px \!important;background:#fff \!important;color:#000 \!important;font-weight:700 \!important;font-size:.76rem \!important;margin-left:8px;flex-shrink:0}
+.nav-cta:hover{background:rgba(255,255,255,.9) \!important;transform:scale(1.02)}
+.nav-toggle{display:none;color:white;font-size:1.3rem;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.07);margin-left:auto}
+section{padding:100px 24px;position:relative}
+.section-container{max-width:1100px;margin:0 auto}
+.section-label{display:inline-flex;align-items:center;gap:10px;font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-bottom:16px}
+.section-label::before{content:'';width:20px;height:1px;background:rgba(255,255,255,.5)}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5.5vw,4.4rem);line-height:.95;margin-bottom:20px}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s,transform .75s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.btn-primary{padding:15px 34px;background:#fff;color:#000;font-weight:700;font-size:.84rem;border-radius:var(--radius-pill);letter-spacing:.06em;text-transform:uppercase;transition:var(--transition);display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,255,255,.18)}
+.btn-ghost{padding:15px 34px;font-weight:600;font-size:.84rem;letter-spacing:.06em;text-transform:uppercase;transition:var(--transition);color:#fff;border-radius:var(--radius-pill);border:1px solid rgba(255,255,255,.25)}
+.btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.45);transform:translateY(-2px)}
+.btn-small{padding:11px 24px;font-size:.77rem;font-weight:600;border-radius:var(--radius-pill);letter-spacing:.06em;text-transform:uppercase;transition:var(--transition);display:inline-flex;align-items:center}
+.btn-sw{background:#fff;color:#000}
+.btn-sw:hover{background:rgba(255,255,255,.88);transform:translateY(-1px)}
+.btn-so{border:1px solid rgba(255,255,255,.28);color:#fff}
+.btn-so:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);transform:translateY(-1px)}
+
+/* PAGE HEADER */
+.page-header{position:relative;overflow:hidden;padding:160px 24px 100px;text-align:center;}
+.page-header-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.42;filter:brightness(.55);}
+.page-header-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(to bottom,rgba(0,0,0,.72) 0%,rgba(0,0,0,.5) 40%,rgba(0,0,0,.85) 100%);}
+.page-header-content{position:relative;z-index:2;}
+.page-header-content .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-bottom:20px;opacity:0;animation:fadeUp 1s .3s forwards}
+.page-header-content .hero-eyebrow::before,.page-header-content .hero-eyebrow::after{content:'';width:26px;height:1px;background:rgba(255,255,255,.3)}
+.page-header-content h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,9vw,8rem);line-height:.9;opacity:0;animation:fadeUp 1s .5s forwards}
+.page-header-content p{font-size:clamp(.9rem,1.7vw,1.05rem);color:rgba(255,255,255,.65);font-weight:300;max-width:580px;margin:20px auto 0;line-height:1.82;opacity:0;animation:fadeUp 1s .7s forwards}
+
+/* TARIF CARD */
+.tarifs-wrapper{display:flex;flex-direction:column;gap:16px}
+.tarif-section-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.2em;color:rgba(255,255,255,.35);text-transform:uppercase;margin-top:32px;margin-bottom:8px}
+.tarif-card{padding:0;overflow:hidden;transition:var(--transition)}
+.tarif-card:hover{border-color:rgba(255,255,255,.2);box-shadow:0 16px 48px rgba(0,0,0,.5);transform:translateY(-2px)}
+.tarif-card-inner{display:flex;gap:0;align-items:stretch}
+.tarif-card-badge{writing-mode:vertical-lr;transform:rotate(180deg);padding:24px 16px;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.35);background:rgba(255,255,255,.03);border-right:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:center;min-width:46px;flex-shrink:0}
+.tarif-card-body{flex:1;padding:28px 36px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.tarif-card-icon{font-size:2.2rem;flex-shrink:0}
+.tarif-card-info{flex:1;min-width:240px}
+.tarif-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;margin-bottom:5px}
+.tarif-card-desc{font-size:.87rem;color:rgba(255,255,255,.6);font-weight:300;line-height:1.7}
+.tarif-card-features{list-style:none;margin-top:12px;display:flex;flex-direction:column;gap:6px}
+.tarif-card-features li{font-size:.82rem;color:rgba(255,255,255,.55);display:flex;align-items:center;gap:8px;font-weight:300}
+.tarif-card-features li::before{content:'—';color:rgba(255,255,255,.2);flex-shrink:0}
+.tarif-card-pricing{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:12px;min-width:150px}
+.tarif-price{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;line-height:1}
+.tarif-price-note{font-size:.72rem;color:rgba(255,255,255,.45);line-height:1.5}
+.tarif-card.featured{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.07)}
+
+/* NOTE BILAN */
+.bilan-note{padding:28px 36px;margin-top:40px;display:flex;gap:20px;align-items:flex-start}
+.bilan-note-icon{font-size:1.8rem;flex-shrink:0}
+.bilan-note-text h4{font-size:1rem;font-weight:700;margin-bottom:8px}
+.bilan-note-text p{font-size:.88rem;color:rgba(255,255,255,.62);font-weight:300;line-height:1.75}
+
+/* FAQ */
+.faq-grid{display:flex;flex-direction:column;gap:12px;margin-top:50px;max-width:760px}
+.faq-item{padding:22px 28px;cursor:pointer;transition:var(--transition)}
+.faq-item:hover{background:rgba(255,255,255,.08)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-q-text{font-size:.93rem;font-weight:600}
+.faq-toggle{font-size:1.2rem;color:rgba(255,255,255,.4);transition:var(--transition);flex-shrink:0}
+.faq-a{font-size:.87rem;color:rgba(255,255,255,.62);font-weight:300;line-height:1.75;margin-top:14px;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-toggle{transform:rotate(45deg);color:#fff}
+
+/* CTA */
+.cta-section{padding:100px 24px;text-align:center;background:linear-gradient(180deg,transparent,rgba(255,255,255,.02),transparent)}
+.cta-section h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:.95;margin-bottom:18px}
+.cta-section p{color:rgba(255,255,255,.65);font-weight:300;font-size:.97rem;line-height:1.8;max-width:560px;margin:0 auto 34px}
+.cta-btns{display:flex;justify-content:center;gap:13px;flex-wrap:wrap}
+
+/* FOOTER */
+.footer{padding:72px 24px 36px;border-top:1px solid rgba(255,255,255,.06);background:#0a0a0a}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:52px}
+.footer-brand .footer-logo{width:36px;margin-bottom:18px;opacity:.72}
+.footer-brand-name{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.05em;margin-bottom:13px}
+.footer-tagline{font-size:.84rem;color:rgba(255,255,255,.5);font-weight:300;line-height:1.8;max-width:270px;margin-bottom:22px}
+.footer-socials{display:flex;gap:9px}
+.footer-social{width:36px;height:36px;border-radius:11px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:.88rem;transition:var(--transition)}
+.footer-social:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.footer-col h4{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.5);margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-col ul li a{font-size:.84rem;color:rgba(255,255,255,.52);transition:var(--transition);font-weight:300}
+.footer-col ul li a:hover{color:#fff}
+.footer-contact-item{display:flex;align-items:center;gap:9px;font-size:.82rem;color:rgba(255,255,255,.52);margin-bottom:9px;font-weight:300}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid rgba(255,255,255,.05);flex-wrap:wrap;gap:14px}
+.footer-copy{font-size:.74rem;color:rgba(255,255,255,.5);font-weight:300}
+.footer-legal{display:flex;gap:22px}
+.footer-legal a{font-size:.74rem;color:rgba(255,255,255,.5);transition:var(--transition)}
+.footer-legal a:hover{color:#fff}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:200px}
+@media(max-width:900px){.tarif-card-body{flex-direction:column;gap:20px}.tarif-card-pricing{align-items:flex-start;text-align:left;width:100%}}
+@media(max-width:768px){.nav-links{display:none}.nav-toggle{display:flex;align-items:center;justify-content:center}.nav.mobile-open{flex-direction:column;top:0;left:0;right:0;transform:none;border-radius:0 0 22px 22px;padding:16px 20px 22px;background:rgba(0,0,0,.94);backdrop-filter:blur(40px);max-width:100%;width:100%}.nav.mobile-open .nav-links{display:flex;flex-direction:column;width:100%;gap:3px}.nav.mobile-open .nav-links a{display:block;text-align:center;padding:11px 18px}.nav.mobile-open .nav-cta{margin-left:0;margin-top:7px;text-align:center}section{padding:80px 20px}.footer-top{grid-template-columns:1fr;gap:26px}.footer-bottom{flex-direction:column;text-align:center}.tarif-card-badge{writing-mode:horizontal-tb;transform:none;min-width:auto;padding:12px 20px;border-right:none;border-bottom:1px solid rgba(255,255,255,.07)}.tarif-card-inner{flex-direction:column}}
+@media(max-width:480px){.cta-btns{flex-direction:column;align-items:center}.cta-btns a{width:100%;max-width:300px;justify-content:center}}
+</style>
+</head>
+<body>
+<nav class="nav glass-pill" id="mainNav">
+  <img src="assets/nz_logo_nav.png" alt="NZ" class="nav-logo">
+  <button class="nav-toggle" onclick="toggleNav()">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="remise-en-forme.html">Remise en forme</a>
+    <a href="retour-au-sport.html">Retour au sport</a>
+    <a href="performance.html">Performance</a>
+    <a href="coaching-basket.html">Coaching basket</a>
+    <a href="mon-histoire.html">Mon histoire</a>
+    <a href="tarifs.html" class="active">Tarifs</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="nav-cta glass-pill">R&eacute;server un bilan</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <video class="page-header-video" autoplay muted loop playsinline poster="assets/IMG_3832.jpeg"><source src="assets/hero_video.mp4" type="video/mp4"></video>
+  <div class="page-header-overlay"></div>
+  <div class="page-header-content">
+  <div class="hero-eyebrow">Accompagnements &middot; Mathieu Nzita</div>
+  <h1>TARIFS</h1>
+</div>
+  </div>
+
+<section>
+  <div class="section-container">
+    <div class="reveal">
+      <span class="section-label">Point d'entr&eacute;e</span>
+      <h2 class="section-title">COMMENCE<br>PAR UN BILAN</h2>
+      <p style="color:rgba(255,255,255,.65);font-weight:300;font-size:.95rem;line-height:1.82;max-width:560px;margin-bottom:36px">Avant tout accompagnement, on fait le point ensemble. Un &eacute;change pour comprendre ton profil, tes objectifs et d&eacute;finir le bon chemin.</p>
+    </div>
+    <div class="tarifs-wrapper reveal">
+      
+      <div class="tarif-card glass-strong">
+        <div class="tarif-card-inner">
+          <div class="tarif-card-badge">Entr&eacute;e</div>
+          <div class="tarif-card-body">
+            <div class="tarif-card-icon">🎯</div>
+            <div class="tarif-card-info">
+              <div class="tarif-card-title">Bilan Forme &amp; Performance</div>
+              <p class="tarif-card-desc">Un &eacute;change structur&eacute; pour &eacute;valuer ton niveau, identifier tes objectifs r&eacute;els et d&eacute;finir l'accompagnement le plus adapt&eacute;.</p>
+              <ul class="tarif-card-features">
+                <li>&Eacute;valuation de ton niveau actuel</li>
+                <li>Identification des objectifs prioritaires</li>
+                <li>Proposition d'accompagnement adapt&eacute;e</li>
+                <li>Sans engagement imm&eacute;diat</li>
+              </ul>
+            </div>
+            <div class="tarif-card-pricing">
+              <div class="tarif-price">Offert</div>
+              <div class="tarif-price-note">lors du premier &eacute;change</div>
+              <a href="contact.html" class="btn-small btn-sw">R&eacute;server &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tarif-section-title">Accompagnements coaching</div>
+
+      
+      <div class="tarif-card glass">
+        <div class="tarif-card-inner">
+          <div class="tarif-card-badge">Remise en forme</div>
+          <div class="tarif-card-body">
+            <div class="tarif-card-icon">🔥</div>
+            <div class="tarif-card-info">
+              <div class="tarif-card-title">Coaching Remise en forme</div>
+              <p class="tarif-card-desc">Pour les adultes qui veulent retrouver leur forme, leur &eacute;nergie et leur mobilit&eacute; avec un cadre progressif et personnalis&eacute;.</p>
+              <ul class="tarif-card-features">
+                <li>Programme personnalis&eacute; sur mesure</li>
+                <li>Suivi r&eacute;gulier et adaptation continue</li>
+                <li>Objectifs r&eacute;alistes et progressifs</li>
+              </ul>
+            </div>
+            <div class="tarif-card-pricing">
+              <div>
+                <div class="tarif-price" style="font-size:1.8rem">Sur devis</div>
+                <div class="tarif-price-note">apr&egrave;s bilan initial<br>tarif adapt&eacute; au projet</div>
+              </div>
+              <a href="contact.html" class="btn-small btn-so">En savoir plus</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tarif-card glass">
+        <div class="tarif-card-inner">
+          <div class="tarif-card-badge">Retour au sport</div>
+          <div class="tarif-card-body">
+            <div class="tarif-card-icon">🔄</div>
+            <div class="tarif-card-info">
+              <div class="tarif-card-title">Coaching Retour au sport</div>
+              <p class="tarif-card-desc">Pour les personnes qui reprennent apr&egrave;s une blessure ou une longue coupure. Reprise progressive, intelligente et durable.</p>
+              <ul class="tarif-card-features">
+                <li>Protocole de reprise adapt&eacute;</li>
+                <li>Gestion de la douleur et des signaux</li>
+                <li>Reconstruction de la confiance physique</li>
+              </ul>
+            </div>
+            <div class="tarif-card-pricing">
+              <div>
+                <div class="tarif-price" style="font-size:1.8rem">Sur devis</div>
+                <div class="tarif-price-note">apr&egrave;s bilan initial<br>tarif adapt&eacute; au projet</div>
+              </div>
+              <a href="contact.html" class="btn-small btn-so">En savoir plus</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="tarif-card glass">
+        <div class="tarif-card-inner">
+          <div class="tarif-card-badge">Performance</div>
+          <div class="tarif-card-body">
+            <div class="tarif-card-icon">⚡</div>
+            <div class="tarif-card-info">
+              <div class="tarif-card-title">Coaching Performance</div>
+              <p class="tarif-card-desc">Pour les sportifs qui veulent progresser physiquement avec m&eacute;thode, structure et exigence. Force, mobilit&eacute;, coordination, endurance.</p>
+              <ul class="tarif-card-features">
+                <li>Plan de progression personnalis&eacute;</li>
+                <li>Travail cibl&eacute; sur les points cl&eacute;s</li>
+                <li>Suivi et mesure des progr&egrave;s</li>
+              </ul>
+            </div>
+            <div class="tarif-card-pricing">
+              <div>
+                <div class="tarif-price" style="font-size:1.8rem">Sur devis</div>
+                <div class="tarif-price-note">apr&egrave;s bilan initial<br>tarif adapt&eacute; au projet</div>
+              </div>
+              <a href="contact.html" class="btn-small btn-so">En savoir plus</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tarif-section-title">Sp&eacute;cialit&eacute;</div>
+
+      
+      <div class="tarif-card glass-strong featured">
+        <div class="tarif-card-inner">
+          <div class="tarif-card-badge">Sp&eacute;cialit&eacute;</div>
+          <div class="tarif-card-body">
+            <div class="tarif-card-icon">🏀</div>
+            <div class="tarif-card-info">
+              <div class="tarif-card-title">Coaching Basket Individuel</div>
+              <p class="tarif-card-desc">S&eacute;ance individuelle 1h15&ndash;1h30. Technique, physique, jeu de pieds, mental &mdash; selon ton niveau, ton poste et tes besoins.</p>
+              <ul class="tarif-card-features">
+                <li>S&eacute;ance de coaching individuelle (1h15&ndash;1h30)</li>
+                <li>Entr&eacute;e stadium incluse (10 €)</li>
+                <li>Acompte de 30 € &agrave; la r&eacute;servation</li>
+                <li>Validation manuelle &mdash; adresse envoy&eacute;e apr&egrave;s confirmation</li>
+                <li>Cr&eacute;neaux : 10h30 / 12h15 / 14h00 / 15h45</li>
+                <li>Base : Thiais (94)</li>
+              </ul>
+            </div>
+            <div class="tarif-card-pricing">
+              <div>
+                <div class="tarif-price">60 &euro;</div>
+                <div class="tarif-price-note">par s&eacute;ance<br>(50 € coaching + 10 € stadium)</div>
+              </div>
+              <a href="coaching-basket.html" class="btn-small btn-sw">R&eacute;server &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="bilan-note glass reveal" style="margin-top:48px">
+      <span class="bilan-note-icon">💡</span>
+      <div class="bilan-note-text">
+        <h4>Pas s&ucirc;r de quel accompagnement choisir ?</h4>
+        <p>Commence par un bilan gratuit. On fait le point ensemble sur ton profil, tes objectifs et tes contraintes &mdash; et je te propose l'accompagnement le plus adapt&eacute;, sans pression ni engagement imm&eacute;diat.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:linear-gradient(180deg,transparent,rgba(255,255,255,.018),transparent)">
+  <div class="section-container">
+    <div class="reveal">
+      <span class="section-label">Questions fr&eacute;quentes</span>
+      <h2 class="section-title">TU AS DES<br>QUESTIONS ?</h2>
+    </div>
+    <div class="faq-grid reveal">
+      <div class="faq-item glass" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">Comment se d&eacute;roule le bilan initial ?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a">Le bilan est un &eacute;change d'une vingtaine de minutes, par t&eacute;l&eacute;phone ou en visio. On fait le point sur ton niveau, ton historique sportif, tes objectifs et tes contraintes. &Agrave; l'issue de cet &eacute;change, je te propose un accompagnement adapt&eacute;. C'est gratuit et sans engagement.</div>
+      </div>
+      <div class="faq-item glass" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">Comment sont d&eacute;finis les tarifs des accompagnements ?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a">Les tarifs des accompagnements remise en forme, retour au sport et performance sont d&eacute;finis apr&egrave;s le bilan initial. Ils d&eacute;pendent de la dur&eacute;e, de la fr&eacute;quence et du type d'accompagnement souhait&eacute;. Chaque situation est diff&eacute;rente, chaque tarif est adapt&eacute;.</div>
+      </div>
+      <div class="faq-item glass" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">Est-ce que le coaching basket se fait en pr&eacute;sentiel ?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a">Oui, le coaching basket est exclusivement en pr&eacute;sentiel. La s&eacute;ance a lieu dans un gymnasium de Thiais (94). L'adresse exacte est communiqu&eacute;e apr&egrave;s confirmation de la r&eacute;servation.</div>
+      </div>
+      <div class="faq-item glass" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">Que se passe-t-il apr&egrave;s ma demande de r&eacute;servation basket ?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a">Apr&egrave;s ta demande, Mathieu confirme manuellement le cr&eacute;neau sous 24h. Une fois valid&eacute;, tu re&ccedil;ois les informations de paiement de l'acompte (30 €) et l'adresse exacte du gymnasium. Le solde de 30 € est r&egrave;gl&eacute; le jour de la s&eacute;ance.</div>
+      </div>
+      <div class="faq-item glass" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">Est-ce que Mathieu propose du coaching &agrave; distance ?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a">Le coaching &agrave; distance existe en tant que compl&eacute;ment ou option pour certains accompagnements. C'est quelque chose &agrave; discuter lors du bilan initial selon ta situation g&eacute;ographique et tes besoins.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <div class="section-container">
+    <div class="reveal">
+      <span class="section-label" style="justify-content:center;display:flex">Passe &agrave; l'action</span>
+      <h2>PR&Ecirc;T &Agrave;<br>COMMENCER ?</h2>
+      <p>On commence par un bilan pour d&eacute;finir ensemble le bon accompagnement. Gratuit, sans engagement.</p>
+      <div class="cta-btns">
+        <a href="contact.html" class="btn-primary">R&eacute;server mon bilan</a>
+        <a href="coaching-basket.html" class="btn-ghost">R&eacute;server un coaching basket</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/nz_logo_nav.png" alt="NZ" class="footer-logo">
+        <div class="footer-brand-name">Mathieu Nzita</div>
+        <p class="footer-tagline">Coaching remise en forme, performance et retour au sport. Sp&eacute;cialit&eacute; basket.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social">&#128247;</a>
+          <a href="#" class="footer-social">&#127925;</a>
+          <a href="#" class="footer-social">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="remise-en-forme.html">Remise en forme</a></li>
+          <li><a href="retour-au-sport.html">Retour au sport</a></li>
+          <li><a href="performance.html">Performance</a></li>
+          <li><a href="coaching-basket.html">Coaching basket</a></li>
+          <li><a href="mon-histoire.html">Mon histoire</a></li>
+          <li><a href="tarifs.html">Tarifs</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">&#9993;&#65039; mathieunzita60@gmail.com</div>
+        <div class="footer-contact-item">&#128241; Disponible via WhatsApp</div>
+        <div class="footer-contact-item">&#128205; Thiais (94) &mdash; &Icirc;le-de-France</div>
+        <div class="footer-contact-item">&#128336; R&eacute;ponse sous 24h</div>
+      </div>
+      <div class="footer-col">
+        <h4>Accompagnements</h4>
+        <ul>
+          <li><a href="contact.html">Bilan Forme &amp; Performance</a></li>
+          <li><a href="remise-en-forme.html">Coaching remise en forme</a></li>
+          <li><a href="retour-au-sport.html">Coaching retour au sport</a></li>
+          <li><a href="performance.html">Coaching performance</a></li>
+          <li><a href="coaching-basket.html">Coaching basket individuel</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 Mathieu Nzita &mdash; Tous droits r&eacute;serv&eacute;s.</p>
+      <div class="footer-legal"><a href="#">Mentions l&eacute;gales</a><a href="#">Confidentialit&eacute;</a><a href="#">CGV</a></div>
+    </div>
+  </div>
+</footer>
+<script>
+const reveals=document.querySelectorAll(".reveal");
+const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add("visible"),i*80);observer.unobserve(entry.target)}})},{threshold:.1});
+reveals.forEach(el=>observer.observe(el));
+const nav=document.getElementById("mainNav");
+window.addEventListener("scroll",()=>{if(window.scrollY>60){nav.style.background="rgba(0,0,0,0.72)";nav.style.backdropFilter="blur(32px)"}else{nav.style.background="";nav.style.backdropFilter=""}});
+function toggleNav(){nav.classList.toggle("mobile-open");nav.querySelector(".nav-toggle").innerHTML=nav.classList.contains("mobile-open")?"&#10005;":"&#9776;";}
+nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("mobile-open");nav.querySelector(".nav-toggle").innerHTML="&#9776;";}));
+function toggleFaq(item){item.classList.toggle('open')}
+</script>
+</body>
+</html>

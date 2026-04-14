@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coaching Basket Individuel — Mathieu Nzita</title>
+<meta name="description" content="Coaching basket individuel avec Mathieu Nzita. Séance 1h15-1h30, 60€. Technique, physique, mental. Thiais (94). Réservez votre créneau.">
+<link rel="icon" type="image/png" href="assets/nz_logo_nav.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--black:#000;--white:#fff;--glass-bg:rgba(255,255,255,.055);--glass-border:rgba(255,255,255,.11);--text-muted:rgba(255,255,255,.5);--text-secondary:rgba(255,255,255,.72);--radius-glass:24px;--radius-pill:100px;--transition:.4s cubic-bezier(.25,.46,.45,.94)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Outfit',-apple-system,sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;line-height:1.6}
+img{max-width:100%;display:block}a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;background:none;font-family:inherit}
+.glass{background:var(--glass-bg);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--glass-border);border-radius:var(--radius-glass)}
+.glass-strong{background:rgba(255,255,255,.09);backdrop-filter:blur(40px) saturate(200%);-webkit-backdrop-filter:blur(40px) saturate(200%);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius-glass)}
+.glass-pill{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-pill)}
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:1000;padding:8px 6px;display:flex;align-items:center;gap:2px;transition:var(--transition);max-width:1100px;width:calc(100% - 32px)}
+.nav-logo{width:32px;height:auto;margin-right:10px;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1}
+.nav a{padding:7px 13px;font-size:.76rem;font-weight:500;color:rgba(255,255,255,.72);border-radius:var(--radius-pill);transition:var(--transition);letter-spacing:.01em;white-space:nowrap}
+.nav a:hover,.nav a.active{color:#fff;background:rgba(255,255,255,.1)}
+.nav-cta{padding:9px 20px !important;background:#fff !important;color:#000 !important;font-weight:700 !important;font-size:.76rem !important;margin-left:8px;flex-shrink:0}
+.nav-cta:hover{background:rgba(255,255,255,.9) !important;transform:scale(1.02)}
+.nav-toggle{display:none;color:white;font-size:1.3rem;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.07);margin-left:auto}
+section{padding:100px 24px;position:relative}
+.section-container{max-width:1100px;margin:0 auto}
+.section-label{display:inline-flex;align-items:center;gap:10px;font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-bottom:16px}
+.section-label::before{content:'';width:20px;height:1px;background:rgba(255,255,255,.5)}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5.5vw,4.4rem);line-height:.95;margin-bottom:20px}
+.section-desc{font-size:1rem;color:rgba(255,255,255,.72);font-weight:300;line-height:1.85}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s,transform .75s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.btn-primary{padding:15px 34px;background:#fff;color:#000;font-weight:700;font-size:.84rem;border-radius:var(--radius-pill);letter-spacing:.06em;text-transform:uppercase;transition:var(--transition);display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,255,255,.18)}
+.btn-ghost{padding:15px 34px;font-weight:600;font-size:.84rem;letter-spacing:.06em;text-transform:uppercase;transition:var(--transition);color:#fff;border-radius:var(--radius-pill);border:1px solid rgba(255,255,255,.25)}
+.btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.45);transform:translateY(-2px)}
+
+/* PAGE HERO */
+.page-hero{min-height:80vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:140px 24px 80px;text-align:center}
+.page-hero-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.45;filter:brightness(.55);}
+.page-hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(to bottom,rgba(0,0,0,.72) 0%,rgba(0,0,0,.48) 40%,rgba(0,0,0,.88) 100%)}
+.page-hero-content{position:relative;z-index:2;max-width:820px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-bottom:20px;opacity:0;animation:fadeUp 1s .3s forwards}
+.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:26px;height:1px;background:rgba(255,255,255,.3)}
+.hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,7rem);line-height:.9;opacity:0;animation:fadeUp 1s .5s forwards;text-shadow:0 4px 40px rgba(0,0,0,.4)}
+.hero-p{font-size:clamp(.9rem,1.7vw,1.06rem);color:rgba(255,255,255,.72);font-weight:300;max-width:620px;margin:22px auto 0;line-height:1.82;opacity:0;animation:fadeUp 1s .7s forwards}
+.hero-price-banner{display:inline-flex;align-items:center;gap:20px;margin-top:28px;padding:16px 32px;opacity:0;animation:fadeUp 1s .85s forwards}
+.hero-price-item{text-align:center}
+.hero-price-item .price-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;line-height:1}
+.hero-price-item .price-label{font-size:.65rem;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.12em}
+.hero-price-sep{width:1px;height:40px;background:rgba(255,255,255,.15)}
+.hero-actions{display:flex;justify-content:center;gap:13px;flex-wrap:wrap;margin-top:28px;opacity:0;animation:fadeUp 1s 1s forwards}
+
+/* INFOS SÉANCE */
+.seance-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:50px}
+.seance-item{padding:26px 22px;text-align:center;transition:var(--transition)}
+.seance-item:hover{background:rgba(255,255,255,.08);transform:translateY(-3px)}
+.seance-icon{font-size:1.6rem;margin-bottom:12px;display:block}
+.seance-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;margin-bottom:6px}
+.seance-desc{font-size:.82rem;color:rgba(255,255,255,.6);font-weight:300;line-height:1.6}
+
+/* CE QU'ON TRAVAILLE */
+.travail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:50px}
+.travail-item{padding:24px 20px;transition:var(--transition)}
+.travail-item:hover{background:rgba(255,255,255,.08);transform:translateY(-2px)}
+.travail-item h4{font-size:.93rem;font-weight:700;margin-bottom:6px}
+.travail-item p{font-size:.83rem;color:rgba(255,255,255,.62);font-weight:300;line-height:1.7}
+
+/* PROCESSUS */
+.process-steps{display:flex;flex-direction:column;gap:0;max-width:700px;margin:50px auto 0}
+.process-step{display:flex;gap:24px;padding:28px 0;border-bottom:1px solid rgba(255,255,255,.06);align-items:flex-start}
+.process-step:last-child{border-bottom:none}
+.process-dot{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;flex-shrink:0}
+.process-content h4{font-size:.97rem;font-weight:700;margin-bottom:5px}
+.process-content p{font-size:.86rem;color:rgba(255,255,255,.65);font-weight:300;line-height:1.7}
+.process-badge{display:inline-block;margin-top:8px;padding:4px 12px;border-radius:var(--radius-pill);font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
+
+/* TARIF BLOC */
+.tarif-bloc{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:50px}
+.tarif-card{padding:40px 36px}
+.tarif-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;margin-bottom:20px;color:rgba(255,255,255,.6)}
+.tarif-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.tarif-row:last-of-type{border-bottom:none;padding-bottom:0}
+.tarif-row-label{font-size:.9rem;color:rgba(255,255,255,.7);font-weight:400}
+.tarif-row-value{font-family:'Bebas Neue',sans-serif;font-size:1.5rem}
+.tarif-total{margin-top:20px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center}
+.tarif-total-label{font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.tarif-total-value{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;line-height:1}
+.tarif-acompte{margin-top:14px;padding:16px 20px;text-align:center}
+.tarif-acompte p{font-size:.82rem;color:rgba(255,255,255,.6);font-weight:300;line-height:1.6}
+.tarif-acompte strong{color:#fff;font-size:.95rem}
+.tarif-info-card{padding:36px 32px}
+.tarif-info-card h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;margin-bottom:20px;color:rgba(255,255,255,.6)}
+.info-row{display:flex;gap:14px;margin-bottom:18px;align-items:flex-start}
+.info-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px;opacity:.75}
+.info-text h4{font-size:.88rem;font-weight:700;margin-bottom:3px}
+.info-text p{font-size:.82rem;color:rgba(255,255,255,.6);font-weight:300;line-height:1.6}
+.info-text p strong{color:rgba(255,255,255,.85)}
+
+/* MODULE RÉSERVATION */
+#reservation{background:linear-gradient(180deg,transparent,rgba(255,255,255,.018),transparent)}
+.reservation-module{max-width:800px;margin:0 auto}
+.reservation-module h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4.5vw,3.5rem);line-height:.95;margin-bottom:16px}
+.reservation-module .sub{color:rgba(255,255,255,.65);font-weight:300;font-size:.93rem;line-height:1.75;margin-bottom:40px}
+.resa-notice{padding:16px 20px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);font-size:.82rem;color:rgba(255,255,255,.65);margin-bottom:32px;display:flex;gap:10px;align-items:flex-start}
+.resa-notice-icon{font-size:1rem;flex-shrink:0;margin-top:1px}
+
+/* ÉTAPE 1: DATE */
+.resa-step{margin-bottom:36px}
+.resa-step-header{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.resa-step-num{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;flex-shrink:0}
+.resa-step-title{font-size:1rem;font-weight:700}
+.resa-step-subtitle{font-size:.78rem;color:rgba(255,255,255,.45);margin-left:auto}
+.date-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.date-cell{padding:10px 6px;text-align:center;border-radius:10px;cursor:pointer;transition:var(--transition);border:1px solid transparent;font-size:.82rem;font-weight:500}
+.date-cell.header{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);cursor:default;padding-bottom:12px;border:none}
+.date-cell.empty{cursor:default}
+.date-cell.available{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.date-cell.available:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+.date-cell.selected{background:#fff;color:#000 !important;border-color:#fff}
+.date-cell.past{color:rgba(255,255,255,.2);cursor:not-allowed}
+.date-cell.today{border-color:rgba(255,255,255,.3)}
+.cal-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cal-month{font-family:'Bebas Neue',sans-serif;font-size:1.3rem}
+.cal-btn{padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:.8rem;font-weight:600;transition:var(--transition)}
+.cal-btn:hover{background:rgba(255,255,255,.12)}
+
+/* ÉTAPE 2: CRÉNEAU */
+.creneaux-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.creneau-btn{padding:16px;text-align:center;border-radius:14px;cursor:pointer;transition:var(--transition);border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:#fff}
+.creneau-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22)}
+.creneau-btn.selected{background:#fff;color:#000;border-color:#fff}
+.creneau-sub{font-family:'Outfit',sans-serif;font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-top:3px}
+.creneau-btn.selected .creneau-sub{color:rgba(0,0,0,.5)}
+
+/* ÉTAPE 3: FORMULAIRE */
+.resa-form{display:flex;flex-direction:column;gap:0}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-bottom:8px}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;color:#fff;font-family:'Outfit',sans-serif;font-size:.9rem;transition:var(--transition);outline:none;-webkit-appearance:none}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.08)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group select option{background:#111;color:#fff}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.28)}
+
+/* RÉCAP */
+.resa-recap{padding:24px 28px;margin-bottom:24px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);display:none}
+.resa-recap.visible{display:block}
+.recap-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.4);margin-bottom:14px}
+.recap-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.87rem}
+.recap-row:last-child{border-bottom:none}
+.recap-row span{color:rgba(255,255,255,.55);font-weight:300}
+.recap-row strong{color:#fff;font-weight:600}
+.recap-total{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding:14px 0;border-top:1px solid rgba(255,255,255,.12)}
+.recap-total-label{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.5)}
+.recap-total-value{font-family:'Bebas Neue',sans-serif;font-size:2rem}
+.recap-acompte-note{font-size:.78rem;color:rgba(255,255,255,.45);margin-top:8px;text-align:right}
+
+.resa-submit{width:100%;padding:18px;background:#fff;color:#000;font-weight:700;font-size:.88rem;text-transform:uppercase;letter-spacing:.08em;border-radius:var(--radius-pill);transition:var(--transition);font-family:'Outfit',sans-serif;margin-top:8px}
+.resa-submit:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,255,255,.18)}
+.resa-submit:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.resa-terms{font-size:.75rem;color:rgba(255,255,255,.35);text-align:center;margin-top:14px;line-height:1.6}
+.resa-success{padding:40px;text-align:center;display:none}
+.resa-success.visible{display:block}
+.resa-success-icon{font-size:3.5rem;margin-bottom:16px}
+.resa-success h3{font-family:'Bebas Neue',sans-serif;font-size:2rem;margin-bottom:12px}
+.resa-success p{color:rgba(255,255,255,.65);font-size:.9rem;font-weight:300;line-height:1.75}
+
+/* POURQUOI */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.side-img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:var(--radius-glass)}
+.block-text h3{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;margin-bottom:16px}
+.block-text p{color:rgba(255,255,255,.72);font-weight:300;line-height:1.85;margin-bottom:14px;font-size:.93rem}
+.check-list{list-style:none;margin:20px 0 30px;display:flex;flex-direction:column;gap:11px}
+.check-list li{display:flex;align-items:flex-start;gap:12px;font-size:.9rem;color:rgba(255,255,255,.72)}
+.check-list li::before{content:'✓';color:rgba(255,255,255,.35);font-weight:700;flex-shrink:0}
+
+/* FOOTER */
+.footer{padding:72px 24px 36px;border-top:1px solid rgba(255,255,255,.06);background:#0a0a0a}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:52px}
+.footer-brand .footer-logo{width:36px;margin-bottom:18px;opacity:.72}
+.footer-brand-name{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.05em;margin-bottom:13px}
+.footer-tagline{font-size:.84rem;color:rgba(255,255,255,.5);font-weight:300;line-height:1.8;max-width:270px;margin-bottom:22px}
+.footer-socials{display:flex;gap:9px}
+.footer-social{width:36px;height:36px;border-radius:11px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:.88rem;transition:var(--transition)}
+.footer-social:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.footer-col h4{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.5);margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-col ul li a{font-size:.84rem;color:rgba(255,255,255,.52);transition:var(--transition);font-weight:300}
+.footer-col ul li a:hover{color:#fff}
+.footer-contact-item{display:flex;align-items:center;gap:9px;font-size:.82rem;color:rgba(255,255,255,.52);margin-bottom:9px;font-weight:300}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid rgba(255,255,255,.05);flex-wrap:wrap;gap:14px}
+.footer-copy{font-size:.74rem;color:rgba(255,255,255,.5);font-weight:300}
+.footer-legal{display:flex;gap:22px}
+.footer-legal a{font-size:.74rem;color:rgba(255,255,255,.5);transition:var(--transition)}
+.footer-legal a:hover{color:#fff}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:200px}
+
+@media(max-width:900px){.seance-grid,.travail-grid{grid-template-columns:repeat(2,1fr)}.tarif-bloc{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr;gap:40px}.side-img{max-width:360px;margin:0 auto;display:block}}
+@media(max-width:768px){.nav-links{display:none}.nav-toggle{display:flex;align-items:center;justify-content:center}.nav.mobile-open{flex-direction:column;top:0;left:0;right:0;transform:none;border-radius:0 0 22px 22px;padding:16px 20px 22px;background:rgba(0,0,0,.94);backdrop-filter:blur(40px);max-width:100%;width:100%}.nav.mobile-open .nav-links{display:flex;flex-direction:column;width:100%;gap:3px}.nav.mobile-open .nav-links a{display:block;text-align:center;padding:11px 18px}.nav.mobile-open .nav-cta{margin-left:0;margin-top:7px;text-align:center}section{padding:80px 20px}.footer-top{grid-template-columns:1fr;gap:26px}.footer-bottom{flex-direction:column;text-align:center}.creneaux-grid{grid-template-columns:repeat(2,1fr)}.form-row-2{grid-template-columns:1fr}.hero-price-banner{flex-direction:column;gap:12px}.hero-price-sep{display:none}}
+@media(max-width:480px){.hero-actions{flex-direction:column;align-items:center}.hero-actions a{width:100%;max-width:300px;justify-content:center}.seance-grid,.travail-grid{grid-template-columns:1fr}.creneaux-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<nav class="nav glass-pill" id="mainNav">
+  <img src="assets/nz_logo_nav.png" alt="NZ" class="nav-logo">
+  <button class="nav-toggle" onclick="toggleNav()">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="remise-en-forme.html">Remise en forme</a>
+    <a href="retour-au-sport.html">Retour au sport</a>
+    <a href="performance.html">Performance</a>
+    <a href="coaching-basket.html" class="active">Coaching basket</a>
+    <a href="mon-histoire.html">Mon histoire</a>
+    <a href="tarifs.html">Tarifs</a>
+    <a href="contact.html">Contact</a>
+    <a href="#reservation" class="nav-cta glass-pill">R&eacute;server</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <video class="page-hero-video" autoplay muted loop playsinline poster="assets/IMG_3832.jpeg"><source src="assets/hero_video.mp4" type="video/mp4"></video>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <div class="hero-eyebrow">Sp&eacute;cialit&eacute; &middot; Mathieu Nzita</div>
+    <h1 class="hero-h1">COACHING<br>BASKET<br>INDIVIDUEL</h1>
+    <div class="hero-price-banner glass-pill">
+      <div class="hero-price-item">
+        <div class="price-val">60 &euro;</div>
+        <div class="price-label">par s&eacute;ance</div>
+      </div>
+      <div class="hero-price-sep"></div>
+      <div class="hero-price-item">
+        <div class="price-val">1h15</div>
+        <div class="price-label">– 1h30</div>
+      </div>
+      <div class="hero-price-sep"></div>
+      <div class="hero-price-item">
+        <div class="price-val">30 &euro;</div>
+        <div class="price-label">acompte</div>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="#reservation" class="btn-primary">R&eacute;server ton coaching basket</a>
+      <a href="#tarif" class="btn-ghost">D&eacute;tail du tarif</a>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="section-container">
+    <div class="reveal">
+      <span class="section-label">La s&eacute;ance</span>
+      <h2 class="section-title">UNE S&Eacute;ANCE<br>FAITE POUR TOI</h2>
+      <p class="section-desc" style="max-width:560px">Chaque s&eacute;ance est pr&eacute;par&eacute;e en fonction de ton profil. Niveau, poste, objectif du moment &mdash; rien n'est g&eacute;n&eacute;rique.</p>
+    </div>
+    <div class="seance-grid reveal">
+      <div class="seance-item glass">
+        <span class="seance-icon">⏱️</span>
+        <div class="seance-title">1h15 – 1h30</div>
+        <p class="seance-desc">Dur&eacute;e adapt&eacute;e selon le contenu de la s&eacute;ance et les besoins du joueur</p>
+      </div>
+      <div class="seance-item glass">
+        <span class="seance-icon">🎯</span>
+        <div class="seance-title">100% individuel</div>
+        <p class="seance-desc">Coaching en one-to-one. Toute l'attention est concentr&eacute;e sur toi</p>
+      </div>
+      <div class="seance-item glass">
+        <span class="seance-icon">📋</span>
+        <div class="seance-title">Objectif pr&eacute;cis</div>
+        <p class="seance-desc">Chaque s&eacute;ance a un fil conducteur clair, d&eacute;fini avant de commencer</p>
+      </div>
+      <div class="seance-item glass">
+        <span class="seance-icon">📍</span>
+        <div class="seance-title">Thiais — 94</div>
+        <p class="seance-desc">Adresse exacte envoy&eacute;e apr&egrave;s confirmation de la r&eacute;servation</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:linear-gradient(180deg,transparent,rgba(255,255,255,.018),transparent)">
+  <div class="section-container">
+    <div class="reveal">
+      <span class="section-label">Ce qu'on travaille</span>
+      <h2 class="section-title">LE TRAVAIL<br>POSSIBLE</h2>
+      <p class="section-desc" style="max-width:560px">Selon tes besoins du moment, on choisit ensemble ce qui va faire le plus de diff&eacute;rence pour toi.</p>
+    </div>
+    <div class="travail-grid reveal">
+      <div class="travail-item glass">
+        <h4>🤾 Technique individuelle</h4>
+        <p>Dribble, finitions, shoots, r&eacute;ceptions, moves &mdash; le travail technique cibl&eacute; sur tes gestes prioritaires</p>
+      </div>
+      <div class="travail-item glass">
+        <h4>👣 Jeu de pieds</h4>
+        <p>P&eacute;n&eacute;trations, pivots, coupes, appuis &mdash; la base de tout joueur efficace sur le terrain</p>
+      </div>
+      <div class="travail-item glass">
+        <h4>⚡ Explosivit&eacute; & vitesse</h4>
+        <p>D&eacute;parts, acc&eacute;l&eacute;rations, d&eacute;tente, changements de direction &mdash; ce qui cr&eacute;e le d&eacute;calage</p>
+      </div>
+      <div class="travail-item glass">
+        <h4>💪 Pr&eacute;paration physique</h4>
+        <p>Travail physique sp&eacute;cifique basket : renforcement, mobilit&eacute;, gainage fonctionnel</p>
+      </div>
+      <div class="travail-item glass">
+        <h4>🔄 Retour au jeu</h4>
+        <p>Reprise apr&egrave;s blessure ou longue coupure &mdash; retour progressif et s&eacute;curis&eacute; sur le parquet</p>
+      </div>
+      <div class="travail-item glass">
+        <h4>🧠 Lecture de jeu &amp; mental</h4>
+        <p>Prise de d&eacute;cision, confiance, g&eacute;rer la pression &mdash; la dimension mentale qui fait la diff&eacute;rence</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tarif">
+  <div class="section-container">
+    <div class="reveal">
+      <span class="section-label">Tarif &amp; process</span>
+      <h2 class="section-title">TOUT CE QU'IL<br>FAUT SAVOIR</h2>
+    </div>
+    <div class="tarif-bloc reveal">
+      <div class="tarif-card glass-strong">
+        <h3>D&eacute;tail du tarif</h3>
+        <div class="tarif-row">
+          <span class="tarif-row-label">S&eacute;ance coaching individuelle</span>
+          <span class="tarif-row-value">50 &euro;</span>
+        </div>
+        <div class="tarif-row">
+          <span class="tarif-row-label">Entr&eacute;e stadium (incluse)</span>
+          <span class="tarif-row-value">10 &euro;</span>
+        </div>
+        <div class="tarif-total glass">
+          <span class="tarif-total-label">Total s&eacute;ance</span>
+          <span class="tarif-total-value">60 &euro;</span>
+        </div>
+        <div class="tarif-acompte glass">
+          <p>Acompte &agrave; la r&eacute;servation : <strong>30 €</strong><br>Solde r&egrave;gl&eacute; le jour de la s&eacute;ance : <strong>30 €</strong></p>
+        </div>
+      </div>
+      <div class="tarif-info-card glass">
+        <h3>Le process</h3>
+        <div class="info-row">
+          <span class="info-icon">📝</span>
+          <div class="info-text">
+            <h4>1. Tu envoies ta demande</h4>
+            <p>Tu choisis une date et un cr&eacute;neau et tu remplis le formulaire de r&eacute;servation.</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">💳</span>
+          <div class="info-text">
+            <h4>2. Tu verses l'acompte</h4>
+            <p>Un acompte de <strong>30 €</strong> est demand&eacute; pour valider ta demande.</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">✅</span>
+          <div class="info-text">
+            <h4>3. Validation manuelle</h4>
+            <p>Mathieu confirme la s&eacute;ance manuellement. Tu re&ccedil;ois une confirmation par email ou WhatsApp.</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">📍</span>
+          <div class="info-text">
+            <h4>4. Adresse envoy&eacute;e</h4>
+            <p>L'adresse exacte du gymnasium est envoy&eacute;e apr&egrave;s confirmation. Base : <strong>Thiais (94)</strong>.</p>
+          </div>
+        </div>
+        <div class="info-row">
+          <span class="info-icon">💰</span>
+          <div class="info-text">
+            <h4>5. Solde le jour J</h4>
+            <p>Le solde de <strong>30 €</strong> est r&eacute;gl&eacute; directement le jour de la s&eacute;ance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reservation">
+  <div class="section-container">
+    <div class="reservation-module reveal">
+      <span class="section-label">R&eacute;servation</span>
+      <h2>ENVOYER MA DEMANDE<br>DE R&Eacute;SERVATION</h2>
+      <p class="sub">Remplis le formulaire ci-dessous. Ta s&eacute;ance sera <strong>confirm&eacute;e manuellement</strong> par Mathieu avant validation d&eacute;finitive. L'adresse exacte te sera communiqu&eacute;e apr&egrave;s confirmation.</p>
+      <div class="resa-notice glass">
+        <span class="resa-notice-icon">ℹ️</span>
+        <span>Cette demande de r&eacute;servation n'est pas une confirmation automatique. Mathieu valide chaque cr&eacute;neau manuellement. Tu recevras une r&eacute;ponse sous 24h.</span>
+      </div>
+      <div id="resaForm">
+        
+        <div class="resa-step glass-strong" style="padding:28px">
+          <div class="resa-step-header">
+            <div class="resa-step-num">1</div>
+            <div class="resa-step-title">Choisis une date</div>
+            <span class="resa-step-subtitle" id="selectedDateDisplay">&mdash;</span>
+          </div>
+          <div class="cal-nav">
+            <button class="cal-btn" onclick="changeMonth(-1)">&larr;</button>
+            <div class="cal-month" id="calMonth"></div>
+            <button class="cal-btn" onclick="changeMonth(1)">&rarr;</button>
+          </div>
+          <div class="date-grid" id="calGrid"></div>
+        </div>
+
+        
+        <div class="resa-step glass-strong" style="padding:28px;margin-top:16px">
+          <div class="resa-step-header">
+            <div class="resa-step-num">2</div>
+            <div class="resa-step-title">Choisis un cr&eacute;neau</div>
+            <span class="resa-step-subtitle" id="selectedCreneauDisplay">&mdash;</span>
+          </div>
+          <div class="creneaux-grid">
+            <button class="creneau-btn" onclick="selectCreneau(this,'10h30')">
+              10h30<div class="creneau-sub">Disponible</div>
+            </button>
+            <button class="creneau-btn" onclick="selectCreneau(this,'12h15')">
+              12h15<div class="creneau-sub">Disponible</div>
+            </button>
+            <button class="creneau-btn" onclick="selectCreneau(this,'14h00')">
+              14h00<div class="creneau-sub">Disponible</div>
+            </button>
+            <button class="creneau-btn" onclick="selectCreneau(this,'15h45')">
+              15h45<div class="creneau-sub">Disponible</div>
+            </button>
+          </div>
+        </div>
+
+        
+        <div class="resa-step glass-strong" style="padding:28px;margin-top:16px">
+          <div class="resa-step-header">
+            <div class="resa-step-num">3</div>
+            <div class="resa-step-title">Tes informations</div>
+          </div>
+          <form class="resa-form" onsubmit="submitResa(event)">
+            <div class="form-row-2">
+              <div class="form-group"><label>Pr&eacute;nom *</label><input type="text" id="prenom" placeholder="Ton pr&eacute;nom" required></div>
+              <div class="form-group"><label>Nom *</label><input type="text" id="nom" placeholder="Ton nom" required></div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group"><label>Email *</label><input type="email" id="email" placeholder="ton@email.com" required></div>
+              <div class="form-group"><label>T&eacute;l&eacute;phone / WhatsApp *</label><input type="tel" id="tel" placeholder="06 XX XX XX XX" required></div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group"><label>&Acirc;ge du joueur *</label><input type="number" id="age" placeholder="Ex : 17" min="8" max="60" required></div>
+              <div class="form-group"><label>Niveau *</label>
+                <select id="niveau" required>
+                  <option value="" disabled selected>Ton niveau actuel</option>
+                  <option>D&eacute;butant</option>
+                  <option>Loisir / Amateur</option>
+                  <option>Club r&eacute;gional</option>
+                  <option>Club national</option>
+                  <option>Semi-pro</option>
+                  <option>Professionnel</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group"><label>Poste</label><input type="text" id="poste" placeholder="Ex : meneur, ailier..."></div>
+              <div class="form-group"><label>Club actuel</label><input type="text" id="club" placeholder="Ton club (si applicable)"></div>
+            </div>
+            <div class="form-group"><label>Objectif principal de la s&eacute;ance *</label>
+              <select id="objectif" required>
+                <option value="" disabled selected>Qu'est-ce que tu veux travailler ?</option>
+                <option>Technique individuelle (dribble, shoot, finitions)</option>
+                <option>Jeu de pieds et d&eacute;placements</option>
+                <option>Explosivit&eacute; et vitesse</option>
+                <option>Pr&eacute;paration physique basket</option>
+                <option>Retour au jeu apr&egrave;s blessure</option>
+                <option>Lecture de jeu et mental</option>
+                <option>Pr&eacute;paration avant comp&eacute;tition</option>
+                <option>Bilan g&eacute;n&eacute;ral &mdash; Mathieu choisit le contenu</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Message compl&eacute;mentaire</label><textarea id="message" placeholder="Pr&eacute;cise ton niveau, ta situation, tes attentes, des blessures en cours..."></textarea></div>
+
+            
+            <div class="resa-recap glass" id="resaRecap">
+              <div class="recap-title">R&eacute;capitulatif de ta demande</div>
+              <div class="recap-row"><span>Date souhait&eacute;e</span><strong id="recapDate">&mdash;</strong></div>
+              <div class="recap-row"><span>Cr&eacute;neau souhait&eacute;</span><strong id="recapCreneau">&mdash;</strong></div>
+              <div class="recap-row"><span>S&eacute;ance coaching individuelle</span><strong>50 €</strong></div>
+              <div class="recap-row"><span>Entr&eacute;e stadium</span><strong>10 €</strong></div>
+              <div class="recap-total">
+                <span class="recap-total-label">Total s&eacute;ance</span>
+                <span class="recap-total-value">60 €</span>
+              </div>
+              <div class="recap-acompte-note">Acompte demand&eacute; &agrave; la r&eacute;servation : <strong>30 €</strong> &mdash; Solde le jour de la s&eacute;ance : <strong>30 €</strong></div>
+            </div>
+
+            <button type="submit" class="resa-submit" id="submitBtn">Envoyer ma demande de r&eacute;servation</button>
+            <p class="resa-terms">En envoyant cette demande, tu acceptes que Mathieu te contacte pour confirmer ou ajuster le cr&eacute;neau. Cette demande n'est pas une confirmation automatique. Cr&eacute;neau en attente de confirmation.</p>
+          </form>
+        </div>
+
+        
+        <div class="resa-success glass-strong" id="resaSuccess">
+          <div class="resa-success-icon">✅</div>
+          <h3>Demande envoy&eacute;e !</h3>
+          <p>Ta demande de r&eacute;servation a bien &eacute;t&eacute; re&ccedil;ue.<br>Mathieu te contactera sous <strong>24h</strong> pour confirmer ton cr&eacute;neau et te communiquer les informations de paiement de l'acompte (30 €) ainsi que l'adresse exacte.<br><br>Tu recevras une confirmation par email ou WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="grid-2">
+      <div class="reveal">
+        <img src="assets/IMG_4890.jpeg" alt="Mathieu Nzita coach basket" class="side-img">
+      </div>
+      <div class="block-text reveal">
+        <span class="section-label">Pourquoi Mathieu</span>
+        <h2 class="section-title">UN ANCIEN<br>JOUEUR DE<br>HAUT NIVEAU</h2>
+        <p>Mathieu Nzita a jou&eacute; au Mans Sarthe Basket, au Boulazac Basket Dordogne. Champion de France, stagiaire pro, capitaine &mdash; il a v&eacute;cu le basket &agrave; haut niveau de l'int&eacute;rieur.</p>
+        <p>Il coache avec un regard technique form&eacute; par des ann&eacute;es d'entra&icirc;nements d'&eacute;lite, une pr&eacute;cision de correction rare, et une capacit&eacute; &agrave; comprendre exactement ce qui bloque dans le jeu d'un joueur.</p>
+        <ul class="check-list">
+          <li>Formation haut niveau &mdash; P&ocirc;le Espoir + Pro</li>
+          <li>V&eacute;cu de la blessure et du retour au jeu</li>
+          <li>Regard technique pr&eacute;cis et exp&eacute;rienc&eacute;</li>
+          <li>Approche adapt&eacute;e &agrave; ton niveau et ton poste</li>
+          <li>Disponibilit&eacute; et suivi entre les s&eacute;ances</li>
+        </ul>
+        <a href="#reservation" class="btn-primary">R&eacute;server mon coaching basket</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/nz_logo_nav.png" alt="NZ" class="footer-logo">
+        <div class="footer-brand-name">Mathieu Nzita</div>
+        <p class="footer-tagline">Coaching remise en forme, performance et retour au sport. Sp&eacute;cialit&eacute; basket.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social">&#128247;</a>
+          <a href="#" class="footer-social">&#127925;</a>
+          <a href="#" class="footer-social">&#9654;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="remise-en-forme.html">Remise en forme</a></li>
+          <li><a href="retour-au-sport.html">Retour au sport</a></li>
+          <li><a href="performance.html">Performance</a></li>
+          <li><a href="coaching-basket.html">Coaching basket</a></li>
+          <li><a href="mon-histoire.html">Mon histoire</a></li>
+          <li><a href="tarifs.html">Tarifs</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact-item">&#9993;&#65039; mathieunzita60@gmail.com</div>
+        <div class="footer-contact-item">&#128241; Disponible via WhatsApp</div>
+        <div class="footer-contact-item">&#128205; Thiais (94) &mdash; &Icirc;le-de-France</div>
+        <div class="footer-contact-item">&#128336; R&eacute;ponse sous 24h</div>
+      </div>
+      <div class="footer-col">
+        <h4>Accompagnements</h4>
+        <ul>
+          <li><a href="contact.html">Bilan Forme &amp; Performance</a></li>
+          <li><a href="remise-en-forme.html">Coaching remise en forme</a></li>
+          <li><a href="retour-au-sport.html">Coaching retour au sport</a></li>
+          <li><a href="performance.html">Coaching performance</a></li>
+          <li><a href="coaching-basket.html">Coaching basket individuel</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 Mathieu Nzita &mdash; Tous droits r&eacute;serv&eacute;s.</p>
+      <div class="footer-legal"><a href="#">Mentions l&eacute;gales</a><a href="#">Confidentialit&eacute;</a><a href="#">CGV</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// NAV
+const nav=document.getElementById("mainNav");
+window.addEventListener("scroll",()=>{if(window.scrollY>60){nav.style.background="rgba(0,0,0,0.72)";nav.style.backdropFilter="blur(32px)"}else{nav.style.background="";nav.style.backdropFilter=""}});
+function toggleNav(){nav.classList.toggle("mobile-open");nav.querySelector(".nav-toggle").innerHTML=nav.classList.contains("mobile-open")?"&#10005;":"&#9776;";}
+nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("mobile-open");nav.querySelector(".nav-toggle").innerHTML="&#9776;";}));
+
+// REVEAL
+const reveals=document.querySelectorAll(".reveal");
+const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add("visible"),i*80);observer.unobserve(entry.target)}})},{threshold:.1});
+reveals.forEach(el=>observer.observe(el));
+
+// CALENDAR
+let currentDate=new Date();
+let selectedDate=null;
+let selectedCreneau=null;
+const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const DAYS=['Lu','Ma','Me','Je','Ve','Sa','Di'];
+
+function renderCalendar(){
+  const year=currentDate.getFullYear(),month=currentDate.getMonth();
+  document.getElementById('calMonth').textContent=MONTHS[month]+' '+year;
+  const grid=document.getElementById('calGrid');
+  grid.innerHTML='';
+  DAYS.forEach(d=>{const el=document.createElement('div');el.className='date-cell header';el.textContent=d;grid.appendChild(el)});
+  const firstDay=new Date(year,month,1);
+  let startDow=firstDay.getDay();
+  startDow=startDow===0?6:startDow-1;
+  for(let i=0;i<startDow;i++){const el=document.createElement('div');el.className='date-cell empty';grid.appendChild(el)}
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const today=new Date();today.setHours(0,0,0,0);
+  for(let d=1;d<=daysInMonth;d++){
+    const el=document.createElement('div');
+    const cellDate=new Date(year,month,d);cellDate.setHours(0,0,0,0);
+    const dow=cellDate.getDay();
+    const isWeekend=dow===0||dow===6;
+    const isPast=cellDate<today;
+    if(isPast||isWeekend){el.className='date-cell past';el.textContent=d}
+    else{
+      el.className='date-cell available';
+      if(cellDate.getTime()===today.getTime())el.classList.add('today');
+      if(selectedDate&&cellDate.getTime()===selectedDate.getTime())el.classList.add('selected');
+      el.textContent=d;
+      el.addEventListener('click',()=>selectDate(cellDate,el));
+    }
+    grid.appendChild(el);
+  }
+}
+function changeMonth(dir){currentDate.setMonth(currentDate.getMonth()+dir);renderCalendar()}
+function selectDate(date,el){
+  selectedDate=date;
+  document.querySelectorAll('.date-cell.available').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  const fmt=date.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('selectedDateDisplay').textContent=fmt;
+  document.getElementById('recapDate').textContent=fmt;
+  updateRecap();
+}
+function selectCreneau(btn,creneau){
+  selectedCreneau=creneau;
+  document.querySelectorAll('.creneau-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('selectedCreneauDisplay').textContent=creneau;
+  document.getElementById('recapCreneau').textContent=creneau;
+  updateRecap();
+}
+function updateRecap(){
+  const recap=document.getElementById('resaRecap');
+  if(selectedDate&&selectedCreneau){recap.classList.add('visible')}
+}
+function submitResa(e){
+  e.preventDefault();
+  if(!selectedDate){alert('Veuillez choisir une date.');return}
+  if(!selectedCreneau){alert('Veuillez choisir un créneau.');return}
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true;btn.textContent='Envoi en cours...';
+  setTimeout(()=>{
+    document.getElementById('resaForm').style.display='none';
+    document.getElementById('resaSuccess').classList.add('visible');
+  },1400);
+}
+renderCalendar();
+</script>
+</body>
+</html>

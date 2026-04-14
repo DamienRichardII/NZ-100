@@ -150,7 +150,6 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
 </head>
 <body>
 
-<!-- ═══════════════ LOGIN SCREEN ═══════════════ -->
 <div id="loginScreen" class="login-screen">
   <div class="login-card glass-strong">
     <img src="assets/nz_logo_hero.png" alt="NZ 100%" class="login-logo">
@@ -195,10 +194,9 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
   </div>
 </div>
 
-<!-- ═══════════════ DASHBOARD ═══════════════ -->
 <div id="dashboardScreen" class="hidden">
 
-  <!-- Top Bar -->
+  
   <div class="topbar">
     <div class="topbar-left">
       <img src="assets/nz_logo_nav.png" alt="NZ" class="topbar-logo">
@@ -213,7 +211,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
   </div>
 
   <div class="app-layout">
-    <!-- Sidebar -->
+    
     <aside class="sidebar">
       <div class="sidebar-section">
         <div class="sidebar-label">Mon programme</div>
@@ -242,17 +240,17 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
       </div>
     </aside>
 
-    <!-- Main -->
+    
     <main class="main-content">
 
-      <!-- ═══ OVERVIEW ═══ -->
+      
       <div id="sec-overview">
         <div class="dashboard-welcome">
           <h1>Bienvenue dans votre programme &#128170;</h1>
           <p>S&eacute;lectionnez votre programme pour commencer votre transformation.</p>
         </div>
 
-        <!-- Video Welcome -->
+        
         <div class="video-player-area" style="margin-bottom:40px;">
           <video autoplay muted loop playsinline id="welcomeVideo">
             <source src="assets/welcome_video.mp4" type="video/mp4">
@@ -263,7 +261,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
           </div>
         </div>
 
-        <!-- Program Selection -->
+        
         <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;margin-bottom:20px;letter-spacing:0.05em;">VOTRE PROGRAMME</h2>
         <div class="program-select-grid">
           <div class="program-select-card glass active" onclick="selectProgram(this, 'perte')">
@@ -288,14 +286,14 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
           </div>
         </div>
 
-        <!-- Progress -->
+        
         <div class="progress-bar-container">
           <div class="progress-label"><span>Progression globale</span><strong>0%</strong></div>
           <div class="progress-track"><div class="progress-fill" style="width:0%"></div></div>
         </div>
       </div>
 
-      <!-- ═══ PART 1 : INTRODUCTION ═══ -->
+      
       <div id="sec-part1" class="hidden">
         <div class="dashboard-welcome">
           <h1>PARTIE 1 : INTRODUCTION</h1>
@@ -347,7 +345,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
           </div>
         </div>
 
-        <!-- Video Player Area -->
+        
         <div class="video-player-area" style="margin-top:32px;">
           <video autoplay muted loop playsinline id="part1Video">
             <source src="assets/welcome_video.mp4" type="video/mp4">
@@ -359,7 +357,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
         </div>
       </div>
 
-      <!-- ═══ PART 2 : PROGRAMME SPORTIF ═══ -->
+      
       <div id="sec-part2" class="hidden">
         <div class="dashboard-welcome">
           <h1>PARTIE 2 : PROGRAMME SPORTIF</h1>
@@ -420,7 +418,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
         </div>
       </div>
 
-      <!-- ═══ PART 3 : PROGRAMME NUTRITION ═══ -->
+      
       <div id="sec-part3" class="hidden">
         <div class="dashboard-welcome">
           <h1>PARTIE 3 : ALIMENTATION</h1>
