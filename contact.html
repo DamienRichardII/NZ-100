@@ -21,8 +21,8 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}button{cur
 .nav-links{display:flex;align-items:center;gap:2px;flex:1}
 .nav a{padding:7px 13px;font-size:.76rem;font-weight:500;color:rgba(255,255,255,.72);border-radius:var(--radius-pill);transition:var(--transition);letter-spacing:.01em;white-space:nowrap}
 .nav a:hover,.nav a.active{color:#fff;background:rgba(255,255,255,.1)}
-.nav-cta{padding:9px 20px \!important;background:#fff \!important;color:#000 \!important;font-weight:700 \!important;font-size:.76rem \!important;margin-left:8px;flex-shrink:0}
-.nav-cta:hover{background:rgba(255,255,255,.9) \!important;transform:scale(1.02)}
+.nav-cta{padding:9px 20px !important;background:#fff !important;color:#000 !important;font-weight:700 !important;font-size:.76rem !important;margin-left:8px;flex-shrink:0}
+.nav-cta:hover{background:rgba(255,255,255,.9) !important;transform:scale(1.02)}
 .nav-toggle{display:none;color:white;font-size:1.3rem;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.07);margin-left:auto}
 .page-header{position:relative;overflow:hidden;padding:160px 24px 100px;text-align:center;}
 .page-header-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.42;filter:brightness(.55);}
@@ -103,6 +103,12 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 @media(max-width:900px){.contact-layout{grid-template-columns:1fr;gap:40px}}
 @media(max-width:768px){.nav-links{display:none}.nav-toggle{display:flex;align-items:center;justify-content:center}.nav.mobile-open{flex-direction:column;top:0;left:0;right:0;transform:none;border-radius:0 0 22px 22px;padding:16px 20px 22px;background:rgba(0,0,0,.94);backdrop-filter:blur(40px);max-width:100%;width:100%}.nav.mobile-open .nav-links{display:flex;flex-direction:column;width:100%;gap:3px}.nav.mobile-open .nav-links a{display:block;text-align:center;padding:11px 18px}.nav.mobile-open .nav-cta{margin-left:0;margin-top:7px;text-align:center}section{padding:60px 20px}.contact-form-wrap{padding:28px 22px}.footer-top{grid-template-columns:1fr;gap:26px}.footer-bottom{flex-direction:column;text-align:center}}
 @media(max-width:480px){.form-row-2{grid-template-columns:1fr}}
+
+/* SOCIAL CTA BUTTONS */
+.footer-social-btn,.footer-socials .footer-social-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);font-size:.75rem;font-weight:500;color:rgba(255,255,255,.62);text-decoration:none;transition:.4s cubic-bezier(.25,.46,.45,.94);}
+.footer-social-btn:hover{background:rgba(255,255,255,.12);color:#fff;transform:translateY(-2px);border-color:rgba(255,255,255,.22);}
+.footer-social-btn svg{flex-shrink:0;opacity:.75;}
+.footer-social-btn:hover svg{opacity:1;}
 </style>
 </head>
 <body>
@@ -140,28 +146,28 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <p>Que tu veuilles retrouver ta forme, reprendre le sport, progresser physiquement ou r&eacute;server un coaching basket &mdash; je te r&eacute;ponds rapidement avec une proposition claire.</p>
         <div class="contact-details">
           <div class="contact-detail-item">
-            <div class="contact-detail-icon">&#9993;&#65039;</div>
+            <div class="contact-detail-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
             <div class="contact-detail-text">
               <h4>Email</h4>
               <p>mathieunzita60@gmail.com</p>
             </div>
           </div>
           <div class="contact-detail-item">
-            <div class="contact-detail-icon">&#128241;</div>
+            <div class="contact-detail-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 011 2.18 2 2 0 013 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.19-1.19a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0121 14h.92z"/></svg></div>
             <div class="contact-detail-text">
               <h4>WhatsApp</h4>
               <p>Disponible sur demande — r&eacute;ponse rapide</p>
             </div>
           </div>
           <div class="contact-detail-item">
-            <div class="contact-detail-icon">&#128205;</div>
+            <div class="contact-detail-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
             <div class="contact-detail-text">
               <h4>Zone d'intervention</h4>
-              <p>Thiais (94) &mdash; &Icirc;le-de-France</p>
+              <p>&Icirc;le-de-France</p>
             </div>
           </div>
           <div class="contact-detail-item">
-            <div class="contact-detail-icon">&#128336;</div>
+            <div class="contact-detail-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
             <div class="contact-detail-text">
               <h4>D&eacute;lai de r&eacute;ponse</h4>
               <p>Sous 24h en semaine</p>
@@ -251,7 +257,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
           </form>
           <div class="form-success" id="formSuccess">
             <div class="form-success-icon">&#9989;</div>
-            <h3>Message envoy&eacute; \!</h3>
+            <h3>Message envoy&eacute; !</h3>
             <p>Mathieu a bien re&ccedil;u ta demande et te r&eacute;pondra sous <strong>24h</strong> avec une proposition adapt&eacute;e &agrave; ton profil. Garde un &oelig;il sur ta bo&icirc;te mail ou ton WhatsApp.</p>
           </div>
         </div>
@@ -268,9 +274,9 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <div class="footer-brand-name">Mathieu Nzita</div>
         <p class="footer-tagline">Coaching remise en forme, performance et retour au sport. Sp&eacute;cialit&eacute; basket.</p>
         <div class="footer-socials">
-          <a href="#" class="footer-social">&#128247;</a>
-          <a href="#" class="footer-social">&#127925;</a>
-          <a href="#" class="footer-social">&#9654;</a>
+          <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg><span>Instagram</span></a>
+          <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg><span>TikTok</span></a>
+          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg><span>YouTube</span></a>
         </div>
       </div>
       <div class="footer-col">
@@ -288,10 +294,10 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="footer-contact-item">&#9993;&#65039; mathieunzita60@gmail.com</div>
-        <div class="footer-contact-item">&#128241; Disponible via WhatsApp</div>
-        <div class="footer-contact-item">&#128205; Thiais (94) &mdash; &Icirc;le-de-France</div>
-        <div class="footer-contact-item">&#128336; R&eacute;ponse sous 24h</div>
+        <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> mathieunzita60@gmail.com</div>
+        <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 011 2.18 2 2 0 013 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.19-1.19a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0121 14h.92z"/></svg> Disponible via WhatsApp</div>
+        <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> &Icirc;le-de-France</div>
+        <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> R&eacute;ponse sous 24h</div>
       </div>
       <div class="footer-col">
         <h4>Accompagnements</h4>

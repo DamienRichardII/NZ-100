@@ -205,6 +205,35 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 @media(max-width:900px){.seance-grid,.travail-grid{grid-template-columns:repeat(2,1fr)}.tarif-bloc{grid-template-columns:1fr}.grid-2{grid-template-columns:1fr;gap:40px}.side-img{max-width:360px;margin:0 auto;display:block}}
 @media(max-width:768px){.nav-links{display:none}.nav-toggle{display:flex;align-items:center;justify-content:center}.nav.mobile-open{flex-direction:column;top:0;left:0;right:0;transform:none;border-radius:0 0 22px 22px;padding:16px 20px 22px;background:rgba(0,0,0,.94);backdrop-filter:blur(40px);max-width:100%;width:100%}.nav.mobile-open .nav-links{display:flex;flex-direction:column;width:100%;gap:3px}.nav.mobile-open .nav-links a{display:block;text-align:center;padding:11px 18px}.nav.mobile-open .nav-cta{margin-left:0;margin-top:7px;text-align:center}section{padding:80px 20px}.footer-top{grid-template-columns:1fr;gap:26px}.footer-bottom{flex-direction:column;text-align:center}.creneaux-grid{grid-template-columns:repeat(2,1fr)}.form-row-2{grid-template-columns:1fr}.hero-price-banner{flex-direction:column;gap:12px}.hero-price-sep{display:none}}
 @media(max-width:480px){.hero-actions{flex-direction:column;align-items:center}.hero-actions a{width:100%;max-width:300px;justify-content:center}.seance-grid,.travail-grid{grid-template-columns:1fr}.creneaux-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* VIDEO SEANCE BLOCKS */
+.seance-section{padding:80px 0;}
+.seance-section .section-container{max-width:1100px;margin:0 auto;padding:0 24px;}
+.seance-videos{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;border-radius:20px;overflow:hidden;}
+.seance-vid-block{position:relative;height:420px;overflow:hidden;cursor:default;}
+.seance-vid-block:hover .seance-vid{transform:scale(1.04);}
+.seance-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.25,.46,.45,.94);}
+.seance-vid-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.88) 0%,rgba(0,0,0,.4) 55%,rgba(0,0,0,.15) 100%);z-index:1;}
+.seance-vid-content{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:24px 22px;}
+.seance-vid-num{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.18em;color:rgba(255,255,255,.38);margin-bottom:6px;}
+.seance-vid-title{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;line-height:1;letter-spacing:.04em;margin-bottom:8px;}
+.seance-vid-desc{font-size:.78rem;color:rgba(255,255,255,.62);font-weight:300;line-height:1.55;}
+@media(max-width:900px){.seance-videos{grid-template-columns:repeat(2,1fr);}.seance-vid-block{height:300px;}}
+@media(max-width:560px){.seance-videos{grid-template-columns:1fr;}.seance-vid-block{height:260px;}.seance-vid-content{padding:20px 18px;}}
+
+/* TRAVAIL MARQUEE BAND */
+.travail-marquee{overflow:hidden;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);padding:22px 0;background:rgba(255,255,255,.02);}
+.travail-track{display:flex;align-items:center;gap:0;width:max-content;animation:travailscroll 22s linear infinite;}
+.travail-marquee:hover .travail-track{animation-play-state:paused;}
+.travail-kw{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.1em;white-space:nowrap;padding:0 28px;color:rgba(255,255,255,.78);}
+.travail-sep{font-size:.7rem;color:rgba(255,255,255,.22);flex-shrink:0;}
+@keyframes travailscroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SOCIAL CTA BUTTONS */
+.footer-social-btn,.footer-socials .footer-social-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);font-size:.75rem;font-weight:500;color:rgba(255,255,255,.62);text-decoration:none;transition:.4s cubic-bezier(.25,.46,.45,.94);}
+.footer-social-btn:hover{background:rgba(255,255,255,.12);color:#fff;transform:translateY(-2px);border-color:rgba(255,255,255,.22);}
+.footer-social-btn svg{flex-shrink:0;opacity:.75;}
+.footer-social-btn:hover svg{opacity:1;}
 </style>
 </head>
 <body>
@@ -253,72 +282,92 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
   </div>
 </div>
 
-<section>
+<section class="seance-section">
   <div class="section-container">
     <div class="reveal">
       <span class="section-label">La s&eacute;ance</span>
       <h2 class="section-title">UNE S&Eacute;ANCE<br>FAITE POUR TOI</h2>
-      <p class="section-desc" style="max-width:560px">Chaque s&eacute;ance est pr&eacute;par&eacute;e en fonction de ton profil. Niveau, poste, objectif du moment &mdash; rien n'est g&eacute;n&eacute;rique.</p>
+      <p class="section-desc" style="max-width:560px">Chaque s&eacute;ance est pr&eacute;par&eacute;e en fonction de ton profil. Niveau, poste, objectif du moment — rien n'est g&eacute;n&eacute;rique.</p>
     </div>
-    <div class="seance-grid reveal">
-      <div class="seance-item glass">
-        <span class="seance-icon">⏱️</span>
-        <div class="seance-title">1h15 – 1h30</div>
-        <p class="seance-desc">Dur&eacute;e adapt&eacute;e selon le contenu de la s&eacute;ance et les besoins du joueur</p>
+    <div class="seance-videos reveal">
+
+      <div class="seance-vid-block">
+        <video class="seance-vid" autoplay muted loop playsinline>
+          <source src="assets/1H15-1H30.mp4" type="video/mp4">
+        </video>
+        <div class="seance-vid-overlay"></div>
+        <div class="seance-vid-content">
+          <div class="seance-vid-num">01</div>
+          <div class="seance-vid-title">1h15 &ndash; 1h30</div>
+          <p class="seance-vid-desc">Dur&eacute;e adapt&eacute;e selon le contenu de la s&eacute;ance et les besoins du joueur</p>
+        </div>
       </div>
-      <div class="seance-item glass">
-        <span class="seance-icon">🎯</span>
-        <div class="seance-title">100% individuel</div>
-        <p class="seance-desc">Coaching en one-to-one. Toute l'attention est concentr&eacute;e sur toi</p>
+
+      <div class="seance-vid-block">
+        <video class="seance-vid" autoplay muted loop playsinline>
+          <source src="assets/100%-Individuel.mp4" type="video/mp4">
+        </video>
+        <div class="seance-vid-overlay"></div>
+        <div class="seance-vid-content">
+          <div class="seance-vid-num">02</div>
+          <div class="seance-vid-title">100% Individuel</div>
+          <p class="seance-vid-desc">Coaching en one-to-one. Toute l'attention est concentr&eacute;e sur toi</p>
+        </div>
       </div>
-      <div class="seance-item glass">
-        <span class="seance-icon">📋</span>
-        <div class="seance-title">Objectif pr&eacute;cis</div>
-        <p class="seance-desc">Chaque s&eacute;ance a un fil conducteur clair, d&eacute;fini avant de commencer</p>
+
+      <div class="seance-vid-block">
+        <video class="seance-vid" autoplay muted loop playsinline>
+          <source src="assets/objectif-precis.mp4" type="video/mp4">
+        </video>
+        <div class="seance-vid-overlay"></div>
+        <div class="seance-vid-content">
+          <div class="seance-vid-num">03</div>
+          <div class="seance-vid-title">Objectif pr&eacute;cis</div>
+          <p class="seance-vid-desc">Chaque s&eacute;ance a un fil conducteur clair, d&eacute;fini avant de commencer</p>
+        </div>
       </div>
-      <div class="seance-item glass">
-        <span class="seance-icon">📍</span>
-        <div class="seance-title">Thiais — 94</div>
-        <p class="seance-desc">Adresse exacte envoy&eacute;e apr&egrave;s confirmation de la r&eacute;servation</p>
+
+      <div class="seance-vid-block">
+        <video class="seance-vid" autoplay muted loop playsinline>
+          <source src="assets/IDF.mp4" type="video/mp4">
+        </video>
+        <div class="seance-vid-overlay"></div>
+        <div class="seance-vid-content">
+          <div class="seance-vid-num">04</div>
+          <div class="seance-vid-title">&Icirc;le-de-France</div>
+          <p class="seance-vid-desc">Adresse exacte envoy&eacute;e apr&egrave;s confirmation de la r&eacute;servation</p>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<section style="background:linear-gradient(180deg,transparent,rgba(255,255,255,.018),transparent)">
-  <div class="section-container">
+<section class="travail-band-section" style="padding:0;overflow:hidden;">
+  <div class="travail-band-header section-container" style="padding-top:80px;padding-bottom:40px;">
     <div class="reveal">
       <span class="section-label">Ce qu'on travaille</span>
       <h2 class="section-title">LE TRAVAIL<br>POSSIBLE</h2>
       <p class="section-desc" style="max-width:560px">Selon tes besoins du moment, on choisit ensemble ce qui va faire le plus de diff&eacute;rence pour toi.</p>
     </div>
-    <div class="travail-grid reveal">
-      <div class="travail-item glass">
-        <h4>🤾 Technique individuelle</h4>
-        <p>Dribble, finitions, shoots, r&eacute;ceptions, moves &mdash; le travail technique cibl&eacute; sur tes gestes prioritaires</p>
-      </div>
-      <div class="travail-item glass">
-        <h4>👣 Jeu de pieds</h4>
-        <p>P&eacute;n&eacute;trations, pivots, coupes, appuis &mdash; la base de tout joueur efficace sur le terrain</p>
-      </div>
-      <div class="travail-item glass">
-        <h4>⚡ Explosivit&eacute; & vitesse</h4>
-        <p>D&eacute;parts, acc&eacute;l&eacute;rations, d&eacute;tente, changements de direction &mdash; ce qui cr&eacute;e le d&eacute;calage</p>
-      </div>
-      <div class="travail-item glass">
-        <h4>💪 Pr&eacute;paration physique</h4>
-        <p>Travail physique sp&eacute;cifique basket : renforcement, mobilit&eacute;, gainage fonctionnel</p>
-      </div>
-      <div class="travail-item glass">
-        <h4>🔄 Retour au jeu</h4>
-        <p>Reprise apr&egrave;s blessure ou longue coupure &mdash; retour progressif et s&eacute;curis&eacute; sur le parquet</p>
-      </div>
-      <div class="travail-item glass">
-        <h4>🧠 Lecture de jeu &amp; mental</h4>
-        <p>Prise de d&eacute;cision, confiance, g&eacute;rer la pression &mdash; la dimension mentale qui fait la diff&eacute;rence</p>
-      </div>
+  </div>
+  <div class="travail-marquee" aria-hidden="true">
+    <div class="travail-track">
+      <span class="travail-kw">Technique individuelle</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Jeu de pieds</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Explosivit&eacute; &amp; vitesse</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Pr&eacute;paration physique</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Retour au jeu</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Lecture de jeu &amp; mental</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Technique individuelle</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Jeu de pieds</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Explosivit&eacute; &amp; vitesse</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Pr&eacute;paration physique</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Retour au jeu</span><span class="travail-sep">/</span>
+      <span class="travail-kw">Lecture de jeu &amp; mental</span><span class="travail-sep">/</span>
     </div>
   </div>
+  <div style="padding-bottom:80px;"></div>
 </section>
 
 <section id="tarif">
@@ -373,7 +422,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
           <span class="info-icon">📍</span>
           <div class="info-text">
             <h4>4. Adresse envoy&eacute;e</h4>
-            <p>L'adresse exacte du gymnasium est envoy&eacute;e apr&egrave;s confirmation. Base : <strong>Thiais (94)</strong>.</p>
+            <p>L'adresse exacte du gymnasium est envoy&eacute;e apr&egrave;s confirmation. Base : <strong>&Icirc;le-de-France</strong>.</p>
           </div>
         </div>
         <div class="info-row">
@@ -506,7 +555,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 
         
         <div class="resa-success glass-strong" id="resaSuccess">
-          <div class="resa-success-icon">✅</div>
+          <div class="resa-success-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></div>
           <h3>Demande envoy&eacute;e !</h3>
           <p>Ta demande de r&eacute;servation a bien &eacute;t&eacute; re&ccedil;ue.<br>Mathieu te contactera sous <strong>24h</strong> pour confirmer ton cr&eacute;neau et te communiquer les informations de paiement de l'acompte (30 €) ainsi que l'adresse exacte.<br><br>Tu recevras une confirmation par email ou WhatsApp.</p>
         </div>
@@ -515,29 +564,6 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
   </div>
 </section>
 
-<section>
-  <div class="section-container">
-    <div class="grid-2">
-      <div class="reveal">
-        <img src="assets/IMG_4890.jpeg" alt="Mathieu Nzita coach basket" class="side-img">
-      </div>
-      <div class="block-text reveal">
-        <span class="section-label">Pourquoi Mathieu</span>
-        <h2 class="section-title">UN ANCIEN<br>JOUEUR DE<br>HAUT NIVEAU</h2>
-        <p>Mathieu Nzita a jou&eacute; au Mans Sarthe Basket, au Boulazac Basket Dordogne. Champion de France, stagiaire pro, capitaine &mdash; il a v&eacute;cu le basket &agrave; haut niveau de l'int&eacute;rieur.</p>
-        <p>Il coache avec un regard technique form&eacute; par des ann&eacute;es d'entra&icirc;nements d'&eacute;lite, une pr&eacute;cision de correction rare, et une capacit&eacute; &agrave; comprendre exactement ce qui bloque dans le jeu d'un joueur.</p>
-        <ul class="check-list">
-          <li>Formation haut niveau &mdash; P&ocirc;le Espoir + Pro</li>
-          <li>V&eacute;cu de la blessure et du retour au jeu</li>
-          <li>Regard technique pr&eacute;cis et exp&eacute;rienc&eacute;</li>
-          <li>Approche adapt&eacute;e &agrave; ton niveau et ton poste</li>
-          <li>Disponibilit&eacute; et suivi entre les s&eacute;ances</li>
-        </ul>
-        <a href="#reservation" class="btn-primary">R&eacute;server mon coaching basket</a>
-      </div>
-    </div>
-  </div>
-</section>
 
 <footer class="footer">
   <div class="footer-inner">
@@ -547,9 +573,9 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <div class="footer-brand-name">Mathieu Nzita</div>
         <p class="footer-tagline">Coaching remise en forme, performance et retour au sport. Sp&eacute;cialit&eacute; basket.</p>
         <div class="footer-socials">
-          <a href="#" class="footer-social">&#128247;</a>
-          <a href="#" class="footer-social">&#127925;</a>
-          <a href="#" class="footer-social">&#9654;</a>
+          <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg><span>Instagram</span></a>
+          <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg><span>TikTok</span></a>
+          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg><span>YouTube</span></a>
         </div>
       </div>
       <div class="footer-col">
@@ -567,10 +593,10 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <div class="footer-contact-item">&#9993;&#65039; mathieunzita60@gmail.com</div>
-        <div class="footer-contact-item">&#128241; Disponible via WhatsApp</div>
-        <div class="footer-contact-item">&#128205; Thiais (94) &mdash; &Icirc;le-de-France</div>
-        <div class="footer-contact-item">&#128336; R&eacute;ponse sous 24h</div>
+        <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> mathieunzita60@gmail.com</div>
+        <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 011 2.18 2 2 0 013 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.09 7.91a16 16 0 006 6l1.19-1.19a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0121 14h.92z"/></svg> Disponible via WhatsApp</div>
+        <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> &Icirc;le-de-France</div>
+        <div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> R&eacute;ponse sous 24h</div>
       </div>
       <div class="footer-col">
         <h4>Accompagnements</h4>

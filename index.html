@@ -80,9 +80,7 @@ button{cursor:pointer;border:none;background:none;font-family:inherit;}
 .btn-primary:hover{background:rgba(255,255,255,.9);transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,255,255,.15);}
 .btn-ghost{display:inline-block;color:var(--white);font-size:.88rem;font-weight:500;padding:15px 28px;border-radius:var(--radius-pill);border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:var(--transition);}
 .btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.5);}
-.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-muted);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;animation:scrollbounce 2.2s infinite;}
-.hero-scroll-line{width:1px;height:30px;background:linear-gradient(to bottom,rgba(255,255,255,.45),transparent);}
-@keyframes scrollbounce{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
+
 
 /* MARQUEE */
 .marquee-section{overflow:hidden;padding:24px 0;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06);position:relative;z-index:1;}
@@ -190,6 +188,26 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease;}
 .reveal.visible{opacity:1;transform:none;}
+
+/* ROADMAP */
+.roadmap{display:flex;flex-direction:column;max-width:720px;margin:56px auto 0;}
+.roadmap-step{display:flex;gap:20px;align-items:stretch;}
+.roadmap-track{display:flex;flex-direction:column;align-items:center;width:48px;flex-shrink:0;padding-bottom:16px;}
+.roadmap-num{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.08em;flex-shrink:0;}
+.roadmap-line{width:1px;flex:1;min-height:20px;background:linear-gradient(to bottom,rgba(255,255,255,.14) 0%,rgba(255,255,255,.03) 100%);margin-top:6px;}
+.roadmap-body{flex:1;padding:26px 30px;margin-bottom:16px;border-radius:var(--radius-glass);}
+.roadmap-body--final{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.07);}
+.roadmap-tag{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.38);margin-bottom:8px;}
+.roadmap-tag--final{color:rgba(255,255,255,.7);}
+.roadmap-title{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.04em;margin-bottom:10px;line-height:1;}
+.roadmap-desc{font-size:.86rem;color:rgba(255,255,255,.65);line-height:1.72;font-weight:300;}
+@media(max-width:600px){.roadmap{margin-top:36px;}.roadmap-body{padding:20px 22px;}.roadmap-num{width:36px;height:36px;font-size:.85rem;}.roadmap-track{width:36px;}}
+
+/* SOCIAL CTA BUTTONS */
+.footer-social-btn,.footer-socials .footer-social-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);font-size:.75rem;font-weight:500;color:rgba(255,255,255,.62);text-decoration:none;transition:.4s cubic-bezier(.25,.46,.45,.94);}
+.footer-social-btn:hover{background:rgba(255,255,255,.12);color:#fff;transform:translateY(-2px);border-color:rgba(255,255,255,.22);}
+.footer-social-btn svg{flex-shrink:0;opacity:.75;}
+.footer-social-btn:hover svg{opacity:1;}
 </style>
 </head>
 <body>
@@ -224,12 +242,8 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
     <p class="hero-slogan-sub">La cl&eacute; de la libert&eacute;</p>
     <div class="hero-ctas">
       <a href="contact.html" class="btn-primary">R&eacute;server un bilan gratuit</a>
-      <a href="#services" class="btn-ghost">D&eacute;couvrir les accompagnements</a>
+      <a href="tarifs.html" class="btn-ghost">D&eacute;couvrir les accompagnements</a>
     </div>
-  </div>
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    <span>Scroll</span>
   </div>
 </section>
 
@@ -252,7 +266,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
   <div class="section-inner">
     <p class="section-label reveal">Parcours &amp; r&eacute;sultats</p>
     <h2 class="section-title reveal">Une expertise<br>construite sur le terrain.</h2>
-    <p class="section-sub reveal">P&ocirc;le Espoir, professionnel, blessures, retour &mdash; Mathieu a v&eacute;cu tout &ccedil;a. Il coache depuis ce v&eacute;cu.</p>
+    <p class="section-sub reveal">P&ocirc;le Espoir, professionnel, blessures, retour. Mathieu a v&eacute;cu tout &ccedil;a. Il coache depuis ce v&eacute;cu.</p>
     <div class="cred-grid reveal">
       <div class="cred-item">
         <span class="cred-number">+8</span>
@@ -264,7 +278,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
       </div>
       <div class="cred-item">
         <span class="cred-number">P&ocirc;le</span>
-        <div class="cred-label">Espoir basket &mdash; d&egrave;s 12 ans</div>
+        <div class="cred-label">Espoir basket &ndash; d&egrave;s 12 ans</div>
       </div>
       <div class="cred-item">
         <span class="cred-number">Pro</span>
@@ -280,93 +294,95 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
     <h2 class="section-title reveal">Ce coaching est fait<br>pour toi si&hellip;</h2>
     <div class="pourqui-grid">
       <div class="pourqui-card glass reveal">
-        <div class="pq-icon">&#127939;</div>
+        <div class="pq-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4" r="2"/><path d="M5 21l3-8 3 3 3-4 4 5"/><path d="M9 13l-2-5 4-2 2 4"/></svg></div>
         <div class="pq-title">Tu veux te remettre en forme</div>
         <p class="pq-desc">Tu as pris du poids, perdu la condition physique, tu veux retrouver de l&rsquo;&eacute;nergie et te sentir bien dans ton corps &mdash; sans r&eacute;gime ni programme g&eacute;n&eacute;rique.</p>
       </div>
       <div class="pourqui-card glass reveal">
-        <div class="pq-icon">&#129307;</div>
+        <div class="pq-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 109-9H3"/><polyline points="3 3 3 12 12 12"/></svg></div>
         <div class="pq-title">Tu reprends apr&egrave;s une blessure</div>
         <p class="pq-desc">Op&eacute;ration, longue coupure, peur de rechuter. Tu as besoin d&rsquo;un retour structur&eacute;, progressif et s&eacute;curis&eacute; pour retrouver confiance et sensations.</p>
       </div>
       <div class="pourqui-card glass reveal">
-        <div class="pq-icon">&#9889;</div>
+        <div class="pq-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <div class="pq-title">Tu vises de meilleures performances</div>
         <p class="pq-desc">Tu t&rsquo;entra&icirc;nes d&eacute;j&agrave; mais tu veux passer un cap &mdash; explosivit&eacute;, force, coordination, endurance. Un vrai programme de performance personnalis&eacute;.</p>
       </div>
       <div class="pourqui-card glass reveal">
-        <div class="pq-icon">&#127936;</div>
+        <div class="pq-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M4.93 4.93l14.14 14.14M19.07 4.93L4.93 19.07"/><path d="M12 2a10 10 0 010 20M2 12h20"/></svg></div>
         <div class="pq-title">Tu joues au basket</div>
-        <p class="pq-desc">Basketteur amateur ou comp&eacute;titeur, sessions individuelles sur le terrain avec un coach qui a jou&eacute; au plus haut niveau. Thiais (94), 60&euro; la s&eacute;ance.</p>
+        <p class="pq-desc">Basketteur amateur ou comp&eacute;titeur, sessions individuelles sur le terrain avec un coach qui a jou&eacute; au plus haut niveau. &Icirc;le-de-France, 60&euro; la s&eacute;ance.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="services">
-  <div class="section-inner">
-    <p class="section-label reveal">Les accompagnements</p>
-    <h2 class="section-title reveal">Choisir son parcours.</h2>
-    <p class="section-sub reveal">Chaque accompagnement commence par un bilan gratuit pour construire quelque chose de sur-mesure.</p>
-    <div class="services-grid">
-      <a href="remise-en-forme.html" class="service-card glass reveal">
-        <div class="sc-number">01</div>
-        <div class="sc-title">Remise en forme</div>
-        <p class="sc-desc">Retrouver le corps que tu veux. Programme progressif, alimentation, habitudes, mental &mdash; une transformation compl&egrave;te et durable.</p>
-        <span class="sc-link">D&eacute;couvrir &rarr;</span>
-      </a>
-      <a href="retour-au-sport.html" class="service-card glass reveal">
-        <div class="sc-number">02</div>
-        <div class="sc-title">Retour au sport</div>
-        <p class="sc-desc">Reprendre apr&egrave;s une blessure ou une longue coupure. Un protocole s&eacute;curis&eacute; pour retrouver sensations, confiance et capacit&eacute;s physiques.</p>
-        <span class="sc-link">D&eacute;couvrir &rarr;</span>
-      </a>
-      <a href="performance.html" class="service-card glass reveal">
-        <div class="sc-number">03</div>
-        <div class="sc-title">Performance</div>
-        <p class="sc-desc">Passer un cap. Force, explosivit&eacute;, mobilit&eacute;, coordination. Pour les sportifs qui s&rsquo;entra&icirc;nent d&eacute;j&agrave; et veulent des r&eacute;sultats mesurables.</p>
-        <span class="sc-link">D&eacute;couvrir &rarr;</span>
-      </a>
-      <a href="coaching-basket.html" class="service-card glass featured reveal">
-        <div class="sc-number">04 &bull; Sp&eacute;cialit&eacute;</div>
-        <div class="sc-title">Coaching Basket</div>
-        <p class="sc-desc">Sessions individuelles sur le terrain. Technique, physique, mental. 60&euro; / s&eacute;ance &mdash; Thiais (94). Cr&eacute;neaux &agrave; 10h30, 12h15, 14h00, 15h45.</p>
-        <span class="sc-link">R&eacute;server une s&eacute;ance &rarr;</span>
-      </a>
-    </div>
-  </div>
-</section>
 
 <section class="section" id="methode">
   <div class="section-inner">
     <p class="section-label reveal">La m&eacute;thode NZ</p>
     <h2 class="section-title reveal">Comment &ccedil;a se passe.</h2>
-    <div class="methode-steps">
-      <div class="step-card glass reveal">
-        <div class="step-num">01</div>
-        <div class="step-title">Bilan gratuit</div>
-        <p class="step-desc">On analyse ton niveau, tes objectifs, ton historique. 30 minutes. Sans engagement.</p>
+    <div class="roadmap reveal">
+
+      <div class="roadmap-step">
+        <div class="roadmap-track">
+          <div class="roadmap-num">01</div>
+          <div class="roadmap-line"></div>
+        </div>
+        <div class="roadmap-body glass">
+          <div class="roadmap-tag">Point de d&eacute;part</div>
+          <div class="roadmap-title">Bilan gratuit</div>
+          <p class="roadmap-desc">On analyse ton niveau, tes objectifs, ton historique. 30 minutes. Sans engagement. C&rsquo;est ici que tout commence.</p>
+        </div>
       </div>
-      <div class="step-card glass reveal">
-        <div class="step-num">02</div>
-        <div class="step-title">Programme sur-mesure</div>
-        <p class="step-desc">Un plan construit pour toi, pas un programme g&eacute;n&eacute;rique. Adapt&eacute; &agrave; ta vie et tes contraintes.</p>
+
+      <div class="roadmap-step">
+        <div class="roadmap-track">
+          <div class="roadmap-num">02</div>
+          <div class="roadmap-line"></div>
+        </div>
+        <div class="roadmap-body glass">
+          <div class="roadmap-tag">Fondation</div>
+          <div class="roadmap-title">Programme sur-mesure</div>
+          <p class="roadmap-desc">Un plan construit pour toi, pas un programme g&eacute;n&eacute;rique. Adapt&eacute; &agrave; ta vie, tes contraintes, ton niveau r&eacute;el.</p>
+        </div>
       </div>
-      <div class="step-card glass reveal">
-        <div class="step-num">03</div>
-        <div class="step-title">Coaching actif</div>
-        <p class="step-desc">Entra&icirc;nements encadr&eacute;s, corrections en temps r&eacute;el, progression mesur&eacute;e semaine apr&egrave;s semaine.</p>
+
+      <div class="roadmap-step">
+        <div class="roadmap-track">
+          <div class="roadmap-num">03</div>
+          <div class="roadmap-line"></div>
+        </div>
+        <div class="roadmap-body glass">
+          <div class="roadmap-tag">Progression</div>
+          <div class="roadmap-title">Coaching actif</div>
+          <p class="roadmap-desc">Entra&icirc;nements encadr&eacute;s, corrections en temps r&eacute;el. Chaque s&eacute;ance a un objectif mesurable. Rien n&rsquo;est laiss&eacute; au hasard.</p>
+        </div>
       </div>
-      <div class="step-card glass reveal">
-        <div class="step-num">04</div>
-        <div class="step-title">Ajustements continus</div>
-        <p class="step-desc">Le programme &eacute;volue avec toi. Chaque feedback compte, chaque plateau est anticip&eacute;.</p>
+
+      <div class="roadmap-step">
+        <div class="roadmap-track">
+          <div class="roadmap-num">04</div>
+          <div class="roadmap-line"></div>
+        </div>
+        <div class="roadmap-body glass">
+          <div class="roadmap-tag">Affinage</div>
+          <div class="roadmap-title">Ajustements continus</div>
+          <p class="roadmap-desc">Le programme &eacute;volue avec toi. Chaque feedback compte, chaque plateau est anticip&eacute; avant d&rsquo;appara&icirc;tre.</p>
+        </div>
       </div>
-      <div class="step-card glass reveal">
-        <div class="step-num">05</div>
-        <div class="step-title">Autonomie durable</div>
-        <p class="step-desc">L&rsquo;objectif final : que tu n&rsquo;aies plus besoin de moi. Des habitudes ancr&eacute;es, un corps capable.</p>
+
+      <div class="roadmap-step">
+        <div class="roadmap-track">
+          <div class="roadmap-num">05</div>
+        </div>
+        <div class="roadmap-body glass roadmap-body--final">
+          <div class="roadmap-tag roadmap-tag--final">Objectif final</div>
+          <div class="roadmap-title">Autonomie durable</div>
+          <p class="roadmap-desc">Tu n&rsquo;as plus besoin de moi. Des habitudes ancr&eacute;es, un corps capable, une discipline int&eacute;gr&eacute;e. C&rsquo;est &ccedil;a la libert&eacute;.</p>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -379,7 +395,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
     <div class="histoire-content reveal">
       <p class="section-label">Qui est Mathieu ?</p>
       <blockquote class="histoire-quote">&ldquo;J&rsquo;ai &eacute;t&eacute; en fauteuil roulant &agrave; 15 ans. Puis Champion de France &agrave; 17.&rdquo;</blockquote>
-      <p class="histoire-text">P&ocirc;le Espoir d&egrave;s 12 ans, op&eacute;ration du genou &agrave; 15, 8 mois de r&eacute;&eacute;ducation &mdash; Mathieu a v&eacute;cu le pire et le meilleur du sport. Ce parcours l&rsquo;a rendu capable de comprendre chaque &eacute;tape que tu traverses : la peur, le doute, la progression, la victoire.</p>
+      <p class="histoire-text">P&ocirc;le Espoir d&egrave;s 12 ans, op&eacute;ration du genou &agrave; 15, 8 mois de r&eacute;&eacute;ducation. Mathieu a v&eacute;cu le pire et le meilleur du sport. Ce parcours l&rsquo;a rendu capable de comprendre chaque &eacute;tape que tu traverses : la peur, le doute, la progression, la victoire.</p>
       <p class="histoire-text">Il ne coache pas depuis un livre. Il coache depuis ce qu&rsquo;il a v&eacute;cu.</p>
       <a href="mon-histoire.html" class="btn-ghost">Lire son parcours complet &rarr;</a>
     </div>
@@ -438,11 +454,11 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
     <div class="footer-grid">
       <div class="footer-brand">
         <img src="assets/nz_logo_nav.png" alt="NZ 100%" class="footer-logo">
-        <p>Coach sportif expert en remise en forme, retour au sport et performance. Bas&eacute; &agrave; Thiais (94), interventions sur Paris.</p>
+        <p>Coach sportif expert en remise en forme, retour au sport et performance. Bas&eacute; en &Icirc;le-de-France, interventions sur Paris.</p>
         <div class="footer-social">
-          <a href="#" aria-label="Instagram">&#128247;</a>
-          <a href="#" aria-label="TikTok">&#127925;</a>
-          <a href="#" aria-label="YouTube">&#9654;</a>
+          <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg><span>Instagram</span></a>
+          <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg><span>TikTok</span></a>
+          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg><span>YouTube</span></a>
         </div>
       </div>
       <div class="footer-col">
@@ -468,7 +484,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
         <ul>
           <li><a href="mailto:mathieunzita60@gmail.com">mathieunzita60@gmail.com</a></li>
           <li><a href="contact.html">WhatsApp</a></li>
-          <li><a href="#">Thiais (94) &bull; Paris</a></li>
+          <li><a href="#">&Icirc;le-de-France</a></li>
           <li><a href="contact.html" style="color:rgba(255,255,255,.85);font-weight:600;">R&eacute;server un bilan &rarr;</a></li>
         </ul>
       </div>
