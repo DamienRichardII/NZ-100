@@ -53,7 +53,7 @@ section{padding:100px 24px;position:relative}
 .pourqui-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px}
 .pq-item{padding:28px 24px;transition:var(--transition)}
 .pq-item:hover{transform:translateY(-3px);background:rgba(255,255,255,.08)}
-.pq-item-icon{font-size:1.8rem;margin-bottom:14px}
+.pq-item-icon{width:44px;height:44px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:#fff;}
 .pq-item-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;margin-bottom:8px}
 .pq-item-desc{font-size:.86rem;color:var(--text-secondary);font-weight:300;line-height:1.75}
 
@@ -115,11 +115,11 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 @media(max-width:768px){.nav-links{display:none}.nav-toggle{display:flex;align-items:center;justify-content:center}.nav.mobile-open{flex-direction:column;top:0;left:0;right:0;transform:none;border-radius:0 0 22px 22px;padding:16px 20px 22px;background:rgba(0,0,0,.94);backdrop-filter:blur(40px);max-width:100%;width:100%}.nav.mobile-open .nav-links{display:flex;flex-direction:column;width:100%;gap:3px}.nav.mobile-open .nav-links a{display:block;text-align:center;padding:11px 18px}.nav.mobile-open .nav-cta{margin-left:0;margin-top:7px;text-align:center}section{padding:80px 20px}.footer-top{grid-template-columns:1fr;gap:26px}.footer-bottom{flex-direction:column;text-align:center}}
 @media(max-width:480px){.cta-btns,.hero-actions{flex-direction:column;align-items:center}.cta-btns a,.hero-actions a{width:100%;max-width:300px;justify-content:center}}
 
-/* SOCIAL CTA BUTTONS */
-.footer-social-btn,.footer-socials .footer-social-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);font-size:.75rem;font-weight:500;color:rgba(255,255,255,.62);text-decoration:none;transition:.4s cubic-bezier(.25,.46,.45,.94);}
-.footer-social-btn:hover{background:rgba(255,255,255,.12);color:#fff;transform:translateY(-2px);border-color:rgba(255,255,255,.22);}
-.footer-social-btn svg{flex-shrink:0;opacity:.75;}
-.footer-social-btn:hover svg{opacity:1;}
+/* SOCIAL ICON BUTTONS - icon only */
+.footer-social-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);text-decoration:none;transition:.4s cubic-bezier(.25,.46,.45,.94);}
+.footer-social-btn:hover{background:rgba(255,255,255,.14);color:#fff;transform:translateY(-2px);border-color:rgba(255,255,255,.25);}
+.footer-social-btn svg{flex-shrink:0;}
+.footer-socials{display:flex;gap:9px;}.footer-social{display:flex;gap:9px;margin-top:18px;}
 </style>
 </head>
 <body>
@@ -140,7 +140,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 </nav>
 
 <div class="page-hero">
-  <video class="page-hero-video" autoplay muted loop playsinline poster="assets/IMG_3832.jpeg"><source src="assets/hero_video.mp4" type="video/mp4"></video>
+  <video class="page-hero-video" autoplay muted loop playsinline poster="assets/IMG_3832.jpeg"><source src="assets/Mathieu-hero-V2.mp4" type="video/mp4"></video>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content">
     <div class="hero-eyebrow">Accompagnement 01 &middot; Mathieu Nzita</div>
@@ -160,17 +160,17 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
     </div>
     <div class="pourqui-grid-3 reveal">
       <div class="pq-item glass">
-        <div class="pq-item-icon">😮‍💨</div>
+        <div class="pq-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg></div>
         <div class="pq-item-title">Tu t'essouffles vite</div>
         <p class="pq-item-desc">Monter des escaliers, marcher vite, bouger sans te sentir limit&eacute; &mdash; &ccedil;a doit redevenir naturel.</p>
       </div>
       <div class="pq-item glass">
-        <div class="pq-item-icon">⚡</div>
+        <div class="pq-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <div class="pq-item-title">Tu manques d'&eacute;nergie</div>
         <p class="pq-item-desc">Tu te sens fatigu&eacute;, lourd, sans vitalit&eacute;. Le corps a besoin de mouvement pour retrouver son niveau.</p>
       </div>
       <div class="pq-item glass">
-        <div class="pq-item-icon">📅</div>
+        <div class="pq-item-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
         <div class="pq-item-title">Tu es inactif depuis un moment</div>
         <p class="pq-item-desc">Pas de sport depuis des mois ou des ann&eacute;es. Tu veux reprendre mais ne sais pas par o&ugrave; commencer.</p>
       </div>
@@ -296,9 +296,9 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <div class="footer-brand-name">Mathieu Nzita</div>
         <p class="footer-tagline">Coaching remise en forme, performance et retour au sport. Sp&eacute;cialit&eacute; basket.</p>
         <div class="footer-socials">
-          <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg><span>Instagram</span></a>
-          <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg><span>TikTok</span></a>
-          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg><span>YouTube</span></a>
+          <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg></a>
+          <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg></a>
+          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg></a>
         </div>
       </div>
       <div class="footer-col">

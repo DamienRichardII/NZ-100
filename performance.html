@@ -47,7 +47,7 @@ section{padding:100px 24px;position:relative}
 .pilliers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:50px}
 .pillier-card{padding:30px 26px;transition:var(--transition)}
 .pillier-card:hover{transform:translateY(-3px);background:rgba(255,255,255,.08)}
-.pillier-icon{font-size:2rem;margin-bottom:16px}
+.pillier-icon{width:48px;height:48px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:#fff;}
 .pillier-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;margin-bottom:8px}
 .pillier-desc{font-size:.86rem;color:rgba(255,255,255,.72);font-weight:300;line-height:1.75}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
@@ -92,11 +92,11 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 @media(max-width:768px){.nav-links{display:none}.nav-toggle{display:flex;align-items:center;justify-content:center}.nav.mobile-open{flex-direction:column;top:0;left:0;right:0;transform:none;border-radius:0 0 22px 22px;padding:16px 20px 22px;background:rgba(0,0,0,.94);backdrop-filter:blur(40px);max-width:100%;width:100%}.nav.mobile-open .nav-links{display:flex;flex-direction:column;width:100%;gap:3px}.nav.mobile-open .nav-links a{display:block;text-align:center;padding:11px 18px}.nav.mobile-open .nav-cta{margin-left:0;margin-top:7px;text-align:center}section{padding:80px 20px}.footer-top{grid-template-columns:1fr;gap:26px}.footer-bottom{flex-direction:column;text-align:center}}
 @media(max-width:480px){.cta-btns,.hero-actions{flex-direction:column;align-items:center}.cta-btns a,.hero-actions a{width:100%;max-width:300px;justify-content:center}}
 
-/* SOCIAL CTA BUTTONS */
-.footer-social-btn,.footer-socials .footer-social-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);font-size:.75rem;font-weight:500;color:rgba(255,255,255,.62);text-decoration:none;transition:.4s cubic-bezier(.25,.46,.45,.94);}
-.footer-social-btn:hover{background:rgba(255,255,255,.12);color:#fff;transform:translateY(-2px);border-color:rgba(255,255,255,.22);}
-.footer-social-btn svg{flex-shrink:0;opacity:.75;}
-.footer-social-btn:hover svg{opacity:1;}
+/* SOCIAL ICON BUTTONS - icon only */
+.footer-social-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);text-decoration:none;transition:.4s cubic-bezier(.25,.46,.45,.94);}
+.footer-social-btn:hover{background:rgba(255,255,255,.14);color:#fff;transform:translateY(-2px);border-color:rgba(255,255,255,.25);}
+.footer-social-btn svg{flex-shrink:0;}
+.footer-socials{display:flex;gap:9px;}.footer-social{display:flex;gap:9px;margin-top:18px;}
 </style>
 </head>
 <body>
@@ -117,7 +117,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 </nav>
 
 <div class="page-hero">
-  <video class="page-hero-video" autoplay muted loop playsinline poster="assets/IMG_3832.jpeg"><source src="assets/hero_video.mp4" type="video/mp4"></video>
+  <video class="page-hero-video" autoplay muted loop playsinline poster="assets/IMG_3832.jpeg"><source src="assets/Mathieu-hero-V2.mp4" type="video/mp4"></video>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content">
     <div class="hero-eyebrow">Accompagnement 03 &middot; Mathieu Nzita</div>
@@ -138,22 +138,22 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
     </div>
     <div class="pilliers-grid reveal">
       <div class="pillier-card glass">
-        <div class="pillier-icon">💪</div>
+        <div class="pillier-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14.5c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.83 8 21v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14.5H5V16c0 .83-.67 1.5-1.5 1.5S2 16.83 2 16s.67-1.5 1.5-1.5z"/><path d="M14.5 13.5c0 4.142-3.358 7.5-7.5 7.5-4.142 0-7.5-3.358-7.5-7.5 0-4.142 3.358-7.5 7.5-7.5.95 0 1.862.175 2.708.492"/><path d="M14.5 13.5c0-4.142 3.358-7.5 7.5-7.5s7.5 3.358 7.5 7.5c0 4.142-3.358 7.5-7.5 7.5-.95 0-1.862-.175-2.708-.492"/></svg></div>
         <div class="pillier-title">Force &amp; puissance</div>
         <p class="pillier-desc">Renforcement musculaire fonctionnel, gainage, d&eacute;veloppement de la force utile dans ton sport ou ton activit&eacute;.</p>
       </div>
       <div class="pillier-card glass">
-        <div class="pillier-icon">🔄</div>
+        <div class="pillier-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></div>
         <div class="pillier-title">Mobilit&eacute; &amp; souplesse</div>
         <p class="pillier-desc">Amplitude de mouvement, pr&eacute;vention des blessures, lib&eacute;ration articulaire. La mobilit&eacute; multiplie la performance.</p>
       </div>
       <div class="pillier-card glass">
-        <div class="pillier-icon">⚡</div>
+        <div class="pillier-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <div class="pillier-title">Explosivit&eacute; &amp; vitesse</div>
         <p class="pillier-desc">D&eacute;tente, acc&eacute;l&eacute;ration, changement de direction. Le travail explosif cibl&eacute; qui fait la diff&eacute;rence.</p>
       </div>
       <div class="pillier-card glass">
-        <div class="pillier-icon">🎯</div>
+        <div class="pillier-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
         <div class="pillier-title">Coordination &amp; contr&ocirc;le</div>
         <p class="pillier-desc">Propioception, gestes techniques, qualit&eacute; du mouvement. Ce qui s&eacute;pare les bons sportifs des excellents.</p>
       </div>
@@ -163,7 +163,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <p class="pillier-desc">Capacit&eacute; &agrave; tenir dans la dur&eacute;e et &agrave; r&eacute;p&eacute;ter l'effort. Entra&icirc;nement adapt&eacute; &agrave; ton niveau et ton activit&eacute;.</p>
       </div>
       <div class="pillier-card glass">
-        <div class="pillier-icon">🧠</div>
+        <div class="pillier-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2z"/></svg></div>
         <div class="pillier-title">Discipline &amp; r&eacute;gularit&eacute;</div>
         <p class="pillier-desc">La performance se construit sur la r&eacute;gularit&eacute;. Mathieu t'aide &agrave; tenir le cap et &agrave; maintenir le niveau d'exigence.</p>
       </div>
@@ -247,9 +247,9 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <div class="footer-brand-name">Mathieu Nzita</div>
         <p class="footer-tagline">Coaching remise en forme, performance et retour au sport. Sp&eacute;cialit&eacute; basket.</p>
         <div class="footer-socials">
-          <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg><span>Instagram</span></a>
-          <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg><span>TikTok</span></a>
-          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg><span>YouTube</span></a>
+          <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg></a>
+          <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg></a>
+          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg></a>
         </div>
       </div>
       <div class="footer-col">

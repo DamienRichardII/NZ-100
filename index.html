@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NZ 100% — Coach Remise en Forme | Retour au Sport | Performance</title>
-<meta name="description" content="Mathieu Nzita — Coach sportif expert en remise en forme, retour au sport après blessure, et performance. Coaching personnalisé à Paris & Thiais (94).">
+<meta name="description" content="Mathieu Nzita — Coach sportif expert en remise en forme, retour au sport après blessure, et performance. Coaching personnalisé à Paris & Île-de-France.">
 <link rel="icon" type="image/png" href="assets/nz_logo_nav.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -203,11 +203,25 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
 .roadmap-desc{font-size:.86rem;color:rgba(255,255,255,.65);line-height:1.72;font-weight:300;}
 @media(max-width:600px){.roadmap{margin-top:36px;}.roadmap-body{padding:20px 22px;}.roadmap-num{width:36px;height:36px;font-size:.85rem;}.roadmap-track{width:36px;}}
 
-/* SOCIAL CTA BUTTONS */
-.footer-social-btn,.footer-socials .footer-social-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);font-size:.75rem;font-weight:500;color:rgba(255,255,255,.62);text-decoration:none;transition:.4s cubic-bezier(.25,.46,.45,.94);}
-.footer-social-btn:hover{background:rgba(255,255,255,.12);color:#fff;transform:translateY(-2px);border-color:rgba(255,255,255,.22);}
-.footer-social-btn svg{flex-shrink:0;opacity:.75;}
-.footer-social-btn:hover svg{opacity:1;}
+/* SOCIAL ICON BUTTONS - icon only */
+.footer-social-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);text-decoration:none;transition:.4s cubic-bezier(.25,.46,.45,.94);}
+.footer-social-btn:hover{background:rgba(255,255,255,.14);color:#fff;transform:translateY(-2px);border-color:rgba(255,255,255,.25);}
+.footer-social-btn svg{flex-shrink:0;}
+.footer-socials{display:flex;gap:9px;}.footer-social{display:flex;gap:9px;margin-top:18px;}
+
+/* AVIS VIDEO BLOCKS */
+.avis-videos{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;border-radius:20px;overflow:hidden;}
+.avis-vid-block{position:relative;height:460px;overflow:hidden;cursor:default;}
+.avis-vid-block:hover .avis-vid{transform:scale(1.03);}
+.avis-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.25,.46,.45,.94);}
+.avis-vid-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.15) 60%,rgba(0,0,0,.05) 100%);z-index:1;}
+.avis-vid-legend{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:20px 18px;}
+.avis-vid-name{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.06em;color:#fff;}
+@media(max-width:900px){.avis-videos{grid-template-columns:repeat(2,1fr);}.avis-vid-block{height:340px;}}
+@media(max-width:560px){.avis-videos{grid-template-columns:repeat(2,1fr);border-radius:14px;}.avis-vid-block{height:260px;}.avis-vid-name{font-size:1rem;}}
+
+/* Fix histoire-image for portrait photo */
+.histoire-image{border-radius:var(--radius-glass);overflow:hidden;aspect-ratio:3/4;}
 </style>
 </head>
 <body>
@@ -231,7 +245,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
 <section class="hero">
   <div class="hero-video-wrap">
     <video autoplay muted loop playsinline preload="auto" poster="assets/IMG_3832.jpeg">
-      <source src="assets/hero_video.mp4" type="video/mp4">
+      <source src="assets/Mathieu-hero-V2.mp4" type="video/mp4">
     </video>
   </div>
   <div class="hero-overlay"></div>
@@ -278,7 +292,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
       </div>
       <div class="cred-item">
         <span class="cred-number">P&ocirc;le</span>
-        <div class="cred-label">Espoir basket &ndash; d&egrave;s 12 ans</div>
+        <div class="cred-label">Espoir basket, d&egrave;s 12 ans</div>
       </div>
       <div class="cred-item">
         <span class="cred-number">Pro</span>
@@ -390,13 +404,12 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
 <section class="histoire-section" id="histoire">
   <div class="histoire-inner">
     <div class="histoire-image reveal">
-      <img src="assets/IMG_3836.jpeg" alt="Mathieu Nzita coach" loading="lazy">
+      <img src="assets/mathieu-portrait.jpeg" alt="Mathieu Nzita coach sportif" loading="lazy">
     </div>
     <div class="histoire-content reveal">
       <p class="section-label">Qui est Mathieu ?</p>
-      <blockquote class="histoire-quote">&ldquo;J&rsquo;ai &eacute;t&eacute; en fauteuil roulant &agrave; 15 ans. Puis Champion de France &agrave; 17.&rdquo;</blockquote>
-      <p class="histoire-text">P&ocirc;le Espoir d&egrave;s 12 ans, op&eacute;ration du genou &agrave; 15, 8 mois de r&eacute;&eacute;ducation. Mathieu a v&eacute;cu le pire et le meilleur du sport. Ce parcours l&rsquo;a rendu capable de comprendre chaque &eacute;tape que tu traverses : la peur, le doute, la progression, la victoire.</p>
-      <p class="histoire-text">Il ne coache pas depuis un livre. Il coache depuis ce qu&rsquo;il a v&eacute;cu.</p>
+      <blockquote class="histoire-quote">&ldquo;En fauteuil roulant depuis l&rsquo;&acirc;ge de 15 ans, j&rsquo;ai transform&eacute; mon parcours en une force.&rdquo;</blockquote>
+      <p class="histoire-text">Aujourd&rsquo;hui, je mets &agrave; profit mon savoir-faire, mon savoir-&ecirc;tre et toute mon exp&eacute;rience pour les transmettre et accompagner les autres.</p>
       <a href="mon-histoire.html" class="btn-ghost">Lire son parcours complet &rarr;</a>
     </div>
   </div>
@@ -406,31 +419,48 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
   <div class="section-inner">
     <p class="section-label reveal">Ce qu&rsquo;ils en disent</p>
     <h2 class="section-title reveal">Des r&eacute;sultats r&eacute;els.</h2>
-    <div class="temoignages-grid">
-      <div class="temoignage-card glass reveal">
-        <div class="temo-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="temo-text">&ldquo;Avant Mathieu, j&rsquo;avais essay&eacute; 3 coachs diff&eacute;rents. Aucun ne m&rsquo;avait vraiment compris. Lui, il a su exactement o&ugrave; j&rsquo;&eacute;tais et o&ugrave; j&rsquo;avais besoin d&rsquo;aller. En 3 mois, j&rsquo;ai retrouv&eacute; une condition que je croyais perdue.&rdquo;</p>
-        <div class="temo-author">
-          <div class="temo-avatar">K</div>
-          <div><div class="temo-name">Karim B.</div><div class="temo-detail">Remise en forme &bull; 34 ans</div></div>
+    <div class="avis-videos reveal">
+
+      <div class="avis-vid-block">
+        <video class="avis-vid" autoplay muted loop playsinline>
+          <source src="assets/Nahan-Niare-Avis.mp4" type="video/mp4">
+        </video>
+        <div class="avis-vid-overlay"></div>
+        <div class="avis-vid-legend">
+          <span class="avis-vid-name">Nahan Niar&eacute;</span>
         </div>
       </div>
-      <div class="temoignage-card glass reveal">
-        <div class="temo-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="temo-text">&ldquo;Op&eacute;r&eacute;e du genou, j&rsquo;avais peur de ne jamais retourner sur le terrain. Mathieu a structur&eacute; ma reprise &eacute;tape par &eacute;tape. 6 mois plus tard je joue &agrave; nouveau. Sa compr&eacute;hension des blessures est au-dessus de tout.&rdquo;</p>
-        <div class="temo-author">
-          <div class="temo-avatar">S</div>
-          <div><div class="temo-name">Sarah M.</div><div class="temo-detail">Retour au sport &bull; Basketteuse</div></div>
+
+      <div class="avis-vid-block">
+        <video class="avis-vid" autoplay muted loop playsinline>
+          <source src="assets/Dylan-Affo-Mama-Avis.mp4" type="video/mp4">
+        </video>
+        <div class="avis-vid-overlay"></div>
+        <div class="avis-vid-legend">
+          <span class="avis-vid-name">Dylan Affo Mama</span>
         </div>
       </div>
-      <div class="temoignage-card glass reveal">
-        <div class="temo-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="temo-text">&ldquo;Je pensais plafonner. Mathieu m&rsquo;a montr&eacute; que j&rsquo;avais des lacunes que je ne voyais m&ecirc;me pas. Explosive power, placement de pieds, lecture du jeu &mdash; mon niveau a clairement augment&eacute; en 2 mois.&rdquo;</p>
-        <div class="temo-author">
-          <div class="temo-avatar">T</div>
-          <div><div class="temo-name">Thomas L.</div><div class="temo-detail">Coaching basket &bull; Comp&eacute;titeur R3</div></div>
+
+      <div class="avis-vid-block">
+        <video class="avis-vid" autoplay muted loop playsinline>
+          <source src="assets/Amali-Montout-Avis.mp4" type="video/mp4">
+        </video>
+        <div class="avis-vid-overlay"></div>
+        <div class="avis-vid-legend">
+          <span class="avis-vid-name">Amali Montout</span>
         </div>
       </div>
+
+      <div class="avis-vid-block">
+        <video class="avis-vid" autoplay muted loop playsinline>
+          <source src="assets/Clarence-masamba-avis.mp4" type="video/mp4">
+        </video>
+        <div class="avis-vid-overlay"></div>
+        <div class="avis-vid-legend">
+          <span class="avis-vid-name">Clarence Masamba</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -456,9 +486,9 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
         <img src="assets/nz_logo_nav.png" alt="NZ 100%" class="footer-logo">
         <p>Coach sportif expert en remise en forme, retour au sport et performance. Bas&eacute; en &Icirc;le-de-France, interventions sur Paris.</p>
         <div class="footer-social">
-          <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg><span>Instagram</span></a>
-          <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg><span>TikTok</span></a>
-          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg><span>YouTube</span></a>
+          <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg></a>
+          <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg></a>
+          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg></a>
         </div>
       </div>
       <div class="footer-col">
