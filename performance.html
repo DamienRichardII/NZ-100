@@ -26,7 +26,7 @@ img{max-width:100%;display:block}a{text-decoration:none;color:inherit}button{cur
 section{padding:100px 24px;position:relative}
 .section-container{max-width:1100px;margin:0 auto}
 .section-label{display:inline-flex;align-items:center;gap:10px;font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-bottom:16px}
-.section-label::before{content:'';width:20px;height:1px;background:rgba(255,255,255,.5)}
+.section-label::before{display:none;width:20px;height:1px;background:rgba(255,255,255,.5)}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5.5vw,4.4rem);line-height:.95;margin-bottom:20px}
 .section-desc{font-size:1rem;color:rgba(255,255,255,.72);font-weight:300;line-height:1.85}
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .75s,transform .75s cubic-bezier(.25,.46,.45,.94)}
@@ -40,7 +40,7 @@ section{padding:100px 24px;position:relative}
 .page-hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(to bottom,rgba(0,0,0,.72) 0%,rgba(0,0,0,.48) 40%,rgba(0,0,0,.88) 100%)}
 .page-hero-content{position:relative;z-index:2;max-width:820px}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-bottom:20px;opacity:0;animation:fadeUp 1s .3s forwards}
-.hero-eyebrow::before,.hero-eyebrow::after{content:'';width:26px;height:1px;background:rgba(255,255,255,.3)}
+.hero-eyebrow::before,.hero-eyebrow::after{display:none;}
 .hero-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,6.5rem);line-height:.92;opacity:0;animation:fadeUp 1s .5s forwards;text-shadow:0 4px 40px rgba(0,0,0,.4)}
 .hero-p{font-size:clamp(.9rem,1.7vw,1.05rem);color:rgba(255,255,255,.72);font-weight:300;max-width:600px;margin:22px auto 0;line-height:1.82;opacity:0;animation:fadeUp 1s .7s forwards}
 .hero-actions{display:flex;justify-content:center;gap:13px;flex-wrap:wrap;margin-top:32px;opacity:0;animation:fadeUp 1s .9s forwards}
@@ -97,6 +97,64 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 .footer-social-btn:hover{background:rgba(255,255,255,.14);color:#fff;transform:translateY(-2px);border-color:rgba(255,255,255,.25);}
 .footer-social-btn svg{flex-shrink:0;}
 .footer-socials{display:flex;gap:9px;}.footer-social{display:flex;gap:9px;margin-top:18px;}
+
+/* ═══ NZ100 — OPTIMISATIONS MOBILE GLOBALES ═══ */
+@media(max-width:640px){
+
+  /* Sections : padding réduit */
+  section{padding:64px 20px !important;}
+
+  /* Hero : moins haut */
+  .hero,.page-hero{min-height:88vh;}
+
+  /* Pour qui — cartes compactes */
+  .pourqui-grid{grid-template-columns:1fr !important;gap:12px;}
+  .pourqui-card{padding:22px 20px !important;}
+  .pq-icon,.pq-item-icon{margin-bottom:10px;}
+
+  /* Info blocs coaching-basket */
+  .info-grid,.info-blocks{grid-template-columns:1fr !important;gap:10px;}
+  .info-block{padding:20px 18px !important;}
+
+  /* Piliers performance */
+  .pilliers-grid{grid-template-columns:1fr 1fr !important;gap:10px;}
+  .pillier-card{padding:22px 16px !important;}
+
+  /* Cards retour-au-sport */
+  .cards-grid{grid-template-columns:1fr 1fr !important;gap:10px;}
+  .card-item,.card{padding:22px 16px !important;}
+
+  /* Tarifs */
+  .tarifs-grid{grid-template-columns:1fr !important;gap:16px;}
+  .tarif-card{padding:28px 20px !important;}
+
+  /* Bilan / note */
+  .bilan-note{padding:20px !important;}
+
+  /* Timeline histoire */
+  .histoire-timeline{gap:20px !important;}
+  .histoire-timeline-item{padding:20px 18px !important;}
+
+  /* Hero brand padding réduit */
+  .hero-brand{gap:12px;}
+  .hero-slogan-main{font-size:clamp(2.6rem,14vw,5rem) !important;}
+
+  /* Section container padding réduit */
+  .section-container,.section-inner{padding:0 4px;}
+
+  /* Texte de section */
+  .section-sub,.section-desc{font-size:.87rem !important;}
+
+  /* CTA hero */
+  .hero-ctas,.hero-actions{gap:10px !important;}
+}
+
+@media(max-width:400px){
+  section{padding:52px 16px !important;}
+  .hero-slogan-main{font-size:clamp(2.4rem,13vw,4rem) !important;}
+  .pilliers-grid{grid-template-columns:1fr !important;}
+  .cards-grid{grid-template-columns:1fr !important;}
+}
 </style>
 </head>
 <body>
@@ -117,7 +175,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 </nav>
 
 <div class="page-hero">
-  <video class="page-hero-video" autoplay muted loop playsinline poster="assets/IMG_3832.jpeg"><source src="assets/Mathieu-hero-V2.mp4" type="video/mp4"></video>
+  <video class="page-hero-video" autoplay muted loop playsinline preload="auto" poster="assets/IMG_3832.jpeg"><source src="assets/Mathieu-hero-V2.mp4" type="video/mp4"></video>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content">
     <div class="hero-eyebrow">Accompagnement 03 &middot; Mathieu Nzita</div>
@@ -249,7 +307,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <div class="footer-socials">
           <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg></a>
           <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg></a>
-          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg></a>
+          <a href="https://www.youtube.com/watch?v=afNqAnQtv54" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg></a>
         </div>
       </div>
       <div class="footer-col">
@@ -297,6 +355,73 @@ const nav=document.getElementById("mainNav");
 window.addEventListener("scroll",()=>{if(window.scrollY>60){nav.style.background="rgba(0,0,0,0.72)";nav.style.backdropFilter="blur(32px)"}else{nav.style.background="";nav.style.backdropFilter=""}});
 function toggleNav(){nav.classList.toggle("mobile-open");nav.querySelector(".nav-toggle").innerHTML=nav.classList.contains("mobile-open")?"&#10005;":"&#9776;";}
 nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("mobile-open");nav.querySelector(".nav-toggle").innerHTML="&#9776;";}));
+</script>
+<script>
+/* NZ100 — VIDEO RELIABILITY — mobile + Safari */
+(function(){
+  'use strict';
+
+  function tryPlay(v){
+    if(!v||v.paused===false) return;
+    var p=v.play();
+    if(p&&typeof p.catch==='function') p.catch(function(){});
+  }
+
+  /* ── HERO VIDEO : démarre à 5s, reboucle à 5s ── */
+  var heroSel=['.hero-video-wrap video','.page-hero-video','.page-header-video'];
+  var hv=null;
+  for(var si=0;si<heroSel.length;si++){
+    hv=document.querySelector(heroSel[si]);
+    if(hv) break;
+  }
+  if(hv){
+    hv.removeAttribute('loop');
+    function heroGo(){
+      hv.currentTime=5;
+      tryPlay(hv);
+    }
+    hv.addEventListener('loadedmetadata',heroGo);
+    hv.addEventListener('ended',heroGo);
+    hv.addEventListener('timeupdate',function(){
+      if(hv.duration>0&&hv.currentTime>=hv.duration-0.4){
+        hv.currentTime=5;
+        tryPlay(hv);
+      }
+    });
+    // iOS Safari suspend/stall recovery
+    hv.addEventListener('suspend',function(){ if(!document.hidden) tryPlay(hv); });
+    hv.addEventListener('stalled',function(){ if(!document.hidden) tryPlay(hv); });
+    if(hv.readyState>=1) heroGo();
+  }
+
+  /* ── SECTION VIDEOS : seance-vid + avis-vid ── */
+  var svids=document.querySelectorAll('.seance-vid,.avis-vid');
+  svids.forEach(function(vid){
+    vid.addEventListener('loadedmetadata',function(){ tryPlay(vid); });
+    vid.addEventListener('suspend',function(){ if(!document.hidden) tryPlay(vid); });
+    vid.addEventListener('stalled',function(){ if(!document.hidden) tryPlay(vid); });
+    if(vid.readyState>=2) tryPlay(vid);
+  });
+
+  /* ── IntersectionObserver : play quand visible, pause hors champ ── */
+  if('IntersectionObserver' in window && svids.length){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ tryPlay(e.target); }
+        else{ if(!e.target.paused) e.target.pause(); }
+      });
+    },{threshold:0.15,rootMargin:'0px'});
+    svids.forEach(function(v){ io.observe(v); });
+  }
+
+  /* ── Visibilité page : relancer au retour au premier plan ── */
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden){
+      if(hv) tryPlay(hv);
+      svids.forEach(function(v){ tryPlay(v); });
+    }
+  });
+})();
 </script>
 </body>
 </html>

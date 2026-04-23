@@ -217,11 +217,135 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
 .avis-vid-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.15) 60%,rgba(0,0,0,.05) 100%);z-index:1;}
 .avis-vid-legend{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:20px 18px;}
 .avis-vid-name{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.06em;color:#fff;}
-@media(max-width:900px){.avis-videos{grid-template-columns:repeat(2,1fr);}.avis-vid-block{height:340px;}}
-@media(max-width:560px){.avis-videos{grid-template-columns:repeat(2,1fr);border-radius:14px;}.avis-vid-block{height:260px;}.avis-vid-name{font-size:1rem;}}
+
+
 
 /* Fix histoire-image for portrait photo */
 .histoire-image{border-radius:var(--radius-glass);overflow:hidden;aspect-ratio:3/4;}
+
+/* ═══ AVIS — RESPONSIVE ═══ */
+@media(max-width:900px){
+  .avis-videos{grid-template-columns:repeat(2,1fr);}
+  .avis-vid-block{height:320px;}
+}
+
+/* ═══ AVIS — RAIL HORIZONTAL MOBILE ═══ */
+@media(max-width:620px){
+  .avis-videos{
+    display:flex !important;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    gap:10px;
+    padding:0 20px 20px;
+    margin:16px -24px 0;
+    border-radius:0;
+  }
+  .avis-videos::-webkit-scrollbar{display:none;}
+  .avis-vid-block{
+    flex:0 0 72vw;
+    max-width:280px;
+    min-width:220px;
+    height:420px !important;
+    scroll-snap-align:start;
+    border-radius:18px;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .avis-vid-block:first-child{scroll-margin-left:20px;}
+  .avis-vid-name{font-size:1.05rem;}
+}
+
+/* ═══ NZ100 — OPTIMISATIONS MOBILE GLOBALES ═══ */
+@media(max-width:640px){
+
+  /* Sections : padding réduit */
+  section{padding:64px 20px !important;}
+
+  /* Hero : moins haut */
+  .hero,.page-hero{min-height:88vh;}
+
+  /* Pour qui — cartes compactes */
+  .pourqui-card{padding:22px 20px !important;}
+  .pq-icon,.pq-item-icon{margin-bottom:10px;}
+
+  /* Info blocs coaching-basket */
+  .info-grid,.info-blocks{grid-template-columns:1fr !important;gap:10px;}
+  .info-block{padding:20px 18px !important;}
+
+  /* Piliers performance */
+  .pilliers-grid{grid-template-columns:1fr 1fr !important;gap:10px;}
+  .pillier-card{padding:22px 16px !important;}
+
+  /* Cards retour-au-sport */
+  .cards-grid{grid-template-columns:1fr 1fr !important;gap:10px;}
+  .card-item,.card{padding:22px 16px !important;}
+
+  /* Tarifs */
+  .tarifs-grid{grid-template-columns:1fr !important;gap:16px;}
+  .tarif-card{padding:28px 20px !important;}
+
+  /* Bilan / note */
+  .bilan-note{padding:20px !important;}
+
+  /* Timeline histoire */
+  .histoire-timeline{gap:20px !important;}
+  .histoire-timeline-item{padding:20px 18px !important;}
+
+  /* Hero brand padding réduit */
+  .hero-brand{gap:12px;}
+  .hero-slogan-main{font-size:clamp(2.6rem,14vw,5rem) !important;}
+
+  /* Section container padding réduit */
+  .section-container,.section-inner{padding:0 4px;}
+
+  /* Texte de section */
+  .section-sub,.section-desc{font-size:.87rem !important;}
+
+  /* CTA hero */
+  .hero-ctas,.hero-actions{gap:10px !important;}
+}
+
+@media(max-width:400px){
+  section{padding:52px 16px !important;}
+  .hero-slogan-main{font-size:clamp(2.4rem,13vw,4rem) !important;}
+  .pilliers-grid{grid-template-columns:1fr !important;}
+  .cards-grid{grid-template-columns:1fr !important;}
+}
+
+/* ═══ POUR QUI — MOBILE COMPACT (texte masqué, 2 colonnes, icône+titre) ═══ */
+@media(max-width:640px){
+  .pourqui-grid{
+    grid-template-columns:1fr 1fr !important;
+    gap:10px !important;
+  }
+  .pourqui-card{
+    padding:20px 14px 18px !important;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+  .pq-desc{display:none !important;}
+  .pq-icon{
+    margin-bottom:6px !important;
+    flex-shrink:0;
+  }
+  .pq-icon svg{width:20px;height:20px;}
+  .pq-title{
+    font-size:1.1rem !important;
+    letter-spacing:.02em;
+    line-height:1.2;
+    margin-bottom:0 !important;
+  }
+}
+@media(max-width:380px){
+  .pourqui-grid{grid-template-columns:1fr !important;}
+  .pourqui-card{padding:18px 16px 16px !important;}
+  .pq-title{font-size:1.05rem !important;}
+}
 </style>
 </head>
 <body>
@@ -422,7 +546,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
     <div class="avis-videos reveal">
 
       <div class="avis-vid-block">
-        <video class="avis-vid" autoplay muted loop playsinline>
+        <video class="avis-vid" autoplay muted loop playsinline preload="auto">
           <source src="assets/Nahan-Niare-Avis.mp4" type="video/mp4">
         </video>
         <div class="avis-vid-overlay"></div>
@@ -432,7 +556,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
       </div>
 
       <div class="avis-vid-block">
-        <video class="avis-vid" autoplay muted loop playsinline>
+        <video class="avis-vid" autoplay muted loop playsinline preload="auto">
           <source src="assets/Dylan-Affo-Mama-Avis.mp4" type="video/mp4">
         </video>
         <div class="avis-vid-overlay"></div>
@@ -442,7 +566,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
       </div>
 
       <div class="avis-vid-block">
-        <video class="avis-vid" autoplay muted loop playsinline>
+        <video class="avis-vid" autoplay muted loop playsinline preload="auto">
           <source src="assets/Amali-Montout-Avis.mp4" type="video/mp4">
         </video>
         <div class="avis-vid-overlay"></div>
@@ -452,7 +576,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
       </div>
 
       <div class="avis-vid-block">
-        <video class="avis-vid" autoplay muted loop playsinline>
+        <video class="avis-vid" autoplay muted loop playsinline preload="auto">
           <source src="assets/Clarence-masamba-avis.mp4" type="video/mp4">
         </video>
         <div class="avis-vid-overlay"></div>
@@ -488,7 +612,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
         <div class="footer-social">
           <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg></a>
           <a href="#" class="footer-social-btn" aria-label="TikTok"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 01-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.06a8.16 8.16 0 004.77 1.52V7.12a4.85 4.85 0 01-1-.43z"/></svg></a>
-          <a href="#" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg></a>
+          <a href="https://www.youtube.com/watch?v=afNqAnQtv54" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg></a>
         </div>
       </div>
       <div class="footer-col">
@@ -553,6 +677,73 @@ var revObs=new IntersectionObserver(function(entries){
 },{threshold:.1,rootMargin:'0px 0px -30px 0px'});
 reveals.forEach(function(r){revObs.observe(r);});
 
+</script>
+<script>
+/* NZ100 — VIDEO RELIABILITY — mobile + Safari */
+(function(){
+  'use strict';
+
+  function tryPlay(v){
+    if(!v||v.paused===false) return;
+    var p=v.play();
+    if(p&&typeof p.catch==='function') p.catch(function(){});
+  }
+
+  /* ── HERO VIDEO : démarre à 5s, reboucle à 5s ── */
+  var heroSel=['.hero-video-wrap video','.page-hero-video','.page-header-video'];
+  var hv=null;
+  for(var si=0;si<heroSel.length;si++){
+    hv=document.querySelector(heroSel[si]);
+    if(hv) break;
+  }
+  if(hv){
+    hv.removeAttribute('loop');
+    function heroGo(){
+      hv.currentTime=5;
+      tryPlay(hv);
+    }
+    hv.addEventListener('loadedmetadata',heroGo);
+    hv.addEventListener('ended',heroGo);
+    hv.addEventListener('timeupdate',function(){
+      if(hv.duration>0&&hv.currentTime>=hv.duration-0.4){
+        hv.currentTime=5;
+        tryPlay(hv);
+      }
+    });
+    // iOS Safari suspend/stall recovery
+    hv.addEventListener('suspend',function(){ if(!document.hidden) tryPlay(hv); });
+    hv.addEventListener('stalled',function(){ if(!document.hidden) tryPlay(hv); });
+    if(hv.readyState>=1) heroGo();
+  }
+
+  /* ── SECTION VIDEOS : seance-vid + avis-vid ── */
+  var svids=document.querySelectorAll('.seance-vid,.avis-vid');
+  svids.forEach(function(vid){
+    vid.addEventListener('loadedmetadata',function(){ tryPlay(vid); });
+    vid.addEventListener('suspend',function(){ if(!document.hidden) tryPlay(vid); });
+    vid.addEventListener('stalled',function(){ if(!document.hidden) tryPlay(vid); });
+    if(vid.readyState>=2) tryPlay(vid);
+  });
+
+  /* ── IntersectionObserver : play quand visible, pause hors champ ── */
+  if('IntersectionObserver' in window && svids.length){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ tryPlay(e.target); }
+        else{ if(!e.target.paused) e.target.pause(); }
+      });
+    },{threshold:0.15,rootMargin:'0px'});
+    svids.forEach(function(v){ io.observe(v); });
+  }
+
+  /* ── Visibilité page : relancer au retour au premier plan ── */
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden){
+      if(hv) tryPlay(hv);
+      svids.forEach(function(v){ tryPlay(v); });
+    }
+  });
+})();
 </script>
 </body>
 </html>
