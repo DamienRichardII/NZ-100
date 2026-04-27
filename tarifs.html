@@ -183,11 +183,22 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
   .pilliers-grid{grid-template-columns:1fr !important;}
   .cards-grid{grid-template-columns:1fr !important;}
 }
+
+/* ─── NAV ADDITIONS ─────────────────────────────────────────── */
+.nav-page-name{display:none;font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;flex:1;text-align:center;}
+.nav-client{padding:7px 13px !important;border:1px solid rgba(255,255,255,.28) !important;color:var(--white) !important;font-size:.76rem !important;font-weight:600 !important;border-radius:var(--radius-pill) !important;margin-left:4px;flex-shrink:0;transition:var(--transition);background:transparent !important;}
+.nav-client:hover{background:rgba(255,255,255,.08) !important;border-color:rgba(255,255,255,.5) !important;}
+@media(max-width:768px){
+  .nav-page-name{display:block;}
+  .nav.mobile-open .nav-page-name{display:none;}
+  .nav.mobile-open .nav-client{margin-left:0;margin-top:4px;text-align:center;display:block;border-color:rgba(255,255,255,.2) !important;}
+}
 </style>
 </head>
 <body>
 <nav class="nav glass-pill" id="mainNav">
   <img src="assets/nz_logo_nav.png" alt="NZ" class="nav-logo">
+  <span class="nav-page-name">Tarifs</span>
   <button class="nav-toggle" onclick="toggleNav()">&#9776;</button>
   <div class="nav-links">
     <a href="index.html">Accueil</a>
@@ -198,6 +209,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
     <a href="mon-histoire.html">Mon histoire</a>
     <a href="tarifs.html" class="active">Tarifs</a>
     <a href="contact.html">Contact</a>
+    <a href="espace-client.html" class="nav-client">Espace client</a>
     <a href="contact.html" class="nav-cta glass-pill">R&eacute;server un bilan</a>
   </div>
 </nav>
