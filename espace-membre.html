@@ -146,6 +146,158 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
 
 /* HIDE STATES */
 .hidden { display: none !important; }
+
+/* ─── MOBILE BOTTOM NAV ──────────────────────────────────────────────────── */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  display: none;
+  gap: 0;
+}
+.mbn-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 4px;
+  cursor: pointer;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color 0.3s ease;
+  border: none;
+  background: none;
+  font-family: 'Outfit', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+.mbn-item.active { color: var(--white); }
+.mbn-item svg { flex-shrink: 0; }
+
+/* ─── MOBILE VIDEO SIZING ─────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .video-player-area video {
+    aspect-ratio: 16/9;
+    max-height: 230px;
+  }
+  .app-layout { padding-bottom: 70px; }
+  .main-content { padding: 24px 16px; }
+}
+
+/* ─── MESSAGERIE ─────────────────────────────────────────────────────────── */
+.msg-wrap {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 62px - 80px - 70px);
+  min-height: 320px;
+  max-height: 600px;
+}
+.msg-thread {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+.msg-bubble-wrap {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  max-width: 80%;
+}
+.msg-bubble-wrap.from-me {
+  flex-direction: row-reverse;
+  margin-left: auto;
+}
+.msg-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 700;
+  flex-shrink: 0;
+}
+.msg-bubble {
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  max-width: 100%;
+  word-break: break-word;
+}
+.msg-bubble-wrap.from-coach .msg-bubble {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-bottom-left-radius: 4px;
+  color: var(--white);
+}
+.msg-bubble-wrap.from-me .msg-bubble {
+  background: rgba(255,255,255,0.92);
+  color: #000;
+  border-bottom-right-radius: 4px;
+}
+.msg-meta {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.3);
+  margin-top: 4px;
+  text-align: right;
+}
+.msg-bubble-wrap.from-coach .msg-meta { text-align: left; }
+.msg-compose {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 0 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: auto;
+}
+.msg-input {
+  flex: 1;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-pill);
+  color: var(--white);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  outline: none;
+  transition: var(--transition);
+}
+.msg-input:focus { border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.09); }
+.msg-input::placeholder { color: rgba(255,255,255,0.3); }
+.msg-send {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+.msg-send:hover { transform: scale(1.05); }
+
+/* ─── RESPONSIVE MOBILE BOTTOM NAV SHOW ─────────────────────────────────── */
+@media (max-width: 900px) {
+  .mobile-bottom-nav { display: flex; }
+}
+
+/* ─── PSC-ICON SVG SIZING ─────────────────────────────────────────────────── */
+.program-select-card .psc-icon svg { display: block; }
+.program-select-card .psc-icon { color: rgba(255,255,255,0.85); }
+
 </style>
 </head>
 <body>
@@ -216,26 +368,31 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
       <div class="sidebar-section">
         <div class="sidebar-label">Mon programme</div>
         <div class="sidebar-item active" data-section="overview" onclick="showSection('overview')">
-          <div class="si-icon">&#127968;</div>
+          <div class="si-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
           Tableau de bord
         </div>
       </div>
       <div class="sidebar-section">
         <div class="sidebar-label">Contenu</div>
         <div class="sidebar-item" data-section="part1" onclick="showSection('part1')">
-          <div class="si-icon">&#127916;</div>
+          <div class="si-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg></div>
           Partie 1 : Introduction
           <span class="si-badge">3</span>
         </div>
         <div class="sidebar-item" data-section="part2" onclick="showSection('part2')">
-          <div class="si-icon">&#128170;</div>
+          <div class="si-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5v14M18 5v14M6 9h12M6 15h12M2 9h4v6H2zM18 9h4v6h-4z"/></svg></div>
           Partie 2 : Programme Sportif
           <span class="si-badge">4</span>
         </div>
         <div class="sidebar-item" data-section="part3" onclick="showSection('part3')">
-          <div class="si-icon">&#127822;</div>
+          <div class="si-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.34a1 1 0 001.66 1.12C7.17 18.34 9 16 12 16c4 0 6.61-2.5 8-5-.5 2.5-2 8-8 11 3.5-1 9-4 9-12a7 7 0 00-4-7z"/></svg></div>
           Partie 3 : Nutrition
           <span class="si-badge">2</span>
+        </div>
+        <div class="sidebar-item" data-section="messagerie" onclick="showSection('messagerie')">
+          <div class="si-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
+          Messagerie
+          <span class="si-badge">1</span>
         </div>
       </div>
     </aside>
@@ -246,7 +403,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
       
       <div id="sec-overview">
         <div class="dashboard-welcome">
-          <h1>Bienvenue dans votre programme &#128170;</h1>
+          <h1>Bienvenue dans votre programme</h1>
           <p>S&eacute;lectionnez votre programme pour commencer votre transformation.</p>
         </div>
 
@@ -265,22 +422,22 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
         <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;margin-bottom:20px;letter-spacing:0.05em;">VOTRE PROGRAMME</h2>
         <div class="program-select-grid">
           <div class="program-select-card glass active" onclick="selectProgram(this, 'perte')">
-            <div class="psc-icon">&#128293;</div>
+            <div class="psc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 01-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg></div>
             <h3>NZ PERTE DE POIDS</h3>
             <p>Sport + alimentation pour des r&eacute;sultats</p>
           </div>
           <div class="program-select-card glass" onclick="selectProgram(this, 'masse')">
-            <div class="psc-icon">&#128170;</div>
+            <div class="psc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5v14M18 5v14M6 9h12M6 15h12M2 9h4v6H2zM18 9h4v6h-4z"/></svg></div>
             <h3>NZ PRISE DE MASSE</h3>
             <p>Force musculaire & mobilit&eacute;</p>
           </div>
           <div class="program-select-card glass" onclick="selectProgram(this, 'athle')">
-            <div class="psc-icon">&#9889;</div>
+            <div class="psc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
             <h3>NZ ATHL&Eacute;TISME</h3>
             <p>Performance sportive</p>
           </div>
           <div class="program-select-card glass" onclick="selectProgram(this, 'protection')">
-            <div class="psc-icon">&#128737;&#65039;</div>
+            <div class="psc-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
             <h3>NZ PROTECTION</h3>
             <p>Pr&eacute;vention articulaire</p>
           </div>
@@ -307,11 +464,11 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <h2>Bienvenue & F&eacute;licitations</h2>
               <p>Vid&eacute;o de bienvenue, objectifs et cadeau offert</p>
             </div>
-            <div class="course-section-toggle">&#9660;</div>
+            <div class="course-section-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
           </div>
           <div class="course-items">
             <div class="course-item active" onclick="playCourseVideo(this)">
-              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-icon video"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
               <div class="ci-info">
                 <h4>Vid&eacute;o de bienvenue</h4>
                 <span>Vid&eacute;o &bull; F&eacute;licitations et pr&eacute;sentation</span>
@@ -319,7 +476,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <div class="ci-status"></div>
             </div>
             <div class="course-item" onclick="playCourseVideo(this)">
-              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-icon video"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
               <div class="ci-info">
                 <h4>Explication des objectifs & d&eacute;roul&eacute;</h4>
                 <span>Vid&eacute;o &bull; Ce que vous allez accomplir</span>
@@ -327,7 +484,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <div class="ci-status"></div>
             </div>
             <div class="course-item">
-              <div class="ci-icon gift">&#127873;</div>
+              <div class="ci-icon gift"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg></div>
               <div class="ci-info">
                 <h4>Cadeau offert</h4>
                 <span>T&eacute;l&eacute;chargeable &bull; Surprise de bienvenue</span>
@@ -335,7 +492,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <div class="ci-status"></div>
             </div>
             <div class="course-item">
-              <div class="ci-icon pdf">&#128196;</div>
+              <div class="ci-icon pdf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
               <div class="ci-info">
                 <h4>Fiches introductives</h4>
                 <span>PDF &bull; Guide de d&eacute;marrage</span>
@@ -371,11 +528,11 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <h2>Pr&eacute;sentation & Exercices</h2>
               <p>Sp&eacute;cificit&eacute;s sportives et d&eacute;monstrations techniques</p>
             </div>
-            <div class="course-section-toggle">&#9660;</div>
+            <div class="course-section-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
           </div>
           <div class="course-items">
             <div class="course-item active" onclick="playCourseVideo(this)">
-              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-icon video"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
               <div class="ci-info">
                 <h4>Pr&eacute;sentation des sp&eacute;cificit&eacute;s sportives</h4>
                 <span>Vid&eacute;o &bull; Approche et m&eacute;thodologie</span>
@@ -383,7 +540,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <div class="ci-status"></div>
             </div>
             <div class="course-item" onclick="playCourseVideo(this)">
-              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-icon video"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
               <div class="ci-info">
                 <h4>Exercice 1 &mdash; D&eacute;monstration technique</h4>
                 <span>Vid&eacute;o &bull; Technique d&eacute;taill&eacute;e</span>
@@ -391,7 +548,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <div class="ci-status"></div>
             </div>
             <div class="course-item" onclick="playCourseVideo(this)">
-              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-icon video"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
               <div class="ci-info">
                 <h4>Exercice 2 &mdash; D&eacute;monstration technique</h4>
                 <span>Vid&eacute;o &bull; Technique d&eacute;taill&eacute;e</span>
@@ -399,7 +556,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <div class="ci-status"></div>
             </div>
             <div class="course-item" onclick="playCourseVideo(this)">
-              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-icon video"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
               <div class="ci-info">
                 <h4>Exercice 3 &mdash; D&eacute;monstration technique</h4>
                 <span>Vid&eacute;o &bull; Technique d&eacute;taill&eacute;e</span>
@@ -407,7 +564,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <div class="ci-status"></div>
             </div>
             <div class="course-item">
-              <div class="ci-icon pdf">&#128196;</div>
+              <div class="ci-icon pdf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
               <div class="ci-info">
                 <h4>Programme PDF complet &mdash; 4 semaines</h4>
                 <span>PDF &bull; S&eacute;ries, r&eacute;p&eacute;titions, planning A &agrave; Z</span>
@@ -432,11 +589,11 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <h2>Programme Nutritionnel</h2>
               <p>Objectifs, aliments &agrave; privil&eacute;gier et plan complet</p>
             </div>
-            <div class="course-section-toggle">&#9660;</div>
+            <div class="course-section-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
           </div>
           <div class="course-items">
             <div class="course-item active" onclick="playCourseVideo(this)">
-              <div class="ci-icon video">&#9654;</div>
+              <div class="ci-icon video"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
               <div class="ci-info">
                 <h4>Pr&eacute;sentation des objectifs nutritionnels</h4>
                 <span>Vid&eacute;o &bull; Strat&eacute;gie alimentaire</span>
@@ -444,7 +601,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
               <div class="ci-status"></div>
             </div>
             <div class="course-item">
-              <div class="ci-icon pdf">&#128196;</div>
+              <div class="ci-icon pdf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
               <div class="ci-info">
                 <h4>Aliments &agrave; privil&eacute;gier vs aliments interdits</h4>
                 <span>PDF &bull; Liste compl&egrave;te</span>
@@ -455,9 +612,72 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
         </div>
       </div>
 
+
+      <!-- MESSAGERIE -->
+      <div id="sec-messagerie" class="hidden">
+        <div class="dashboard-welcome">
+          <h1>MESSAGERIE</h1>
+          <p>Posez vos questions à Mathieu directement depuis votre espace.</p>
+        </div>
+
+        <div class="glass" style="padding:28px 28px 20px;border-radius:20px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
+            <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;flex-shrink:0;">M</div>
+            <div>
+              <div style="font-weight:600;font-size:.9rem;">Mathieu Nzita</div>
+              <div style="font-size:.72rem;color:rgba(255,255,255,0.4);">Coach NZ 100% &mdash; Répond sous 24h</div>
+            </div>
+            <div style="margin-left:auto;width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;"></div>
+          </div>
+
+          <div class="msg-wrap">
+            <div class="msg-thread" id="msgThread">
+              <div class="msg-bubble-wrap from-coach">
+                <div class="msg-avatar">M</div>
+                <div>
+                  <div class="msg-bubble">Bienvenue dans votre espace membre ! N'hésitez pas à me poser toutes vos questions sur votre programme. Je suis là pour vous accompagner. 💪</div>
+                  <div class="msg-meta">Mathieu &bull; Aujourd'hui</div>
+                </div>
+              </div>
+            </div>
+            <div class="msg-compose">
+              <input class="msg-input" id="msgInput" type="text" placeholder="Écrivez votre message à Mathieu…" onkeydown="if(event.key==='Enter') sendMsg()">
+              <button class="msg-send" onclick="sendMsg()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 </div>
+
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-bottom-nav" id="mobileBottomNav">
+  <button class="mbn-item active" data-section="overview" onclick="showSection('overview');mbnActive(this)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
+    Accueil
+  </button>
+  <button class="mbn-item" data-section="part1" onclick="showSection('part1');mbnActive(this)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+    Intro
+  </button>
+  <button class="mbn-item" data-section="part2" onclick="showSection('part2');mbnActive(this)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5v14M18 5v14M6 9h12M6 15h12M2 9h4v6H2zM18 9h4v6h-4z"/></svg>
+    Sport
+  </button>
+  <button class="mbn-item" data-section="part3" onclick="showSection('part3');mbnActive(this)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.34a1 1 0 001.66 1.12C7.17 18.34 9 16 12 16c4 0 6.61-2.5 8-5-.5 2.5-2 8-8 11 3.5-1 9-4 9-12a7 7 0 00-4-7z"/></svg>
+    Nutrition
+  </button>
+  <button class="mbn-item" data-section="messagerie" onclick="showSection('messagerie');mbnActive(this)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Message
+  </button>
+</nav>
 
 <script>
 // Welcome video: limit to 20s loop
@@ -530,6 +750,35 @@ function playCourseVideo(item) {
   // Mark as done
   const status = item.querySelector('.ci-status');
   if (status) { status.classList.add('done'); status.innerHTML = '&#10003;'; }
+}
+
+// Messagerie
+function sendMsg() {
+  var input = document.getElementById('msgInput');
+  var text = input.value.trim();
+  if (!text) return;
+  var thread = document.getElementById('msgThread');
+  var now = new Date();
+  var time = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+  var bubble = '<div class="msg-bubble-wrap from-me"><div><div class="msg-bubble">' + escHtml(text) + '</div><div class="msg-meta">' + time + '</div></div></div>';
+  thread.insertAdjacentHTML('beforeend', bubble);
+  thread.scrollTop = thread.scrollHeight;
+  input.value = '';
+  // Auto-reply
+  setTimeout(function() {
+    var reply = '<div class="msg-bubble-wrap from-coach"><div class="msg-avatar">M</div><div><div class="msg-bubble">Bien reçu ! Je vous réponds dans les meilleurs délais. 🙏</div><div class="msg-meta">Mathieu &bull; ' + time + '</div></div></div>';
+    thread.insertAdjacentHTML('beforeend', reply);
+    thread.scrollTop = thread.scrollHeight;
+  }, 1200);
+}
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Mobile bottom nav sync
+function mbnActive(btn) {
+  document.querySelectorAll('.mbn-item').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
 }
 </script>
 </body>
