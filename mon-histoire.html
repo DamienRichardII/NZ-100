@@ -49,7 +49,7 @@ section{padding:100px 24px;position:relative}
 /* STORY CONTENT */
 .story-intro{display:grid;grid-template-columns:1fr 1.3fr;gap:72px;align-items:center;margin-top:60px}
 .story-intro-visual{position:relative}
-.story-img-main{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:var(--radius-glass)}
+.story-img-main{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;border-radius:var(--radius-glass)}
 .story-intro-text{}
 .story-intro-text h3{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;margin-bottom:18px}
 .story-intro-text p{color:var(--text-secondary);font-weight:300;line-height:1.85;margin-bottom:16px;font-size:.93rem}
@@ -64,7 +64,7 @@ section{padding:100px 24px;position:relative}
 .timeline-year{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:rgba(255,255,255,.28);margin-bottom:4px}
 .timeline-title{font-size:1.15rem;font-weight:700;margin-bottom:10px}
 .timeline-desc{color:var(--text-secondary);font-weight:300;font-size:.9rem;line-height:1.8;max-width:560px}
-.timeline-img{width:100%;max-width:380px;aspect-ratio:16/9;object-fit:cover;border-radius:14px;margin-top:16px;opacity:.85}
+.timeline-img{width:100%;max-width:380px;aspect-ratio:4/3;object-fit:cover;object-position:top center;border-radius:14px;margin-top:16px;opacity:.85}
 
 /* TRANSITION */
 .histoire-transition{padding:100px 24px;text-align:center;background:linear-gradient(180deg,transparent,rgba(255,255,255,.02),transparent)}
@@ -79,7 +79,24 @@ section{padding:100px 24px;position:relative}
 .mission-text ul{list-style:none;margin:20px 0 30px;display:flex;flex-direction:column;gap:12px}
 .mission-text ul li{display:flex;align-items:center;gap:12px;font-size:.9rem;color:var(--text-secondary)}
 .mission-text ul li::before{content:'→';color:rgba(255,255,255,.35);font-weight:300}
-.mission-visual img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:var(--radius-glass)}
+.mission-visual img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;border-radius:var(--radius-glass)}
+
+/* PODCAST */
+.podcast-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
+.podcast-card{display:block;text-decoration:none;color:inherit;border-radius:20px;overflow:hidden;transition:var(--transition)}
+.podcast-card:hover{transform:translateY(-4px)}
+.podcast-thumb{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.02) 100%);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.podcast-thumb-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55;transition:var(--transition)}
+.podcast-card:hover .podcast-thumb-img{opacity:.7}
+.podcast-play{position:relative;z-index:1;width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+.podcast-card:hover .podcast-play{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.55);transform:scale(1.08)}
+.podcast-info{padding:22px 24px 26px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-top:none;border-radius:0 0 20px 20px}
+.podcast-ep{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:rgba(255,255,255,.38);margin-bottom:7px}
+.podcast-title{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;line-height:1.1;margin-bottom:8px}
+.podcast-desc{font-size:.82rem;color:rgba(255,255,255,.52);font-weight:300;line-height:1.65;margin-bottom:16px}
+.podcast-cta-row{display:flex;align-items:center;gap:8px;font-size:.74rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.6);transition:var(--transition)}
+.podcast-card:hover .podcast-cta-row{color:#fff}
+@media(max-width:768px){.podcast-grid{grid-template-columns:1fr}}
 
 /* CTA */
 .cta-histoire{padding:100px 24px;text-align:center}
@@ -240,7 +257,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 
 <div class="page-hero">
   <video class="page-hero-video" autoplay muted loop playsinline preload="auto">
-    <source src="assets/Mathieu-hero-V2.mp4" type="video/mp4">
+    <source src="assets/mathieu-hero-v3.mp4" type="video/mp4">
   </video>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content">
@@ -303,7 +320,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <div class="timeline-year">17 ANS</div>
         <div class="timeline-title">Champion de France &mdash; Contrat stagiaire pro</div>
         <p class="timeline-desc">Contre toute attente. Deux ans apr&egrave;s avoir tout perdu, Mathieu signe un contrat stagiaire professionnel et remporte le titre de Champion de France avec Le Mans. Ce retour n'est pas un miracle. C'est le r&eacute;sultat de chaque matin difficile, chaque r&eacute;p&eacute;tition invisible, chaque moment o&ugrave; il aurait pu abandonner et ne l'a pas fait.</p>
-        <img src="assets/Mathieu-champion-france.jpeg" alt="Champion de France" class="timeline-img">
+        <img src="assets/mathieu-champion-france-v2.jpeg" alt="Champion de France" class="timeline-img">
       </div>
       <div class="histoire-timeline-item">
         <div class="timeline-phase">La suite</div>
@@ -347,8 +364,55 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <a href="contact.html" class="btn-primary">Prendre contact &rarr;</a>
       </div>
       <div class="mission-visual reveal">
-        <img src="assets/IMG_3832.jpeg" alt="Mathieu Nzita en action">
+        <img src="assets/mathieu-coach-portrait-v2.jpeg" alt="Mathieu Nzita coach">
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="podcast">
+  <div class="section-inner" style="max-width:1100px;margin:0 auto;">
+    <p class="section-label reveal">Podcast</p>
+    <h2 class="section-title reveal">LE SON<br>DE MA VISION.</h2>
+    <p class="section-sub reveal" style="max-width:580px;color:var(--text-secondary);font-weight:300;font-size:.97rem;line-height:1.8;margin-bottom:0;">Mathieu partage son parcours, sa méthode et sa vision du coaching dans ces épisodes.</p>
+    <div class="podcast-grid reveal">
+
+      <a href="https://youtu.be/afNqAnQtv54" target="_blank" rel="noopener noreferrer" class="podcast-card">
+        <div class="podcast-thumb">
+          <img src="https://img.youtube.com/vi/afNqAnQtv54/maxresdefault.jpg" alt="Podcast Mathieu Nzita" class="podcast-thumb-img" onerror="this.style.display='none'">
+          <div class="podcast-play">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="podcast-info">
+          <div class="podcast-ep">Épisode 01</div>
+          <div class="podcast-title">LES SECRETS DERRIÈRE L'ENTRAÎNEMENT DES ATHLÈTES PROFESSIONNELS</div>
+          <div class="podcast-desc">Mathieu Nzita, ancien prodige du basket français devenu professionnel à 17 ans, a vu sa carrière stoppée net par une mauvaise gestion des blessures et une charge d'entraînement excessive. Aujourd'hui coach de haut niveau, il partage ses meilleurs secrets pour un corps à toute épreuve. Un&nbsp;"must see" pour tout athlète qui rêve de devenir professionnel.</div>
+          <div class="podcast-cta-row">
+            <svg width="16" height="12" viewBox="0 0 18 13" fill="currentColor"><path d="M17.5 2.3A2.26 2.26 0 0015.92.73C14.55.4 9 .4 9 .4S3.45.4 2.08.73A2.26 2.26 0 00.5 2.3 23.7 23.7 0 000 6.5a23.7 23.7 0 00.5 4.2 2.26 2.26 0 001.58 1.57C3.45 12.6 9 12.6 9 12.6s5.55 0 6.92-.33a2.26 2.26 0 001.58-1.57A23.7 23.7 0 0018 6.5a23.7 23.7 0 00-.5-4.2zM7.2 9.3V3.7L12 6.5 7.2 9.3z"/></svg>
+            Regarder sur YouTube
+          </div>
+        </div>
+      </a>
+
+      <a href="https://youtu.be/gt5kPuZQIQI" target="_blank" rel="noopener noreferrer" class="podcast-card">
+        <div class="podcast-thumb">
+          <img src="https://img.youtube.com/vi/gt5kPuZQIQI/maxresdefault.jpg" alt="Podcast Mathieu Nzita" class="podcast-thumb-img" onerror="this.style.display='none'">
+          <div class="podcast-play">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="podcast-info">
+          <div class="podcast-ep">Épisode 02</div>
+          <div class="podcast-title">LA FACE CACHÉE DU SPORT DE HAUT NIVEAU (VU PAR 3 SPORTIFS PROFESSIONNELS)</div>
+          <div class="podcast-desc">Un footballeur, un basketteur et un handballeur professionnel s'assoient autour d'une table pour révéler les dessous du monde professionnel comme vous ne l'avez jamais vu.</div>
+          <div class="podcast-cta-row">
+            <svg width="16" height="12" viewBox="0 0 18 13" fill="currentColor"><path d="M17.5 2.3A2.26 2.26 0 0015.92.73C14.55.4 9 .4 9 .4S3.45.4 2.08.73A2.26 2.26 0 00.5 2.3 23.7 23.7 0 000 6.5a23.7 23.7 0 00.5 4.2 2.26 2.26 0 001.58 1.57C3.45 12.6 9 12.6 9 12.6s5.55 0 6.92-.33a2.26 2.26 0 001.58-1.57A23.7 23.7 0 0018 6.5a23.7 23.7 0 00-.5-4.2zM7.2 9.3V3.7L12 6.5 7.2 9.3z"/></svg>
+            Regarder sur YouTube
+          </div>
+        </div>
+      </a>
+
     </div>
   </div>
 </section>

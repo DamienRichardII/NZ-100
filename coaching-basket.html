@@ -360,7 +360,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 </nav>
 
 <div class="page-hero">
-  <video class="page-hero-video" autoplay muted loop playsinline preload="auto" poster="assets/IMG_3832.jpeg"><source src="assets/Mathieu-hero-V2.mp4" type="video/mp4"></video>
+  <video class="page-hero-video" autoplay muted loop playsinline preload="auto" poster="assets/IMG_3832.jpeg"><source src="assets/mathieu-hero-v3.mp4" type="video/mp4"></video>
   <div class="page-hero-overlay"></div>
   <div class="page-hero-content">
     <div class="hero-eyebrow">Sp&eacute;cialit&eacute; &mdash; Mathieu Nzita</div>
@@ -867,13 +867,4 @@ renderCalendar();
   }
 
   /* ── Visibilité page : relancer au retour au premier plan ── */
-  document.addEventListener('visibilitychange',function(){
-    if(!document.hidden){
-      if(hv) tryPlay(hv);
-      svids.forEach(function(v){ tryPlay(v); });
-    }
-  });
-})();
-</script>
-</body>
-</html>
+  document.addEventListener('visibilitycha
