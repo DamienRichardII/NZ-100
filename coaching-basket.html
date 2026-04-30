@@ -209,7 +209,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 /* VIDEO SEANCE BLOCKS */
 .seance-section{padding:80px 0;}
 .seance-section .section-container{max-width:1100px;margin:0 auto;padding:0 24px;}
-.seance-videos{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;border-radius:20px;overflow:hidden;}
+.seance-videos{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:48px;border-radius:20px;overflow:hidden;}
 .seance-vid-block{position:relative;height:420px;overflow:hidden;cursor:default;}
 .seance-vid-block:hover .seance-vid{transform:scale(1.04);}
 .seance-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.25,.46,.45,.94);}
@@ -237,8 +237,11 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 
 /* ═══ SÉANCE — RESPONSIVE ═══ */
 @media(max-width:900px){
-  .seance-videos{grid-template-columns:repeat(2,1fr);}
+  .seance-videos{grid-template-columns:repeat(3,1fr);}
   .seance-vid-block{height:320px;}
+}
+@media(max-width:700px) and (min-width:621px){
+  .seance-videos{grid-template-columns:repeat(2,1fr);}
 }
 
 /* ═══ SÉANCE — RAIL HORIZONTAL MOBILE ═══ */
@@ -442,6 +445,18 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
           <div class="seance-vid-num">04</div>
           <div class="seance-vid-title">&Icirc;le-de-France</div>
           <p class="seance-vid-desc">Adresse exacte envoy&eacute;e apr&egrave;s confirmation de la r&eacute;servation</p>
+        </div>
+      </div>
+
+      <div class="seance-vid-block">
+        <video class="seance-vid" autoplay muted loop playsinline preload="auto">
+          <source src="assets/coaching-jeunes.mp4" type="video/mp4">
+        </video>
+        <div class="seance-vid-overlay"></div>
+        <div class="seance-vid-content">
+          <div class="seance-vid-num">05</div>
+          <div class="seance-vid-title">Jeunes</div>
+          <p class="seance-vid-desc">Coaching adapt&eacute; &agrave; l&rsquo;&acirc;ge du joueur</p>
         </div>
       </div>
 

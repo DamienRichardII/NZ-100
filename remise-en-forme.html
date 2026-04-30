@@ -208,11 +208,16 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
   .nav.mobile-open .nav-client{margin-left:0;margin-top:4px;text-align:center;display:block;border-color:rgba(255,255,255,.2) !important;}
 }
 
-/* PHOTO SOUS HERO */
-.rfe-hero-photo{padding:0 24px;margin-top:-32px;margin-bottom:0;display:flex;justify-content:center;}
-.rfe-hero-photo-inner{width:100%;max-width:400px;border-radius:var(--radius-glass);overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.55);}
-.rfe-hero-photo-inner img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;display:block;opacity:.92;}
-@media(max-width:768px){.rfe-hero-photo{margin-top:-20px;padding:0 16px;}.rfe-hero-photo-inner{max-width:100%;}}
+/* SECTION RÉSULTAT */
+.resultat-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;margin-top:56px;}
+.resultat-visual img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;border-radius:var(--radius-glass);opacity:.92;}
+.resultat-text{display:flex;flex-direction:column;gap:0;}
+.resultat-desc{font-size:.93rem;color:var(--text-secondary);line-height:1.85;font-weight:300;margin-top:20px;margin-bottom:32px;}
+.resultat-proof{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.resultat-proof-item{padding:18px 20px;border:1px solid rgba(255,255,255,.07);border-radius:14px;background:rgba(255,255,255,.03);}
+.resultat-proof-num{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;line-height:1;letter-spacing:.02em;}
+.resultat-proof-label{font-size:.72rem;color:var(--text-muted);margin-top:4px;font-weight:400;}
+@media(max-width:900px){.resultat-grid{grid-template-columns:1fr;gap:40px;}.resultat-visual{max-width:360px;margin:0 auto;}.resultat-proof{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
@@ -244,12 +249,6 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
       <a href="contact.html" class="btn-primary">Commencer ma remise en forme</a>
       <a href="tarifs.html" class="btn-ghost">Voir les tarifs</a>
     </div>
-  </div>
-</div>
-
-<div class="rfe-hero-photo">
-  <div class="rfe-hero-photo-inner">
-    <img src="assets/remise-en-forme.jpeg" alt="Remise en forme &mdash; Mathieu Nzita">
   </div>
 </div>
 
@@ -304,6 +303,21 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
       </div>
       <div class="benefices-visual reveal">
         <img src="assets/mathieu-remise-benefices.jpeg" alt="Remise en forme avec Mathieu Nzita">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="resultat-grid">
+      <div class="resultat-visual reveal">
+        <img src="assets/remise-en-forme.jpeg" alt="R&eacute;sultat remise en forme &mdash; Mathieu Nzita">
+      </div>
+      <div class="resultat-text reveal">
+        <span class="section-label">R&eacute;sultat</span>
+        <h2 class="section-title">AVANT.<br>APR&Egrave;S.<br>DIFF&Eacute;RENCE.</h2>
+        <p class="resultat-desc">Ce qu&rsquo;on construit ensemble, &ccedil;a se voit. Dans le souffle retrouv&eacute;, dans le corps qui r&eacute;pond mieux, dans l&rsquo;&eacute;nergie qui revient. Pas du tout ou rien &mdash; une transformation progressive, r&eacute;elle, durable.</p>
       </div>
     </div>
   </div>
