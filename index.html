@@ -359,9 +359,40 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
   .nav.mobile-open .nav-page-name{display:none;}
   .nav.mobile-open .nav-client{margin-left:0;margin-top:4px;text-align:center;display:block;border-color:rgba(255,255,255,.2) !important;}
 }
+
+/* ══ INTRO OUVERTURE ══ */
+#site-intro{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;transition:opacity .9s ease;}
+#site-intro.fade-out{opacity:0;pointer-events:none;}
+#intro-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+#intro-gradient{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.35) 0%,rgba(0,0,0,.08) 50%,rgba(0,0,0,.65) 100%);z-index:1;}
+#intro-logo{position:relative;z-index:2;text-align:center;animation:introLogo 1.2s ease forwards;}
+#intro-logo img{width:72px;height:auto;opacity:.9;}
+@keyframes introLogo{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
+#intro-skip{position:absolute;bottom:36px;right:36px;z-index:2;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);cursor:pointer;border:1px solid rgba(255,255,255,.18);padding:9px 22px;border-radius:100px;transition:.3s;background:rgba(0,0,0,.25);}
+#intro-skip:hover{color:#fff;border-color:rgba(255,255,255,.5);}
+#intro-sound{position:absolute;bottom:36px;left:36px;z-index:2;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);cursor:pointer;border:1px solid rgba(255,255,255,.22);padding:9px 22px;border-radius:100px;transition:.3s;background:rgba(0,0,0,.3);display:none;align-items:center;gap:8px;}
+#intro-sound:hover{color:#fff;border-color:rgba(255,255,255,.6);}
+#intro-sound svg{flex-shrink:0;}
+@media(max-width:640px){#intro-skip{bottom:24px;right:18px;font-size:.68rem;padding:8px 16px;}#intro-sound{bottom:24px;left:18px;font-size:.68rem;padding:8px 16px;}}
 </style>
 </head>
 <body>
+
+<!-- ══ INTRO OUVERTURE ══ -->
+<div id="site-intro">
+  <video id="intro-video" playsinline preload="auto">
+    <source src="assets/nz100-intro-opening.mp4" type="video/mp4">
+  </video>
+  <div id="intro-gradient"></div>
+  <div id="intro-logo">
+    <img src="assets/nz_logo_hero.png" alt="NZ 100%">
+  </div>
+  <button id="intro-sound" type="button" style="display:none" aria-label="Activer le son">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+    Son coupé
+  </button>
+  <button id="intro-skip" type="button">Passer</button>
+</div>
 
 <nav class="nav glass-pill" id="mainNav">
   <img src="assets/nz_logo_nav.png" alt="NZ" class="nav-logo">
@@ -406,7 +437,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
     <div class="marquee-item"><img src="assets/IMG_0547.jpeg" alt=""></div>
     <div class="marquee-item"><img src="assets/mathieu-index-marquee-01.jpeg" alt=""></div>
     <div class="marquee-item"><img src="assets/IMG_3836.jpeg" alt=""></div>
-    <div class="marquee-item"><img src="assets/mathieu-performance-pourquoi.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/mathieu-index-marquee-02.jpeg" alt=""></div>
     <div class="marquee-item"><img src="assets/IMG_4652.jpeg" alt=""></div>
     <div class="marquee-item"><img src="assets/mathieu-performance-methode.jpeg" alt=""></div>
     <div class="marquee-item"><img src="assets/IMG_4872.jpeg" alt=""></div>
@@ -414,7 +445,7 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
     <div class="marquee-item"><img src="assets/IMG_0547.jpeg" alt=""></div>
     <div class="marquee-item"><img src="assets/mathieu-index-marquee-01.jpeg" alt=""></div>
     <div class="marquee-item"><img src="assets/IMG_3836.jpeg" alt=""></div>
-    <div class="marquee-item"><img src="assets/mathieu-performance-pourquoi.jpeg" alt=""></div>
+    <div class="marquee-item"><img src="assets/mathieu-index-marquee-02.jpeg" alt=""></div>
     <div class="marquee-item"><img src="assets/IMG_4652.jpeg" alt=""></div>
     <div class="marquee-item"><img src="assets/mathieu-performance-methode.jpeg" alt=""></div>
     <div class="marquee-item"><img src="assets/IMG_4872.jpeg" alt=""></div>
@@ -761,4 +792,96 @@ reveals.forEach(function(r){revObs.observe(r);});
   });
 
   /* ── IntersectionObserver : play quand visible, pause hors champ ── */
-  i
+  if('IntersectionObserver' in window && svids.length){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ tryPlay(e.target); }
+        else{ if(!e.target.paused) e.target.pause(); }
+      });
+    },{threshold:0.15,rootMargin:'0px'});
+    svids.forEach(function(v){ io.observe(v); });
+  }
+
+  /* ── Visibilité page : relancer au retour au premier plan ── */
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden){
+      if(hv) tryPlay(hv);
+      svids.forEach(function(v){ tryPlay(v); });
+    }
+  });
+})();
+</script>
+
+<script>
+/* ══ INTRO OUVERTURE — logique sessionStorage ══ */
+(function(){
+  var overlay = document.getElementById('site-intro');
+  if(!overlay) return;
+
+  /* Déjà vu dans cette session → masquer immédiatement, aucune animation */
+  if(sessionStorage.getItem('nz100-intro')){
+    overlay.style.display = 'none';
+    return;
+  }
+
+  /* Verrouiller le scroll pendant l'intro */
+  document.body.style.overflow = 'hidden';
+
+  /* Fermeture propre : fade-out 950ms puis display:none */
+  function dismiss(){
+    if(overlay.classList.contains('fade-out')) return;
+    overlay.classList.add('fade-out');
+    document.body.style.overflow = '';
+    sessionStorage.setItem('nz100-intro','1');
+    setTimeout(function(){ overlay.style.display = 'none'; }, 950);
+  }
+
+  var vid   = document.getElementById('intro-video');
+  var skip  = document.getElementById('intro-skip');
+  var sound = document.getElementById('intro-sound');
+
+  if(vid){
+    /* Fermeture naturelle à la fin de la vidéo */
+    vid.addEventListener('ended', dismiss);
+
+    /* Fallback uniquement si la vidéo échoue vraiment à charger */
+    vid.addEventListener('error', function(){
+      setTimeout(dismiss, 2000);
+    });
+
+    /* Tentative autoplay AVEC son */
+    vid.muted = false;
+    var playAttempt = vid.play();
+
+    if(playAttempt !== undefined){
+      playAttempt.catch(function(){
+        /* Autoplay sonore bloqué → lecture silencieuse + bouton son */
+        vid.muted = true;
+        var mutedAttempt = vid.play();
+        if(sound){ sound.style.display = 'flex'; }
+        if(mutedAttempt !== undefined){
+          mutedAttempt.catch(function(){
+            /* Lecture muette impossible (très rare) → fermer après 3s */
+            setTimeout(dismiss, 3000);
+          });
+        }
+      });
+    }
+
+    /* Bouton son : unmute et masquer */
+    if(sound){
+      sound.addEventListener('click', function(){
+        vid.muted = false;
+        sound.style.display = 'none';
+      });
+    }
+  }
+
+  /* Bouton Passer : fermeture immédiate */
+  if(skip){
+    skip.addEventListener('click', dismiss);
+  }
+})();
+</script>
+</body>
+</html>
