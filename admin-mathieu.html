@@ -79,6 +79,26 @@ input,textarea{font-family:inherit;}
 .kpi-trend-neu{background:rgba(255,255,255,.06);color:var(--text-muted);border:1px solid rgba(255,255,255,.08);}
 .kpi-card-icon{position:absolute;bottom:16px;right:20px;opacity:.08;color:var(--white);}
 
+/* ── PAYMENT STATUS BADGES ──────────────────────────────────────── */
+.pay-badge{display:inline-flex;align-items:center;gap:5px;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 9px;border-radius:var(--radius-pill);}
+.pay-badge::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.pay-badge-unpaid{background:rgba(255,255,255,.06);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);}
+.pay-badge-unpaid::before{background:rgba(255,255,255,.3);}
+.pay-badge-pending{background:rgba(251,191,36,.12);color:rgba(255,220,80,.85);border:1px solid rgba(251,191,36,.25);}
+.pay-badge-pending::before{background:#fbbf24;}
+.pay-badge-paid{background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.22);}
+.pay-badge-paid::before{background:#4ade80;}
+.pay-badge-failed{background:rgba(248,113,113,.1);color:rgba(255,150,150,.85);border:1px solid rgba(248,113,113,.22);}
+.pay-badge-failed::before{background:#f87171;}
+/* Filtre rapide paiement */
+.pay-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.pay-filter-btn{padding:5px 14px;border-radius:var(--radius-pill);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);cursor:pointer;transition:var(--transition);}
+.pay-filter-btn:hover{background:rgba(255,255,255,.09);color:var(--white);}
+.pay-filter-btn.active{background:var(--white);color:var(--black);}
+/* Override confirm btn si unpaid */
+.confirm-btn-warn{background:rgba(251,191,36,.15) !important;border:1px solid rgba(251,191,36,.35) !important;color:rgba(255,220,80,.9) !important;}
+.confirm-btn-warn::after{content:' ⚠';}
+
 .kpi-secondary{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:36px;}
 .kpi-sec-card{padding:20px 22px;display:flex;align-items:center;gap:16px;}
 .kpi-sec-icon{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -626,18 +646,97 @@ function _renderRecentLeads(leads) {
   }).join('');
 }
 
+/* ── Mapping badge paiement ─── */
+function _payBadge(status) {
+  var map = {
+    unpaid:  ['unpaid',  'Non payé'],
+    pending: ['pending', 'En attente'],
+    paid:    ['paid',    'Payé'],
+    failed:  ['failed',  'Échec'],
+  };
+  var s = (status || 'unpaid').toLowerCase();
+  var info = map[s] || map['unpaid'];
+  return '<span class="pay-badge pay-badge-'+info[0]+'">'+info[1]+'</span>';
+}
+
+/* ── État actuel du filtre ─── */
+var _bookingPayFilter = 'all';
+
 function _renderPendingBookings(bookings) {
   var container = document.getElementById('admin-bookings-list');
-  if (!container || !bookings || !bookings.length) return;
-  container.innerHTML = bookings.map(function(b){
+  if (!container) return;
+
+  // Stocker pour re-filtrage
+  container._allBookings = bookings || [];
+
+  // Injecter les boutons filtre si pas encore présents
+  var filterWrap = document.getElementById('admin-bookings-pay-filter');
+  if (!filterWrap) {
+    var fw = document.createElement('div');
+    fw.id = 'admin-bookings-pay-filter';
+    fw.className = 'pay-filter';
+    fw.innerHTML = [
+      {k:'all',   l:'Toutes'},
+      {k:'unpaid',l:'Non payées'},
+      {k:'paid',  l:'Payées'},
+      {k:'pending',l:'En attente'},
+    ].map(function(f){
+      return '<button class="pay-filter-btn'+(f.k===_bookingPayFilter?' active':'')+'" onclick="_setBookingFilter(\''+f.k+'\')">'+f.l+'</button>';
+    }).join('');
+    container.parentNode.insertBefore(fw, container);
+  }
+
+  _applyBookingFilter();
+}
+
+function _setBookingFilter(filter) {
+  _bookingPayFilter = filter;
+  // Mettre à jour l'état actif des boutons
+  var fw = document.getElementById('admin-bookings-pay-filter');
+  if (fw) fw.querySelectorAll('.pay-filter-btn').forEach(function(btn){
+    btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === {
+      all:'toutes',unpaid:'non payées',paid:'payées',pending:'en attente'
+    }[filter]);
+  });
+  _applyBookingFilter();
+}
+
+function _applyBookingFilter() {
+  var container = document.getElementById('admin-bookings-list');
+  if (!container) return;
+  var bookings = container._allBookings || [];
+
+  var filtered = bookings.filter(function(b){
+    if (_bookingPayFilter === 'all') return true;
+    var ps = (b.payment_status || 'unpaid').toLowerCase();
+    return ps === _bookingPayFilter;
+  });
+
+  if (!filtered.length) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.4);">Aucune réservation pour ce filtre.</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map(function(b){
     var date = new Date(b.created_at).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'});
-    return '<div class="conv-item" style="padding:12px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
-      + '<div style="display:flex;justify-content:space-between;align-items:center;">'
-      + '<div><div style="font-weight:600;font-size:.88rem;">'+escHtml(b.name||'')+'</div>'
-      + '<div style="font-size:.78rem;color:rgba(255,255,255,.5);">'+escHtml(b.service||'')+'</div>'
-      + (b.requested_date?'<div style="font-size:.75rem;color:rgba(255,255,255,.4);">'+escHtml((b.requested_date||'')+(b.requested_time?' '+b.requested_time:''))+'</div>':'')
+    var payStatus = (b.payment_status || 'unpaid').toLowerCase();
+    var isUnpaid  = payStatus === 'unpaid' || payStatus === 'failed';
+    // Avertissement si on essaie de confirmer sans paiement
+    var confirmNote = isUnpaid
+      ? '<div style="font-size:.72rem;color:rgba(255,190,50,.75);margin-top:4px;">⚠ Acompte non reçu — confirmer avec précaution</div>'
+      : '';
+    return '<div class="conv-item" style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'
+      + '<div style="flex:1;min-width:0;">'
+      + '<div style="font-weight:600;font-size:.88rem;">'+escHtml(b.name||'')+'</div>'
+      + '<div style="font-size:.78rem;color:rgba(255,255,255,.5);">'+escHtml(b.service||b.session_type||'')+'</div>'
+      + (b.requested_date||b.preferred_date?'<div style="font-size:.75rem;color:rgba(255,255,255,.4);">'+escHtml((b.requested_date||b.preferred_date||'')+(b.requested_time?' '+b.requested_time:''))+'</div>':'')
+      + confirmNote
       + '</div>'
+      + '<div style="text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;">'
       + '<div style="font-size:.72rem;color:rgba(255,255,255,.4);">'+date+'</div>'
+      + _payBadge(b.payment_status)
+      + '</div>'
       + '</div></div>';
   }).join('');
 }

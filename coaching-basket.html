@@ -681,7 +681,20 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <div class="resa-success glass-strong" id="resaSuccess">
           <div class="resa-success-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg></div>
           <h3>Demande envoy&eacute;e !</h3>
-          <p>Ta demande de r&eacute;servation a bien &eacute;t&eacute; re&ccedil;ue.<br>Mathieu te contactera sous <strong>24h</strong> pour confirmer ton cr&eacute;neau et te communiquer les informations de paiement de l'acompte (30 €) ainsi que l'adresse exacte.<br><br>Tu recevras une confirmation par email ou WhatsApp.</p>
+          <p>Ta demande de r&eacute;servation a bien &eacute;t&eacute; re&ccedil;ue.<br>Mathieu confirmera ton cr&eacute;neau sous <strong>24h</strong> et t'enverra l'adresse exacte du gymnase.<br><br>Pour acc&eacute;l&eacute;rer la confirmation, tu peux d&egrave;s maintenant r&eacute;gler l'acompte de <strong>30 €</strong>. Le solde de 40 € sera pay&eacute; le jour de la s&eacute;ance.</p>
+          <!-- Bouton paiement Stripe — Phase 1 : Payment Link -->
+          <div id="stripePayBlock" style="margin-top:24px;display:flex;flex-direction:column;align-items:center;gap:10px">
+            <a id="stripePayBtn"
+               href="https://À_REMPLACER_PAR_LE_LIEN_STRIPE"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="resa-submit"
+               style="display:inline-flex;align-items:center;gap:10px;justify-content:center;text-decoration:none;max-width:360px;background:#635BFF">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+              Payer mon acompte maintenant — 30 &euro;
+            </a>
+            <span style="font-size:.76rem;color:rgba(255,255,255,.4)">Paiement s&eacute;curis&eacute; via Stripe &mdash; tu peux aussi attendre la confirmation de Mathieu</span>
+          </div>
         </div>
       </div>
     </div>
@@ -743,6 +756,12 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="assets/js/supabaseClient.js?v=booking-v2"></script>
 <script>
+// ─── STRIPE PAYMENT LINK ──────────────────────────────────────────
+// Phase 1 : Payment Link statique. Remplacer par le vrai lien Stripe.
+// Phase 2 : sera remplacé par l'Edge Function create-checkout-session.
+const STRIPE_PAYMENT_LINK_BASKET = 'https://À_REMPLACER_PAR_LE_LIEN_STRIPE';
+// ─────────────────────────────────────────────────────────────────
+
 // NAV
 const nav=document.getElementById("mainNav");
 window.addEventListener("scroll",()=>{if(window.scrollY>60){nav.style.background="rgba(0,0,0,0.72)";nav.style.backdropFilter="blur(32px)"}else{nav.style.background="";nav.style.backdropFilter=""}});
@@ -868,6 +887,18 @@ async function submitResa(e){
 
   if(success){
     document.getElementById('resaForm').style.display='none';
+    // Injecter l'email dans le Payment Link Stripe (prefill)
+    var payBtn=document.getElementById('stripePayBtn');
+    if(payBtn && STRIPE_PAYMENT_LINK_BASKET && !STRIPE_PAYMENT_LINK_BASKET.includes('À_REMPLACER')){
+      var payUrl=STRIPE_PAYMENT_LINK_BASKET;
+      if(email) payUrl+=(payUrl.includes('?')?'&':'?')+'prefilled_email='+encodeURIComponent(email.trim().toLowerCase());
+      payBtn.href=payUrl;
+      document.getElementById('stripePayBlock').style.display='flex';
+    } else {
+      // Payment Link pas encore configuré — on masque le bloc paiement
+      var pb=document.getElementById('stripePayBlock');
+      if(pb) pb.style.display='none';
+    }
     document.getElementById('resaSuccess').classList.add('visible');
   }
 }
