@@ -307,7 +307,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
     <img src="assets/nz_logo_hero.png" alt="NZ 100%" class="login-logo">
     <h1>ESPACE MEMBRE</h1>
     <p class="login-sub">Connectez-vous pour acc&eacute;der &agrave; vos programmes</p>
-    
+    <div id="authError" style="display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.3);border-radius:10px;padding:12px 16px;font-size:.82rem;color:#ff8080;margin-bottom:14px;text-align:left;"></div>
     <div id="loginForm">
       <div class="form-group">
         <label>Email</label>
@@ -686,41 +686,121 @@ if (wVid) wVid.addEventListener('timeupdate', () => { if (wVid.currentTime >= 20
 const p1Vid = document.getElementById('part1Video');
 if (p1Vid) p1Vid.addEventListener('timeupdate', () => { if (p1Vid.currentTime >= 20) p1Vid.currentTime = 0; });
 
-// Auth simulation
+// ── AUTH SUPABASE ──────────────────────────────────────────
 function showLogin() {
   document.getElementById('loginForm').classList.remove('hidden');
   document.getElementById('registerForm').classList.add('hidden');
+  clearAuthError();
 }
 function showRegister() {
   document.getElementById('loginForm').classList.add('hidden');
   document.getElementById('registerForm').classList.remove('hidden');
+  clearAuthError();
+}
+function clearAuthError() {
+  var el = document.getElementById('authError');
+  if (el) { el.textContent = ''; el.style.display = 'none'; }
+}
+function showAuthError(msg) {
+  var el = document.getElementById('authError');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.display = 'block';
 }
 
-function doLogin() {
-  const email = document.getElementById('loginEmail').value;
-  if (!email) return;
-  const name = email.split('@')[0];
-  enterDashboard(name);
+async function doLogin() {
+  var email = (document.getElementById('loginEmail').value || '').trim();
+  var password = document.getElementById('loginPassword').value || '';
+  if (!email || !password) { showAuthError('Email et mot de passe requis.'); return; }
+  var btn = document.querySelector('#loginForm .login-btn');
+  btn.disabled = true; btn.textContent = 'Connexion...';
+  clearAuthError();
+  if (window.NZ && window.NZ.signInClient) {
+    var result = await window.NZ.signInClient(email, password);
+    if (result.error) {
+      var msg = result.error.message || 'Identifiants incorrects.';
+      if (msg.includes('Invalid')) msg = 'Email ou mot de passe incorrect.';
+      showAuthError(msg);
+      btn.disabled = false; btn.textContent = 'Se connecter';
+    } else {
+      var profile = await window.NZ.getCurrentProfile();
+      enterDashboard(profile ? (profile.full_name || email) : email, profile);
+    }
+  } else {
+    // Fallback si Supabase non configuré
+    console.warn('[NZ] Supabase non configuré — mode démo');
+    enterDashboard(email.split('@')[0], null);
+  }
 }
 
-function doRegister() {
-  const firstname = document.getElementById('regFirstname').value;
-  const lastname = document.getElementById('regLastname').value;
-  if (!firstname) return;
-  enterDashboard(firstname + ' ' + lastname);
+async function doRegister() {
+  var firstname = (document.getElementById('regFirstname').value || '').trim();
+  var lastname  = (document.getElementById('regLastname').value || '').trim();
+  var email     = (document.getElementById('regEmail').value || '').trim();
+  var password  = document.getElementById('regPassword').value || '';
+  if (!firstname || !email || !password) { showAuthError('Tous les champs sont requis.'); return; }
+  if (password.length < 8) { showAuthError('Le mot de passe doit contenir au moins 8 caractères.'); return; }
+  var btn = document.querySelector('#registerForm .login-btn');
+  btn.disabled = true; btn.textContent = 'Création...';
+  clearAuthError();
+  if (window.NZ && window.NZ.signUpClient) {
+    var result = await window.NZ.signUpClient(email, password, (firstname + ' ' + lastname).trim());
+    if (result.error) {
+      showAuthError(result.error.message || 'Erreur lors de l'inscription.');
+      btn.disabled = false; btn.textContent = 'Créer mon compte';
+    } else {
+      // Compte créé — email de confirmation envoyé par Supabase
+      showAuthError('');
+      document.getElementById('registerForm').innerHTML = '<div style="text-align:center;padding:20px 0"><div style="font-size:2.5rem;margin-bottom:16px">✅</div><h3 style="font-family:Bebas Neue,sans-serif;font-size:1.6rem;margin-bottom:10px">Compte créé !</h3><p style="color:rgba(255,255,255,.6);font-size:.88rem;line-height:1.7">Un email de confirmation vous a été envoyé.<br>Vérifiez votre boîte mail puis connectez-vous.</p><button class="login-btn" style="margin-top:20px" onclick="showLogin()">Se connecter</button></div>';
+    }
+  } else {
+    enterDashboard(firstname + ' ' + lastname, null);
+  }
 }
 
-function enterDashboard(name) {
+function enterDashboard(name, profile) {
   document.getElementById('loginScreen').classList.add('hidden');
   document.getElementById('dashboardScreen').classList.remove('hidden');
   document.getElementById('userName').textContent = name;
   document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+  // Charger les données du dashboard si NZ disponible
+  if (profile && window.NZ) { _loadDashboardData(profile); }
 }
 
-function doLogout() {
-  document.getElementById('dashboardScreen').classList.add('hidden');
-  document.getElementById('loginScreen').classList.remove('hidden');
+async function _loadDashboardData(profile) {
+  try {
+    var programs = await window.NZ.fetchClientPrograms(profile.id);
+    // Mise à jour de la progression si programmes actifs
+    if (programs && programs.length > 0) {
+      var prog = programs[0];
+      var pct = prog.progress_pct || 0;
+      var progressEl = document.querySelector('.progress-fill');
+      var progressLbl = document.querySelector('.progress-label');
+      if (progressEl) progressEl.style.width = pct + '%';
+      if (progressLbl) progressLbl.textContent = pct + '% complété';
+    }
+  } catch(err) { console.warn('[NZ] _loadDashboardData:', err); }
 }
+
+async function doLogout() {
+  if (window.NZ && window.NZ.signOutClient) {
+    await window.NZ.signOutClient(); // redirige vers index.html
+  } else {
+    document.getElementById('dashboardScreen').classList.add('hidden');
+    document.getElementById('loginScreen').classList.remove('hidden');
+  }
+}
+
+// Vérifier la session au chargement
+(async function initAuth() {
+  if (!window.NZ) return;
+  var user = await window.NZ.getCurrentUser();
+  if (user) {
+    var profile = await window.NZ.getCurrentProfile();
+    var name = profile ? (profile.full_name || user.email) : user.email;
+    enterDashboard(name, profile);
+  }
+})();
 
 // Sections
 function showSection(id) {
@@ -753,23 +833,25 @@ function playCourseVideo(item) {
 }
 
 // Messagerie
-function sendMsg() {
+async function sendMsg() {
   var input = document.getElementById('msgInput');
   var text = input.value.trim();
   if (!text) return;
   var thread = document.getElementById('msgThread');
   var now = new Date();
   var time = now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+  // Affichage immédiat
   var bubble = '<div class="msg-bubble-wrap from-me"><div><div class="msg-bubble">' + escHtml(text) + '</div><div class="msg-meta">' + time + '</div></div></div>';
   thread.insertAdjacentHTML('beforeend', bubble);
   thread.scrollTop = thread.scrollHeight;
   input.value = '';
-  // Auto-reply
-  setTimeout(function() {
-    var reply = '<div class="msg-bubble-wrap from-coach"><div class="msg-avatar">M</div><div><div class="msg-bubble">Bien reçu ! Je vous réponds dans les meilleurs délais. 🙏</div><div class="msg-meta">Mathieu &bull; ' + time + '</div></div></div>';
-    thread.insertAdjacentHTML('beforeend', reply);
-    thread.scrollTop = thread.scrollHeight;
-  }, 1200);
+  // Envoi Supabase
+  if (window.NZ && window.NZ.sendMessage) {
+    var user = await window.NZ.getCurrentUser();
+    if (user) {
+      await window.NZ.sendMessage(user.id, text, 'client');
+    }
+  }
 }
 function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -781,5 +863,7 @@ function mbnActive(btn) {
   btn.classList.add('active');
 }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/js/supabaseClient.js"></script>
 </body>
 </html>

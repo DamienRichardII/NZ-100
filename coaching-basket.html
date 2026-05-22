@@ -810,16 +810,63 @@ function updateRecap(){
   const recap=document.getElementById('resaRecap');
   if(selectedDate&&selectedCreneau){recap.classList.add('visible')}
 }
-function submitResa(e){
+async function submitResa(e){
   e.preventDefault();
-  if(!selectedDate){alert('Veuillez choisir une date.');return}
-  if(!selectedCreneau){alert('Veuillez choisir un créneau.');return}
+  if(!selectedDate){alert('Veuillez choisir une date.');return;}
+  if(!selectedCreneau){alert('Veuillez choisir un créneau.');return;}
+
+  const prenom  = (document.getElementById('prenom')||{}).value||'';
+  const nom     = (document.getElementById('nom')||{}).value||'';
+  const email   = (document.getElementById('email')||{}).value||'';
+  const tel     = (document.getElementById('tel')||{}).value||'';
+  const age     = (document.getElementById('age')||{}).value||'';
+  const niveau  = (document.getElementById('niveau')||{}).value||'';
+  const poste   = (document.getElementById('poste')||{}).value||'';
+  const club    = (document.getElementById('club')||{}).value||'';
+  const objectif= (document.getElementById('objectif')||{}).value||'';
+  const message = (document.getElementById('message')||{}).value||'';
+
   const btn=document.getElementById('submitBtn');
   btn.disabled=true;btn.textContent='Envoi en cours...';
-  setTimeout(()=>{
+
+  // Construction du message complet
+  const details=[
+    age?'Âge : '+age:'',
+    niveau?'Niveau : '+niveau:'',
+    poste?'Poste : '+poste:'',
+    club?'Club : '+club:'',
+    message?'Message : '+message:''
+  ].filter(Boolean).join(' | ');
+
+  // Date ISO pour preferred_date
+  const isoDate=selectedDate.toISOString().split('T')[0];
+
+  let success=false;
+  if(window.NZ&&window.NZ.submitBookingRequest){
+    const result=await window.NZ.submitBookingRequest({
+      name:(prenom+' '+nom).trim(),
+      email:email.trim().toLowerCase(),
+      phone:tel||null,
+      session_type:objectif||'Coaching basket individuel',
+      preferred_date:isoDate+' '+selectedCreneau,
+      message:details||null
+    });
+    success=result.success;
+    if(!success){
+      btn.disabled=false;btn.textContent='Envoyer ma demande de réservation';
+      alert('Une erreur est survenue. Merci de réessayer ou de me contacter directement.');
+      return;
+    }
+  } else {
+    // Fallback sans Supabase
+    console.warn('[NZ] Supabase non configuré — mode démo');
+    success=true;
+  }
+
+  if(success){
     document.getElementById('resaForm').style.display='none';
     document.getElementById('resaSuccess').classList.add('visible');
-  },1400);
+  }
 }
 renderCalendar();
 </script>
@@ -882,4 +929,15 @@ renderCalendar();
   }
 
   /* ── Visibilité page : relancer au retour au premier plan ── */
-  document.addEventListener('visibilitycha
+  document.addEventListener('visibilitychange', function(){
+    if(!document.hidden){
+      svids.forEach(function(v){ tryPlay(v); });
+    }
+  });
+
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/js/supabaseClient.js"></script>
+</body>
+</html>
