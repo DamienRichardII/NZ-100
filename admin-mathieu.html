@@ -498,6 +498,8 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 
 </div><!-- /adminWrap -->
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/js/supabaseClient.js?v=admin-v2"></script>
 <script>
 /* ══ DATA ════════════════════════════════════════════════════════════ */
 var KPI = {
@@ -565,16 +567,17 @@ async function doAdminLogin() {
     var profile = await window.NZ.getCurrentProfile();
     if (!profile || profile.role !== 'admin') {
       await window.NZ.signOutClient && window.NZ._sb.auth.signOut();
-      errEl.textContent = 'Accès réservé à l'administrateur.';
+      errEl.textContent = "Accès réservé à l'administrateur.";
       errEl.style.display = 'block';
       btn.disabled = false; btn.textContent = 'Accéder au tableau de bord';
       return;
     }
     _enterAdminDashboard();
   } else {
-    // Fallback sans Supabase configuré
-    console.warn('[NZ] Supabase non configuré — accès admin en mode démo');
-    _enterAdminDashboard();
+    console.error('[NZ Admin] window.NZ indisponible — Supabase non chargé.');
+    errEl.textContent = "Connexion indisponible pour le moment. Merci de réessayer.";
+    errEl.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Accéder au tableau de bord';
   }
 }
 
@@ -648,16 +651,18 @@ async function doLogout() {
   }
 }
 
-// Vérifier la session au chargement
-(async function checkAdminSession() {
-  if (!window.NZ) return;
+// Vérifier la session au chargement (DOMContentLoaded — supabaseClient.js déjà chargé)
+async function checkAdminSession() {
+  console.log('[NZ Admin] checkAdminSession — window.NZ disponible:', !!window.NZ);
+  if (!window.NZ || !window.NZ.getCurrentUser) return;
   var user = await window.NZ.getCurrentUser();
   if (!user) return;
   var profile = await window.NZ.getCurrentProfile();
   if (profile && profile.role === 'admin') {
     _enterAdminDashboard();
   }
-})();
+}
+window.addEventListener('DOMContentLoaded', checkAdminSession);
 
 /* ══ INIT ════════════════════════════════════════════════════════════ */
 function initAdmin() {
@@ -1004,7 +1009,5 @@ function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="assets/js/supabaseClient.js"></script>
 </body>
 </html>

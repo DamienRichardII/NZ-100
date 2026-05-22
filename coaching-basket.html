@@ -740,6 +740,8 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/js/supabaseClient.js?v=booking-v2"></script>
 <script>
 // NAV
 const nav=document.getElementById("mainNav");
@@ -858,9 +860,10 @@ async function submitResa(e){
       return;
     }
   } else {
-    // Fallback sans Supabase
-    console.warn('[NZ] Supabase non configuré — mode démo');
-    success=true;
+    console.error('[NZ Booking] window.NZ indisponible — Supabase non chargé.');
+    btn.disabled=false; btn.textContent='Envoyer ma demande de réservation';
+    alert("Réservation indisponible pour le moment. Merci de réessayer ou de contacter Mathieu directement.");
+    return;
   }
 
   if(success){
@@ -937,7 +940,5 @@ renderCalendar();
 
 })();
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="assets/js/supabaseClient.js"></script>
 </body>
 </html>
