@@ -34,6 +34,7 @@ if (!window.supabase) {
   throw new Error('[NZ] CDN Supabase non chargé — supabaseClient.js interrompu.');
 }
 
+console.log('[NZ Supabase] build version: leads-v5');
 console.log('[NZ Supabase] URL:', NZ_SUPABASE_URL);
 console.log('[NZ Supabase] anon key present:', !!NZ_SUPABASE_ANON);
 console.log('[NZ Supabase] anon key prefix:', NZ_SUPABASE_ANON ? NZ_SUPABASE_ANON.slice(0, 12) : 'MISSING');
