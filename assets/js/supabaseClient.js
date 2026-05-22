@@ -34,7 +34,7 @@ if (!window.supabase) {
   throw new Error('[NZ] CDN Supabase non chargé — supabaseClient.js interrompu.');
 }
 
-console.log('[NZ Supabase] build version: leads-v5');
+console.log('[NZ Supabase] build version: leads-v6');
 console.log('[NZ Supabase] URL:', NZ_SUPABASE_URL);
 console.log('[NZ Supabase] anon key present:', !!NZ_SUPABASE_ANON);
 console.log('[NZ Supabase] anon key prefix:', NZ_SUPABASE_ANON ? NZ_SUPABASE_ANON.slice(0, 12) : 'MISSING');
@@ -175,19 +175,18 @@ async function insertLead({
 
   console.log('[NZ Supabase] insertLead payload →', cleanPayload);
 
-  const { data, error } = await _sb
+  // INSERT sans SELECT — le rôle anon n'a pas SELECT sur leads (sécurité intentionnelle)
+  const { error } = await _sb
     .from('leads')
-    .insert([cleanPayload])
-    .select()
-    .single();
+    .insert([cleanPayload]);
 
   if (error) {
     console.error('[NZ Contact] Supabase insertLead error:', error.message, error);
     throw error;
   }
 
-  console.log('[NZ Supabase] insertLead succès — lead enregistré :', data);
-  return data;
+  console.log('[NZ Supabase] insertLead succès — lead envoyé à Supabase');
+  return { success: true };
 }
 
 // ============================================================
@@ -636,23 +635,15 @@ window.NZ = {
   fetchProgramContents,
   fetchContentProgress,
   markContentDone,
-  // Réservations
-  submitBookingRequest,
-  // Admin — Dashboard
-  fetchAdminDashboard,
-  // Admin — Leads
-  fetchAdminLeads,
+  // Admin helpers
   updateLeadStatus,
-  // Admin — Sessions
-  fetchAdminSessions,
-  // Admin — Messages
-  fetchAdminMessages,
-  // Admin — Bookings
   updateBookingStatus,
-  // Admin — Programmes
   assignProgramToClient,
+  fetchAdminLeads,
+  fetchAdminSessions,
+  fetchAdminMessages,
   // Client Supabase brut (requêtes custom)
   _sb
 };
 
-console.log('[NZ 100%] supabaseClient.js v3 chargé — prêt.');
+console.log('[NZ 100%] supabaseClient.js leads-v6 chargé — prêt.');
