@@ -679,7 +679,11 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
   </button>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/js/supabaseClient.js?v=member-v1"></script>
 <script>
+console.log('[NZ Espace Membre] script chargé — member-v1');
+console.log('[NZ Espace Membre] window.NZ disponible:', !!window.NZ);
 // Welcome video: limit to 20s loop
 const wVid = document.getElementById('welcomeVideo');
 if (wVid) wVid.addEventListener('timeupdate', () => { if (wVid.currentTime >= 20) wVid.currentTime = 0; });
@@ -727,9 +731,9 @@ async function doLogin() {
       enterDashboard(profile ? (profile.full_name || email) : email, profile);
     }
   } else {
-    // Fallback si Supabase non configuré
-    console.warn('[NZ] Supabase non configuré — mode démo');
-    enterDashboard(email.split('@')[0], null);
+    console.error('[NZ Espace Membre] window.NZ indisponible — Supabase non chargé.');
+    showAuthError("Connexion indisponible pour le moment. Merci de réessayer.");
+    btn.disabled = false; btn.textContent = 'Se connecter';
   }
 }
 
@@ -746,7 +750,7 @@ async function doRegister() {
   if (window.NZ && window.NZ.signUpClient) {
     var result = await window.NZ.signUpClient(email, password, (firstname + ' ' + lastname).trim());
     if (result.error) {
-      showAuthError(result.error.message || 'Erreur lors de l'inscription.');
+      showAuthError(result.error.message || "Erreur lors de l'inscription.");
       btn.disabled = false; btn.textContent = 'Créer mon compte';
     } else {
       // Compte créé — email de confirmation envoyé par Supabase
@@ -754,7 +758,9 @@ async function doRegister() {
       document.getElementById('registerForm').innerHTML = '<div style="text-align:center;padding:20px 0"><div style="font-size:2.5rem;margin-bottom:16px">✅</div><h3 style="font-family:Bebas Neue,sans-serif;font-size:1.6rem;margin-bottom:10px">Compte créé !</h3><p style="color:rgba(255,255,255,.6);font-size:.88rem;line-height:1.7">Un email de confirmation vous a été envoyé.<br>Vérifiez votre boîte mail puis connectez-vous.</p><button class="login-btn" style="margin-top:20px" onclick="showLogin()">Se connecter</button></div>';
     }
   } else {
-    enterDashboard(firstname + ' ' + lastname, null);
+    console.error('[NZ Espace Membre] window.NZ indisponible — Supabase non chargé.');
+    showAuthError("Inscription indisponible pour le moment. Merci de réessayer.");
+    btn.disabled = false; btn.textContent = 'Créer mon compte';
   }
 }
 
@@ -791,25 +797,32 @@ async function doLogout() {
   }
 }
 
-// Vérifier la session au chargement
-(async function initAuth() {
-  if (!window.NZ) return;
+// Vérifier la session au chargement (DOMContentLoaded — supabaseClient.js déjà chargé)
+async function initAuth() {
+  console.log('[NZ Espace Membre] initAuth — window.NZ disponible:', !!window.NZ);
+  if (!window.NZ || !window.NZ.getCurrentUser) {
+    console.error('[NZ Espace Membre] window.NZ indisponible — Supabase non chargé.');
+    return;
+  }
   var user = await window.NZ.getCurrentUser();
   if (user) {
     var profile = await window.NZ.getCurrentProfile();
     var name = profile ? (profile.full_name || user.email) : user.email;
     enterDashboard(name, profile);
   }
-})();
+}
+window.addEventListener('DOMContentLoaded', initAuth);
 
 // Sections
 function showSection(id) {
   // Hide all sections
   document.querySelectorAll('[id^="sec-"]').forEach(el => el.classList.add('hidden'));
-  document.getElementById('sec-' + id).classList.remove('hidden');
+  var sec = document.getElementById('sec-' + id);
+  if (sec) sec.classList.remove('hidden');
   // Active sidebar
   document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
-  document.querySelector('.sidebar-item[data-section="' + id + '"]').classList.add('active');
+  var activeItem = document.querySelector('.sidebar-item[data-section="' + id + '"]');
+  if (activeItem) activeItem.classList.add('active');
 }
 
 // Toggle course section
@@ -863,7 +876,5 @@ function mbnActive(btn) {
   btn.classList.add('active');
 }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="assets/js/supabaseClient.js"></script>
 </body>
 </html>
