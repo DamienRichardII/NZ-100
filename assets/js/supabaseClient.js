@@ -163,6 +163,7 @@ async function insertLead({
     program_interest: program_interest || null,
     objective:        objective        || null,
     message:          message          ? message.trim()  : null,
+    status:           'nouveau',
     source:           source           || 'contact_form'
   };
 
