@@ -34,6 +34,10 @@ if (!window.supabase) {
   throw new Error('[NZ] CDN Supabase non chargé — supabaseClient.js interrompu.');
 }
 
+console.log('[NZ Supabase] URL:', NZ_SUPABASE_URL);
+console.log('[NZ Supabase] anon key present:', !!NZ_SUPABASE_ANON);
+console.log('[NZ Supabase] anon key prefix:', NZ_SUPABASE_ANON ? NZ_SUPABASE_ANON.slice(0, 12) : 'MISSING');
+
 const _sb = window.supabase.createClient(NZ_SUPABASE_URL, NZ_SUPABASE_ANON, {
   auth: {
     autoRefreshToken: true,
@@ -41,7 +45,8 @@ const _sb = window.supabase.createClient(NZ_SUPABASE_URL, NZ_SUPABASE_ANON, {
     detectSessionInUrl: true
   }
 });
-console.log('[NZ] Supabase initialisé — projet gzrlhvbqdscccqdcklpn');
+console.log('[NZ Supabase] client loaded — projet gzrlhvbqdscccqdcklpn');
+console.log('[NZ Supabase] createClient OK — clé anon active');
 
 // ============================================================
 // AUTH — UTILISATEUR COURANT
