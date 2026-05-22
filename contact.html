@@ -275,17 +275,17 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <div class="contact-form-wrap glass-strong">
           <div class="form-title">Envoie ta demande</div>
           <p class="form-subtitle">Remplis ce formulaire et je te r&eacute;ponds sous 24h avec une proposition adapt&eacute;e &agrave; ton profil.</p>
-          <form id="contactForm" onsubmit="handleSubmit(event)">
+          <form id="contactForm" onsubmit="nzHandleContact(event)" novalidate>
             <div class="form-row-2">
-              <div class="form-group"><label>Pr&eacute;nom *</label><input type="text" placeholder="Ton pr&eacute;nom" required></div>
-              <div class="form-group"><label>Nom *</label><input type="text" placeholder="Ton nom" required></div>
+              <div class="form-group"><label for="cf-prenom">Pr&eacute;nom *</label><input id="cf-prenom" type="text" placeholder="Ton pr&eacute;nom" required autocomplete="given-name"></div>
+              <div class="form-group"><label for="cf-nom">Nom *</label><input id="cf-nom" type="text" placeholder="Ton nom" required autocomplete="family-name"></div>
             </div>
             <div class="form-row-2">
-              <div class="form-group"><label>Email *</label><input type="email" placeholder="ton@email.com" required></div>
-              <div class="form-group"><label>T&eacute;l&eacute;phone / WhatsApp</label><input type="tel" placeholder="06 XX XX XX XX"></div>
+              <div class="form-group"><label for="cf-email">Email *</label><input id="cf-email" type="email" placeholder="ton@email.com" required autocomplete="email"></div>
+              <div class="form-group"><label for="cf-phone">T&eacute;l&eacute;phone / WhatsApp</label><input id="cf-phone" type="tel" placeholder="06 XX XX XX XX" autocomplete="tel"></div>
             </div>
-            <div class="form-group"><label>Service souhait&eacute; *</label>
-              <select required>
+            <div class="form-group"><label for="cf-service">Service souhait&eacute; *</label>
+              <select id="cf-service" required>
                 <option value="" disabled selected>Ce qui t'int&eacute;resse</option>
                 <option>Bilan Forme &amp; Performance (gratuit)</option>
                 <option>Coaching Remise en forme</option>
@@ -296,8 +296,8 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
               </select>
             </div>
             <div class="form-row-2">
-              <div class="form-group"><label>Objectif principal</label>
-                <select>
+              <div class="form-group"><label for="cf-objectif">Objectif principal</label>
+                <select id="cf-objectif">
                   <option value="" disabled selected>Ton objectif</option>
                   <option>Retrouver ma forme</option>
                   <option>Reprendre le sport apr&egrave;s arr&ecirc;t</option>
@@ -308,8 +308,8 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
                   <option>Autre</option>
                 </select>
               </div>
-              <div class="form-group"><label>Niveau actuel</label>
-                <select>
+              <div class="form-group"><label for="cf-niveau">Niveau actuel</label>
+                <select id="cf-niveau">
                   <option value="" disabled selected>Ton niveau</option>
                   <option>S&eacute;dentaire / Inactif</option>
                   <option>Loisir / D&eacute;butant</option>
@@ -320,8 +320,9 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
                 </select>
               </div>
             </div>
-            <div class="form-group"><label>Disponibilit&eacute;s (jours / moments)</label><input type="text" placeholder="Ex : samedi matin, soir en semaine..."></div>
-            <div class="form-group"><label>Ton message *</label><textarea placeholder="D&eacute;cris ta situation, tes objectifs, tes contraintes, tes questions... Plus c'est pr&eacute;cis, mieux je pourrai te r&eacute;pondre." required></textarea></div>
+            <div class="form-group"><label for="cf-dispo">Disponibilit&eacute;s (jours / moments)</label><input id="cf-dispo" type="text" placeholder="Ex : samedi matin, soir en semaine..."></div>
+            <div class="form-group"><label for="cf-message">Ton message *</label><textarea id="cf-message" placeholder="D&eacute;cris ta situation, tes objectifs, tes contraintes, tes questions... Plus c'est pr&eacute;cis, mieux je pourrai te r&eacute;pondre." required></textarea></div>
+            <div id="formError" style="display:none;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.3);border-radius:10px;padding:12px 16px;font-size:.82rem;color:#ff8080;margin-bottom:12px;"></div>
             <button type="submit" class="form-submit">Envoyer ma demande</button>
             <p class="form-note">R&eacute;ponse sous 24h &mdash; Sans engagement &mdash; Mathieu te r&eacute;pond personnellement</p>
           </form>
@@ -394,14 +395,77 @@ const nav=document.getElementById("mainNav");
 window.addEventListener("scroll",()=>{if(window.scrollY>60){nav.style.background="rgba(0,0,0,0.72)";nav.style.backdropFilter="blur(32px)"}else{nav.style.background="";nav.style.backdropFilter=""}});
 function toggleNav(){nav.classList.toggle("mobile-open");nav.querySelector(".nav-toggle").innerHTML=nav.classList.contains("mobile-open")?"&#10005;":"&#9776;";}
 nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("mobile-open");nav.querySelector(".nav-toggle").innerHTML="&#9776;";}));
-function handleSubmit(e){
+async function nzHandleContact(e){
   e.preventDefault();
-  const btn=e.target.querySelector('.form-submit');
-  btn.disabled=true;btn.textContent='Envoi en cours...';
-  setTimeout(()=>{
-    e.target.style.display='none';
+  const form=e.target;
+  const btn=form.querySelector('.form-submit');
+  const errEl=document.getElementById('formError');
+
+  // Lecture des champs
+  const prenom=(document.getElementById('cf-prenom')||{}).value||'';
+  const nom=(document.getElementById('cf-nom')||{}).value||'';
+  const email=(document.getElementById('cf-email')||{}).value||'';
+  const phone=(document.getElementById('cf-phone')||{}).value||'';
+  const service=(document.getElementById('cf-service')||{}).value||'';
+  const objectif=(document.getElementById('cf-objectif')||{}).value||'';
+  const niveau=(document.getElementById('cf-niveau')||{}).value||'';
+  const dispo=(document.getElementById('cf-dispo')||{}).value||'';
+  const message=(document.getElementById('cf-message')||{}).value||'';
+
+  if(!prenom||!email||!service||!message){
+    if(errEl){errEl.textContent='Merci de remplir tous les champs obligatoires.';errEl.style.display='block';}
+    return;
+  }
+
+  btn.disabled=true; btn.textContent='Envoi en cours...';
+  if(errEl) errEl.style.display='none';
+
+  console.log('[NZ Contact] submit intercepted — prenom:', prenom, 'email:', email);
+
+  // Construction du message complet
+  const fullMessage=[
+    message,
+    objectif?'Objectif : '+objectif:'',
+    niveau?'Niveau : '+niveau:'',
+    dispo?'Disponibilités : '+dispo:''
+  ].filter(Boolean).join('\n');
+
+  // Vérification window.NZ disponible
+  if(!window.NZ||!window.NZ.insertLead){
+    console.error('[NZ Contact] window.NZ non disponible — supabaseClient.js non chargé.');
+    btn.disabled=false; btn.textContent='Envoyer ma demande';
+    if(errEl){
+      errEl.textContent='Service temporairement indisponible. Merci de réessayer ou de me contacter directement par Instagram ou email.';
+      errEl.style.display='block';
+    }
+    return;
+  }
+
+  const payload={
+    first_name: prenom.trim(),
+    last_name:  nom.trim()||null,
+    email:      email.trim(),
+    phone:      phone||null,
+    message:    fullMessage,
+    objective:  objectif||null,
+    program_interest: service||null,
+    source:     'contact_form'
+  };
+  console.log('[NZ Contact] payload', payload);
+
+  try{
+    const savedLead=await window.NZ.insertLead(payload);
+    console.log('[NZ Contact] Lead saved:', savedLead);
+    form.style.display='none';
     document.getElementById('formSuccess').classList.add('visible');
-  },1200);
+  }catch(err){
+    console.error('[NZ Contact] Lead insert failed:', err);
+    btn.disabled=false; btn.textContent='Envoyer ma demande';
+    if(errEl){
+      errEl.textContent="Impossible d'envoyer la demande pour le moment. Merci de réessayer ou de me contacter directement.";
+      errEl.style.display='block';
+    }
+  }
 }
 </script>
 <script>
@@ -471,5 +535,7 @@ function handleSubmit(e){
   });
 })();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/js/supabaseClient.js?v=leads-v3"></script>
 </body>
 </html>
