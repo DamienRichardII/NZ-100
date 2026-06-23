@@ -121,6 +121,7 @@ section{padding:100px 24px;position:relative}
 .date-cell.available:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
 .date-cell.selected{background:#fff;color:#000 !important;border-color:#fff}
 .date-cell.past{color:rgba(255,255,255,.2);cursor:not-allowed}
+.date-cell.blocked-date{color:rgba(255,255,255,.15);cursor:not-allowed;background:rgba(255,60,60,.06);border:1px solid rgba(255,60,60,.1)}
 .date-cell.today{border-color:rgba(255,255,255,.3)}
 .cal-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .cal-month{font-family:'Bebas Neue',sans-serif;font-size:1.3rem}
@@ -798,7 +799,16 @@ function renderCalendar(){
     const dow=cellDate.getDay();
     const isWeekend=dow===0||dow===6;
     const isPast=cellDate<today;
-    if(isPast||isWeekend){el.className='date-cell past';el.textContent=d}
+    // Indisponibilité : 4–15 juillet 2026
+    const isBlocked=(year===2026&&month===6&&d>=4&&d<=15);
+    if(isPast||isWeekend||isBlocked){
+      el.className='date-cell past';
+      if(isBlocked&&!isPast&&!isWeekend){
+        el.className='date-cell past blocked-date';
+        el.title='Indisponible (4–15 juillet)';
+      }
+      el.textContent=d;
+    }
     else{
       el.className='date-cell available';
       if(cellDate.getTime()===today.getTime())el.classList.add('today');

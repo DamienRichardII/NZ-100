@@ -214,12 +214,18 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
 
 /* AVIS VIDEO BLOCKS */
 .avis-videos{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:48px;border-radius:20px;overflow:hidden;}
-.avis-vid-block{position:relative;height:460px;overflow:hidden;cursor:default;}
+.avis-vid-block{position:relative;height:460px;overflow:hidden;cursor:pointer;}
 .avis-vid-block:hover .avis-vid{transform:scale(1.03);}
 .avis-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.25,.46,.45,.94);}
-.avis-vid-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.15) 60%,rgba(0,0,0,.05) 100%);z-index:1;}
+.avis-vid-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.15) 60%,rgba(0,0,0,.05) 100%);z-index:1;transition:background .3s;}
+.avis-vid-block.playing .avis-vid-overlay{background:linear-gradient(to top,rgba(0,0,0,.6) 0%,rgba(0,0,0,.0) 50%,rgba(0,0,0,.0) 100%);}
 .avis-vid-legend{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:20px 18px;}
 .avis-vid-name{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.06em;color:#fff;}
+.avis-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:3;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;transition:background .25s,transform .25s,opacity .25s;pointer-events:none;}
+.avis-vid-block:hover .avis-play-btn{background:rgba(255,255,255,.28);transform:translate(-50%,-50%) scale(1.08);}
+.avis-vid-block.playing .avis-play-btn{opacity:0;}
+.avis-vid-block.playing:hover .avis-play-btn{opacity:1;background:rgba(0,0,0,.38);}
+.avis-play-btn svg{margin-left:4px;}
 
 
 
@@ -365,12 +371,10 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
 #site-intro.fade-out{opacity:0;pointer-events:none;}
 #intro-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 #intro-gradient{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.35) 0%,rgba(0,0,0,.08) 50%,rgba(0,0,0,.65) 100%);z-index:1;}
-#intro-logo{position:relative;z-index:2;text-align:center;animation:introLogo 1.2s ease forwards;}
-#intro-logo img{width:72px;height:auto;opacity:.9;}
-@keyframes introLogo{from{opacity:0;transform:scale(.85);}to{opacity:1;transform:scale(1);}}
-#intro-skip{position:absolute;bottom:36px;right:36px;z-index:2;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);cursor:pointer;border:1px solid rgba(255,255,255,.18);padding:9px 22px;border-radius:100px;transition:.3s;background:rgba(0,0,0,.25);}
+#intro-logo{display:none;}
+#intro-skip{position:absolute;bottom:36px;right:36px;z-index:10;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);cursor:pointer;border:1px solid rgba(255,255,255,.18);padding:9px 22px;border-radius:100px;transition:.3s;background:rgba(0,0,0,.25);pointer-events:auto;}
 #intro-skip:hover{color:#fff;border-color:rgba(255,255,255,.5);}
-#intro-sound{position:absolute;bottom:36px;left:36px;z-index:2;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);cursor:pointer;border:1px solid rgba(255,255,255,.22);padding:9px 22px;border-radius:100px;transition:.3s;background:rgba(0,0,0,.3);display:none;align-items:center;gap:8px;}
+#intro-sound{position:absolute;bottom:36px;left:36px;z-index:10;font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);cursor:pointer;border:1px solid rgba(255,255,255,.22);padding:9px 22px;border-radius:100px;transition:.3s;background:rgba(0,0,0,.3);display:none;align-items:center;gap:8px;pointer-events:auto;}
 #intro-sound:hover{color:#fff;border-color:rgba(255,255,255,.6);}
 #intro-sound svg{flex-shrink:0;}
 @media(max-width:640px){#intro-skip{bottom:24px;right:18px;font-size:.68rem;padding:8px 16px;}#intro-sound{bottom:24px;left:18px;font-size:.68rem;padding:8px 16px;}}
@@ -598,41 +602,45 @@ footer{padding:64px 24px 32px;border-top:1px solid rgba(255,255,255,.06);positio
     <h2 class="section-title reveal">Des r&eacute;sultats r&eacute;els.</h2>
     <div class="avis-videos reveal">
 
-      <div class="avis-vid-block">
-        <video class="avis-vid" autoplay muted loop playsinline preload="auto">
+      <div class="avis-vid-block" onclick="toggleAvisVid(this)">
+        <video class="avis-vid" playsinline preload="metadata">
           <source src="assets/Nahan-Niare-Avis.mp4" type="video/mp4">
         </video>
         <div class="avis-vid-overlay"></div>
+        <div class="avis-play-btn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
         <div class="avis-vid-legend">
           <span class="avis-vid-name">Nahan Niar&eacute;</span>
         </div>
       </div>
 
-      <div class="avis-vid-block">
-        <video class="avis-vid" autoplay muted loop playsinline preload="auto">
+      <div class="avis-vid-block" onclick="toggleAvisVid(this)">
+        <video class="avis-vid" playsinline preload="metadata">
           <source src="assets/Dylan-Affo-Mama-Avis.mp4" type="video/mp4">
         </video>
         <div class="avis-vid-overlay"></div>
+        <div class="avis-play-btn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
         <div class="avis-vid-legend">
           <span class="avis-vid-name">Dylan Affo Mama</span>
         </div>
       </div>
 
-      <div class="avis-vid-block">
-        <video class="avis-vid" autoplay muted loop playsinline preload="auto">
+      <div class="avis-vid-block" onclick="toggleAvisVid(this)">
+        <video class="avis-vid" playsinline preload="metadata">
           <source src="assets/Amali-Montout-Avis.mp4" type="video/mp4">
         </video>
         <div class="avis-vid-overlay"></div>
+        <div class="avis-play-btn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
         <div class="avis-vid-legend">
           <span class="avis-vid-name">Amali Montout</span>
         </div>
       </div>
 
-      <div class="avis-vid-block">
-        <video class="avis-vid" autoplay muted loop playsinline preload="auto">
+      <div class="avis-vid-block" onclick="toggleAvisVid(this)">
+        <video class="avis-vid" playsinline preload="metadata">
           <source src="assets/Clarence-masamba-avis.mp4" type="video/mp4">
         </video>
         <div class="avis-vid-overlay"></div>
+        <div class="avis-play-btn" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#fff" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
         <div class="avis-vid-legend">
           <span class="avis-vid-name">Clarence Masamba</span>
         </div>
@@ -722,6 +730,40 @@ document.querySelectorAll('.nav-links a').forEach(function(link){
     nav.querySelector('.nav-toggle').innerHTML='&#9776;';
   });
 });
+/* ── TÉMOIGNAGES : lecture interactive avec son, une vidéo à la fois ── */
+function toggleAvisVid(block){
+  var vid=block.querySelector('.avis-vid');
+  if(!vid) return;
+  var isPlaying=!vid.paused;
+  /* Pause toutes les autres */
+  document.querySelectorAll('.avis-vid-block').forEach(function(b){
+    var v=b.querySelector('.avis-vid');
+    if(v&&!v.paused){ v.pause(); b.classList.remove('playing'); }
+  });
+  if(isPlaying){
+    /* Déjà en lecture → on a pausé ci-dessus */
+    return;
+  }
+  /* Lecture avec son */
+  vid.muted=false;
+  var p=vid.play();
+  if(p&&typeof p.catch==='function'){
+    p.catch(function(){
+      /* Bloqué par le navigateur → silencieux */
+      vid.muted=true;
+      vid.play().catch(function(){});
+    });
+  }
+  block.classList.add('playing');
+  /* Retirer la classe playing à la fin */
+  vid.addEventListener('ended',function(){
+    block.classList.remove('playing');
+  },{once:true});
+  vid.addEventListener('pause',function(){
+    block.classList.remove('playing');
+  },{once:true});
+}
+
 var reveals=document.querySelectorAll('.reveal');
 var revObs=new IntersectionObserver(function(entries){
   entries.forEach(function(e){
@@ -782,8 +824,8 @@ reveals.forEach(function(r){revObs.observe(r);});
     });
   }
 
-  /* ── SECTION VIDEOS : seance-vid + avis-vid ── */
-  var svids=document.querySelectorAll('.seance-vid,.avis-vid');
+  /* ── SECTION VIDEOS : seance-vid uniquement (avis-vid = interactif) ── */
+  var svids=document.querySelectorAll('.seance-vid');
   svids.forEach(function(vid){
     vid.addEventListener('loadedmetadata',function(){ tryPlay(vid); });
     vid.addEventListener('suspend',function(){ if(!document.hidden) tryPlay(vid); });
@@ -818,7 +860,7 @@ reveals.forEach(function(r){revObs.observe(r);});
   var overlay = document.getElementById('site-intro');
   if(!overlay) return;
 
-  /* Déjà vu dans cette session → masquer immédiatement, aucune animation */
+  /* Déjà vu dans cette session → masquer immédiatement */
   if(sessionStorage.getItem('nz100-intro')){
     overlay.style.display = 'none';
     return;
@@ -836,18 +878,16 @@ reveals.forEach(function(r){revObs.observe(r);});
     setTimeout(function(){ overlay.style.display = 'none'; }, 950);
   }
 
+  /* Exposer dismiss globalement */
+  window._nzIntroDismiss = dismiss;
+
   var vid   = document.getElementById('intro-video');
   var skip  = document.getElementById('intro-skip');
   var sound = document.getElementById('intro-sound');
 
   if(vid){
-    /* Fermeture naturelle à la fin de la vidéo */
     vid.addEventListener('ended', dismiss);
-
-    /* Fallback uniquement si la vidéo échoue vraiment à charger */
-    vid.addEventListener('error', function(){
-      setTimeout(dismiss, 2000);
-    });
+    vid.addEventListener('error', function(){ setTimeout(dismiss, 2000); });
 
     /* Tentative autoplay AVEC son */
     vid.muted = false;
@@ -861,26 +901,39 @@ reveals.forEach(function(r){revObs.observe(r);});
         if(sound){ sound.style.display = 'flex'; }
         if(mutedAttempt !== undefined){
           mutedAttempt.catch(function(){
-            /* Lecture muette impossible (très rare) → fermer après 3s */
             setTimeout(dismiss, 3000);
           });
         }
       });
     }
 
+    /* Fallback : montrer le bouton son après 600ms si la vidéo est muette */
+    setTimeout(function(){
+      if(vid.muted && sound){ sound.style.display = 'flex'; }
+    }, 600);
+
     /* Bouton son : unmute et masquer */
     if(sound){
-      sound.addEventListener('click', function(){
+      sound.addEventListener('click', function(e){
+        e.stopPropagation();
         vid.muted = false;
         sound.style.display = 'none';
       });
     }
   }
 
-  /* Bouton Passer : fermeture immédiate */
+  /* Bouton Passer */
   if(skip){
-    skip.addEventListener('click', dismiss);
+    skip.addEventListener('click', function(e){
+      e.stopPropagation();
+      dismiss();
+    });
   }
+
+  /* Cliquer n'importe où sur l'overlay (hors boutons) = passer */
+  overlay.addEventListener('click', function(e){
+    if(!e.target.closest('button')){ dismiss(); }
+  });
 })();
 </script>
 </body>

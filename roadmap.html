@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light" style=""><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;family=Oswald:wght@500;700&amp;display=swap" rel="stylesheet" data-editor-preserved="true">
+    
+    <title>NZ 100% - Bilan Personnalisé</title>
+    
+    <style>
+      :root {
+        --bg: #000000;
+        --bg-light: #0a0a0a;
+        --card-bg: #111111;
+        --text: #ffffff;
+        --text-muted: #a0a0a0;
+        --border: #222222;
+        --border-focus: #ffffff;
+      }
+      html {
+        scroll-behavior: smooth;
+        background-color: var(--bg);
+      }
+      body {
+        margin: 0 auto;
+        padding: 40px 20px;
+        max-width: 900px;
+        font-family: 'Inter', sans-serif;
+        color: var(--text);
+        background-color: var(--bg);
+        line-height: 1.6;
+        box-sizing: border-box;
+      }
+      h1,
+      h2,
+      h3,
+      .impact-title {
+        font-family: 'Oswald', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0;
+      }
+      .hero-title {
+        font-size: clamp(3rem, 8vw, 5.5rem);
+        line-height: 1.1;
+        margin: 20px 0;
+        font-weight: 700;
+      }
+      .hero-subtitle {
+        font-size: clamp(1.2rem, 3vw, 1.8rem);
+        color: var(--text-muted);
+        letter-spacing: 3px;
+        margin-bottom: 30px;
+      }
+      .text-muted {
+        color: var(--text-muted);
+      }
+      .italic {
+        font-style: italic;
+      }
+
+      .hero {
+        text-align: center;
+        padding: 60px 0 80px;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 60px;
+      }
+      .badges {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 24px;
+        margin-bottom: 60px;
+      }
+      .card {
+        background: linear-gradient(145deg, var(--card-bg), var(--bg-light));
+        border: 1px solid var(--border);
+        padding: 30px;
+        border-radius: 8px;
+      }
+      .card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+      }
+      .coach-block {
+        text-align: center;
+        padding: 40px;
+        border: 1px solid var(--border);
+        background-color: var(--bg-light);
+        margin-bottom: 60px;
+      }
+      .coach-block h2 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+      .coach-block p {
+        margin: 8px 0;
+      }
+      .coach-block a {
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .btn-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-block;
+        padding: 16px 36px;
+        border-radius: 50px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        border: 2px solid transparent;
+      }
+      .btn-primary {
+        background-color: var(--text);
+        color: var(--bg);
+      }
+      .btn-outline {
+        background-color: transparent;
+        color: var(--text);
+        border-color: var(--text);
+      }
+      .btn-download {
+        background: #ffffff;
+        color: #000000;
+        border: 2px solid #ffffff;
+        font-weight: 700;
+      }
+
+      section {
+        position: relative;
+        margin-bottom: 80px;
+        padding: 40px 0;
+        border-top: 1px solid var(--border);
+      }
+      .section-number {
+        position: absolute;
+        top: -20px;
+        left: -10px;
+        font-family: 'Oswald', sans-serif;
+        font-size: 8rem;
+        color: rgba(255, 255, 255, 0.03);
+        line-height: 1;
+        z-index: -1;
+        pointer-events: none;
+      }
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+      .intro-text {
+        color: var(--text-muted);
+        font-style: italic;
+        margin-bottom: 40px;
+        font-size: 1.1rem;
+      }
+      .form-group {
+        margin-bottom: 30px;
+      }
+      .form-group > label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+        font-size: 1.05rem;
+      }
+      input[type='text'],
+      input[type='number'],
+      input[type='email'],
+      input[type='tel'],
+      textarea {
+        width: 100%;
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 16px;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      .radio-group,
+      .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .option-label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        color: var(--text-muted);
+      }
+      input[type='radio'],
+      input[type='checkbox'] {
+        margin-right: 12px;
+      }
+
+      .pact-section {
+        text-align: center;
+        padding: 60px 20px;
+        border: 1px solid var(--border);
+        background-color: var(--bg-light);
+      }
+      .pact-section h2 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+      }
+      .pact-section p {
+        max-width: 700px;
+        margin: 0 auto 30px;
+        font-size: 1.2rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 60px 0;
+        border-top: 1px solid var(--border);
+        margin-top: 80px;
+      }
+      .footer-slogan {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+      .footer-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        margin: 0 10px;
+      }
+    </style>
+  </head>
+  <body style="">
+    <header class="hero">
+      <h1 class="hero-title">MORE DISCIPLINE</h1>
+      <div class="hero-subtitle impact-title">LA CLÉ DE LA LIBERTÉ</div>
+      <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px">
+        Bilan personnalisé — Ton point de départ vers une transformation 100% sur-mesure
+      </p>
+
+      <div class="badges">
+        <span>⏱ 15 minutes</span>
+        <span>🔒 100% confidentiel</span>
+        <span>🎯 Programme sur-mesure</span>
+      </div>
+
+      <div class="btn-group">
+        <a href="#bilan" class="btn btn-primary">COMMENCER LE BILAN</a>
+        <a href="#bilan" class="btn btn-outline">Découvrir le bilan</a>
+        <a href="mailto:mathieunzita60@gmail.com?subject=Roadmap%20NZ%20100%25&amp;body=Voici%20la%20roadmap" class="btn btn-download">📧 ENVOYER PAR MAIL</a>
+        <a href="#" class="btn btn-download">📥 TÉLÉCHARGER HTML</a>
+      </div>
+    </header>
+
+    <div class="grid-3">
+      <div class="card">
+        <h3 class="impact-title">🎯 ANALYSE 360°</h3>
+        <p class="text-muted">Je décortique ton profil pour ne rien laisser au hasard.</p>
+      </div>
+      <div class="card">
+        <h3 class="impact-title">⚡ PLAN D'ACTION</h3>
+        <p class="text-muted">Des étapes claires, nettes et précises pour atteindre tes objectifs.</p>
+      </div>
+      <div class="card">
+        <h3 class="impact-title">🔒 ENGAGEMENT</h3>
+        <p class="text-muted">Un pacte entre toi et moi. On ne lâche rien jusqu'au résultat.</p>
+      </div>
+    </div>
+
+    <div class="coach-block">
+      <p class="text-muted impact-title">TON COACH</p>
+      <h2 class="impact-title">MATHIEU NZITA</h2>
+      <p>Coach sportif certifié — Fondateur NZ 100%</p>
+      <p class="text-muted">Spécialisé en : Remise en forme · Retour au sport · Performance · Coaching basket</p>
+      <p style="margin: 20px 0">
+        <a href="mailto:mathieunzita60@gmail.com">mathieunzita60@gmail.com</a><br>
+        <span class="text-muted">Instagram : @nzmathieu / @Nz.hundred</span>
+      </p>
+      <p class="italic" style="font-size: 1.2rem; margin-top: 30px">
+        "La discipline n'est pas une punition. C'est ta liberté."
+      </p>
+    </div>
+
+    <form id="bilan" action="mailto:mathieunzita60@gmail.com?subject=Bilan%20NZ%20100%25" method="post" enctype="text/plain">
+      <section>
+        <div class="section-number">01</div>
+        <h2 class="section-title impact-title">Identité &amp; Contact</h2>
+        <p class="intro-text">Qui es-tu ? Faisons les présentations.</p>
+        <div class="form-group">
+          <label>Nom &amp; Prénom</label>
+          <input type="text" name="Nom_Prenom" required="">
+        </div>
+        <div class="form-group">
+          <label>Âge</label>
+          <input type="number" name="Age" required="">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="Email" required="">
+        </div>
+        <div class="form-group">
+          <label>Téléphone</label>
+          <input type="tel" name="Telephone" required="">
+        </div>
+        <div class="form-group">
+          <label>Profession / Rythme de vie</label>
+          <input type="text" name="Profession">
+        </div>
+      </section>
+
+      <section>
+        <div class="section-number">02</div>
+        <h2 class="section-title impact-title">Point de départ</h2>
+        <p class="intro-text">Où en es-tu aujourd'hui physiquement ?</p>
+        <div class="form-group">
+          <label>Taille (cm)</label>
+          <input type="number" name="Taille">
+        </div>
+        <div class="form-group">
+          <label>Poids actuel (kg)</label>
+          <input type="number" name="Poids">
+        </div>
+        <div class="form-group">
+          <label>Comment décrirais-tu ton niveau sportif actuel ?</label>
+          <div class="radio-group">
+            <label class="option-label"><input type="radio" name="Niveau" value="Débutant"> Débutant (je reprends de zéro)</label>
+            <label class="option-label"><input type="radio" name="Niveau" value="Intermédiaire"> Intermédiaire (1 à 2 séances par
+              semaine)</label>
+            <label class="option-label"><input type="radio" name="Niveau" value="Confirmé"> Confirmé (3+ séances, régulier)</label>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-number">03</div>
+        <h2 class="section-title impact-title">Objectifs</h2>
+        <p class="intro-text">Où veux-tu aller ? Cible précisément ton but.</p>
+        <div class="form-group">
+          <label>Objectif principal (plusieurs choix possibles)</label>
+          <div class="checkbox-group">
+            <label class="option-label"><input type="checkbox" name="Objectif" value="Perte de gras"> Perte de masse grasse / Sèche</label>
+            <label class="option-label"><input type="checkbox" name="Objectif" value="Prise de muscle"> Prise de masse musculaire</label>
+            <label class="option-label"><input type="checkbox" name="Objectif" value="Remise en forme"> Remise en forme générale / Santé</label>
+            <label class="option-label"><input type="checkbox" name="Objectif" value="Performance"> Performance sportive (ex: Basket)</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Quel est ton objectif de poids idéal ? (kg)</label>
+          <input type="number" name="Poids_Cible">
+        </div>
+        <div class="form-group">
+          <label>Pourquoi cet objectif est-il important pour toi MAINTENANT ?</label>
+          <textarea name="Motivation"></textarea>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-number">04</div>
+        <h2 class="section-title impact-title">Santé &amp; Antécédents</h2>
+        <p class="intro-text">La sécurité d'abord.</p>
+        <div class="form-group">
+          <label>As-tu des blessures, douleurs ou contraintes physiques ?</label>
+          <textarea name="Blessures" placeholder="Genoux, dos, épaules..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Suis-tu un traitement médical ou as-tu des pathologies ?</label>
+          <textarea name="Medical"></textarea>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-number">05</div>
+        <h2 class="section-title impact-title">Nutrition</h2>
+        <p class="intro-text">L'entraînement est le moteur, la nutrition est l'essence.</p>
+        <div class="form-group">
+          <label>Combien de repas fais-tu par jour en moyenne ?</label>
+          <input type="number" name="Repas_Jour">
+        </div>
+        <div class="form-group">
+          <label>As-tu des allergies, intolérances ou régimes spécifiques ?</label>
+          <input type="text" name="Regime" placeholder="Végétarien, sans gluten, etc.">
+        </div>
+        <div class="form-group">
+          <label>Quel est ton plus gros point faible en nutrition ?</label>
+          <textarea name="Point_Faible_Nutrition" placeholder="Grignotage, fast-food, manque de temps..."></textarea>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-number">06</div>
+        <h2 class="section-title impact-title">Disponibilités</h2>
+        <p class="intro-text">Organisons ton succès.</p>
+        <div class="form-group">
+          <label>Combien de jours par semaine peux-tu t'entraîner ?</label>
+          <input type="number" name="Jours_Entrainement" min="1" max="7">
+        </div>
+        <div class="form-group">
+          <label>Lieu d'entraînement prévu :</label>
+          <div class="radio-group">
+            <label class="option-label"><input type="radio" name="Lieu" value="Salle de sport"> Salle de sport</label>
+            <label class="option-label"><input type="radio" name="Lieu" value="Maison"> À la maison</label>
+            <label class="option-label"><input type="radio" name="Lieu" value="Extérieur"> En extérieur</label>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-number">07</div>
+        <h2 class="section-title impact-title">Performance Basket (Optionnel)</h2>
+        <p class="intro-text">Si ton objectif est lié au Basketball.</p>
+        <div class="form-group">
+          <label>Quel est ton poste de jeu ?</label>
+          <input type="text" name="Poste_Basket">
+        </div>
+        <div class="form-group">
+          <label>Sur quel aspect technique ou physique veux-tu exploser ?</label>
+          <textarea name="Objectif_Basket" placeholder="Détente, shoot, explosivité, cardio..."></textarea>
+        </div>
+      </section>
+
+      <section class="pact-section">
+        <h2 class="impact-title">LE PACTE NZ 100%</h2>
+        <p>
+          Je m'engage à te fournir les meilleurs outils, mon expertise et mon énergie pour te faire atteindre ton but.
+          En retour, j'attends de toi :
+        </p>
+        <div style="text-align: left; max-width: 500px; margin: 0 auto 40px">
+          <div class="form-group" style="margin-bottom: 15px">
+            <label class="option-label"><input type="checkbox" required=""> Je m'engage à être honnête dans mes retours.</label>
+          </div>
+          <div class="form-group" style="margin-bottom: 15px">
+            <label class="option-label"><input type="checkbox" required=""> Je m'engage à respecter la discipline demandée.</label>
+          </div>
+          <div class="form-group" style="margin-bottom: 15px">
+            <label class="option-label"><input type="checkbox" required=""> Je comprends qu'il n'y a pas de résultat sans effort.</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" style="font-size: 1.2rem; padding: 20px 50px">
+          ENVOYER MON BILAN
+        </button>
+      </section>
+    </form>
+
+    <footer>
+      <p class="footer-slogan impact-title">MORE DISCIPLINE — LA CLÉ DE LA LIBERTÉ</p>
+      <p class="text-muted" style="margin-bottom: 20px">NZ 100% — Coach Mathieu Nzita</p>
+      <div class="footer-links" style="margin-bottom: 20px">
+        <a href="mailto:mathieunzita60@gmail.com">📩 mathieunzita60@gmail.com</a> ·
+        <a href="https://instagram.com/nzmathieu" target="_blank">@nzmathieu</a> ·
+        <a href="https://instagram.com/Nz.hundred" target="_blank">@Nz.hundred</a>
+      </div>
+    </footer>
+
+    
+  
+
+</body></html>

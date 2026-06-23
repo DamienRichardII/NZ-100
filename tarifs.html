@@ -378,9 +378,38 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
           </div>
         </div>
       </div>
+
+      <div class="tarif-section-title">Programmes digitaux</div>
+
+      <div class="tarif-card glass">
+        <div class="tarif-card-inner">
+          <div class="tarif-card-badge">Digital</div>
+          <div class="tarif-card-body">
+            <div class="tarif-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg></div>
+            <div class="tarif-card-info">
+              <div class="tarif-card-title">Programme de Dribble</div>
+              <p class="tarif-card-desc">Travaille ta ma&icirc;trise du ballon &agrave; ton rythme, n&rsquo;importe o&ugrave;. Des exercices progressifs de dribble et de contr&ocirc;le con&ccedil;us par Mathieu pour tous les niveaux.</p>
+              <ul class="tarif-card-features">
+                <li>Acc&egrave;s imm&eacute;diat apr&egrave;s commande</li>
+                <li>Exercices vid&eacute;os progressifs</li>
+                <li>Tous niveaux &mdash; d&eacute;butant &agrave; confirm&eacute;</li>
+                <li>T&eacute;l&eacute;chargeable, acc&egrave;s &agrave; vie</li>
+              </ul>
+            </div>
+            <div class="tarif-card-pricing">
+              <div>
+                <div class="tarif-price">29,99 &euro;</div>
+                <div class="tarif-price-note">paiement unique<br>acc&egrave;s &agrave; vie</div>
+              </div>
+              <a href="contact.html" class="btn-small btn-sw">Commander &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    
+
     <div class="bilan-note glass reveal" style="margin-top:48px">
       <span class="bilan-note-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><line x1="9" y1="18" x2="15" y2="18"/><line x1="10" y1="22" x2="14" y2="22"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/></svg></span>
       <div class="bilan-note-text">
@@ -520,16 +549,6 @@ function toggleFaq(item){item.classList.toggle('open')}
       hv.currentTime=5;
       tryPlay(hv);
     }
-    hv.addEventListener('loadedmetadata',heroGo);
-    hv.addEventListener('ended',heroGo);
-    hv.addEventListener('timeupdate',function(){
-      if(hv.duration>0&&hv.currentTime>=hv.duration-0.4){
-        hv.currentTime=5;
-        tryPlay(hv);
-      }
-    });
-    // iOS Safari suspend/stall recovery
-    hv.addEventListener('suspend',function(){ if(!document.hidden) tryPlay(hv); });
     hv.addEventListener('stalled',function(){ if(!document.hidden) tryPlay(hv); });
     if(hv.readyState>=1) heroGo();
   }
