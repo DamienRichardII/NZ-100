@@ -521,10 +521,10 @@ async function payBasket(offerType, btn){
     var userMsg;
     switch(err.message){
       case 'init':    userMsg='Service indisponible pour le moment — rechargez la page et réessayez.'; break;
-      case 'service': userMsg='Le paiement n'a pas pu être lancé. Vérifiez votre connexion et réessayez.'; break;
+      case 'service': userMsg='Le paiement n\'a pas pu être lancé. Vérifiez votre connexion et réessayez.'; break;
       case 'stripe':  userMsg='Une erreur est survenue côté paiement. Merci de réessayer dans quelques instants.'; break;
       case 'url':     userMsg='Lien de paiement introuvable. Merci de réessayer.'; break;
-      default:        userMsg='Le paiement n'a pas pu être lancé. Merci de réessayer dans quelques instants.';
+      default:        userMsg='Le paiement n\'a pas pu être lancé. Merci de réessayer dans quelques instants.';
     }
     console.error('[NZ Basket] payBasket error:', err.message);
     showToast(userMsg, 'error');
