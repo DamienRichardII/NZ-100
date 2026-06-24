@@ -90,6 +90,27 @@ input,textarea{font-family:inherit;}
 .pay-badge-paid::before{background:#4ade80;}
 .pay-badge-failed{background:rgba(248,113,113,.1);color:rgba(255,150,150,.85);border:1px solid rgba(248,113,113,.22);}
 .pay-badge-failed::before{background:#f87171;}
+/* ── Badges statut présence ── */
+.status-badge{display:inline-flex;align-items:center;gap:5px;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;padding:3px 9px;border-radius:100px;}
+.status-badge::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.status-badge-honore{background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.22);}.status-badge-honore::before{background:#4ade80;}
+.status-badge-annule{background:rgba(248,113,113,.1);color:#f87171;border:1px solid rgba(248,113,113,.22);}.status-badge-annule::before{background:#f87171;}
+.status-badge-noshow{background:rgba(220,38,38,.15);color:#fca5a5;border:1px solid rgba(220,38,38,.35);}.status-badge-noshow::before{background:#dc2626;}
+.status-badge-pending{background:rgba(251,191,36,.12);color:rgba(255,220,80,.85);border:1px solid rgba(251,191,36,.25);}.status-badge-pending::before{background:#fbbf24;}
+/* ── Actions présence ── */
+.presence-actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px;}
+.pa-btn{padding:5px 11px;border-radius:100px;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;border:1px solid transparent;transition:.25s;font-family:'Outfit',sans-serif;}
+.pa-btn:hover{transform:translateY(-1px);}
+.pa-btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.pa-btn-honore{background:rgba(74,222,128,.12);color:#4ade80;border-color:rgba(74,222,128,.3);}
+.pa-btn-honore:hover{background:rgba(74,222,128,.22);}
+.pa-btn-annule-veille{background:rgba(251,191,36,.1);color:#fbbf24;border-color:rgba(251,191,36,.3);}
+.pa-btn-annule-veille:hover{background:rgba(251,191,36,.2);}
+.pa-btn-annule-j{background:rgba(248,113,113,.1);color:#f87171;border-color:rgba(248,113,113,.3);}
+.pa-btn-annule-j:hover{background:rgba(248,113,113,.2);}
+.pa-btn-noshow{background:rgba(220,38,38,.14);color:#fca5a5;border-color:rgba(220,38,38,.4);}
+.pa-btn-noshow:hover{background:rgba(220,38,38,.24);}
+.retention-note{font-size:.72rem;color:rgba(255,200,80,.7);margin-top:6px;font-style:italic;}
 /* Filtre rapide paiement */
 .pay-filter{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
 .pay-filter-btn{padding:5px 14px;border-radius:var(--radius-pill);font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);cursor:pointer;transition:var(--transition);}
@@ -659,6 +680,81 @@ function _payBadge(status) {
   return '<span class="pay-badge pay-badge-'+info[0]+'">'+info[1]+'</span>';
 }
 
+/* ── Badge statut présence ─── */
+function _statusBadge(status) {
+  var map = {
+    honore:        ['honore',  '✓ Honoré'],
+    annule_veille: ['annule',  'Annulé J-1'],
+    annule_j:      ['annule',  'Annulé J'],
+    no_show:       ['noshow',  'No-show'],
+    confirmed:     ['honore',  'Confirmé'],
+  };
+  var s = (status || '').toLowerCase();
+  var info = map[s];
+  if (!info) return '';
+  return '<span class="status-badge status-badge-'+info[0]+'">'+info[1]+'</span>';
+}
+
+/* ── Action présence / annulation ─── */
+async function doPresenceAction(bookingId, action, btn) {
+  if (!confirm(_confirmMsg(action))) return;
+  var allBtns = btn.closest('.presence-actions').querySelectorAll('.pa-btn');
+  allBtns.forEach(function(b){ b.disabled = true; });
+  btn.textContent = 'Mise à jour…';
+  try {
+    var sb = window.NZ && window.NZ._sb;
+    if (!sb) throw new Error('Supabase non initialisé');
+    var retentionPct = {honore:0, annule_veille:50, annule_j:100, no_show:100}[action] || 0;
+    var { error } = await sb.from('booking_requests')
+      .update({
+        status:          action,
+        retention_pct:   retentionPct,
+        actioned_at:     new Date().toISOString(),
+      })
+      .eq('id', bookingId);
+    if (error) throw error;
+    // Ajouter une note retention si applicable
+    if (retentionPct > 0) {
+      await sb.from('retention_logs').insert([{
+        booking_request_id: bookingId,
+        action:             action,
+        retention_pct:      retentionPct,
+        logged_at:          new Date().toISOString(),
+      }]);
+    }
+    // Mettre à jour visuellement sans recharger
+    var card = btn.closest('.conv-item');
+    if (card) {
+      var actionsDiv = card.querySelector('.presence-actions');
+      if (actionsDiv) {
+        var note = retentionPct > 0
+          ? '<p class="retention-note">'+retentionPct+'% retenus — enregistré</p>'
+          : '<p class="retention-note">Séance honorée — merci !</p>';
+        actionsDiv.outerHTML = _statusBadge(action) + note;
+      }
+    }
+  } catch(err) {
+    allBtns.forEach(function(b){ b.disabled = false; });
+    btn.textContent = 'Erreur — réessayer';
+    setTimeout(function(){ btn.textContent = _btnLabel(action); }, 2000);
+    alert('Erreur : ' + err.message);
+  }
+}
+
+function _confirmMsg(action) {
+  var msgs = {
+    honore:        'Marquer cette séance comme honorée ?',
+    annule_veille: 'Annulation la veille — 50% du montant sera retenu. Confirmer ?',
+    annule_j:      'Annulation le jour J — 100% du montant sera retenu. Confirmer ?',
+    no_show:       'Marquer comme no-show — 100% retenu. Confirmer ?',
+  };
+  return msgs[action] || 'Confirmer cette action ?';
+}
+function _btnLabel(action) {
+  var l = {honore:'✓ Honoré', annule_veille:'Annulé J-1 (50%)', annule_j:'Annulé J (100%)', no_show:'No-show (100%)'};
+  return l[action] || action;
+}
+
 /* ── État actuel du filtre ─── */
 var _bookingPayFilter = 'all';
 
@@ -725,6 +821,19 @@ function _applyBookingFilter() {
     var confirmNote = isUnpaid
       ? '<div style="font-size:.72rem;color:rgba(255,190,50,.75);margin-top:4px;">⚠ Acompte non reçu — confirmer avec précaution</div>'
       : '';
+    var bId = escHtml(b.id || '');
+    var bStatus = (b.status || '').toLowerCase();
+    var alreadyActed = ['honore','annule_veille','annule_j','no_show','confirmed'].indexOf(bStatus) >= 0;
+    var statusBadge = alreadyActed ? _statusBadge(b.status) : '';
+    var actionsHtml = '';
+    if (!alreadyActed && bId) {
+      actionsHtml = '<div class="presence-actions">'
+        + '<button class="pa-btn pa-btn-honore" onclick="doPresenceAction(''+bId+'','honore',this)" title="Séance effectuée">✓ Honoré</button>'
+        + '<button class="pa-btn pa-btn-annule-veille" onclick="doPresenceAction(''+bId+'','annule_veille',this)" title="Annulation la veille — 50% retenus">Annulé J-1 (50%)</button>'
+        + '<button class="pa-btn pa-btn-annule-j" onclick="doPresenceAction(''+bId+'','annule_j',this)" title="Annulation le jour J — 100% retenus">Annulé J (100%)</button>'
+        + '<button class="pa-btn pa-btn-noshow" onclick="doPresenceAction(''+bId+'','no_show',this)" title="No-show — 100% retenus">No-show (100%)</button>'
+        + '</div>';
+    }
     return '<div class="conv-item" style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
       + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'
       + '<div style="flex:1;min-width:0;">'
@@ -732,10 +841,12 @@ function _applyBookingFilter() {
       + '<div style="font-size:.78rem;color:rgba(255,255,255,.5);">'+escHtml(b.service||b.session_type||'')+'</div>'
       + (b.requested_date||b.preferred_date?'<div style="font-size:.75rem;color:rgba(255,255,255,.4);">'+escHtml((b.requested_date||b.preferred_date||'')+(b.requested_time?' '+b.requested_time:''))+'</div>':'')
       + confirmNote
+      + actionsHtml
       + '</div>'
       + '<div style="text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;">'
       + '<div style="font-size:.72rem;color:rgba(255,255,255,.4);">'+date+'</div>'
       + _payBadge(b.payment_status)
+      + statusBadge
       + '</div>'
       + '</div></div>';
   }).join('');

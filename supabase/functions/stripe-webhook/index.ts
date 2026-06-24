@@ -1,52 +1,58 @@
 /**
- * NZ-100 — Edge Function : stripe-webhook
- * ────────────────────────────────────────
- * Reçoit les événements Stripe (checkout.session.completed, etc.)
- * et met à jour la base Supabase en conséquence.
+ * NZ-100 — Edge Function : stripe-webhook v2
+ * ──────────────────────────────────────────
+ * Reçoit les événements Stripe, met à jour Supabase,
+ * et déclenche les emails transactionnels via la fonction send-email.
  *
  * Secrets Supabase requis :
- *   STRIPE_WEBHOOK_SECRET    = whsec_...  (depuis Stripe Dashboard → Webhooks)
- *   STRIPE_SECRET_KEY        = sk_live_...
- *   SUPABASE_SERVICE_ROLE_KEY = auto-disponible dans les Edge Functions Supabase
- *   SUPABASE_URL              = auto-disponible dans les Edge Functions Supabase
+ *   STRIPE_WEBHOOK_SECRET     = whsec_...  (Stripe Dashboard → Webhooks)
+ *   STRIPE_SECRET_KEY         = sk_live_...
+ *   SUPABASE_SERVICE_ROLE_KEY = (auto-disponible)
+ *   SUPABASE_URL              = (auto-disponible)
+ *   ADMIN_EMAIL               = mathieunzita60@gmail.com
  *
- * Événements Stripe à configurer dans le Dashboard Stripe → Webhooks :
+ * Événements Stripe à activer :
  *   - checkout.session.completed
  *   - checkout.session.expired
  *   - payment_intent.payment_failed
  *
- * URL du webhook à enregistrer dans Stripe :
- *   https://gzrlhvbqdscccqdcklpn.supabase.co/functions/v1/stripe-webhook
- *
- * Déploiement :
- *   supabase functions deploy stripe-webhook --no-verify-jwt
+ * URL webhook : https://gzrlhvbqdscccqdcklpn.supabase.co/functions/v1/stripe-webhook
  */
 
 import Stripe from 'https://esm.sh/stripe@13.11.0?target=deno';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-// ─── Handler ──────────────────────────────────────────────────────
+const OFFER_LABELS: Record<string, string> = {
+  coaching_basket_acompte:  "Coaching Basket — acompte 30 €",
+  coaching_basket_full:     "Coaching Basket — séance complète 70 €",
+  seance_unitaire:          "Séance à l'unité — acompte 30 €",
+  forfait_5_seances:        "Forfait 5 séances Basket — 350 €",
+  forfait_10_seances:       "Forfait 10 séances Basket — 650 €",
+  programme_dribble:        "Programme de Dribble — 29,99 €",
+  programme_video_muscu:    "Programme Vidéo Musculation — 29,99 €",
+};
+
+function formatEur(centimes: number): string {
+  return (centimes / 100).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' });
+}
+function today(): string {
+  return new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+}
+
 Deno.serve(async (req: Request): Promise<Response> => {
-  if (req.method !== 'POST') {
-    return new Response('Méthode non autorisée', { status: 405 });
-  }
+  if (req.method !== 'POST') return new Response('Méthode non autorisée', { status: 405 });
 
-  // ── Secrets ────────────────────────────────────────────────────
-  const STRIPE_SECRET_KEY      = Deno.env.get('STRIPE_SECRET_KEY');
-  const STRIPE_WEBHOOK_SECRET  = Deno.env.get('STRIPE_WEBHOOK_SECRET');
-  const SUPABASE_URL           = Deno.env.get('SUPABASE_URL') || 'https://gzrlhvbqdscccqdcklpn.supabase.co';
-  const SUPABASE_SERVICE_KEY   = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  const STRIPE_SECRET_KEY     = Deno.env.get('STRIPE_SECRET_KEY');
+  const STRIPE_WEBHOOK_SECRET = Deno.env.get('STRIPE_WEBHOOK_SECRET');
+  const SUPABASE_URL          = Deno.env.get('SUPABASE_URL') || 'https://gzrlhvbqdscccqdcklpn.supabase.co';
+  const SUPABASE_SERVICE_KEY  = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+  const ADMIN_EMAIL           = Deno.env.get('ADMIN_EMAIL') || 'mathieunzita60@gmail.com';
 
-  if (!STRIPE_SECRET_KEY || !STRIPE_WEBHOOK_SECRET) {
-    console.error('[NZ Webhook] Secrets Stripe manquants');
-    return new Response('Configuration manquante', { status: 500 });
-  }
-  if (!SUPABASE_SERVICE_KEY) {
-    console.error('[NZ Webhook] SUPABASE_SERVICE_ROLE_KEY manquante');
-    return new Response('Configuration Supabase manquante', { status: 500 });
-  }
+  if (!STRIPE_SECRET_KEY || !STRIPE_WEBHOOK_SECRET)
+    return new Response('Secrets Stripe manquants', { status: 500 });
+  if (!SUPABASE_SERVICE_KEY)
+    return new Response('SUPABASE_SERVICE_ROLE_KEY manquante', { status: 500 });
 
-  // ── Vérification signature Stripe ──────────────────────────────
   const stripe = new Stripe(STRIPE_SECRET_KEY, { apiVersion: '2023-10-16' });
   const body   = await req.text();
   const sig    = req.headers.get('stripe-signature') || '';
@@ -60,32 +66,37 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return new Response(`Webhook signature invalide : ${msg}`, { status: 400 });
   }
 
-  console.log('[NZ Webhook] Événement reçu :', event.type, event.id);
-
-  // ── Client Supabase avec service_role (bypass RLS) ─────────────
+  console.log('[NZ Webhook] Événement :', event.type, event.id);
   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
-  // ── Traitement des événements ───────────────────────────────────
+  async function sendEmail(type: string, to: string, data: Record<string, string>): Promise<void> {
+    try {
+      const { error } = await supabase.functions.invoke('send-email', { body: { type, to, data } });
+      if (error) console.error('[NZ Webhook] send-email error:', error.message);
+      else console.log('[NZ Webhook] Email:', type, '->', to);
+    } catch (e: unknown) {
+      console.error('[NZ Webhook] send-email exception:', e instanceof Error ? e.message : e);
+    }
+  }
+
   switch (event.type) {
 
-    // ── Paiement réussi ───────────────────────────────────────────
     case 'checkout.session.completed': {
-      const session = event.data.object as Stripe.Checkout.Session;
-      const meta    = session.metadata || {};
-
-      const bookingId    = meta.booking_request_id || null;
-      const offerType    = meta.offer_type          || null;
-      const customerName = meta.customer_name        || null;
-      const amountEur    = session.amount_total      || 0;    // en centimes
-      const currency     = session.currency          || 'eur';
+      const session       = event.data.object as Stripe.Checkout.Session;
+      const meta          = session.metadata || {};
+      const bookingId     = meta.booking_request_id || null;
+      const offerType     = meta.offer_type          || null;
+      const customerName  = meta.customer_name        || 'Client';
+      const customerEmail = session.customer_email    || null;
+      const amountEur     = session.amount_total      || 0;
+      const currency      = session.currency          || 'eur';
       const paymentIntent = typeof session.payment_intent === 'string'
-        ? session.payment_intent
-        : session.payment_intent?.id || null;
+        ? session.payment_intent : session.payment_intent?.id || null;
+      const offerLabel    = offerType ? (OFFER_LABELS[offerType] || offerType) : 'Prestation NZ-100';
 
-      console.log('[NZ Webhook] checkout.session.completed ─', session.id,
-        '— booking_request_id:', bookingId, '— offer:', offerType, '— montant:', amountEur, 'cts');
+      console.log('[NZ Webhook] completed — session:', session.id, '— offer:', offerType, '—', amountEur, 'cts');
 
-      // 1. Insérer dans public.payments
+      // 1. Insérer payment
       const { data: payment, error: payError } = await supabase
         .from('payments')
         .insert([{
@@ -101,84 +112,117 @@ Deno.serve(async (req: Request): Promise<Response> => {
         .single();
 
       if (payError) {
-        console.error('[NZ Webhook] Erreur insertion payments :', payError.message);
-        // On ne retourne pas 500 pour ne pas faire rejouer Stripe en boucle
-        // sauf si c'est une erreur critique autre que doublon (unique constraint)
-        if (!payError.message.includes('duplicate') && !payError.message.includes('unique')) {
+        console.error('[NZ Webhook] payments insert:', payError.message);
+        if (!payError.message.includes('duplicate') && !payError.message.includes('unique'))
           return new Response('Erreur base de données', { status: 500 });
-        }
-        console.warn('[NZ Webhook] Paiement déjà enregistré (doublon) — OK');
+        console.warn('[NZ Webhook] Doublon — paiement déjà enregistré');
       } else {
-        console.log('[NZ Webhook] Payment enregistré :', payment?.id);
+        console.log('[NZ Webhook] Payment:', payment?.id);
       }
 
-      // 2. Mettre à jour booking_requests
+      // 2. Mettre à jour booking
       if (bookingId) {
-        const newStatus = offerType === 'coaching_basket_acompte'
-          ? 'payment_received'   // acompte reçu → en attente confirmation finale
-          : 'confirmed';         // paiement complet → directement confirmé
-
-        const { error: bookingError } = await supabase
+        const newStatus = (offerType === 'coaching_basket_acompte' || offerType === 'seance_unitaire')
+          ? 'payment_received' : 'confirmed';
+        const { error: bkErr } = await supabase
           .from('booking_requests')
-          .update({
-            payment_status:             'paid',
-            stripe_checkout_session_id: session.id,
-            status:                     newStatus,
-          })
+          .update({ payment_status: 'paid', stripe_checkout_session_id: session.id, status: newStatus })
           .eq('id', bookingId);
+        if (bkErr) console.error('[NZ Webhook] booking_requests update:', bkErr.message);
+        else console.log('[NZ Webhook] booking', bookingId, '->', newStatus);
+      }
 
-        if (bookingError) {
-          console.error('[NZ Webhook] Erreur mise à jour booking_requests :', bookingError.message);
-        } else {
-          console.log('[NZ Webhook] booking_request', bookingId, '→ payment_status=paid, status=', newStatus);
+      // 3. Infos réservation pour emails
+      let bookingDate = '';
+      let bookingTime = '';
+      let bookingType = offerLabel;
+      if (bookingId) {
+        const { data: bk } = await supabase
+          .from('booking_requests')
+          .select('preferred_date, preferred_time, session_type')
+          .eq('id', bookingId)
+          .single();
+        if (bk) {
+          bookingDate = bk.preferred_date
+            ? new Date(bk.preferred_date).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+            : '';
+          bookingTime = bk.preferred_time || '';
+          bookingType = bk.session_type   || offerLabel;
         }
       }
+
+      // 4. Emails
+      if (customerEmail) {
+        await sendEmail('confirmation_paiement', customerEmail, {
+          name:       customerName,
+          offer:      offerLabel,
+          amount:     formatEur(amountEur),
+          date:       today(),
+          session_id: session.id,
+          next_steps: bookingDate
+            ? `Votre séance est planifiée le ${bookingDate}${bookingTime ? ' à ' + bookingTime : ''}. Mathieu vous confirmera sous 24h.`
+            : 'Mathieu vous contactera sous 24h pour confirmer les prochaines étapes.',
+        });
+        if (bookingId && bookingDate) {
+          await sendEmail('confirmation_reservation', customerEmail, {
+            name: customerName, date: bookingDate, time: bookingTime,
+            session_type: bookingType, location: 'Communiquée par Mathieu sous 24h',
+          });
+        }
+      }
+
+      await sendEmail('notif_admin_reservation', ADMIN_EMAIL, {
+        client_name:    customerName,
+        client_email:   customerEmail || '(non renseigné)',
+        offer:          offerLabel,
+        date:           bookingDate || '(à définir)',
+        time:           bookingTime || '',
+        payment_status: `✓ Payé — ${formatEur(amountEur)}`,
+      });
 
       break;
     }
 
-    // ── Session expirée (client a abandonné) ─────────────────────
     case 'checkout.session.expired': {
       const session   = event.data.object as Stripe.Checkout.Session;
       const bookingId = session.metadata?.booking_request_id || null;
-
-      console.log('[NZ Webhook] checkout.session.expired ─', session.id, '— booking:', bookingId);
-
+      console.log('[NZ Webhook] expired ─', session.id, '— booking:', bookingId);
       if (bookingId) {
-        await supabase
-          .from('booking_requests')
+        await supabase.from('booking_requests')
           .update({ payment_status: 'unpaid' })
-          .eq('id', bookingId)
-          .eq('payment_status', 'pending'); // ne pas écraser un 'paid'
+          .eq('id', bookingId).eq('payment_status', 'pending');
       }
       break;
     }
 
-    // ── Paiement échoué ───────────────────────────────────────────
     case 'payment_intent.payment_failed': {
-      const pi        = event.data.object as Stripe.PaymentIntent;
-      const sessionId = typeof pi.metadata?.session_id === 'string'
-        ? pi.metadata.session_id : null;
+      const pi            = event.data.object as Stripe.PaymentIntent;
+      const sessionId     = typeof pi.metadata?.session_id === 'string' ? pi.metadata.session_id : null;
+      const customerEmail = typeof pi.receipt_email === 'string' ? pi.receipt_email : null;
+      const offerType     = pi.metadata?.offer_type || '';
+      const offerLabel    = OFFER_LABELS[offerType] || offerType || 'Prestation NZ-100';
 
-      console.log('[NZ Webhook] payment_intent.payment_failed ─', pi.id);
+      console.log('[NZ Webhook] payment_failed ─', pi.id);
 
       if (sessionId) {
-        await supabase
-          .from('booking_requests')
+        await supabase.from('booking_requests')
           .update({ payment_status: 'failed' })
           .eq('stripe_checkout_session_id', sessionId);
       }
+      await supabase.from('payments').insert([{
+        stripe_payment_intent_id: pi.id,
+        amount_eur: pi.amount || 0,
+        currency: pi.currency || 'eur',
+        status: 'failed',
+      }]);
 
-      // Insérer un enregistrement failed dans payments
-      await supabase
-        .from('payments')
-        .insert([{
-          stripe_payment_intent_id: pi.id,
-          amount_eur: pi.amount || 0,
-          currency: pi.currency || 'eur',
-          status: 'failed',
-        }]);
-
+      if (customerEmail) {
+        await sendEmail('paiement_refuse', customerEmail, {
+          name:      pi.metadata?.customer_name || 'Client',
+          offer:     offerLabel,
+          retry_url: 'https://nz-100.vercel.app/tarifs.html',
+        });
+      }
       break;
     }
 

@@ -318,7 +318,18 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
         <input type="password" id="loginPassword" placeholder="&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;&#8226;">
       </div>
       <button class="login-btn" onclick="doLogin()">Se connecter</button>
+      <p class="login-toggle" style="margin-top:8px"><a onclick="showForgot()" style="font-size:.78rem;color:rgba(255,255,255,.4);text-decoration:none">Mot de passe oubli&eacute; ?</a></p>
       <p class="login-toggle">Pas encore inscrit ? <a onclick="showRegister()">Cr&eacute;er un compte</a></p>
+    </div>
+
+    <div id="forgotForm" class="hidden">
+      <p style="font-size:.85rem;color:rgba(255,255,255,.6);margin-bottom:18px;line-height:1.6">Entrez votre adresse email et nous vous enverrons un lien pour r&eacute;initialiser votre mot de passe.</p>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="forgotEmail" placeholder="votre@email.com">
+      </div>
+      <button class="login-btn" onclick="doForgotPassword()">Envoyer le lien</button>
+      <p class="login-toggle"><a onclick="showLogin()">&larr; Retour &agrave; la connexion</a></p>
     </div>
 
     <div id="registerForm" class="hidden">
@@ -384,11 +395,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
           Partie 2 : Programme Sportif
           <span class="si-badge">4</span>
         </div>
-        <div class="sidebar-item" data-section="part3" onclick="showSection('part3')">
-          <div class="si-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.34a1 1 0 001.66 1.12C7.17 18.34 9 16 12 16c4 0 6.61-2.5 8-5-.5 2.5-2 8-8 11 3.5-1 9-4 9-12a7 7 0 00-4-7z"/></svg></div>
-          Partie 3 : Nutrition
-          <span class="si-badge">2</span>
-        </div>
+
         <div class="sidebar-item" data-section="messagerie" onclick="showSection('messagerie')">
           <div class="si-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div>
           Messagerie
@@ -576,41 +583,6 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
       </div>
 
       
-      <div id="sec-part3" class="hidden">
-        <div class="dashboard-welcome">
-          <h1>PARTIE 3 : ALIMENTATION</h1>
-          <p>Objectifs nutritionnels et plan alimentaire pour maximiser vos r&eacute;sultats.</p>
-        </div>
-
-        <div class="course-section open">
-          <div class="course-section-header" onclick="toggleSection(this)">
-            <div class="course-section-number">03</div>
-            <div class="course-section-info">
-              <h2>Programme Nutritionnel</h2>
-              <p>Objectifs, aliments &agrave; privil&eacute;gier et plan complet</p>
-            </div>
-            <div class="course-section-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
-          </div>
-          <div class="course-items">
-            <div class="course-item active" onclick="playCourseVideo(this)">
-              <div class="ci-icon video"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
-              <div class="ci-info">
-                <h4>Pr&eacute;sentation des objectifs nutritionnels</h4>
-                <span>Vid&eacute;o &bull; Strat&eacute;gie alimentaire</span>
-              </div>
-              <div class="ci-status"></div>
-            </div>
-            <div class="course-item">
-              <div class="ci-icon pdf"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div>
-              <div class="ci-info">
-                <h4>Aliments &agrave; privil&eacute;gier vs aliments interdits</h4>
-                <span>PDF &bull; Liste compl&egrave;te</span>
-              </div>
-              <div class="ci-status"></div>
-            </div>
-          </div>
-        </div>
-      </div>
 
 
       <!-- MESSAGERIE -->
@@ -669,10 +641,7 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5v14M18 5v14M6 9h12M6 15h12M2 9h4v6H2zM18 9h4v6h-4z"/></svg>
     Sport
   </button>
-  <button class="mbn-item" data-section="part3" onclick="showSection('part3');mbnActive(this)">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 19.34a1 1 0 001.66 1.12C7.17 18.34 9 16 12 16c4 0 6.61-2.5 8-5-.5 2.5-2 8-8 11 3.5-1 9-4 9-12a7 7 0 00-4-7z"/></svg>
-    Nutrition
-  </button>
+
   <button class="mbn-item" data-section="messagerie" onclick="showSection('messagerie');mbnActive(this)">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
     Message
@@ -694,11 +663,19 @@ if (p1Vid) p1Vid.addEventListener('timeupdate', () => { if (p1Vid.currentTime >=
 function showLogin() {
   document.getElementById('loginForm').classList.remove('hidden');
   document.getElementById('registerForm').classList.add('hidden');
+  document.getElementById('forgotForm').classList.add('hidden');
   clearAuthError();
 }
 function showRegister() {
   document.getElementById('loginForm').classList.add('hidden');
   document.getElementById('registerForm').classList.remove('hidden');
+  document.getElementById('forgotForm').classList.add('hidden');
+  clearAuthError();
+}
+function showForgot() {
+  document.getElementById('loginForm').classList.add('hidden');
+  document.getElementById('registerForm').classList.add('hidden');
+  document.getElementById('forgotForm').classList.remove('hidden');
   clearAuthError();
 }
 function clearAuthError() {
@@ -710,6 +687,32 @@ function showAuthError(msg) {
   if (!el) return;
   el.textContent = msg;
   el.style.display = 'block';
+}
+
+async function doForgotPassword() {
+  var email = (document.getElementById('forgotEmail').value || '').trim();
+  if (!email) { showAuthError('Veuillez saisir votre adresse email.'); return; }
+  var btn = document.querySelector('#forgotForm .login-btn');
+  btn.disabled = true; btn.textContent = 'Envoi...';
+  clearAuthError();
+  try {
+    var sb = window.NZ && window.NZ._sb;
+    if (!sb) throw new Error('Supabase non initialisé');
+    var { error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/reset-password.html'
+    });
+    if (error) throw error;
+    document.getElementById('forgotForm').innerHTML =
+      '<div style="text-align:center;padding:16px 0">' +
+      '<div style="font-size:2rem;margin-bottom:12px">📧</div>' +
+      '<h3 style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;margin-bottom:8px">Email envoyé !</h3>' +
+      '<p style="color:rgba(255,255,255,.6);font-size:.87rem;line-height:1.7">Un lien de réinitialisation a été envoyé à<br><strong style="color:#fff">' + email + '</strong>.<br>Vérifiez votre boîte mail (et vos spams).</p>' +
+      '<button class="login-btn" style="margin-top:16px" onclick="showLogin()">← Retour à la connexion</button>' +
+      '</div>';
+  } catch(err) {
+    showAuthError(err.message || 'Erreur lors de l'envoi. Vérifiez l'email.');
+    btn.disabled = false; btn.textContent = 'Envoyer le lien';
+  }
 }
 
 async function doLogin() {

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarifs Coaching Basket — Mathieu Nzita</title>
+<meta name="description" content="Tarifs coaching basket individuel Mathieu Nzita. Forfait 10 séances 650€, Forfait 5 séances 350€, Séance à l'unité 60€. Île-de-France.">
+<link rel="icon" type="image/png" href="assets/nz_logo_nav.png">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--black:#000;--white:#fff;--glass-bg:rgba(255,255,255,.055);--glass-border:rgba(255,255,255,.11);--text-muted:rgba(255,255,255,.5);--radius-glass:24px;--radius-pill:100px;--transition:.4s cubic-bezier(.25,.46,.45,.94)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:'Outfit',-apple-system,sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;line-height:1.6}
+img{max-width:100%;display:block}a{text-decoration:none;color:inherit}button{cursor:pointer;border:none;background:none;font-family:inherit}
+.glass{background:var(--glass-bg);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--glass-border);border-radius:var(--radius-glass)}
+.glass-strong{background:rgba(255,255,255,.09);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius-glass)}
+.glass-pill{background:rgba(255,255,255,.07);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-pill)}
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:1000;padding:8px 6px;display:flex;align-items:center;gap:2px;transition:var(--transition);max-width:1100px;width:calc(100% - 32px)}
+.nav-logo{width:32px;height:auto;margin-right:10px;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:2px;flex:1}
+.nav a{padding:7px 13px;font-size:.76rem;font-weight:500;color:rgba(255,255,255,.72);border-radius:var(--radius-pill);transition:var(--transition);letter-spacing:.01em;white-space:nowrap}
+.nav a:hover,.nav a.active{color:#fff;background:rgba(255,255,255,.1)}
+.nav-cta{padding:9px 20px !important;background:#fff !important;color:#000 !important;font-weight:700 !important;font-size:.76rem !important;margin-left:8px;flex-shrink:0}
+.nav-cta:hover{background:rgba(255,255,255,.9) !important;transform:scale(1.02)}
+.nav-toggle{display:none;color:white;font-size:1.3rem;padding:8px 12px;border-radius:12px;background:rgba(255,255,255,.07);margin-left:auto}
+.nav-client{padding:7px 13px !important;border:1px solid rgba(255,255,255,.28) !important;color:var(--white) !important;font-size:.76rem !important;font-weight:600 !important;border-radius:var(--radius-pill) !important;margin-left:4px;flex-shrink:0;transition:var(--transition);background:transparent !important;}
+.nav-client:hover{background:rgba(255,255,255,.08) !important;border-color:rgba(255,255,255,.5) !important;}
+.nav-page-name{display:none;font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.06em;white-space:nowrap;max-width:160px;flex:1;text-align:center;}
+section{padding:100px 24px;position:relative}
+.section-container{max-width:1100px;margin:0 auto}
+.section-label{display:inline-flex;align-items:center;gap:10px;font-size:.67rem;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-bottom:16px}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,5.5vw,4.4rem);line-height:.95;margin-bottom:20px}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s,transform .75s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.btn-primary{padding:15px 34px;background:#fff;color:#000;font-weight:700;font-size:.84rem;border-radius:var(--radius-pill);letter-spacing:.06em;text-transform:uppercase;transition:var(--transition);display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(255,255,255,.18)}
+.btn-ghost{padding:15px 34px;font-weight:600;font-size:.84rem;letter-spacing:.06em;text-transform:uppercase;transition:var(--transition);color:#fff;border-radius:var(--radius-pill);border:1px solid rgba(255,255,255,.25)}
+.btn-ghost:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.45);transform:translateY(-2px)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.breadcrumb{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:16px;opacity:0;animation:fadeUp 1s .1s forwards}
+.breadcrumb a{color:rgba(255,255,255,.4);transition:var(--transition)}.breadcrumb a:hover{color:#fff}
+.breadcrumb span{color:rgba(255,255,255,.25)}
+
+/* PAGE HEADER */
+.page-header{position:relative;overflow:hidden;padding:160px 24px 100px;text-align:center;}
+.page-header-video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.42;filter:brightness(.55);}
+.page-header-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;background:linear-gradient(to bottom,rgba(0,0,0,.72) 0%,rgba(0,0,0,.5) 40%,rgba(0,0,0,.85) 100%);}
+.page-header-content{position:relative;z-index:2;}
+.page-header-content .hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.22em;color:rgba(255,255,255,.5);margin-bottom:20px;opacity:0;animation:fadeUp 1s .3s forwards}
+.page-header-content h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,9vw,8rem);line-height:.9;opacity:0;animation:fadeUp 1s .5s forwards}
+.page-header-content p{font-size:clamp(.9rem,1.7vw,1.05rem);color:rgba(255,255,255,.65);font-weight:300;max-width:580px;margin:20px auto 0;line-height:1.82;opacity:0;animation:fadeUp 1s .7s forwards}
+
+/* PRICING CARDS GRID */
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:48px}
+.pricing-card{border-radius:24px;padding:36px 28px;display:flex;flex-direction:column;position:relative;transition:var(--transition);overflow:hidden}
+.pricing-card:hover{transform:translateY(-4px);box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.pricing-card.featured{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.22)}
+.pricing-card.featured::before{content:'TOP OFFRE';position:absolute;top:20px;right:-30px;background:#fff;color:#000;font-size:.6rem;font-weight:800;letter-spacing:.14em;padding:5px 40px;transform:rotate(40deg);transform-origin:center}
+.pc-icon{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.pc-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.02em;margin-bottom:8px}
+.pc-price{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;line-height:1;color:#fff;margin:16px 0 4px}
+.pc-price-sub{font-size:.72rem;color:rgba(255,255,255,.45);margin-bottom:20px;line-height:1.5}
+.pc-economy{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:100px;font-size:.65rem;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:20px;letter-spacing:.08em}
+.pc-features{list-style:none;display:flex;flex-direction:column;gap:9px;flex:1;margin-bottom:28px}
+.pc-features li{font-size:.83rem;color:rgba(255,255,255,.62);display:flex;align-items:flex-start;gap:9px;font-weight:300;line-height:1.5}
+.pc-features li svg{flex-shrink:0;margin-top:2px;color:rgba(255,255,255,.5)}
+.pc-features li.highlight{color:rgba(255,255,255,.9);font-weight:500}
+.pc-features li.highlight svg{color:#fff}
+.pc-cta{width:100%;padding:14px 20px;border-radius:100px;font-size:.8rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;transition:var(--transition);text-align:center;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.pc-cta-primary{background:#fff;color:#000;border:none}
+.pc-cta-primary:hover{background:rgba(255,255,255,.88);transform:scale(1.02)}
+.pc-cta-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.28)}
+.pc-cta-ghost:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.5)}
+.pc-cta:disabled{opacity:.55;cursor:not-allowed;transform:none !important}
+
+/* DÉTAIL SÉANCES */
+.seance-detail{display:flex;gap:16px;margin-top:48px;flex-wrap:wrap}
+.seance-pill{flex:1;min-width:140px;padding:20px 20px;border-radius:18px;text-align:center}
+.seance-pill-val{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;line-height:1;margin-bottom:4px}
+.seance-pill-label{font-size:.72rem;color:rgba(255,255,255,.5);font-weight:300}
+
+/* PROGRAMME D'ENTRAÎNEMENT */
+.programme-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:36px}
+.programme-card{padding:24px 18px;border-radius:18px;text-align:center}
+.programme-card-icon{width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;color:rgba(255,255,255,.75)}
+.programme-card-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.06em;margin-bottom:6px}
+.programme-card-desc{font-size:.77rem;color:rgba(255,255,255,.5);font-weight:300;line-height:1.6}
+
+/* PROGRAMME DIGITAL BASKET */
+.digital-section{margin-top:56px}
+.digital-card{padding:32px 36px;display:flex;align-items:center;gap:32px;flex-wrap:wrap;border-color:rgba(255,255,255,.18);background:rgba(255,255,255,.06)}
+.digital-card-info{flex:1;min-width:240px}
+.digital-badge-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:4px 12px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:rgba(255,255,255,.6);margin-bottom:10px}
+
+/* INFOS PRATIQUES */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:36px}
+.info-block{padding:22px 20px;border-radius:18px}
+.info-block-icon{margin-bottom:12px;color:rgba(255,255,255,.6)}
+.info-block-title{font-size:.82rem;font-weight:700;margin-bottom:4px}
+.info-block-desc{font-size:.77rem;color:rgba(255,255,255,.5);font-weight:300;line-height:1.6}
+
+/* FAQ */
+.faq-grid{display:flex;flex-direction:column;gap:12px;max-width:760px;margin-top:48px}
+.faq-item{padding:22px 28px;cursor:pointer;transition:var(--transition)}
+.faq-item:hover{background:rgba(255,255,255,.08)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-q-text{font-size:.93rem;font-weight:600}
+.faq-toggle{font-size:1.2rem;color:rgba(255,255,255,.4);transition:var(--transition);flex-shrink:0}
+.faq-a{font-size:.87rem;color:rgba(255,255,255,.62);font-weight:300;line-height:1.75;margin-top:14px;display:none}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-toggle{transform:rotate(45deg);color:#fff}
+
+/* STRIPE BTN */
+.btn-stripe{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border:1px solid rgba(99,91,255,.55);color:#a8a4ff;background:rgba(99,91,255,.1);border-radius:var(--radius-pill);font-size:.74rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;transition:var(--transition);cursor:pointer}
+.btn-stripe:hover{background:rgba(99,91,255,.2);border-color:rgba(99,91,255,.8)}
+.btn-stripe:disabled{opacity:.5;cursor:not-allowed}
+
+/* TOAST */
+.nz-toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);z-index:9998;padding:14px 24px;border-radius:100px;font-size:.83rem;font-weight:600;background:rgba(20,20,20,.95);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(20px);transition:.4s;opacity:0;white-space:nowrap}
+.nz-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.nz-toast.success{border-color:rgba(74,222,128,.4);color:#4ade80}
+.nz-toast.error{border-color:rgba(248,113,113,.4);color:#f87171}
+
+/* PAYMENT BANNER */
+.payment-banner{padding:18px 28px;border-radius:16px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);display:flex;align-items:center;gap:14px;display:none}
+.payment-banner.show{display:flex}
+.payment-banner svg{flex-shrink:0;color:#4ade80}
+.payment-banner-text h4{font-size:.9rem;font-weight:700;color:#4ade80;margin-bottom:3px}
+.payment-banner-text p{font-size:.82rem;color:rgba(255,255,255,.6);font-weight:300}
+
+/* CTA SECTION */
+.cta-section{padding:100px 24px;text-align:center}
+.cta-section h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5.5vw,4.5rem);line-height:.95;margin-bottom:18px}
+.cta-section p{color:rgba(255,255,255,.65);font-weight:300;font-size:.97rem;line-height:1.8;max-width:560px;margin:0 auto 34px}
+.cta-btns{display:flex;justify-content:center;gap:13px;flex-wrap:wrap}
+
+/* FOOTER */
+.footer{padding:72px 24px 36px;border-top:1px solid rgba(255,255,255,.06);background:#0a0a0a}
+.footer-inner{max-width:1160px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:52px}
+.footer-brand .footer-logo{width:36px;margin-bottom:18px;opacity:.72}
+.footer-brand-name{font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.05em;margin-bottom:13px}
+.footer-tagline{font-size:.84rem;color:rgba(255,255,255,.5);font-weight:300;line-height:1.8;max-width:270px;margin-bottom:22px}
+.footer-socials{display:flex;gap:9px}
+.footer-social-btn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.7);text-decoration:none;transition:.4s}
+.footer-social-btn:hover{background:rgba(255,255,255,.14);color:#fff;transform:translateY(-2px)}
+.footer-col h4{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.5);margin-bottom:18px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.footer-col ul li a{font-size:.84rem;color:rgba(255,255,255,.52);transition:var(--transition);font-weight:300}
+.footer-col ul li a:hover{color:#fff}
+.footer-contact-item{display:flex;align-items:center;gap:9px;font-size:.82rem;color:rgba(255,255,255,.52);margin-bottom:9px;font-weight:300}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid rgba(255,255,255,.05);flex-wrap:wrap;gap:14px}
+.footer-copy{font-size:.74rem;color:rgba(255,255,255,.5);font-weight:300}
+.footer-legal{display:flex;gap:22px}
+.footer-legal a{font-size:.74rem;color:rgba(255,255,255,.5);transition:var(--transition)}
+.footer-legal a:hover{color:#fff}
+body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;opacity:.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:200px}
+
+@media(max-width:960px){.pricing-grid{grid-template-columns:1fr}.programme-grid{grid-template-columns:repeat(2,1fr)}.info-grid{grid-template-columns:1fr 1fr}.footer-top{grid-template-columns:1fr;gap:26px}}
+@media(max-width:768px){.nav-links{display:none}.nav-toggle{display:flex;align-items:center;justify-content:center}.nav-page-name{display:block}.nav.mobile-open{flex-direction:column;top:0;left:0;right:0;transform:none;border-radius:0 0 22px 22px;padding:16px 20px 22px;background:rgba(0,0,0,.94);backdrop-filter:blur(40px);max-width:100%;width:100%}.nav.mobile-open .nav-links{display:flex;flex-direction:column;width:100%;gap:3px}.nav.mobile-open .nav-links a{display:block;text-align:center;padding:11px 18px}.nav.mobile-open .nav-cta{margin-left:0;margin-top:7px;text-align:center}.nav.mobile-open .nav-page-name{display:none}.pricing-card.featured::before{display:none}}
+@media(max-width:640px){section{padding:64px 20px !important}.programme-grid{grid-template-columns:1fr 1fr}.info-grid{grid-template-columns:1fr}.seance-detail{gap:10px}.digital-card{flex-direction:column}.footer-bottom{flex-direction:column;text-align:center}.cta-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+<nav class="nav glass-pill" id="mainNav">
+  <img src="assets/nz_logo_nav.png" alt="NZ" class="nav-logo">
+  <span class="nav-page-name">Tarifs Basket</span>
+  <button class="nav-toggle" onclick="toggleNav()">&#9776;</button>
+  <div class="nav-links">
+    <a href="index.html">Accueil</a>
+    <a href="remise-en-forme.html">Remise en forme</a>
+    <a href="retour-au-sport.html">Retour au sport</a>
+    <a href="performance.html">Performance</a>
+    <a href="coaching-basket.html">Coaching basket</a>
+    <a href="mon-histoire.html">Mon histoire</a>
+    <a href="tarifs.html" class="active">Tarifs</a>
+    <a href="contact.html">Contact</a>
+    <a href="espace-client.html" class="nav-client">Espace client</a>
+    <a href="contact.html" class="nav-cta glass-pill">R&eacute;server un bilan</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <video class="page-header-video" autoplay muted loop playsinline preload="auto"><source src="assets/mathieu-hero-v3.mp4" type="video/mp4"></video>
+  <div class="page-header-overlay"></div>
+  <div class="page-header-content">
+    <div class="breadcrumb"><a href="tarifs.html">Tarifs</a><span>/</span><span style="color:rgba(255,255,255,.7)">Basketball</span></div>
+    <div class="hero-eyebrow">Coaching individuel &mdash; &Icirc;le-de-France</div>
+    <h1>TARIFS BASKET</h1>
+    <p>S&eacute;ances en gymnase, individuelles, 100% adapt&eacute;es &mdash; technique, physique, lecture du jeu, shooting.</p>
+  </div>
+</div>
+
+<!-- TARIFS FORFAITS -->
+<section>
+  <div class="section-container">
+    <div id="paymentBannerInline" class="payment-banner reveal" style="display:none;margin-bottom:32px"></div>
+
+    <div class="reveal">
+      <span class="section-label">Choisissez votre formule</span>
+      <h2 class="section-title">TARIFS<br>BASKETBALL</h2>
+      <p style="color:rgba(255,255,255,.6);font-weight:300;font-size:.95rem;line-height:1.82;max-width:540px">Trois formules pour s&rsquo;adapter &agrave; ton niveau d&rsquo;engagement. Plus tu t&rsquo;investis, plus le co&ucirc;t par s&eacute;ance est avantageux.</p>
+    </div>
+
+    <div class="pricing-grid reveal">
+
+      <!-- FORFAIT 10 -->
+      <div class="pricing-card glass-strong featured">
+        <div class="pc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 000 5H6"/><path d="M18 9h1.5a2.5 2.5 0 010 5H18"/><path d="M8 9h8"/><path d="M8 15h8"/><line x1="12" y1="9" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="15"/></svg>
+        </div>
+        <div class="pc-title">FORFAIT 10 S&Eacute;ANCES</div>
+        <div class="pc-price">650<span style="font-size:1.8rem">&nbsp;&euro;</span></div>
+        <div class="pc-price-sub">Avec stadium inclus &mdash; 65&nbsp;€/s&eacute;ance</div>
+        <div class="pc-economy">🏆 Meilleur rapport qualit&eacute;/prix</div>
+        <ul class="pc-features">
+          <li class="highlight"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>1 s&eacute;ance offerte incluse (tarif d&eacute;gressif)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Focus technique individuelle pure</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Travail de maniement (Dribble)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Renforcement sp&eacute;cifique basket</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Programme personnalis&eacute;</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Coaching mental &amp; discipline</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acc&egrave;s stadium inclus</li>
+        </ul>
+        <button class="pc-cta pc-cta-primary" id="btnForfait10" onclick="payBasket('forfait_10_seances',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Payer 650&nbsp;&euro; &amp; r&eacute;server
+        </button>
+      </div>
+
+      <!-- FORFAIT 5 -->
+      <div class="pricing-card glass">
+        <div class="pc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        </div>
+        <div class="pc-title">FORFAIT 5 S&Eacute;ANCES</div>
+        <div class="pc-price">350<span style="font-size:1.8rem">&nbsp;&euro;</span></div>
+        <div class="pc-price-sub">Sans stadium inclus &mdash; 70&nbsp;€/s&eacute;ance</div>
+        <div class="pc-economy">👍 Engagement progressif</div>
+        <ul class="pc-features">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Focus : situation de jeu r&eacute;el</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Perfectionnement du tir (Shooting)</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acc&egrave;s terrain stadium en suppl&eacute;ment</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Corrections tactiques</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Intensit&eacute; de match</li>
+        </ul>
+        <button class="pc-cta pc-cta-ghost" id="btnForfait5" onclick="payBasket('forfait_5_seances',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Payer 350&nbsp;&euro; &amp; r&eacute;server
+        </button>
+      </div>
+
+      <!-- SÉANCE À L'UNITÉ -->
+      <div class="pricing-card glass">
+        <div class="pc-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="pc-title">S&Eacute;ANCE &Agrave; L&rsquo;UNIT&Eacute;</div>
+        <div class="pc-price">60<span style="font-size:1.8rem">&nbsp;&euro;</span></div>
+        <div class="pc-price-sub">50&nbsp;€ coaching + 10&nbsp;€ stadium<br>Acompte 30&nbsp;€ &agrave; la r&eacute;servation</div>
+        <div class="pc-economy">⚡ D&eacute;couverte ou point pr&eacute;cis</div>
+        <ul class="pc-features">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Session d&eacute;couverte ou appoint</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Analyse technique imm&eacute;diate</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Travail sur un point sp&eacute;cifique</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Acc&egrave;s stadium inclus</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Dur&eacute;e flexible selon les objectifs</li>
+        </ul>
+        <button class="pc-cta pc-cta-ghost" id="btnSeanceUnitaire" onclick="payBasket('seance_unitaire',this)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Payer l&rsquo;acompte (30&nbsp;&euro;)
+        </button>
+      </div>
+    </div>
+
+    <!-- DÉTAIL TARIFS -->
+    <div class="seance-detail reveal">
+      <div class="seance-pill glass">
+        <div class="seance-pill-val">1h &ndash; 2h</div>
+        <div class="seance-pill-label">Dur&eacute;e par s&eacute;ance selon objectifs</div>
+      </div>
+      <div class="seance-pill glass">
+        <div class="seance-pill-val">10&nbsp;&euro;</div>
+        <div class="seance-pill-label">Entr&eacute;e stadium</div>
+      </div>
+      <div class="seance-pill glass">
+        <div class="seance-pill-val">60&nbsp;&euro;</div>
+        <div class="seance-pill-label">S&eacute;ance individuelle</div>
+      </div>
+      <div class="seance-pill glass">
+        <div class="seance-pill-val">IDF</div>
+        <div class="seance-pill-label">Zone de coaching &mdash; &Icirc;le-de-France</div>
+      </div>
+    </div>
+
+    <p style="font-size:.83rem;color:rgba(255,255,255,.4);font-weight:300;margin-top:18px;font-style:italic">On privil&eacute;gie la <strong style="color:rgba(255,255,255,.65)">qualit&eacute; sur la quantit&eacute;</strong> pour maximiser votre progression.</p>
+  </div>
+</section>
+
+<!-- PROGRAMME D'ENTRAÎNEMENT -->
+<section style="background:linear-gradient(180deg,transparent,rgba(255,255,255,.018),transparent)">
+  <div class="section-container">
+    <div class="reveal">
+      <span class="section-label">M&eacute;thodologie</span>
+      <h2 class="section-title">PROGRAMME<br>D&rsquo;ENTRA&Icirc;NEMENT</h2>
+      <p style="color:rgba(255,255,255,.6);font-weight:300;font-size:.95rem;line-height:1.82;max-width:500px">Chaque s&eacute;ance est structur&eacute;e autour des 4 piliers fondamentaux du basket individuel.</p>
+    </div>
+    <div class="programme-grid reveal">
+      <div class="programme-card glass">
+        <div class="programme-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+            <line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/>
+            <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+          </svg>
+        </div>
+        <div class="programme-card-title">SHOOTING &amp; FINITION</div>
+        <div class="programme-card-desc">M&eacute;canique de tir, finition au cercle, tirs en mouvement et situations r&eacute;elles.</div>
+      </div>
+      <div class="programme-card glass">
+        <div class="programme-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M4.93 4.93c4.69 4.69 4.69 9.45 0 14.14"/>
+            <path d="M19.07 4.93c-4.69 4.69-4.69 9.45 0 14.14"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+          </svg>
+        </div>
+        <div class="programme-card-title">BALL HANDLING</div>
+        <div class="programme-card-desc">Maniement du ballon, dribbles d&rsquo;attaque, protection de balle et changements de rythme.</div>
+      </div>
+      <div class="programme-card glass">
+        <div class="programme-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="programme-card-title">CONDITION PHYSIQUE</div>
+        <div class="programme-card-desc">Explosivit&eacute;, d&eacute;tente, cardio sp&eacute;cifique basket, appuis et changements de direction.</div>
+      </div>
+      <div class="programme-card glass">
+        <div class="programme-card-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.5 2A2.5 2.5 0 0112 4.5v0A2.5 2.5 0 0114.5 2h0a7 7 0 017 7c0 5-7 13-7 13S7.5 14 7.5 9a7 7 0 017-7"/>
+            <path d="M12 4.5V12"/><circle cx="12" cy="14" r="1"/>
+          </svg>
+        </div>
+        <div class="programme-card-title">INTELLIGENCE DE JEU</div>
+        <div class="programme-card-desc">Lecture du jeu, prise de d&eacute;cision, spacing et tactique individuelle en situation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMME DIGITAL DRIBBLE -->
+<section>
+  <div class="section-container">
+    <div class="reveal">
+      <span class="section-label">Compl&eacute;ment digital</span>
+      <h2 class="section-title">PROGRAMME<br>DE DRIBBLE</h2>
+    </div>
+    <div class="digital-card glass reveal">
+      <div style="width:48px;height:48px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+      </div>
+      <div class="digital-card-info">
+        <div class="digital-badge-pill">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Acc&egrave;s imm&eacute;diat
+        </div>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;margin-bottom:8px">Programme de Dribble</h3>
+        <p style="font-size:.87rem;color:rgba(255,255,255,.6);font-weight:300;line-height:1.7;margin-bottom:14px">Travaille ta ma&icirc;trise du ballon &agrave; ton rythme, n&rsquo;importe o&ugrave;. Des exercices progressifs de dribble et de contr&ocirc;le con&ccedil;us par Mathieu pour tous les niveaux.</p>
+        <ul style="list-style:none;display:flex;gap:16px;flex-wrap:wrap">
+          <li style="font-size:.78rem;color:rgba(255,255,255,.5)">✓ Acc&egrave;s imm&eacute;diat</li>
+          <li style="font-size:.78rem;color:rgba(255,255,255,.5)">✓ Vid&eacute;os progressives</li>
+          <li style="font-size:.78rem;color:rgba(255,255,255,.5)">✓ Tous niveaux</li>
+          <li style="font-size:.78rem;color:rgba(255,255,255,.5)">✓ Acc&egrave;s &agrave; vie</li>
+        </ul>
+      </div>
+      <div style="flex-shrink:0;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:12px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:2.4rem;line-height:1">29,99&nbsp;&euro;</div>
+        <div style="font-size:.72rem;color:rgba(255,255,255,.45)">paiement unique<br>acc&egrave;s &agrave; vie</div>
+        <button class="btn-stripe" id="btnDribble" onclick="payBasket('programme_dribble',this)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Commander
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFOS PRATIQUES -->
+<section style="padding-top:0">
+  <div class="section-container">
+    <div class="reveal"><span class="section-label">Informations pratiques</span><h2 class="section-title">BON &Agrave;<br>SAVOIR</h2></div>
+    <div class="info-grid reveal">
+      <div class="info-block glass">
+        <div class="info-block-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div class="info-block-title">Lieu</div>
+        <div class="info-block-desc">Gymnase en &Icirc;le-de-France. Adresse communiqu&eacute;e apr&egrave;s confirmation de r&eacute;servation par Mathieu.</div>
+      </div>
+      <div class="info-block glass">
+        <div class="info-block-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="info-block-title">Cr&eacute;neaux</div>
+        <div class="info-block-desc">10h30 &mdash; 12h15 &mdash; 14h00 &mdash; 15h45. Validation manuelle par Mathieu sous 24h.</div>
+      </div>
+      <div class="info-block glass">
+        <div class="info-block-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+        <div class="info-block-title">Paiement</div>
+        <div class="info-block-desc">Acompte 30&nbsp;€ s&eacute;curis&eacute; via Stripe. Solde r&eacute;gl&eacute; le jour J. Forfaits pay&eacute;s int&eacute;gralement &agrave; la r&eacute;servation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background:linear-gradient(180deg,transparent,rgba(255,255,255,.018),transparent)">
+  <div class="section-container">
+    <div class="reveal"><span class="section-label">Questions fr&eacute;quentes</span><h2 class="section-title">TU AS DES<br>QUESTIONS ?</h2></div>
+    <div class="faq-grid reveal">
+      <div class="faq-item glass" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">Comment se d&eacute;roule la r&eacute;servation ?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a">Tu choisis ton forfait, tu paies en ligne via Stripe (paiement s&eacute;curis&eacute;). Mathieu confirme ton cr&eacute;neau sous 24h et t&rsquo;envoie l&rsquo;adresse exacte du gymnase. Pour la s&eacute;ance &agrave; l&rsquo;unit&eacute;, seul l&rsquo;acompte de 30&nbsp;€ est d&ucirc; &agrave; la r&eacute;servation — le solde est r&eacute;gl&eacute; le jour J.</div>
+      </div>
+      <div class="faq-item glass" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">Pour quel niveau est ce coaching ?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a">Tout niveau, tout &acirc;ge, tout poste. Que tu d&eacute;butes ou que tu joues en comp&eacute;tition, les s&eacute;ances sont adapt&eacute;es &agrave; ton profil r&eacute;el. On part de l&agrave; o&ugrave; tu en es.</div>
+      </div>
+      <div class="faq-item glass" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">Quelle est la politique d&rsquo;annulation ?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a">Annulation la veille : 50&nbsp;% retenus. Annulation le jour J ou no-show : 100&nbsp;% retenus. En cas d&rsquo;impr&eacute;vu, contacte Mathieu le plus t&ocirc;t possible.</div>
+      </div>
+      <div class="faq-item glass" onclick="toggleFaq(this)">
+        <div class="faq-q"><span class="faq-q-text">Les forfaits expirent-ils ?</span><span class="faq-toggle">+</span></div>
+        <div class="faq-a">Les s&eacute;ances d&rsquo;un forfait sont &agrave; utiliser dans les 6 mois suivant l&rsquo;achat. Elles peuvent &ecirc;tre utilis&eacute;es &agrave; ton rythme, sans obligation de planning fixe.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <div class="section-container">
+    <div class="reveal">
+      <span class="section-label" style="justify-content:center;display:flex">Pr&ecirc;t ?</span>
+      <h2>R&Eacute;SERVE<br>TA S&Eacute;ANCE</h2>
+      <p>S&eacute;lectionne ton forfait ci-dessus ou r&eacute;serve directement via la page coaching basket pour choisir ton cr&eacute;neau.</p>
+      <div class="cta-btns">
+        <a href="coaching-basket.html" class="btn-primary">R&eacute;server un cr&eacute;neau</a>
+        <a href="tarifs-musculation.html" class="btn-ghost">Voir tarifs musculation</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="assets/nz_logo_nav.png" alt="NZ" class="footer-logo">
+        <div class="footer-brand-name">Mathieu Nzita</div>
+        <p class="footer-tagline">Coaching remise en forme, performance et retour au sport. Sp&eacute;cialit&eacute; basket.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2.5"/></svg></a>
+          <a href="https://www.youtube.com/watch?v=afNqAnQtv54" class="footer-social-btn" aria-label="YouTube"><svg width="18" height="14" viewBox="0 0 24 18" fill="currentColor"><path d="M23.5 2.8A3 3 0 0021.4.7C19.5.2 12 .2 12 .2s-7.5 0-9.4.5A3 3 0 00.5 2.8 31 31 0 000 9a31 31 0 00.5 6.2 3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1A31 31 0 0024 9a31 31 0 00-.5-6.2zM9.6 12.7V5.3L16 9l-6.4 3.7z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Navigation</h4><ul><li><a href="index.html">Accueil</a></li><li><a href="coaching-basket.html">Coaching basket</a></li><li><a href="tarifs.html">Tarifs</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>mathieunzita60@gmail.com</div><div class="footer-contact-item"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>&Icirc;le-de-France</div></div>
+      <div class="footer-col"><h4>Tarifs</h4><ul><li><a href="tarifs-basket.html">Coaching Basket</a></li><li><a href="tarifs-musculation.html">Remise en forme</a></li><li><a href="contact.html">Bilan gratuit</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 Mathieu Nzita &mdash; Tous droits r&eacute;serv&eacute;s.</p>
+      <div class="footer-legal"><a href="#">Mentions l&eacute;gales</a><a href="#">Confidentialit&eacute;</a><a href="#">CGV</a></div>
+    </div>
+  </div>
+</footer>
+
+<div id="nzToast" class="nz-toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/js/supabaseClient.js?v=tarif-basket-v1"></script>
+<script>
+const STRIPE_PK = 'pk_live_51TloPY1FB4mh3lWT2iskqtpTKk43CGHgjRdvJTjdMJnbJgzXbp4WudVY9rFLWWmt2VT90JzLPsZfqnXqxhHGVsTm00rgMdMs4G';
+
+function showToast(msg, type='success'){
+  var t=document.getElementById('nzToast');
+  t.textContent=msg; t.className='nz-toast '+type+' show';
+  setTimeout(function(){ t.classList.remove('show'); },4500);
+}
+
+async function payBasket(offerType, btn){
+  var origHtml = btn.innerHTML;
+  btn.disabled=true; btn.textContent='Chargement…';
+  try {
+    var sb = window.NZ && window.NZ._sb;
+    if(!sb) throw new Error('Supabase non initialisé');
+    var user = null;
+    try{ var {data:{user:u}} = await sb.auth.getUser(); user = u; }catch(e){}
+    var { data, error } = await sb.functions.invoke('create-checkout-session',{
+      body:{ offer_type: offerType, customer_email: user?.email||undefined, customer_name: user?.user_metadata?.full_name||undefined }
+    });
+    if(error) throw new Error(error.message||'Erreur Supabase');
+    if(data?.url){ window.location.href = data.url; }
+    else { throw new Error('URL de paiement manquante'); }
+  } catch(err){
+    showToast('Erreur : '+err.message,'error');
+    btn.disabled=false; btn.innerHTML=origHtml;
+  }
+}
+
+/* Retour Stripe */
+(function(){
+  var p=new URLSearchParams(window.location.search);
+  if(p.get('payment')==='success'){
+    var b=document.getElementById('paymentBannerInline');
+    if(b){
+      b.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><div><strong style="color:#4ade80">Paiement confirm&eacute; !</strong><br><span style="font-size:.82rem;color:rgba(255,255,255,.6);font-weight:300">Merci ! Mathieu vous contacte sous 24h pour confirmer votre cr&eacute;neau.</span></div>';
+      b.style.display='flex';
+      setTimeout(function(){ b.style.display='none'; },10000);
+    }
+    showToast('✓ Paiement validé — email de confirmation envoyé','success');
+    history.replaceState(null,'',window.location.pathname);
+  }
+  if(p.get('payment')==='cancelled'){
+    showToast('Paiement annulé — aucun prélèvement effectué.','error');
+    history.replaceState(null,'',window.location.pathname);
+  }
+})();
+
+const reveals=document.querySelectorAll(".reveal");
+const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add("visible"),i*80);observer.unobserve(entry.target)}})},{threshold:.1});
+reveals.forEach(el=>observer.observe(el));
+const nav=document.getElementById("mainNav");
+window.addEventListener("scroll",()=>{if(window.scrollY>60){nav.style.background="rgba(0,0,0,0.72)";nav.style.backdropFilter="blur(32px)"}else{nav.style.background="";nav.style.backdropFilter=""}});
+function toggleNav(){nav.classList.toggle("mobile-open");nav.querySelector(".nav-toggle").innerHTML=nav.classList.contains("mobile-open")?"&#10005;":"&#9776;";}
+nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("mobile-open");nav.querySelector(".nav-toggle").innerHTML="&#9776;";}));
+function toggleFaq(item){item.classList.toggle('open')}
+</script>
+</body>
+</html>
