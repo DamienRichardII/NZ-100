@@ -494,17 +494,40 @@ async function payBasket(offerType, btn){
   btn.disabled=true; btn.textContent='Chargement…';
   try {
     var sb = window.NZ && window.NZ._sb;
-    if(!sb) throw new Error('Supabase non initialisé');
+    if(!sb) throw new Error('init');
     var user = null;
     try{ var {data:{user:u}} = await sb.auth.getUser(); user = u; }catch(e){}
     var { data, error } = await sb.functions.invoke('create-checkout-session',{
-      body:{ offer_type: offerType, customer_email: user?.email||undefined, customer_name: user?.user_metadata?.full_name||undefined }
+      body:{
+        offer_type:     offerType,
+        customer_email: user && user.email ? user.email : undefined,
+        customer_name:  user && user.user_metadata && user.user_metadata.full_name ? user.user_metadata.full_name : undefined
+      }
     });
-    if(error) throw new Error(error.message||'Erreur Supabase');
-    if(data?.url){ window.location.href = data.url; }
-    else { throw new Error('URL de paiement manquante'); }
+    if(error){
+      // Erreur Supabase (CORS, 404, timeout…)
+      console.error('[NZ Basket] functions.invoke error:', error.message||error);
+      throw new Error('service');
+    }
+    if(data && data.url){
+      window.location.href = data.url;
+    } else if(data && data.error){
+      console.error('[NZ Basket] Edge Function erreur:', data.error);
+      throw new Error('stripe');
+    } else {
+      throw new Error('url');
+    }
   } catch(err){
-    showToast('Erreur : '+err.message,'error');
+    var userMsg;
+    switch(err.message){
+      case 'init':    userMsg='Service indisponible pour le moment — rechargez la page et réessayez.'; break;
+      case 'service': userMsg='Le paiement n'a pas pu être lancé. Vérifiez votre connexion et réessayez.'; break;
+      case 'stripe':  userMsg='Une erreur est survenue côté paiement. Merci de réessayer dans quelques instants.'; break;
+      case 'url':     userMsg='Lien de paiement introuvable. Merci de réessayer.'; break;
+      default:        userMsg='Le paiement n'a pas pu être lancé. Merci de réessayer dans quelques instants.';
+    }
+    console.error('[NZ Basket] payBasket error:', err.message);
+    showToast(userMsg, 'error');
     btn.disabled=false; btn.innerHTML=origHtml;
   }
 }

@@ -328,8 +328,19 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
           </form>
           <div class="form-success" id="formSuccess">
             <div class="form-success-icon">&#9989;</div>
-            <h3>Message envoy&eacute; !</h3>
-            <p>Mathieu a bien re&ccedil;u ta demande et te r&eacute;pondra sous <strong>24h</strong> avec une proposition adapt&eacute;e &agrave; ton profil. Garde un &oelig;il sur ta bo&icirc;te mail ou ton WhatsApp.</p>
+            <h3>Demande envoy&eacute;e !</h3>
+            <p>Mathieu a bien re&ccedil;u ta demande et te r&eacute;pondra sous <strong>24h</strong> avec une proposition adapt&eacute;e &agrave; ton profil. Garde un &oelig;il sur ta bo&icirc;te mail.</p>
+          </div>
+          <div class="form-success" id="formSuccessPartial" style="display:none">
+            <div class="form-success-icon">&#128228;</div>
+            <h3>Demande enregistr&eacute;e</h3>
+            <p>Ta demande a bien &eacute;t&eacute; enregistr&eacute;e. Mathieu te contactera sous <strong>24h</strong>.<br><span style="font-size:.82rem;color:rgba(255,255,255,.4)">La notification email a rencontr&eacute; un probl&egrave;me technique mais tes informations sont bien sauvegard&eacute;es.</span></p>
+          </div>
+          <div id="formErrorState" style="display:none;text-align:center;padding:36px 20px">
+            <div style="font-size:2.8rem;margin-bottom:14px">&#9888;&#65039;</div>
+            <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;margin-bottom:10px;color:#fff">Envoi &eacute;chou&eacute;</h3>
+            <p style="color:rgba(255,255,255,.6);font-size:.88rem;font-weight:300;line-height:1.75;max-width:380px;margin:0 auto 24px">Ta demande n&rsquo;a pas pu &ecirc;tre transmise pour le moment.<br>Aucun de tes champs n&rsquo;a &eacute;t&eacute; effac&eacute; &mdash; tu peux r&eacute;essayer directement.</p>
+            <button onclick="resetContactForm()" style="padding:14px 32px;background:#fff;color:#000;font-weight:700;font-size:.84rem;text-transform:uppercase;letter-spacing:.08em;border-radius:100px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;transition:.3s">R&eacute;essayer</button>
           </div>
         </div>
       </div>
@@ -395,13 +406,20 @@ const nav=document.getElementById("mainNav");
 window.addEventListener("scroll",()=>{if(window.scrollY>60){nav.style.background="rgba(0,0,0,0.72)";nav.style.backdropFilter="blur(32px)"}else{nav.style.background="";nav.style.backdropFilter=""}});
 function toggleNav(){nav.classList.toggle("mobile-open");nav.querySelector(".nav-toggle").innerHTML=nav.classList.contains("mobile-open")?"&#10005;":"&#9776;";}
 nav.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("mobile-open");nav.querySelector(".nav-toggle").innerHTML="&#9776;";}));
+// ─── Contact form — logique robuste ───────────────────────────────────────────
+// 1. INSERT dans Supabase (leads) — données jamais perdues
+// 2. Appel direct à send-lead-notification via sb.functions.invoke()
+// 3. Succès affiché UNIQUEMENT si la notification est réellement envoyée
+// 4. Si notification échoue : état "enregistré sans notification" (pas un faux succès)
+// 5. Si insert échoue : état d'erreur + formulaire conservé pour renvoyer
+
 async function nzHandleContact(e){
   e.preventDefault();
   const form=e.target;
   const btn=form.querySelector('.form-submit');
   const errEl=document.getElementById('formError');
 
-  // Lecture des champs
+  // ── Lecture des champs ──
   const prenom=(document.getElementById('cf-prenom')||{}).value||'';
   const nom=(document.getElementById('cf-nom')||{}).value||'';
   const email=(document.getElementById('cf-email')||{}).value||'';
@@ -412,17 +430,25 @@ async function nzHandleContact(e){
   const dispo=(document.getElementById('cf-dispo')||{}).value||'';
   const message=(document.getElementById('cf-message')||{}).value||'';
 
+  // ── Validation ──
   if(!prenom||!email||!service||!message){
     if(errEl){errEl.textContent='Merci de remplir tous les champs obligatoires.';errEl.style.display='block';}
     return;
   }
 
-  btn.disabled=true; btn.textContent='Envoi en cours...';
+  btn.disabled=true; btn.textContent='Envoi en cours…';
   if(errEl) errEl.style.display='none';
 
-  console.log('[NZ Contact] submit intercepted — prenom:', prenom, 'email:', email);
+  console.log('[NZ Contact] Soumission — prenom:', prenom, '— email:', email);
 
-  // Construction du message complet
+  // ── Vérification Supabase ──
+  if(!window.NZ||!window.NZ.insertLead||!window.NZ._sb){
+    console.error('[NZ Contact] window.NZ non disponible');
+    _showFormError('Service temporairement indisponible. Merci de réessayer dans quelques instants ou de contacter Mathieu directement.', btn);
+    return;
+  }
+
+  // ── Construction du message complet ──
   const fullMessage=[
     message,
     objectif?'Objectif : '+objectif:'',
@@ -430,18 +456,7 @@ async function nzHandleContact(e){
     dispo?'Disponibilités : '+dispo:''
   ].filter(Boolean).join('\n');
 
-  // Vérification window.NZ disponible
-  if(!window.NZ||!window.NZ.insertLead){
-    console.error('[NZ Contact] window.NZ non disponible — supabaseClient.js non chargé.');
-    btn.disabled=false; btn.textContent='Envoyer ma demande';
-    if(errEl){
-      errEl.textContent='Service temporairement indisponible. Merci de réessayer ou de me contacter directement par Instagram ou email.';
-      errEl.style.display='block';
-    }
-    return;
-  }
-
-  const payload={
+  const leadPayload={
     first_name: prenom.trim(),
     last_name:  nom.trim()||null,
     email:      email.trim(),
@@ -451,21 +466,88 @@ async function nzHandleContact(e){
     program_interest: service||null,
     source:     'contact_form'
   };
-  console.log('[NZ Contact] payload', payload);
 
+  // ── Étape 1 : INSERT dans Supabase (données persistées en priorité) ──
+  let leadSaved=false;
   try{
-    const savedLead=await window.NZ.insertLead(payload);
-    console.log('[NZ Contact] Lead saved:', savedLead);
-    form.style.display='none';
-    document.getElementById('formSuccess').classList.add('visible');
+    await window.NZ.insertLead(leadPayload);
+    leadSaved=true;
+    console.log('[NZ Contact] ✓ Lead sauvegardé dans Supabase');
   }catch(err){
-    console.error('[NZ Contact] Lead insert failed:', err);
-    btn.disabled=false; btn.textContent='Envoyer ma demande';
-    if(errEl){
-      errEl.textContent="Impossible d'envoyer la demande pour le moment. Merci de réessayer ou de me contacter directement.";
-      errEl.style.display='block';
-    }
+    console.error('[NZ Contact] ✗ insertLead échoué:', err.message||err);
+    _showFormError(
+      "Ta demande n'a pas pu être transmise pour le moment. Merci de réessayer dans quelques instants.",
+      btn
+    );
+    return;
   }
+
+  // ── Étape 2 : Notification email via Edge Function ──
+  let notifOk=false;
+  try{
+    const { data, error } = await window.NZ._sb.functions.invoke('send-lead-notification',{
+      body:{
+        mode:'direct',
+        lead:{
+          first_name: leadPayload.first_name,
+          last_name:  leadPayload.last_name,
+          email:      leadPayload.email,
+          phone:      leadPayload.phone,
+          message:    leadPayload.message,
+          program_interest: leadPayload.program_interest,
+          objective:  leadPayload.objective,
+          created_at: new Date().toISOString()
+        }
+      }
+    });
+    if(error){
+      console.error('[NZ Contact] send-lead-notification erreur Supabase:', error.message);
+    } else if(data&&data.sent){
+      notifOk=true;
+      console.log('[NZ Contact] ✓ Notification envoyée — Resend id:', data.resend_id||'?');
+    } else {
+      console.warn('[NZ Contact] send-lead-notification — réponse inattendue:', data);
+    }
+  }catch(err){
+    console.error('[NZ Contact] send-lead-notification exception:', err.message||err);
+  }
+
+  // ── Étape 3 : Affichage du résultat ──
+  form.style.display='none';
+
+  if(notifOk){
+    // Succès complet : lead sauvegardé + notification envoyée
+    document.getElementById('formSuccess').style.display='block';
+    console.log('[NZ Contact] ✓ Succès complet');
+  } else if(leadSaved){
+    // Succès partiel : lead sauvegardé mais notification échouée
+    // On ne prétend pas que Mathieu a reçu la notif — message neutre
+    document.getElementById('formSuccessPartial').style.display='block';
+    console.warn('[NZ Contact] Lead sauvegardé mais notification échouée');
+  }
+  // (le cas leadSaved=false est géré plus haut avec return)
+}
+
+// ── Reset du formulaire pour renvoyer sans tout ressaisir ──
+function resetContactForm(){
+  const form=document.getElementById('contactForm');
+  const errState=document.getElementById('formErrorState');
+  if(form){ form.style.display='block'; }
+  if(errState){ errState.style.display='none'; }
+  const btn=form&&form.querySelector('.form-submit');
+  if(btn){ btn.disabled=false; btn.textContent='Envoyer ma demande'; }
+  const errEl=document.getElementById('formError');
+  if(errEl) errEl.style.display='none';
+}
+
+// ── Affiche l'état d'erreur et restaure le bouton ──
+function _showFormError(msg, btn){
+  // Afficher l'inline error en haut du formulaire
+  const errEl=document.getElementById('formError');
+  if(errEl){ errEl.textContent=msg; errEl.style.display='block'; }
+  if(btn){ btn.disabled=false; btn.textContent='Envoyer ma demande'; }
+  // Scroll vers l'erreur
+  if(errEl) errEl.scrollIntoView({behavior:'smooth',block:'center'});
 }
 </script>
 <script>
