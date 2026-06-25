@@ -909,10 +909,10 @@ function _applyBookingFilter() {
     var actionsHtml = '';
     if (!alreadyActed && bId) {
       actionsHtml = '<div class="presence-actions">'
-        + '<button class="pa-btn pa-btn-honore" onclick="doPresenceAction(''+bId+'','honore',this)" title="Séance effectuée">✓ Honoré</button>'
-        + '<button class="pa-btn pa-btn-annule-veille" onclick="doPresenceAction(''+bId+'','annule_veille',this)" title="Annulation la veille — 50% retenus">Annulé J-1 (50%)</button>'
-        + '<button class="pa-btn pa-btn-annule-j" onclick="doPresenceAction(''+bId+'','annule_j',this)" title="Annulation le jour J — 100% retenus">Annulé J (100%)</button>'
-        + '<button class="pa-btn pa-btn-noshow" onclick="doPresenceAction(''+bId+'','no_show',this)" title="No-show — 100% retenus">No-show (100%)</button>'
+        + '<button class="pa-btn pa-btn-honore" onclick="doPresenceAction(\''+bId+'\',\'honore\',this)" title="Séance effectuée">✓ Honoré</button>'
+        + '<button class="pa-btn pa-btn-annule-veille" onclick="doPresenceAction(\''+bId+'\',\'annule_veille\',this)" title="Annulation la veille — 50% retenus">Annulé J-1 (50%)</button>'
+        + '<button class="pa-btn pa-btn-annule-j" onclick="doPresenceAction(\''+bId+'\',\'annule_j\',this)" title="Annulation le jour J — 100% retenus">Annulé J (100%)</button>'
+        + '<button class="pa-btn pa-btn-noshow" onclick="doPresenceAction(\''+bId+'\',\'no_show\',this)" title="No-show — 100% retenus">No-show (100%)</button>'
         + '</div>';
     }
     return '<div class="conv-item" style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
@@ -1298,6 +1298,19 @@ function autoResize(el) {
 
 function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ── Toggle visibilité mot de passe ── */
+function _togglePwd(inputId, btn) {
+  var inp = document.getElementById(inputId);
+  if (!inp) return;
+  var show = inp.type === 'password';
+  inp.type = show ? 'text' : 'password';
+  btn.setAttribute('aria-label', show ? 'Masquer le mot de passe' : 'Afficher le mot de passe');
+  var eyeOpen   = btn.querySelector('.eye-open');
+  var eyeClosed = btn.querySelector('.eye-closed');
+  if (eyeOpen)   eyeOpen.style.display   = show ? 'none'   : 'inline';
+  if (eyeClosed) eyeClosed.style.display = show ? 'inline' : 'none';
 }
 </script>
 </body>
