@@ -409,6 +409,16 @@ body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height
 
       
       <div id="sec-overview">
+
+        <!-- ⏳ Bannière Bientôt disponible -->
+        <div style="background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.03) 100%);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:28px 32px;margin-bottom:36px;display:flex;align-items:flex-start;gap:20px;">
+          <div style="font-size:2.2rem;flex-shrink:0;line-height:1">⏳</div>
+          <div>
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;margin-bottom:8px;color:#fff">Bientôt disponible</h2>
+            <p style="color:rgba(255,255,255,.6);font-size:.88rem;font-weight:300;line-height:1.8;max-width:520px;margin:0">Les contenus de l'espace membre arrivent progressivement. Ton accès est bien actif — les vidéos et programmes seront disponibles très prochainement.<br>Mathieu te tiendra informé par email dès l'ouverture complète.</p>
+          </div>
+        </div>
+
         <div class="dashboard-welcome">
           <h1>Bienvenue dans votre programme</h1>
           <p>S&eacute;lectionnez votre programme pour commencer votre transformation.</p>
@@ -698,19 +708,26 @@ async function doForgotPassword() {
   try {
     var sb = window.NZ && window.NZ._sb;
     if (!sb) throw new Error('Supabase non initialisé');
-    var { error } = await sb.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + '/reset-password.html'
+    // Utilise la Edge Function pour envoyer un email brandé NZ100
+    var { data: resetData, error: resetErr } = await sb.functions.invoke('send-reset-password', {
+      body: { email }
     });
-    if (error) throw error;
+    // On affiche toujours le succès (sécurité : ne pas révéler si l'email existe)
+    if (resetErr) {
+      console.warn('[NZ Reset] Edge function error (non-bloquant):', resetErr.message);
+    } else {
+      console.log('[NZ Reset] Réponse send-reset-password:', resetData);
+    }
     document.getElementById('forgotForm').innerHTML =
       '<div style="text-align:center;padding:16px 0">' +
       '<div style="font-size:2rem;margin-bottom:12px">📧</div>' +
       '<h3 style="font-family:Bebas Neue,sans-serif;font-size:1.4rem;margin-bottom:8px">Email envoyé !</h3>' +
-      '<p style="color:rgba(255,255,255,.6);font-size:.87rem;line-height:1.7">Un lien de réinitialisation a été envoyé à<br><strong style="color:#fff">' + email + '</strong>.<br>Vérifiez votre boîte mail (et vos spams).</p>' +
+      '<p style="color:rgba(255,255,255,.6);font-size:.87rem;line-height:1.7">Si un compte existe pour<br><strong style="color:#fff">' + email + '</strong>,<br>tu recevras un lien de réinitialisation sous quelques secondes.<br><span style="font-size:.8rem;opacity:.7">(Vérifie aussi tes spams)</span></p>' +
       '<button class="login-btn" style="margin-top:16px" onclick="showLogin()">← Retour à la connexion</button>' +
       '</div>';
   } catch(err) {
-    showAuthError(err.message || "Erreur lors de l'envoi. Vérifiez l'email.");
+    console.error('[NZ Reset] Exception doForgotPassword:', err.message||err);
+    showAuthError("Erreur lors de l'envoi. Réessayez dans un instant.");
     btn.disabled = false; btn.textContent = 'Envoyer le lien';
   }
 }

@@ -501,19 +501,30 @@ async function nzHandleContact(e){
     source:     'contact_form'
   };
 
-  // ── Étape 1 : INSERT dans Supabase (données persistées en priorité) ──
+  // ── Étape 1 : INSERT dans Supabase (avec retry réseau automatique) ──
   let leadSaved=false;
-  try{
-    await window.NZ.insertLead(leadPayload);
-    leadSaved=true;
-    console.log('[NZ Contact] ✓ Lead sauvegardé dans Supabase');
-  }catch(err){
-    console.error('[NZ Contact] ✗ insertLead échoué:', err.message||err);
-    _showFormError(
-      "Ta demande n'a pas pu être transmise pour le moment. Merci de réessayer dans quelques instants.",
-      btn
-    );
-    return;
+  const isNetworkErr=(e)=>e&&(e.message||'').match(/Failed to fetch|NetworkError|Network request failed|ERR_NETWORK/i);
+  for(let attempt=1; attempt<=2 && !leadSaved; attempt++){
+    if(attempt>1){
+      console.log('[NZ Contact] Retry insertLead — tentative', attempt);
+      await new Promise(r=>setTimeout(r,1500));
+    }
+    try{
+      console.log('[NZ Contact] insertLead → Supabase | attempt', attempt, '| email:', email.trim());
+      await window.NZ.insertLead(leadPayload);
+      leadSaved=true;
+      console.log('[NZ Contact] ✓ Lead sauvegardé dans Supabase (tentative', attempt+')');
+    }catch(err){
+      console.error('[NZ Contact] ✗ insertLead échoué (tentative '+attempt+'):', err.message||err);
+      if(isNetworkErr(err) && attempt<2){ continue; }
+      _showFormError(
+        isNetworkErr(err)
+          ? "Connexion instable. Vérifie ta connexion internet et réessaie."
+          : "Ta demande n'a pas pu être transmise pour le moment. Merci de réessayer dans quelques instants.",
+        btn
+      );
+      return;
+    }
   }
 
   // ── Étape 2 : Notification email via Edge Function ──

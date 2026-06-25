@@ -84,7 +84,7 @@ ${lead.program_interest ? `<div class="field"><div class="label">Service</div><d
 ${lead.objective ? `<div class="field"><div class="label">Objectif</div><div class="value">${esc(lead.objective)}</div></div>` : ''}
 ${lead.message ? `<div class="field"><div class="label">Message</div><div class="value" style="white-space:pre-wrap">${esc(lead.message)}</div></div>` : ''}
 <hr><div class="field"><div class="label">Date</div><div class="value" style="font-size:13px;color:rgba(255,255,255,.6)">${leadDate}</div></div>
-<a href="https://nz-100.vercel.app/admin-mathieu.html" class="cta">Voir dans l'admin →</a>
+<a href="https://nz-100.com/admin-mathieu.html" class="cta">Voir dans l'admin →</a>
 <div class="footer">NZ 100% · Île-de-France</div>
 </div></body></html>`;
 
