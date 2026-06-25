@@ -32,6 +32,12 @@ input,textarea{font-family:inherit;}
 .login-back{display:inline-block;margin-top:20px;font-size:.8rem;color:var(--text-muted);transition:var(--transition);}
 .login-back:hover{color:var(--white);}
 .login-err{font-size:.8rem;color:rgba(255,100,100,.85);margin-top:8px;display:none;}
+.login-forgot-link{display:inline-block;margin-top:12px;font-size:.78rem;color:rgba(255,255,255,.38);cursor:pointer;transition:var(--transition);}
+.login-forgot-link:hover{color:rgba(255,255,255,.7);}
+.login-success-box{text-align:center;padding:12px 0;}
+.login-success-box .s-icon{font-size:2.2rem;margin-bottom:14px;}
+.login-success-box h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em;margin-bottom:10px;}
+.login-success-box p{font-size:.85rem;color:var(--text-muted);line-height:1.75;}
 
 /* ── TOPBAR ─────────────────────────────────────────────────────── */
 .admin-wrap{display:none;}
@@ -263,7 +269,35 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
     <input type="password" id="adminPwd" class="login-field" placeholder="Mot de passe" autocomplete="current-password" onkeydown="if(event.key==='Enter')doAdminLogin()">
     <button class="login-btn" onclick="doAdminLogin()">Accéder au tableau de bord</button>
     <p class="login-err" id="loginErr">Identifiants incorrects ou accès non autorisé.</p>
+    <p style="margin-top:14px"><span class="login-forgot-link" onclick="showAdminForgot()">Mot de passe oublié ?</span></p>
     <a href="index.html" class="login-back">&larr; Retour au site</a>
+  </div>
+</div>
+
+<!-- ═══ FORGOT PASSWORD SCREEN ══════════════════════════════════════ -->
+<div id="forgotScreen" class="login-wrap" style="display:none;">
+  <div class="login-card glass-strong">
+    <img src="assets/nz_logo_hero.png" alt="NZ 100%" class="login-logo">
+    <h1>NZ ADMIN</h1>
+    <p class="login-sub">Réinitialisation du mot de passe</p>
+
+    <div id="forgotFormWrap">
+      <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:22px;text-align:left;">
+        Saisis l'adresse email de ton compte admin. Tu recevras un lien pour choisir un nouveau mot de passe.
+      </p>
+      <input type="email" id="forgotAdminEmail" class="login-field" placeholder="Email admin" autocomplete="email"
+             onkeydown="if(event.key==='Enter')doAdminForgot()">
+      <button class="login-btn" id="forgotBtn" onclick="doAdminForgot()">Envoyer le lien</button>
+      <p class="login-err" id="forgotErr" style="margin-top:10px;"></p>
+    </div>
+
+    <div id="forgotSuccessWrap" style="display:none;" class="login-success-box">
+      <div class="s-icon">📧</div>
+      <h3>Email envoyé</h3>
+      <p id="forgotSuccessMsg">Si un compte existe pour cette adresse, tu vas recevoir un lien de réinitialisation sous quelques secondes.<br><span style="font-size:.78rem;opacity:.7">(Vérifie aussi les spams)</span></p>
+    </div>
+
+    <span class="login-forgot-link" onclick="showAdminLogin()" style="display:block;margin-top:20px;">← Retour à la connexion</span>
   </div>
 </div>
 
@@ -583,6 +617,46 @@ var CONVS = [
 var currentConvId = 1;
 
 /* ══ AUTH ════════════════════════════════════════════════════════════ */
+function showAdminForgot() {
+  document.getElementById('loginScreen').style.display  = 'none';
+  document.getElementById('forgotScreen').style.display = 'flex';
+  document.getElementById('forgotAdminEmail').value = '';
+  document.getElementById('forgotErr').style.display = 'none';
+  document.getElementById('forgotFormWrap').style.display    = 'block';
+  document.getElementById('forgotSuccessWrap').style.display = 'none';
+  setTimeout(()=>document.getElementById('forgotAdminEmail').focus(), 80);
+}
+
+function showAdminLogin() {
+  document.getElementById('forgotScreen').style.display = 'none';
+  document.getElementById('loginScreen').style.display  = 'flex';
+}
+
+async function doAdminForgot() {
+  var email  = (document.getElementById('forgotAdminEmail').value || '').trim();
+  var errEl  = document.getElementById('forgotErr');
+  var btn    = document.getElementById('forgotBtn');
+  errEl.style.display = 'none';
+  if (!email) { errEl.textContent = 'Saisis ton adresse email.'; errEl.style.display='block'; return; }
+  btn.disabled = true; btn.textContent = 'Envoi...';
+  try {
+    var sb = window.NZ && window.NZ._sb;
+    if (!sb) throw new Error('Supabase non initialisé');
+    var { error } = await sb.functions.invoke('send-reset-password', { body: { email } });
+    if (error) console.warn('[NZ Admin] reset-pwd edge error (non-bloquant):', error.message);
+    // Afficher succès dans tous les cas (sécurité)
+    document.getElementById('forgotFormWrap').style.display    = 'none';
+    document.getElementById('forgotSuccessWrap').style.display = 'block';
+    document.getElementById('forgotSuccessMsg').innerHTML =
+      'Si un compte existe pour <strong>' + email + '</strong>,<br>tu vas recevoir un email avec le lien de réinitialisation sous quelques secondes.<br><span style="font-size:.78rem;opacity:.65">(Vérifie aussi tes spams)</span>';
+  } catch(err) {
+    console.error('[NZ Admin] doAdminForgot exception:', err.message||err);
+    errEl.textContent = "Erreur lors de l'envoi. Réessaie dans un instant.";
+    errEl.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Envoyer le lien';
+  }
+}
+
 async function doAdminLogin() {
   var email    = (document.getElementById('adminEmail')||{value:''}).value.trim();
   var pwd      = (document.getElementById('adminPwd')||{value:''}).value;
