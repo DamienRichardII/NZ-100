@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light" style=""><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" data-editor-preserved="true">
+
+
+<title>NZ 100% — Bilan Personnalisé | More Discipline, La Clé de la Liberté</title>
+
+
+
+<style>
+  /* Loading state pour les boutons */
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+  .btn.loading::after {
+    content: ''; width: 14px; height: 14px;
+    border: 2px solid currentColor; border-top-color: transparent;
+    border-radius: 50%; display: inline-block;
+    animation: spin 0.6s linear infinite; margin-left: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #000;
+    color: #fff;
+    line-height: 1.6;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+
+  /* HERO */
+  .hero { text-align: center; padding: 80px 24px 60px; }
+  .hero h1 {
+    font-size: clamp(42px, 9vw, 72px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .hero .tagline {
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 3px;
+    color: #999;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .hero .lead {
+    color: #bbb; font-size: 15px;
+    max-width: 480px; margin: 0 auto 28px;
+    line-height: 1.6;
+  }
+  .badges-row {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    gap: 18px; margin-bottom: 36px;
+    font-size: 12px; color: #999;
+  }
+  .badges-row span { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* BUTTONS — style pilule blanc comme le site */
+  .btn-group { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 8px;
+    padding: 16px 28px;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all 0.25s ease;
+    text-decoration: none;
+  }
+  .btn-white { background: #fff; color: #000; border-color: #fff; }
+  .btn-white:hover { background: #f0f0f0; transform: translateY(-2px); }
+  .btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,0.4); }
+  .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.06); }
+
+  /* FEATURES (Analyse 360 / Plan d'action / Engagement) */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin: 60px 0 50px;
+  }
+  .feature {
+    background: #0f0f0f;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 22px 20px;
+  }
+  .feature h3 {
+    font-size: 13px; font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .feature p { font-size: 13px; color: #999; line-height: 1.55; }
+
+  /* COACH CARD */
+  .coach-card {
+    background: #0f0f0f;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 30px 24px;
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  .coach-card .label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    color: #999; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .coach-card h2 {
+    font-size: 28px; font-weight: 900;
+    text-transform: uppercase; letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+  .coach-card .role {
+    color: #ccc; font-size: 14px; margin-bottom: 10px;
+  }
+  .coach-card .specs { color: #888; font-size: 13px; margin-bottom: 18px; line-height: 1.7; }
+  .coach-card .contact-row { color: #ccc; font-size: 13px; margin-bottom: 4px; }
+  .coach-card .quote {
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-style: italic;
+    color: #ddd;
+    font-size: 14px;
+  }
+
+  /* SECTIONS DU FORMULAIRE */
+  .section {
+    margin-bottom: 50px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .section-title {
+    font-size: 20px; font-weight: 800;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .section-sub {
+    color: #888; font-size: 13px; font-style: italic;
+    margin-bottom: 28px;
+  }
+
+  /* CHAMPS */
+  .field { margin-bottom: 22px; }
+  .field label.q-label {
+    display: block; font-size: 13px; font-weight: 600;
+    margin-bottom: 8px; color: #fff;
+  }
+  .field .req { color: #fff; opacity: 0.5; margin-left: 3px; }
+  .field .q-hint { font-size: 12px; color: #888; font-style: italic; margin-bottom: 8px; }
+
+  input[type="text"], input[type="email"], input[type="tel"],
+  input[type="number"], textarea, select {
+    width: 100%;
+    padding: 14px 16px;
+    background: #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    transition: border 0.2s, background 0.2s;
+  }
+  input::placeholder, textarea::placeholder { color: #555; }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #fff;
+    background: #111;
+  }
+  textarea { resize: vertical; min-height: 80px; line-height: 1.55; }
+
+  /* OPTIONS RADIO / CHECKBOX */
+  .opts { display: flex; flex-direction: column; gap: 8px; }
+  .opts.row { flex-direction: row; flex-wrap: wrap; }
+  .opt {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px;
+    background: #0a0a0a;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px; color: #ccc;
+    transition: all 0.15s;
+  }
+  .opt:hover { border-color: rgba(255,255,255,0.3); background: #0f0f0f; }
+  .opt input { accent-color: #fff; cursor: pointer; }
+  .opt input:checked ~ span { color: #fff; font-weight: 600; }
+  .opt:has(input:checked) { border-color: #fff; background: #141414; }
+
+  /* SCALE 1-10 */
+  .scale { display: flex; flex-wrap: wrap; gap: 6px; }
+  .scale .opt {
+    padding: 10px 0; min-width: 42px;
+    justify-content: center; flex: 1;
+  }
+
+  /* PACTE */
+  .pacte {
+    background: #0f0f0f;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 36px 28px;
+    text-align: center;
+    margin: 60px 0 40px;
+  }
+  .pacte h2 {
+    font-size: 22px; font-weight: 900;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 18px;
+  }
+  .pacte .intro-pacte {
+    color: #bbb; font-size: 14px; line-height: 1.65;
+    max-width: 520px; margin: 0 auto 22px;
+  }
+  .pacte ul {
+    list-style: none;
+    text-align: left;
+    max-width: 420px;
+    margin: 0 auto 28px;
+  }
+  .pacte ul li {
+    color: #ccc; font-size: 13.5px;
+    padding: 10px 0 10px 24px;
+    position: relative;
+  }
+  .pacte ul li::before {
+    content: '◾'; position: absolute; left: 0; top: 10px;
+    color: #fff; font-size: 10px;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 50px 24px 40px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: #777; font-size: 12px;
+  }
+  footer .more {
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: #fff; margin-bottom: 10px;
+  }
+  footer .liberte { color: #999; font-size: 11px; letter-spacing: 2px; margin-bottom: 18px; }
+  footer .brand { font-size: 13px; color: #ccc; margin-bottom: 8px; }
+  footer .links { font-size: 12px; color: #888; }
+  footer .links a { color: #ccc; text-decoration: none; }
+  footer .links a:hover { color: #fff; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(140px);
+    background: #fff; color: #000;
+    padding: 14px 24px;
+    border-radius: 999px;
+    font-size: 13px; font-weight: 600;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+    z-index: 9999;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    max-width: 90%;
+    text-align: center;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { background: #ff3344; color: #fff; }
+
+  /* MOBILE */
+  @media (max-width: 600px) {
+    .hero { padding: 50px 20px 40px; }
+    .container { padding: 0 18px; }
+    .features { grid-template-columns: 1fr; }
+    .btn { padding: 14px 22px; font-size: 11px; }
+    .btn-group { flex-direction: column; }
+    .btn-group .btn { width: 100%; }
+  }
+</style>
+</head>
+<body style="">
+
+
+<header class="hero container">
+  <h1>More Discipline</h1>
+  <div class="tagline">La clé de la liberté</div>
+  <p class="lead">Bilan personnalisé — Ton point de départ vers une transformation 100% sur-mesure.</p>
+  <div class="badges-row">
+    <span>⏱ 15 minutes</span>
+    <span>🔒 100% confidentiel</span>
+    <span>🎯 Programme sur-mesure</span>
+  </div>
+  <div class="btn-group">
+    <a href="#bilan" class="btn btn-white">Commencer le bilan</a>
+    <a href="#features" class="btn btn-outline">Découvrir le bilan</a>
+  </div>
+  <div class="btn-group" style="margin-top:10px;">
+    <button type="button" class="btn btn-white">📧 Envoyer par mail</button>
+    <button type="button" class="btn btn-outline">📥 Télécharger</button>
+  </div>
+</header>
+
+
+<section id="features" class="container">
+  <div class="features">
+    <div class="feature">
+      <h3>🎯 Analyse 360°</h3>
+      <p>Je décortique ton profil pour ne rien laisser au hasard.</p>
+    </div>
+    <div class="feature">
+      <h3>⚡ Plan d'action</h3>
+      <p>Des étapes claires, nettes et précises pour atteindre tes objectifs.</p>
+    </div>
+    <div class="feature">
+      <h3>🔒 Engagement</h3>
+      <p>Un pacte entre toi et moi. On ne lâche rien jusqu'au résultat.</p>
+    </div>
+  </div>
+
+  
+  <div class="coach-card">
+    <div class="label">Ton coach</div>
+    <h2>Mathieu Nzita</h2>
+    <p class="role">Coach sportif certifié — Fondateur NZ 100%</p>
+    <p class="specs">Spécialisé en : Remise en forme · Retour au sport · Performance · Coaching basket</p>
+    <p class="contact-row">📩 mathieunzita60@gmail.com</p>
+    <p class="contact-row">📲 Instagram : @nzmathieu / @Nz.hundred</p>
+    <p class="quote">"La discipline n'est pas une punition. C'est ta liberté."</p>
+  </div>
+</section>
+
+<form id="bilanForm" class="container">
+
+
+<div id="bilan" class="section">
+  <h2 class="section-title">Identité &amp; Contact</h2>
+  <p class="section-sub">Qui es-tu ? Faisons les présentations.</p>
+
+  <div class="field"><label class="q-label">Nom &amp; Prénom<span class="req">*</span></label>
+    <input type="text" name="nom_prenom" placeholder="Ton nom complet" required=""></div>
+  <div class="field"><label class="q-label">Âge<span class="req">*</span></label>
+    <input type="number" name="age" min="10" max="100" placeholder="Ton âge"></div>
+  <div class="field"><label class="q-label">Email<span class="req">*</span></label>
+    <input type="email" name="email" placeholder="ton.email@exemple.com" required=""></div>
+  <div class="field"><label class="q-label">Téléphone<span class="req">*</span></label>
+    <input type="tel" name="telephone" placeholder="06 XX XX XX XX" required=""></div>
+  <div class="field"><label class="q-label">Instagram (optionnel)</label>
+    <input type="text" name="instagram" placeholder="@ton_pseudo"></div>
+  <div class="field"><label class="q-label">Profession / Rythme de vie</label>
+    <input type="text" name="profession" placeholder="Commercial, étudiant, sédentaire..."></div>
+  <div class="field"><label class="q-label">Sexe</label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="sexe" value="Homme"><span>Homme</span></label>
+      <label class="opt"><input type="radio" name="sexe" value="Femme"><span>Femme</span></label>
+      <label class="opt"><input type="radio" name="sexe" value="Non précisé"><span>Préfère ne pas préciser</span></label>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <h2 class="section-title">Point de départ</h2>
+  <p class="section-sub">Où en es-tu aujourd'hui physiquement ?</p>
+
+  <div class="field"><label class="q-label">Taille (cm)<span class="req">*</span></label>
+    <input type="number" name="taille" min="100" max="230" placeholder="Ex: 178"></div>
+  <div class="field"><label class="q-label">Poids actuel (kg)<span class="req">*</span></label>
+    <input type="number" name="poids_actuel" min="30" max="250" step="0.1" placeholder="Ex: 75"></div>
+  <div class="field"><label class="q-label">Comment décrirais-tu ton niveau sportif actuel ?<span class="req">*</span></label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="niveau" value="Débutant"><span>Débutant (je reprends de zéro)</span></label>
+      <label class="opt"><input type="radio" name="niveau" value="Intermédiaire"><span>Intermédiaire (1 à 2 séances par semaine)</span></label>
+      <label class="opt"><input type="radio" name="niveau" value="Confirmé"><span>Confirmé (3+ séances, régulier)</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Quelle est ton activité quotidienne (hors sport) ?</label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="activite_quotidienne" value="Sédentaire"><span>Sédentaire (bureau, peu de mouvement)</span></label>
+      <label class="opt"><input type="radio" name="activite_quotidienne" value="Légèrement actif"><span>Légèrement actif (debout régulièrement)</span></label>
+      <label class="opt"><input type="radio" name="activite_quotidienne" value="Actif"><span>Actif (métier physique)</span></label>
+      <label class="opt"><input type="radio" name="activite_quotidienne" value="Très actif"><span>Très actif</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Qualité de ton sommeil</label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="sommeil" value="Excellente"><span>Excellente (7-9h, réveil reposé)</span></label>
+      <label class="opt"><input type="radio" name="sommeil" value="Bonne"><span>Bonne (6-7h, quelques réveils)</span></label>
+      <label class="opt"><input type="radio" name="sommeil" value="Moyenne"><span>Moyenne (5-6h, réveils fréquents)</span></label>
+      <label class="opt"><input type="radio" name="sommeil" value="Mauvaise"><span>Mauvaise (moins de 5h, non réparateur)</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Niveau de stress quotidien (1 = très faible, 10 = très élevé)</label>
+    <div class="scale">
+      <label class="opt"><input type="radio" name="stress" value="1"><span>1</span></label>
+      <label class="opt"><input type="radio" name="stress" value="2"><span>2</span></label>
+      <label class="opt"><input type="radio" name="stress" value="3"><span>3</span></label>
+      <label class="opt"><input type="radio" name="stress" value="4"><span>4</span></label>
+      <label class="opt"><input type="radio" name="stress" value="5"><span>5</span></label>
+      <label class="opt"><input type="radio" name="stress" value="6"><span>6</span></label>
+      <label class="opt"><input type="radio" name="stress" value="7"><span>7</span></label>
+      <label class="opt"><input type="radio" name="stress" value="8"><span>8</span></label>
+      <label class="opt"><input type="radio" name="stress" value="9"><span>9</span></label>
+      <label class="opt"><input type="radio" name="stress" value="10"><span>10</span></label>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <h2 class="section-title">Objectifs</h2>
+  <p class="section-sub">Où veux-tu aller ? Cible précisément ton but.</p>
+
+  <div class="field"><label class="q-label">Objectif principal<span class="req">*</span></label>
+    <div class="opts">
+      <label class="opt"><input type="checkbox" name="objectif" value="Perte de masse grasse / Sèche"><span>Perte de masse grasse / Sèche</span></label>
+      <label class="opt"><input type="checkbox" name="objectif" value="Prise de masse musculaire"><span>Prise de masse musculaire</span></label>
+      <label class="opt"><input type="checkbox" name="objectif" value="Recomposition corporelle"><span>Recomposition corporelle</span></label>
+      <label class="opt"><input type="checkbox" name="objectif" value="Tonification / Raffermissement"><span>Tonification / Raffermissement</span></label>
+      <label class="opt"><input type="checkbox" name="objectif" value="Remise en forme générale / Santé"><span>Remise en forme générale / Santé</span></label>
+      <label class="opt"><input type="checkbox" name="objectif" value="Performance sportive"><span>Performance sportive (ex: Basket)</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Quel est ton objectif de poids idéal ? (kg)</label>
+    <input type="number" name="poids_objectif" min="30" max="250" step="0.1" placeholder="Ex: 72"></div>
+  <div class="field"><label class="q-label">En combien de temps souhaites-tu y arriver ?</label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="delai" value="1-3 mois"><span>1-3 mois</span></label>
+      <label class="opt"><input type="radio" name="delai" value="3-6 mois"><span>3-6 mois</span></label>
+      <label class="opt"><input type="radio" name="delai" value="6-12 mois"><span>6-12 mois</span></label>
+      <label class="opt"><input type="radio" name="delai" value="Long terme"><span>Long terme (12+ mois)</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Pourquoi cet objectif est-il important pour toi MAINTENANT ?<span class="req">*</span></label>
+    <p class="q-hint">Va au-delà du "je veux être en forme". Le vrai déclic, l'émotion profonde.</p>
+    <textarea name="motivation_profonde" rows="3" placeholder="Sois honnête avec toi-même..."></textarea>
+  </div>
+  <div class="field"><label class="q-label">As-tu déjà essayé d'atteindre cet objectif auparavant ?</label>
+    <textarea name="deja_essaye" placeholder="Si oui, qu'est-ce qui t'a bloqué.e ?"></textarea>
+  </div>
+  <div class="field"><label class="q-label">Y a-t-il une date limite importante ?</label>
+    <p class="q-hint">Événement, mariage, vacances, compétition...</p>
+    <input type="text" name="date_limite" placeholder="Ex: Mariage en juin, vacances en juillet...">
+  </div>
+  <div class="field"><label class="q-label">Sur une échelle de 1 à 10, à quel point es-tu motivé.e aujourd'hui ?<span class="req">*</span></label>
+    <div class="scale">
+      <label class="opt"><input type="radio" name="motivation_now" value="1"><span>1</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="2"><span>2</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="3"><span>3</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="4"><span>4</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="5"><span>5</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="6"><span>6</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="7"><span>7</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="8"><span>8</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="9"><span>9</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="10"><span>10</span></label>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <h2 class="section-title">Santé &amp; Antécédents</h2>
+  <p class="section-sub">La sécurité d'abord.</p>
+
+  <div class="field"><label class="q-label">As-tu des blessures, douleurs ou contraintes physiques ?</label>
+    <textarea name="blessures" placeholder="Genoux, dos, épaules..."></textarea>
+  </div>
+  <div class="field"><label class="q-label">Suis-tu un traitement médical ou as-tu des pathologies ?</label>
+    <textarea name="medicaments" placeholder="Médicaments réguliers, hypertension, asthme..."></textarea>
+  </div>
+  <div class="field"><label class="q-label">As-tu des douleurs chroniques ?</label>
+    <textarea name="douleurs" placeholder="Si oui, où et depuis quand ?"></textarea>
+  </div>
+</div>
+
+
+
+<div class="section">
+  <h2 class="section-title">Nutrition</h2>
+  <p class="section-sub">L'entraînement est le moteur, la nutrition est l'essence.</p>
+
+  <div class="field"><label class="q-label">Combien de repas fais-tu par jour en moyenne ?</label>
+    <input type="text" name="repas" placeholder="Ex: 3 repas + 1 collation">
+  </div>
+  <div class="field"><label class="q-label">Comment décrirais-tu ton alimentation actuelle ?</label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="alim" value="Excellente"><span>Excellente (équilibrée, saine)</span></label>
+      <label class="opt"><input type="radio" name="alim" value="Correcte"><span>Correcte (quelques écarts)</span></label>
+      <label class="opt"><input type="radio" name="alim" value="Moyenne"><span>Moyenne (manque de structure)</span></label>
+      <label class="opt"><input type="radio" name="alim" value="Mauvaise"><span>Mauvaise (beaucoup de mal bouffe)</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">As-tu des allergies, intolérances ou régimes spécifiques ?</label>
+    <textarea name="allergies" placeholder="Végétarien, sans gluten, etc."></textarea>
+  </div>
+  <div class="field"><label class="q-label">Quel est ton plus gros point faible en nutrition ?</label>
+    <textarea name="point_faible_nutri" placeholder="Grignotage, fast-food, manque de temps..."></textarea>
+  </div>
+  <div class="field"><label class="q-label">Bois-tu suffisamment d'eau quotidiennement ? (1,5-3L)</label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="eau" value="Oui régulièrement"><span>Oui régulièrement</span></label>
+      <label class="opt"><input type="radio" name="eau" value="Parfois"><span>Parfois</span></label>
+      <label class="opt"><input type="radio" name="eau" value="Rarement"><span>Rarement</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Consommes-tu des compléments alimentaires ?</label>
+    <input type="text" name="complements" placeholder="Whey, créatine, vitamines... ou Aucun">
+  </div>
+</div>
+
+
+<div class="section">
+  <h2 class="section-title">Disponibilités</h2>
+  <p class="section-sub">Organisons ton succès.</p>
+
+  <div class="field"><label class="q-label">Combien de jours par semaine peux-tu t'entraîner ?<span class="req">*</span></label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="jours_semaine" value="1-2 jours"><span>1-2 jours</span></label>
+      <label class="opt"><input type="radio" name="jours_semaine" value="3-4 jours"><span>3-4 jours</span></label>
+      <label class="opt"><input type="radio" name="jours_semaine" value="5-6 jours"><span>5-6 jours</span></label>
+      <label class="opt"><input type="radio" name="jours_semaine" value="7 jours"><span>7 jours</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Combien de temps par séance ?</label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="duree_seance" value="30-45 min"><span>30-45 min</span></label>
+      <label class="opt"><input type="radio" name="duree_seance" value="45-60 min"><span>45-60 min</span></label>
+      <label class="opt"><input type="radio" name="duree_seance" value="60-90 min"><span>60-90 min</span></label>
+      <label class="opt"><input type="radio" name="duree_seance" value="90+ min"><span>90+ min</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Lieu d'entraînement prévu :<span class="req">*</span></label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="lieu" value="Salle de sport"><span>Salle de sport</span></label>
+      <label class="opt"><input type="radio" name="lieu" value="À la maison"><span>À la maison</span></label>
+      <label class="opt"><input type="radio" name="lieu" value="En extérieur"><span>En extérieur</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Quel équipement as-tu à disposition ?</label>
+    <div class="opts">
+      <label class="opt"><input type="checkbox" name="equipement" value="Haltères"><span>Haltères</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Barre + poids"><span>Barre + poids</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Machines guidées"><span>Machines guidées</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Banc"><span>Banc de musculation</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Barre de traction"><span>Barre de traction</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Élastiques"><span>Élastiques</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Aucun"><span>Aucun équipement</span></label>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <h2 class="section-title">Mental &amp; Engagement</h2>
+  <p class="section-sub">Le corps suit, le mental décide.</p>
+
+  <div class="field"><label class="q-label">Quelle est ta plus grande PEUR par rapport à ce programme ?</label>
+    <p class="q-hint">Abandonner, te blesser, ne pas voir de résultats... Sois honnête.</p>
+    <textarea name="peur" placeholder="Sois honnête avec toi-même..."></textarea>
+  </div>
+  <div class="field"><label class="q-label">Qu'est-ce qui pourrait t'empêcher de réussir ?</label>
+    <textarea name="obstacles" placeholder="Manque de temps, voyages, fatigue, vie sociale..."></textarea>
+  </div>
+  <div class="field"><label class="q-label">Comment gères-tu les jours difficiles ?</label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="echec" value="Je me remotive rapidement"><span>Je me remotive rapidement</span></label>
+      <label class="opt"><input type="radio" name="echec" value="Pause puis reprise"><span>Je fais une pause puis je reprends</span></label>
+      <label class="opt"><input type="radio" name="echec" value="J'abandonne"><span>J'ai tendance à abandonner</span></label>
+      <label class="opt"><input type="radio" name="echec" value="Je culpabilise"><span>Je culpabilise beaucoup</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">As-tu un système de soutien (famille, amis, partenaire) ?</label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="soutien" value="Très soutenant"><span>Oui, très soutenant</span></label>
+      <label class="opt"><input type="radio" name="soutien" value="Moyennement"><span>Moyennement</span></label>
+      <label class="opt"><input type="radio" name="soutien" value="Seul"><span>Non, seul.e</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Qu'attends-tu PRÉCISÉMENT de ce programme ?<span class="req">*</span></label>
+    <textarea name="attentes" rows="3" placeholder="Résultats concrets, mesurables, dans quel délai ?"></textarea>
+  </div>
+  <div class="field"><label class="q-label">En une phrase, qui es-tu en tant que sportif.ve aujourd'hui ?</label>
+    <textarea name="qui_je_suis" placeholder="Ex: Quelqu'un de déterminé mais j'ai besoin d'être guidé.e."></textarea>
+  </div>
+  <div class="field"><label class="q-label">En une phrase, qui veux-tu DEVENIR ?<span class="req">*</span></label>
+    <textarea name="qui_je_veux_etre" placeholder="Projette-toi dans 1 an : qui es-tu devenu.e ?"></textarea>
+  </div>
+  <div class="field"><label class="q-label">Es-tu prêt.e à investir TEMPS, ÉNERGIE et DISCIPLINE ?<span class="req">*</span></label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="engagement_pret" value="Oui à 100%"><span>Oui, à 100%</span></label>
+      <label class="opt"><input type="radio" name="engagement_pret" value="Oui mais contraintes"><span>Oui, mais j'ai des contraintes</span></label>
+      <label class="opt"><input type="radio" name="engagement_pret" value="Je vais essayer"><span>Je vais essayer</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Sur une échelle de 1 à 10, à quel point es-tu prêt.e à TOUT donner ?<span class="req">*</span></label>
+    <div class="scale">
+      <label class="opt"><input type="radio" name="engagement" value="1"><span>1</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="2"><span>2</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="3"><span>3</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="4"><span>4</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="5"><span>5</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="6"><span>6</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="7"><span>7</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="8"><span>8</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="9"><span>9</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="10"><span>10</span></label>
+    </div>
+  </div>
+</div>
+
+
+<div class="section">
+  <h2 class="section-title">Performance Basket (optionnel)</h2>
+  <p class="section-sub">Si ton objectif est lié au Basketball.</p>
+
+  <div class="field"><label class="q-label">Quel est ton poste de jeu ?</label>
+    <input type="text" name="poste" placeholder="Meneur, ailier, pivot...">
+  </div>
+  <div class="field"><label class="q-label">Sur quel aspect technique ou physique veux-tu exploser ?</label>
+    <textarea name="aspect_basket" placeholder="Détente, shoot, explosivité, cardio..."></textarea>
+  </div>
+  <div class="field"><label class="q-label">Une dernière information importante à partager ?</label>
+    <textarea name="autre_info" placeholder="Tout ce que tu juges utile..."></textarea>
+  </div>
+</div>
+
+</form>
+
+
+
+<section class="container">
+  <div class="pacte">
+    <h2>Le Pacte NZ 100%</h2>
+    <p class="intro-pacte">Je m'engage à te fournir les meilleurs outils, mon expertise et mon énergie pour te faire atteindre ton but. En retour, j'attends de toi :</p>
+    <ul>
+      <li>Je m'engage à être honnête dans mes retours.</li>
+      <li>Je m'engage à respecter la discipline demandée.</li>
+      <li>Je comprends qu'il n'y a pas de résultat sans effort.</li>
+    </ul>
+    <div class="btn-group">
+      <button type="button" class="btn btn-white">📧 Envoyer mon bilan</button>
+      <button type="button" class="btn btn-outline">📥 Télécharger</button>
+    </div>
+    <p style="color:#777;font-size:11px;margin-top:20px;line-height:1.6;">
+      Une fois reçu, j'analyse ton bilan personnellement et je te recontacte pour fixer un rendez-vous.
+    </p>
+  </div>
+</section>
+
+
+<footer>
+  <div class="more">More Discipline</div>
+  <div class="liberte">— La clé de la liberté —</div>
+  <div class="brand">NZ 100% — Coach Mathieu Nzita</div>
+  <div class="links">
+    📩 <a href="mailto:mathieunzita60@gmail.com">mathieunzita60@gmail.com</a>
+    &nbsp;·&nbsp;
+    <a href="https://instagram.com/nzmathieu" target="_blank">@nzmathieu</a>
+    &nbsp;·&nbsp;
+    <a href="https://instagram.com/Nz.hundred" target="_blank">@Nz.hundred</a>
+  </div>
+  <div style="margin-top:14px;font-size:10px;color:#555;">© 2026 NZ 100% — Tous droits réservés</div>
+</footer>
+
+<div id="toast" class="toast"></div>
+
+
+
+
+</body></html>

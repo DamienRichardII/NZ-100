@@ -19,6 +19,8 @@
  *   - paiement_refuse
  *   - rappel_rdv
  *   - notif_admin_reservation
+ *   - bilan_confirmation
+ *   - bilan_admin
  */
 
 interface EmailPayload {
@@ -47,7 +49,8 @@ Deno.serve(async (req: Request): Promise<Response> => {
   if (!template) return jsonError(400, `Type d'email inconnu : ${type}`);
 
   // Destinataires
-  const recipients = type === 'notif_admin_reservation' ? [ADMIN_EMAIL] : [to];
+  const adminOnly = type === 'notif_admin_reservation' || type === 'bilan_admin';
+  const recipients = adminOnly ? [ADMIN_EMAIL] : [to];
 
   try {
     const res = await fetch('https://api.resend.com/emails', {
@@ -188,6 +191,39 @@ p{color:rgba(255,255,255,.7);font-size:.93rem;line-height:1.75;margin:0 0 16px}
           <div class="info-row"><span class="info-label">Paiement</span><span class="info-val">${d.payment_status||''}</span></div>
         </div>
         <a href="https://nz-100.vercel.app/admin-mathieu.html" class="btn">Gérer dans l'admin →</a>
+      `)
+    };
+
+    case 'bilan_confirmation': return {
+      subject: 'Ton bilan NZ 100% a bien été reçu 🎯',
+      html: base(`
+        <span class="tag tag-green">✓ Bilan reçu</span>
+        <h1 style="margin-top:16px">Bien reçu, ${d.name||''} !</h1>
+        <p>Mathieu a bien reçu ton bilan personnalisé. Il l'analyse et te recontacte sous <strong style="color:#fff">24h</strong> pour construire ton programme sur mesure.</p>
+        ${d.objectifs ? `<div style="margin:20px 0"><div class="info-row"><span class="info-label">Objectif(s)</span><span class="info-val">${d.objectifs}</span></div></div>` : ''}
+        <p style="color:rgba(255,255,255,.6);font-size:.88rem">En attendant, tu peux télécharger ta roadmap NZ 100% ci-dessous — un guide de référence pour démarrer dans les meilleures conditions.</p>
+        <a href="${d.roadmap_url||'https://nz-100.vercel.app/roadmap.html'}" class="btn">↓ Télécharger ma roadmap →</a>
+        <p style="font-size:.8rem;color:rgba(255,255,255,.35);margin-top:20px">More Discipline — La clé de la liberté.</p>
+      `)
+    };
+
+    case 'bilan_admin': return {
+      subject: `[NZ Admin] Nouveau bilan — ${d.name||'Inconnu'}`,
+      html: base(`
+        <h1>Nouveau bilan reçu</h1>
+        <p>Un nouveau bilan vient d'être soumis sur NZ-100.</p>
+        <div style="margin:20px 0">
+          <div class="info-row"><span class="info-label">Nom</span><span class="info-val">${d.name||''}</span></div>
+          <div class="info-row"><span class="info-label">Email</span><span class="info-val">${d.email||''}</span></div>
+          <div class="info-row"><span class="info-label">Téléphone</span><span class="info-val">${d.telephone||'—'}</span></div>
+          <div class="info-row"><span class="info-label">Âge</span><span class="info-val">${d.age||'—'}</span></div>
+          <div class="info-row"><span class="info-label">Niveau</span><span class="info-val">${d.niveau||'—'}</span></div>
+          <div class="info-row"><span class="info-label">Objectif(s)</span><span class="info-val">${d.objectifs||'—'}</span></div>
+          <div class="info-row"><span class="info-label">Engagement</span><span class="info-val">${d.engagement||'—'}/10</span></div>
+          <div class="info-row"><span class="info-label">Lieu</span><span class="info-val">${d.lieu||'—'}</span></div>
+          <div class="info-row"><span class="info-label">Attentes</span><span class="info-val" style="font-size:.82rem">${d.attentes||'—'}</span></div>
+        </div>
+        <a href="https://nz-100.vercel.app/admin-mathieu.html" class="btn">Voir dans l'admin →</a>
       `)
     };
 

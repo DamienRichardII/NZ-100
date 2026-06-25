@@ -1,473 +1,788 @@
 <!DOCTYPE html>
-<html lang="fr" data-theme="light" style=""><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;family=Oswald:wght@500;700&amp;display=swap" rel="stylesheet" data-editor-preserved="true">
-    
-    <title>NZ 100% - Bilan Personnalisé</title>
-    
-    <style>
-      :root {
-        --bg: #000000;
-        --bg-light: #0a0a0a;
-        --card-bg: #111111;
-        --text: #ffffff;
-        --text-muted: #a0a0a0;
-        --border: #222222;
-        --border-focus: #ffffff;
-      }
-      html {
-        scroll-behavior: smooth;
-        background-color: var(--bg);
-      }
-      body {
-        margin: 0 auto;
-        padding: 40px 20px;
-        max-width: 900px;
-        font-family: 'Inter', sans-serif;
-        color: var(--text);
-        background-color: var(--bg);
-        line-height: 1.6;
-        box-sizing: border-box;
-      }
-      h1,
-      h2,
-      h3,
-      .impact-title {
-        font-family: 'Oswald', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-top: 0;
-      }
-      .hero-title {
-        font-size: clamp(3rem, 8vw, 5.5rem);
-        line-height: 1.1;
-        margin: 20px 0;
-        font-weight: 700;
-      }
-      .hero-subtitle {
-        font-size: clamp(1.2rem, 3vw, 1.8rem);
-        color: var(--text-muted);
-        letter-spacing: 3px;
-        margin-bottom: 30px;
-      }
-      .text-muted {
-        color: var(--text-muted);
-      }
-      .italic {
-        font-style: italic;
-      }
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NZ 100% — Bilan Personnalisé | More Discipline, La Clé de la Liberté</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ── RESET ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: #000; color: #fff;
+  line-height: 1.6; font-size: 15px;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+.container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
 
-      .hero {
-        text-align: center;
-        padding: 60px 0 80px;
-        border-bottom: 1px solid var(--border);
-        margin-bottom: 60px;
-      }
-      .badges {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        flex-wrap: wrap;
-        margin-bottom: 40px;
-        font-size: 0.9rem;
-        color: var(--text-muted);
-      }
-      .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 24px;
-        margin-bottom: 60px;
-      }
-      .card {
-        background: linear-gradient(145deg, var(--card-bg), var(--bg-light));
-        border: 1px solid var(--border);
-        padding: 30px;
-        border-radius: 8px;
-      }
-      .card h3 {
-        font-size: 1.4rem;
-        margin-bottom: 15px;
-      }
-      .coach-block {
-        text-align: center;
-        padding: 40px;
-        border: 1px solid var(--border);
-        background-color: var(--bg-light);
-        margin-bottom: 60px;
-      }
-      .coach-block h2 {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-      }
-      .coach-block p {
-        margin: 8px 0;
-      }
-      .coach-block a {
-        color: var(--text);
-        text-decoration: none;
-        border-bottom: 1px solid var(--border);
-      }
+/* ── NAV MINI ──────────────────────────────────────────────── */
+.top-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(0,0,0,.85); backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.top-bar-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.35rem; letter-spacing: .1em; color: #fff; text-decoration: none;
+}
+.top-bar-back {
+  font-size: .75rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: rgba(255,255,255,.5); text-decoration: none;
+  display: flex; align-items: center; gap: 6px;
+  transition: color .2s;
+}
+.top-bar-back:hover { color: #fff; }
 
-      .btn-group {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      .btn {
-        display: inline-block;
-        padding: 16px 36px;
-        border-radius: 50px;
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        font-size: 1rem;
-        text-decoration: none;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-align: center;
-        border: 2px solid transparent;
-      }
-      .btn-primary {
-        background-color: var(--text);
-        color: var(--bg);
-      }
-      .btn-outline {
-        background-color: transparent;
-        color: var(--text);
-        border-color: var(--text);
-      }
-      .btn-download {
-        background: #ffffff;
-        color: #000000;
-        border: 2px solid #ffffff;
-        font-weight: 700;
-      }
+/* ── HERO ──────────────────────────────────────────────────── */
+.hero { text-align: center; padding: 80px 24px 60px; }
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.2rem, 10vw, 6rem); line-height: 1; letter-spacing: .02em;
+  margin-bottom: 12px;
+}
+.hero .tagline {
+  font-size: .72rem; font-weight: 700; letter-spacing: .28em;
+  color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 24px;
+}
+.hero .lead {
+  color: rgba(255,255,255,.65); font-size: .97rem; font-weight: 300;
+  max-width: 460px; margin: 0 auto 28px; line-height: 1.7;
+}
+.badges-row {
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: 18px; margin-bottom: 36px; font-size: .78rem; color: rgba(255,255,255,.45);
+}
+.badges-row span { display: inline-flex; align-items: center; gap: 6px; }
 
-      section {
-        position: relative;
-        margin-bottom: 80px;
-        padding: 40px 0;
-        border-top: 1px solid var(--border);
-      }
-      .section-number {
-        position: absolute;
-        top: -20px;
-        left: -10px;
-        font-family: 'Oswald', sans-serif;
-        font-size: 8rem;
-        color: rgba(255, 255, 255, 0.03);
-        line-height: 1;
-        z-index: -1;
-        pointer-events: none;
-      }
-      .section-title {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-      }
-      .intro-text {
-        color: var(--text-muted);
-        font-style: italic;
-        margin-bottom: 40px;
-        font-size: 1.1rem;
-      }
-      .form-group {
-        margin-bottom: 30px;
-      }
-      .form-group > label {
-        display: block;
-        margin-bottom: 10px;
-        font-weight: 600;
-        font-size: 1.05rem;
-      }
-      input[type='text'],
-      input[type='number'],
-      input[type='email'],
-      input[type='tel'],
-      textarea {
-        width: 100%;
-        background: transparent;
-        border: 1px solid var(--border);
-        color: var(--text);
-        padding: 16px;
-        font-family: 'Inter', sans-serif;
-        font-size: 1rem;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-      textarea {
-        min-height: 100px;
-        resize: vertical;
-      }
-      .radio-group,
-      .checkbox-group {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-      .option-label {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        color: var(--text-muted);
-      }
-      input[type='radio'],
-      input[type='checkbox'] {
-        margin-right: 12px;
-      }
+/* ── BUTTONS ───────────────────────────────────────────────── */
+.btn-group { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 15px 28px; border-radius: 999px;
+  font-family: 'Inter', sans-serif; font-size: .75rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  cursor: pointer; border: 1.5px solid transparent;
+  transition: all .25s ease; text-decoration: none;
+}
+.btn-white { background: #fff; color: #000; border-color: #fff; }
+.btn-white:hover { background: #e8e8e8; transform: translateY(-2px); }
+.btn-outline { background: transparent; color: #fff; border-color: rgba(255,255,255,.35); }
+.btn-outline:hover { border-color: #fff; background: rgba(255,255,255,.06); }
+.btn:disabled { opacity: .5; cursor: not-allowed; pointer-events: none; }
 
-      .pact-section {
-        text-align: center;
-        padding: 60px 20px;
-        border: 1px solid var(--border);
-        background-color: var(--bg-light);
-      }
-      .pact-section h2 {
-        font-size: 3.5rem;
-        margin-bottom: 20px;
-      }
-      .pact-section p {
-        max-width: 700px;
-        margin: 0 auto 30px;
-        font-size: 1.2rem;
-      }
+/* ── FEATURES ──────────────────────────────────────────────── */
+.features {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px; margin: 60px 0 50px;
+}
+.feature {
+  background: #0d0d0d; border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; padding: 22px 20px;
+}
+.feature h3 { font-size: .82rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; }
+.feature p { font-size: .83rem; color: rgba(255,255,255,.55); line-height: 1.6; }
 
-      footer {
-        text-align: center;
-        padding: 60px 0;
-        border-top: 1px solid var(--border);
-        margin-top: 80px;
-      }
-      .footer-slogan {
-        font-size: 2.5rem;
-        margin-bottom: 20px;
-      }
-      .footer-links a {
-        color: var(--text-muted);
-        text-decoration: none;
-        margin: 0 10px;
-      }
-    </style>
-  </head>
-  <body style="">
-    <header class="hero">
-      <h1 class="hero-title">MORE DISCIPLINE</h1>
-      <div class="hero-subtitle impact-title">LA CLÉ DE LA LIBERTÉ</div>
-      <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 30px">
-        Bilan personnalisé — Ton point de départ vers une transformation 100% sur-mesure
-      </p>
+/* ── COACH CARD ────────────────────────────────────────────── */
+.coach-card {
+  background: #0d0d0d; border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; padding: 30px 24px; text-align: center; margin-bottom: 60px;
+}
+.coach-card .label { font-size: .68rem; font-weight: 700; letter-spacing: .28em; color: rgba(255,255,255,.4); text-transform: uppercase; margin-bottom: 12px; }
+.coach-card h2 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: .06em; margin-bottom: 10px; }
+.coach-card .role { color: rgba(255,255,255,.7); font-size: .88rem; margin-bottom: 8px; }
+.coach-card .specs { color: rgba(255,255,255,.45); font-size: .82rem; margin-bottom: 14px; line-height: 1.7; }
+.coach-card .contact-row { color: rgba(255,255,255,.6); font-size: .82rem; margin-bottom: 4px; }
+.coach-card .quote {
+  margin-top: 20px; padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,.08);
+  font-style: italic; color: rgba(255,255,255,.8); font-size: .9rem;
+}
 
-      <div class="badges">
-        <span>⏱ 15 minutes</span>
-        <span>🔒 100% confidentiel</span>
-        <span>🎯 Programme sur-mesure</span>
-      </div>
+/* ── FORM SECTIONS ─────────────────────────────────────────── */
+.section { margin-bottom: 50px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,.07); }
+.section-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+.section-sub { color: rgba(255,255,255,.4); font-size: .82rem; font-style: italic; margin-bottom: 28px; }
 
-      <div class="btn-group">
-        <a href="#bilan" class="btn btn-primary">COMMENCER LE BILAN</a>
-        <a href="#bilan" class="btn btn-outline">Découvrir le bilan</a>
-        <a href="mailto:mathieunzita60@gmail.com?subject=Roadmap%20NZ%20100%25&amp;body=Voici%20la%20roadmap" class="btn btn-download">📧 ENVOYER PAR MAIL</a>
-        <a href="#" class="btn btn-download">📥 TÉLÉCHARGER HTML</a>
-      </div>
-    </header>
+/* ── FIELDS ────────────────────────────────────────────────── */
+.field { margin-bottom: 22px; }
+.field label.q-label { display: block; font-size: .83rem; font-weight: 600; margin-bottom: 8px; color: #fff; }
+.field .req { color: rgba(255,255,255,.4); margin-left: 3px; }
+.field .q-hint { font-size: .78rem; color: rgba(255,255,255,.4); font-style: italic; margin-bottom: 8px; }
+input[type="text"], input[type="email"], input[type="tel"],
+input[type="number"], textarea, select {
+  width: 100%; padding: 13px 15px;
+  background: #0a0a0a; border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px; color: #fff;
+  font-family: 'Inter', sans-serif; font-size: .9rem;
+  transition: border .2s, background .2s;
+  appearance: none; -webkit-appearance: none;
+}
+input::placeholder, textarea::placeholder { color: rgba(255,255,255,.25); }
+input:focus, textarea:focus, select:focus {
+  outline: none; border-color: rgba(255,255,255,.5); background: #111;
+}
+textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+select option { background: #111; }
 
-    <div class="grid-3">
-      <div class="card">
-        <h3 class="impact-title">🎯 ANALYSE 360°</h3>
-        <p class="text-muted">Je décortique ton profil pour ne rien laisser au hasard.</p>
-      </div>
-      <div class="card">
-        <h3 class="impact-title">⚡ PLAN D'ACTION</h3>
-        <p class="text-muted">Des étapes claires, nettes et précises pour atteindre tes objectifs.</p>
-      </div>
-      <div class="card">
-        <h3 class="impact-title">🔒 ENGAGEMENT</h3>
-        <p class="text-muted">Un pacte entre toi et moi. On ne lâche rien jusqu'au résultat.</p>
-      </div>
+/* ── OPTIONS ───────────────────────────────────────────────── */
+.opts { display: flex; flex-direction: column; gap: 8px; }
+.opts.row { flex-direction: row; flex-wrap: wrap; }
+.opt {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 15px; background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,.08); border-radius: 10px;
+  cursor: pointer; font-size: .83rem; color: rgba(255,255,255,.7);
+  transition: all .15s; user-select: none;
+}
+.opt:hover { border-color: rgba(255,255,255,.25); background: #0f0f0f; }
+.opt input { accent-color: #fff; cursor: pointer; flex-shrink: 0; }
+.opt:has(input:checked) { border-color: rgba(255,255,255,.5); background: #141414; }
+.opt:has(input:checked) span { color: #fff; font-weight: 600; }
+
+/* ── SCALE ─────────────────────────────────────────────────── */
+.scale { display: flex; flex-wrap: wrap; gap: 6px; }
+.scale .opt { padding: 10px 0; min-width: 40px; justify-content: center; flex: 1; }
+
+/* ── PACTE ─────────────────────────────────────────────────── */
+.pacte {
+  background: #0d0d0d; border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; padding: 36px 28px; text-align: center; margin: 60px 0 40px;
+}
+.pacte h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 16px; }
+.pacte .intro-pacte { color: rgba(255,255,255,.65); font-size: .9rem; line-height: 1.7; max-width: 520px; margin: 0 auto 22px; }
+.pacte ul { list-style: none; text-align: left; max-width: 420px; margin: 0 auto 28px; }
+.pacte ul li { color: rgba(255,255,255,.7); font-size: .87rem; padding: 10px 0 10px 22px; position: relative; }
+.pacte ul li::before { content: '▪'; position: absolute; left: 0; top: 10px; color: #fff; font-size: .62rem; }
+
+/* ── ÉTATS ─────────────────────────────────────────────────── */
+#bilanSuccess, #bilanSuccessPartial, #bilanError { display: none; }
+.state-card {
+  background: #0d0d0d; border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px; padding: 48px 32px; text-align: center;
+  max-width: 540px; margin: 60px auto;
+}
+.state-icon { margin-bottom: 20px; }
+.state-card h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: .06em; margin-bottom: 14px; }
+.state-card p { color: rgba(255,255,255,.6); font-size: .9rem; line-height: 1.7; max-width: 380px; margin: 0 auto 24px; }
+.state-card .dl-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; background: #fff; color: #000;
+  border-radius: 999px; font-size: .78rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; border: none; margin-top: 8px;
+}
+.state-card .dl-cta:hover { background: #e8e8e8; }
+.state-card .retry-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 26px; background: transparent; color: #fff;
+  border-radius: 999px; font-size: .78rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.3); cursor: pointer; margin-top: 12px;
+}
+.state-card .retry-btn:hover { border-color: #fff; }
+.state-partial-note {
+  margin-top: 14px; font-size: .76rem; color: rgba(255,255,255,.35);
+  line-height: 1.6;
+}
+
+/* ── FOOTER ────────────────────────────────────────────────── */
+footer {
+  text-align: center; padding: 48px 24px 36px;
+  border-top: 1px solid rgba(255,255,255,.07);
+  color: rgba(255,255,255,.3); font-size: .76rem;
+}
+footer .more { font-size: .78rem; font-weight: 700; letter-spacing: .28em; text-transform: uppercase; color: #fff; margin-bottom: 8px; }
+footer .liberte { color: rgba(255,255,255,.35); font-size: .7rem; letter-spacing: .2em; margin-bottom: 16px; }
+footer .brand { font-size: .82rem; color: rgba(255,255,255,.55); margin-bottom: 6px; }
+footer a { color: rgba(255,255,255,.6); text-decoration: none; }
+footer a:hover { color: #fff; }
+
+/* ── TOAST ─────────────────────────────────────────────────── */
+#toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(140px);
+  background: #fff; color: #000;
+  padding: 13px 24px; border-radius: 999px;
+  font-size: .82rem; font-weight: 600;
+  box-shadow: 0 12px 40px rgba(0,0,0,.7);
+  z-index: 9999; transition: transform .35s cubic-bezier(.16,1,.3,1);
+  max-width: 90vw; text-align: center; pointer-events: none;
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+#toast.error { background: #ff3344; color: #fff; }
+
+/* ── PRINT ─────────────────────────────────────────────────── */
+@media print {
+  .top-bar, .hero .btn-group, .pacte .btn-group,
+  #bilanSuccess, #bilanSuccessPartial, #bilanError,
+  footer, #toast { display: none !important; }
+  body { background: #fff !important; color: #000 !important; font-size: 12pt; }
+  .hero { padding: 24px 0 20px; border-bottom: 2px solid #000; }
+  .hero h1 { color: #000 !important; font-size: 2.5rem; }
+  .hero .tagline, .hero .lead, .badges-row { color: #333 !important; }
+  .container { max-width: 100%; padding: 0; }
+  .section { border-top: 1px solid #ddd; break-inside: avoid; }
+  .section-title, .section-sub { color: #000 !important; }
+  .feature, .coach-card, .pacte { background: #f9f9f9 !important; border: 1px solid #ddd !important; break-inside: avoid; }
+  .field label.q-label { color: #000 !important; }
+  input, textarea, select { background: #fff !important; border: 1px solid #ccc !important; color: #000 !important; }
+  .opt { background: #f5f5f5 !important; border: 1px solid #ddd !important; color: #000 !important; }
+  .opt:has(input:checked) { background: #e8e8e8 !important; border-color: #999 !important; }
+  @page { margin: 15mm; }
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hero { padding: 50px 20px 40px; }
+  .container { padding: 0 18px; }
+  .features { grid-template-columns: 1fr; }
+  .btn { padding: 13px 20px; font-size: .7rem; }
+  .btn-group { flex-direction: column; }
+  .btn-group .btn { width: 100%; }
+  .pacte { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV MINI -->
+<nav class="top-bar">
+  <a href="index.html" class="top-bar-logo">NZ 100%</a>
+  <a href="index.html" class="top-bar-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Retour
+  </a>
+</nav>
+
+<!-- HERO -->
+<header class="hero container">
+  <h1>More Discipline</h1>
+  <div class="tagline">La clé de la liberté</div>
+  <p class="lead">Bilan personnalisé — Ton point de départ vers une transformation 100% sur-mesure.</p>
+  <div class="badges-row">
+    <span>⏱ 15 minutes</span>
+    <span>🔒 100% confidentiel</span>
+    <span>🎯 Programme sur-mesure</span>
+  </div>
+  <div class="btn-group">
+    <a href="#bilan" class="btn btn-white">Commencer le bilan</a>
+    <a href="#features" class="btn btn-outline">Découvrir le bilan</a>
+  </div>
+  <div class="btn-group" style="margin-top:10px;">
+    <button type="button" class="btn btn-white" onclick="sendBilan()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Envoyer mon bilan
+    </button>
+    <button type="button" class="btn btn-outline" onclick="downloadBilan()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Télécharger
+    </button>
+  </div>
+</header>
+
+<!-- FEATURES -->
+<section id="features" class="container">
+  <div class="features">
+    <div class="feature">
+      <h3>🎯 Analyse 360°</h3>
+      <p>Je décortique ton profil pour ne rien laisser au hasard.</p>
     </div>
-
-    <div class="coach-block">
-      <p class="text-muted impact-title">TON COACH</p>
-      <h2 class="impact-title">MATHIEU NZITA</h2>
-      <p>Coach sportif certifié — Fondateur NZ 100%</p>
-      <p class="text-muted">Spécialisé en : Remise en forme · Retour au sport · Performance · Coaching basket</p>
-      <p style="margin: 20px 0">
-        <a href="mailto:mathieunzita60@gmail.com">mathieunzita60@gmail.com</a><br>
-        <span class="text-muted">Instagram : @nzmathieu / @Nz.hundred</span>
-      </p>
-      <p class="italic" style="font-size: 1.2rem; margin-top: 30px">
-        "La discipline n'est pas une punition. C'est ta liberté."
-      </p>
+    <div class="feature">
+      <h3>⚡ Plan d'action</h3>
+      <p>Des étapes claires, nettes et précises pour atteindre tes objectifs.</p>
     </div>
+    <div class="feature">
+      <h3>🔒 Engagement</h3>
+      <p>Un pacte entre toi et moi. On ne lâche rien jusqu'au résultat.</p>
+    </div>
+  </div>
 
-    <form id="bilan" action="mailto:mathieunzita60@gmail.com?subject=Bilan%20NZ%20100%25" method="post" enctype="text/plain">
-      <section>
-        <div class="section-number">01</div>
-        <h2 class="section-title impact-title">Identité &amp; Contact</h2>
-        <p class="intro-text">Qui es-tu ? Faisons les présentations.</p>
-        <div class="form-group">
-          <label>Nom &amp; Prénom</label>
-          <input type="text" name="Nom_Prenom" required="">
-        </div>
-        <div class="form-group">
-          <label>Âge</label>
-          <input type="number" name="Age" required="">
-        </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="Email" required="">
-        </div>
-        <div class="form-group">
-          <label>Téléphone</label>
-          <input type="tel" name="Telephone" required="">
-        </div>
-        <div class="form-group">
-          <label>Profession / Rythme de vie</label>
-          <input type="text" name="Profession">
-        </div>
-      </section>
+  <div class="coach-card">
+    <div class="label">Ton coach</div>
+    <h2>Mathieu Nzita</h2>
+    <p class="role">Coach sportif certifié — Fondateur NZ 100%</p>
+    <p class="specs">Remise en forme · Retour au sport · Performance · Coaching basket</p>
+    <p class="contact-row">📩 mathieunzita60@gmail.com</p>
+    <p class="contact-row">📲 @nzmathieu / @Nz.hundred</p>
+    <p class="quote">"La discipline n'est pas une punition. C'est ta liberté."</p>
+  </div>
+</section>
 
-      <section>
-        <div class="section-number">02</div>
-        <h2 class="section-title impact-title">Point de départ</h2>
-        <p class="intro-text">Où en es-tu aujourd'hui physiquement ?</p>
-        <div class="form-group">
-          <label>Taille (cm)</label>
-          <input type="number" name="Taille">
-        </div>
-        <div class="form-group">
-          <label>Poids actuel (kg)</label>
-          <input type="number" name="Poids">
-        </div>
-        <div class="form-group">
-          <label>Comment décrirais-tu ton niveau sportif actuel ?</label>
-          <div class="radio-group">
-            <label class="option-label"><input type="radio" name="Niveau" value="Débutant"> Débutant (je reprends de zéro)</label>
-            <label class="option-label"><input type="radio" name="Niveau" value="Intermédiaire"> Intermédiaire (1 à 2 séances par
-              semaine)</label>
-            <label class="option-label"><input type="radio" name="Niveau" value="Confirmé"> Confirmé (3+ séances, régulier)</label>
-          </div>
-        </div>
-      </section>
+<!-- FORMULAIRE -->
+<form id="bilanForm" class="container" onsubmit="return false;">
 
-      <section>
-        <div class="section-number">03</div>
-        <h2 class="section-title impact-title">Objectifs</h2>
-        <p class="intro-text">Où veux-tu aller ? Cible précisément ton but.</p>
-        <div class="form-group">
-          <label>Objectif principal (plusieurs choix possibles)</label>
-          <div class="checkbox-group">
-            <label class="option-label"><input type="checkbox" name="Objectif" value="Perte de gras"> Perte de masse grasse / Sèche</label>
-            <label class="option-label"><input type="checkbox" name="Objectif" value="Prise de muscle"> Prise de masse musculaire</label>
-            <label class="option-label"><input type="checkbox" name="Objectif" value="Remise en forme"> Remise en forme générale / Santé</label>
-            <label class="option-label"><input type="checkbox" name="Objectif" value="Performance"> Performance sportive (ex: Basket)</label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Quel est ton objectif de poids idéal ? (kg)</label>
-          <input type="number" name="Poids_Cible">
-        </div>
-        <div class="form-group">
-          <label>Pourquoi cet objectif est-il important pour toi MAINTENANT ?</label>
-          <textarea name="Motivation"></textarea>
-        </div>
-      </section>
+<div id="bilan" class="section">
+  <h2 class="section-title">Identité &amp; Contact</h2>
+  <p class="section-sub">Qui es-tu ? Faisons les présentations.</p>
+  <div class="field"><label class="q-label">Nom &amp; Prénom <span class="req">*</span></label>
+    <input type="text" name="nom_prenom" placeholder="Ton nom complet" required></div>
+  <div class="field"><label class="q-label">Âge <span class="req">*</span></label>
+    <input type="number" name="age" min="10" max="100" placeholder="Ton âge" required></div>
+  <div class="field"><label class="q-label">Email <span class="req">*</span></label>
+    <input type="email" name="email" placeholder="ton.email@exemple.com" required></div>
+  <div class="field"><label class="q-label">Téléphone <span class="req">*</span></label>
+    <input type="tel" name="telephone" placeholder="06 XX XX XX XX" required></div>
+  <div class="field"><label class="q-label">Instagram (optionnel)</label>
+    <input type="text" name="instagram" placeholder="@ton_pseudo"></div>
+  <div class="field"><label class="q-label">Profession / Rythme de vie</label>
+    <input type="text" name="profession" placeholder="Commercial, étudiant, sédentaire..."></div>
+  <div class="field"><label class="q-label">Sexe</label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="sexe" value="Homme"><span>Homme</span></label>
+      <label class="opt"><input type="radio" name="sexe" value="Femme"><span>Femme</span></label>
+      <label class="opt"><input type="radio" name="sexe" value="Non précisé"><span>Préfère ne pas préciser</span></label>
+    </div>
+  </div>
+</div>
 
-      <section>
-        <div class="section-number">04</div>
-        <h2 class="section-title impact-title">Santé &amp; Antécédents</h2>
-        <p class="intro-text">La sécurité d'abord.</p>
-        <div class="form-group">
-          <label>As-tu des blessures, douleurs ou contraintes physiques ?</label>
-          <textarea name="Blessures" placeholder="Genoux, dos, épaules..."></textarea>
-        </div>
-        <div class="form-group">
-          <label>Suis-tu un traitement médical ou as-tu des pathologies ?</label>
-          <textarea name="Medical"></textarea>
-        </div>
-      </section>
+<div class="section">
+  <h2 class="section-title">Point de départ</h2>
+  <p class="section-sub">Où en es-tu aujourd'hui physiquement ?</p>
+  <div class="field"><label class="q-label">Taille (cm)</label>
+    <input type="number" name="taille" min="100" max="230" placeholder="Ex: 178"></div>
+  <div class="field"><label class="q-label">Poids actuel (kg)</label>
+    <input type="number" name="poids_actuel" min="30" max="250" step="0.1" placeholder="Ex: 75"></div>
+  <div class="field"><label class="q-label">Niveau sportif actuel <span class="req">*</span></label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="niveau" value="Débutant"><span>Débutant (je reprends de zéro)</span></label>
+      <label class="opt"><input type="radio" name="niveau" value="Intermédiaire"><span>Intermédiaire (1 à 2 séances/semaine)</span></label>
+      <label class="opt"><input type="radio" name="niveau" value="Confirmé"><span>Confirmé (3+ séances, régulier)</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Activité quotidienne (hors sport)</label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="activite_quotidienne" value="Sédentaire"><span>Sédentaire (bureau)</span></label>
+      <label class="opt"><input type="radio" name="activite_quotidienne" value="Légèrement actif"><span>Légèrement actif</span></label>
+      <label class="opt"><input type="radio" name="activite_quotidienne" value="Actif"><span>Actif (métier physique)</span></label>
+      <label class="opt"><input type="radio" name="activite_quotidienne" value="Très actif"><span>Très actif</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Qualité du sommeil</label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="sommeil" value="Excellente"><span>Excellente (7-9h)</span></label>
+      <label class="opt"><input type="radio" name="sommeil" value="Bonne"><span>Bonne (6-7h)</span></label>
+      <label class="opt"><input type="radio" name="sommeil" value="Moyenne"><span>Moyenne (5-6h)</span></label>
+      <label class="opt"><input type="radio" name="sommeil" value="Mauvaise"><span>Mauvaise (moins de 5h)</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Niveau de stress (1-10)</label>
+    <div class="scale">
+      <label class="opt"><input type="radio" name="stress" value="1"><span>1</span></label>
+      <label class="opt"><input type="radio" name="stress" value="2"><span>2</span></label>
+      <label class="opt"><input type="radio" name="stress" value="3"><span>3</span></label>
+      <label class="opt"><input type="radio" name="stress" value="4"><span>4</span></label>
+      <label class="opt"><input type="radio" name="stress" value="5"><span>5</span></label>
+      <label class="opt"><input type="radio" name="stress" value="6"><span>6</span></label>
+      <label class="opt"><input type="radio" name="stress" value="7"><span>7</span></label>
+      <label class="opt"><input type="radio" name="stress" value="8"><span>8</span></label>
+      <label class="opt"><input type="radio" name="stress" value="9"><span>9</span></label>
+      <label class="opt"><input type="radio" name="stress" value="10"><span>10</span></label>
+    </div>
+  </div>
+</div>
 
-      <section>
-        <div class="section-number">05</div>
-        <h2 class="section-title impact-title">Nutrition</h2>
-        <p class="intro-text">L'entraînement est le moteur, la nutrition est l'essence.</p>
-        <div class="form-group">
-          <label>Combien de repas fais-tu par jour en moyenne ?</label>
-          <input type="number" name="Repas_Jour">
-        </div>
-        <div class="form-group">
-          <label>As-tu des allergies, intolérances ou régimes spécifiques ?</label>
-          <input type="text" name="Regime" placeholder="Végétarien, sans gluten, etc.">
-        </div>
-        <div class="form-group">
-          <label>Quel est ton plus gros point faible en nutrition ?</label>
-          <textarea name="Point_Faible_Nutrition" placeholder="Grignotage, fast-food, manque de temps..."></textarea>
-        </div>
-      </section>
+<div class="section">
+  <h2 class="section-title">Objectifs</h2>
+  <p class="section-sub">Où veux-tu aller ?</p>
+  <div class="field"><label class="q-label">Objectif principal <span class="req">*</span></label>
+    <div class="opts">
+      <label class="opt"><input type="checkbox" name="objectif" value="Perte de masse grasse / Sèche"><span>Perte de masse grasse / Sèche</span></label>
+      <label class="opt"><input type="checkbox" name="objectif" value="Prise de masse musculaire"><span>Prise de masse musculaire</span></label>
+      <label class="opt"><input type="checkbox" name="objectif" value="Recomposition corporelle"><span>Recomposition corporelle</span></label>
+      <label class="opt"><input type="checkbox" name="objectif" value="Tonification / Raffermissement"><span>Tonification / Raffermissement</span></label>
+      <label class="opt"><input type="checkbox" name="objectif" value="Remise en forme générale / Santé"><span>Remise en forme générale / Santé</span></label>
+      <label class="opt"><input type="checkbox" name="objectif" value="Performance sportive"><span>Performance sportive (ex: Basket)</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Objectif de poids (kg)</label>
+    <input type="number" name="poids_objectif" min="30" max="250" step="0.1" placeholder="Ex: 72"></div>
+  <div class="field"><label class="q-label">En combien de temps ?</label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="delai" value="1-3 mois"><span>1-3 mois</span></label>
+      <label class="opt"><input type="radio" name="delai" value="3-6 mois"><span>3-6 mois</span></label>
+      <label class="opt"><input type="radio" name="delai" value="6-12 mois"><span>6-12 mois</span></label>
+      <label class="opt"><input type="radio" name="delai" value="Long terme"><span>Long terme</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Pourquoi cet objectif est-il important MAINTENANT ? <span class="req">*</span></label>
+    <textarea name="motivation_profonde" rows="3" placeholder="Le vrai déclic..."></textarea></div>
+  <div class="field"><label class="q-label">As-tu déjà essayé d'atteindre cet objectif ?</label>
+    <textarea name="deja_essaye" placeholder="Qu'est-ce qui t'a bloqué.e ?"></textarea></div>
+  <div class="field"><label class="q-label">Date limite importante ?</label>
+    <input type="text" name="date_limite" placeholder="Mariage, vacances, compétition..."></div>
+  <div class="field"><label class="q-label">Niveau de motivation aujourd'hui (1-10) <span class="req">*</span></label>
+    <div class="scale">
+      <label class="opt"><input type="radio" name="motivation_now" value="1"><span>1</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="2"><span>2</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="3"><span>3</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="4"><span>4</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="5"><span>5</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="6"><span>6</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="7"><span>7</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="8"><span>8</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="9"><span>9</span></label>
+      <label class="opt"><input type="radio" name="motivation_now" value="10"><span>10</span></label>
+    </div>
+  </div>
+</div>
 
-      <section>
-        <div class="section-number">06</div>
-        <h2 class="section-title impact-title">Disponibilités</h2>
-        <p class="intro-text">Organisons ton succès.</p>
-        <div class="form-group">
-          <label>Combien de jours par semaine peux-tu t'entraîner ?</label>
-          <input type="number" name="Jours_Entrainement" min="1" max="7">
-        </div>
-        <div class="form-group">
-          <label>Lieu d'entraînement prévu :</label>
-          <div class="radio-group">
-            <label class="option-label"><input type="radio" name="Lieu" value="Salle de sport"> Salle de sport</label>
-            <label class="option-label"><input type="radio" name="Lieu" value="Maison"> À la maison</label>
-            <label class="option-label"><input type="radio" name="Lieu" value="Extérieur"> En extérieur</label>
-          </div>
-        </div>
-      </section>
+<div class="section">
+  <h2 class="section-title">Santé &amp; Antécédents</h2>
+  <p class="section-sub">La sécurité d'abord.</p>
+  <div class="field"><label class="q-label">Blessures, douleurs ou contraintes physiques ?</label>
+    <textarea name="blessures" placeholder="Genoux, dos, épaules..."></textarea></div>
+  <div class="field"><label class="q-label">Traitement médical ou pathologies ?</label>
+    <textarea name="medicaments" placeholder="Médicaments, hypertension, asthme..."></textarea></div>
+  <div class="field"><label class="q-label">Douleurs chroniques ?</label>
+    <textarea name="douleurs" placeholder="Si oui, où et depuis quand ?"></textarea></div>
+</div>
 
-      <section>
-        <div class="section-number">07</div>
-        <h2 class="section-title impact-title">Performance Basket (Optionnel)</h2>
-        <p class="intro-text">Si ton objectif est lié au Basketball.</p>
-        <div class="form-group">
-          <label>Quel est ton poste de jeu ?</label>
-          <input type="text" name="Poste_Basket">
-        </div>
-        <div class="form-group">
-          <label>Sur quel aspect technique ou physique veux-tu exploser ?</label>
-          <textarea name="Objectif_Basket" placeholder="Détente, shoot, explosivité, cardio..."></textarea>
-        </div>
-      </section>
+<div class="section">
+  <h2 class="section-title">Nutrition</h2>
+  <p class="section-sub">L'entraînement est le moteur, la nutrition est l'essence.</p>
+  <div class="field"><label class="q-label">Repas par jour</label>
+    <input type="text" name="repas" placeholder="Ex: 3 repas + 1 collation"></div>
+  <div class="field"><label class="q-label">Alimentation actuelle</label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="alim" value="Excellente"><span>Excellente</span></label>
+      <label class="opt"><input type="radio" name="alim" value="Correcte"><span>Correcte</span></label>
+      <label class="opt"><input type="radio" name="alim" value="Moyenne"><span>Moyenne</span></label>
+      <label class="opt"><input type="radio" name="alim" value="Mauvaise"><span>Mauvaise</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Allergies ou régimes spécifiques</label>
+    <textarea name="allergies" placeholder="Végétarien, sans gluten..."></textarea></div>
+  <div class="field"><label class="q-label">Point faible en nutrition</label>
+    <textarea name="point_faible_nutri" placeholder="Grignotage, fast-food, manque de temps..."></textarea></div>
+  <div class="field"><label class="q-label">Tu bois suffisamment d'eau ?</label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="eau" value="Oui régulièrement"><span>Oui régulièrement</span></label>
+      <label class="opt"><input type="radio" name="eau" value="Parfois"><span>Parfois</span></label>
+      <label class="opt"><input type="radio" name="eau" value="Rarement"><span>Rarement</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Compléments alimentaires</label>
+    <input type="text" name="complements" placeholder="Whey, créatine, vitamines... ou Aucun"></div>
+</div>
 
-      <section class="pact-section">
-        <h2 class="impact-title">LE PACTE NZ 100%</h2>
-        <p>
-          Je m'engage à te fournir les meilleurs outils, mon expertise et mon énergie pour te faire atteindre ton but.
-          En retour, j'attends de toi :
-        </p>
-        <div style="text-align: left; max-width: 500px; margin: 0 auto 40px">
-          <div class="form-group" style="margin-bottom: 15px">
-            <label class="option-label"><input type="checkbox" required=""> Je m'engage à être honnête dans mes retours.</label>
-          </div>
-          <div class="form-group" style="margin-bottom: 15px">
-            <label class="option-label"><input type="checkbox" required=""> Je m'engage à respecter la discipline demandée.</label>
-          </div>
-          <div class="form-group" style="margin-bottom: 15px">
-            <label class="option-label"><input type="checkbox" required=""> Je comprends qu'il n'y a pas de résultat sans effort.</label>
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary" style="font-size: 1.2rem; padding: 20px 50px">
-          ENVOYER MON BILAN
-        </button>
-      </section>
-    </form>
+<div class="section">
+  <h2 class="section-title">Disponibilités</h2>
+  <p class="section-sub">Organisons ton succès.</p>
+  <div class="field"><label class="q-label">Jours d'entraînement par semaine <span class="req">*</span></label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="jours_semaine" value="1-2 jours"><span>1-2 jours</span></label>
+      <label class="opt"><input type="radio" name="jours_semaine" value="3-4 jours"><span>3-4 jours</span></label>
+      <label class="opt"><input type="radio" name="jours_semaine" value="5-6 jours"><span>5-6 jours</span></label>
+      <label class="opt"><input type="radio" name="jours_semaine" value="7 jours"><span>7 jours</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Durée par séance</label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="duree_seance" value="30-45 min"><span>30-45 min</span></label>
+      <label class="opt"><input type="radio" name="duree_seance" value="45-60 min"><span>45-60 min</span></label>
+      <label class="opt"><input type="radio" name="duree_seance" value="60-90 min"><span>60-90 min</span></label>
+      <label class="opt"><input type="radio" name="duree_seance" value="90+ min"><span>90+ min</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Lieu d'entraînement <span class="req">*</span></label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="lieu" value="Salle de sport"><span>Salle de sport</span></label>
+      <label class="opt"><input type="radio" name="lieu" value="À la maison"><span>À la maison</span></label>
+      <label class="opt"><input type="radio" name="lieu" value="En extérieur"><span>En extérieur</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Équipement disponible</label>
+    <div class="opts">
+      <label class="opt"><input type="checkbox" name="equipement" value="Haltères"><span>Haltères</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Barre + poids"><span>Barre + poids</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Machines guidées"><span>Machines guidées</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Banc"><span>Banc</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Barre de traction"><span>Barre de traction</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Élastiques"><span>Élastiques</span></label>
+      <label class="opt"><input type="checkbox" name="equipement" value="Aucun"><span>Aucun équipement</span></label>
+    </div>
+  </div>
+</div>
 
-    <footer>
-      <p class="footer-slogan impact-title">MORE DISCIPLINE — LA CLÉ DE LA LIBERTÉ</p>
-      <p class="text-muted" style="margin-bottom: 20px">NZ 100% — Coach Mathieu Nzita</p>
-      <div class="footer-links" style="margin-bottom: 20px">
-        <a href="mailto:mathieunzita60@gmail.com">📩 mathieunzita60@gmail.com</a> ·
-        <a href="https://instagram.com/nzmathieu" target="_blank">@nzmathieu</a> ·
-        <a href="https://instagram.com/Nz.hundred" target="_blank">@Nz.hundred</a>
-      </div>
-    </footer>
+<div class="section">
+  <h2 class="section-title">Mental &amp; Engagement</h2>
+  <p class="section-sub">Le corps suit, le mental décide.</p>
+  <div class="field"><label class="q-label">Ta plus grande PEUR par rapport à ce programme</label>
+    <textarea name="peur" placeholder="Abandonner, te blesser, ne pas voir de résultats..."></textarea></div>
+  <div class="field"><label class="q-label">Ce qui pourrait t'empêcher de réussir</label>
+    <textarea name="obstacles" placeholder="Manque de temps, voyages, fatigue..."></textarea></div>
+  <div class="field"><label class="q-label">Comment tu gères les jours difficiles</label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="echec" value="Je me remotive rapidement"><span>Je me remotive rapidement</span></label>
+      <label class="opt"><input type="radio" name="echec" value="Pause puis reprise"><span>Pause puis reprise</span></label>
+      <label class="opt"><input type="radio" name="echec" value="J'abandonne"><span>J'ai tendance à abandonner</span></label>
+      <label class="opt"><input type="radio" name="echec" value="Je culpabilise"><span>Je culpabilise beaucoup</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Système de soutien (famille, amis)</label>
+    <div class="opts row">
+      <label class="opt"><input type="radio" name="soutien" value="Très soutenant"><span>Oui, très soutenant</span></label>
+      <label class="opt"><input type="radio" name="soutien" value="Moyennement"><span>Moyennement</span></label>
+      <label class="opt"><input type="radio" name="soutien" value="Seul"><span>Non, seul.e</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Qu'attends-tu PRÉCISÉMENT de ce programme ? <span class="req">*</span></label>
+    <textarea name="attentes" rows="3" placeholder="Résultats concrets, mesurables..."></textarea></div>
+  <div class="field"><label class="q-label">En une phrase, qui es-tu en tant que sportif.ve aujourd'hui ?</label>
+    <textarea name="qui_je_suis" placeholder="Ex: Quelqu'un de déterminé mais j'ai besoin d'être guidé.e."></textarea></div>
+  <div class="field"><label class="q-label">En une phrase, qui veux-tu DEVENIR ? <span class="req">*</span></label>
+    <textarea name="qui_je_veux_etre" placeholder="Projette-toi dans 1 an..."></textarea></div>
+  <div class="field"><label class="q-label">Prêt.e à investir TEMPS, ÉNERGIE et DISCIPLINE ? <span class="req">*</span></label>
+    <div class="opts">
+      <label class="opt"><input type="radio" name="engagement_pret" value="Oui à 100%"><span>Oui, à 100%</span></label>
+      <label class="opt"><input type="radio" name="engagement_pret" value="Oui mais contraintes"><span>Oui, mais j'ai des contraintes</span></label>
+      <label class="opt"><input type="radio" name="engagement_pret" value="Je vais essayer"><span>Je vais essayer</span></label>
+    </div>
+  </div>
+  <div class="field"><label class="q-label">Prêt.e à TOUT donner (1-10) <span class="req">*</span></label>
+    <div class="scale">
+      <label class="opt"><input type="radio" name="engagement" value="1"><span>1</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="2"><span>2</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="3"><span>3</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="4"><span>4</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="5"><span>5</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="6"><span>6</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="7"><span>7</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="8"><span>8</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="9"><span>9</span></label>
+      <label class="opt"><input type="radio" name="engagement" value="10"><span>10</span></label>
+    </div>
+  </div>
+</div>
 
-    
-  
+<div class="section">
+  <h2 class="section-title">Performance Basket (optionnel)</h2>
+  <p class="section-sub">Si ton objectif est lié au Basketball.</p>
+  <div class="field"><label class="q-label">Poste de jeu</label>
+    <input type="text" name="poste" placeholder="Meneur, ailier, pivot..."></div>
+  <div class="field"><label class="q-label">Aspect technique ou physique à travailler</label>
+    <textarea name="aspect_basket" placeholder="Détente, shoot, explosivité, cardio..."></textarea></div>
+  <div class="field"><label class="q-label">Autre information importante</label>
+    <textarea name="autre_info" placeholder="Tout ce que tu juges utile..."></textarea></div>
+</div>
 
-</body></html>
+</form>
+
+<!-- PACTE -->
+<section class="container">
+  <div class="pacte">
+    <h2>Le Pacte NZ 100%</h2>
+    <p class="intro-pacte">Je m'engage à te fournir les meilleurs outils, mon expertise et mon énergie pour te faire atteindre ton but. En retour, j'attends de toi :</p>
+    <ul>
+      <li>Je m'engage à être honnête dans mes retours.</li>
+      <li>Je m'engage à respecter la discipline demandée.</li>
+      <li>Je comprends qu'il n'y a pas de résultat sans effort.</li>
+    </ul>
+    <div class="btn-group">
+      <button type="button" class="btn btn-white" id="submitPacteBtn" onclick="sendBilan()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Envoyer mon bilan
+      </button>
+      <button type="button" class="btn btn-outline" onclick="downloadBilan()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Télécharger
+      </button>
+    </div>
+    <p style="color:rgba(255,255,255,.3);font-size:.75rem;margin-top:18px;line-height:1.7;">
+      Une fois reçu, Mathieu analyse ton bilan personnellement et te recontacte sous 24h.
+    </p>
+  </div>
+</section>
+
+<!-- ÉTAT SUCCÈS COMPLET -->
+<section class="container" id="bilanSuccess" style="display:none">
+  <div class="state-card">
+    <div class="state-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(74,222,128,1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+    </div>
+    <h2>Bilan reçu !</h2>
+    <p>Mathieu a bien reçu ton bilan. Il l'analyse et te recontacte sous <strong style="color:#fff">24h</strong>.<br><br>Un email de confirmation avec le lien de téléchargement de ta roadmap t'a été envoyé.</p>
+    <button class="dl-cta" onclick="downloadBilan()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Télécharger ma roadmap (PDF)
+    </button>
+  </div>
+</section>
+
+<!-- ÉTAT SUCCÈS PARTIEL -->
+<section class="container" id="bilanSuccessPartial" style="display:none">
+  <div class="state-card">
+    <div class="state-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(251,191,36,1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+    </div>
+    <h2>Bilan enregistré ✓</h2>
+    <p>Ton bilan a bien été enregistré et transmis à Mathieu. Il te recontacte sous <strong style="color:#fff">24h</strong>.</p>
+    <button class="dl-cta" onclick="downloadBilan()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      Télécharger ma roadmap (PDF)
+    </button>
+    <p class="state-partial-note">Note : l'email de confirmation n'a pas pu être envoyé, mais ton bilan est bien enregistré.</p>
+  </div>
+</section>
+
+<!-- ÉTAT ERREUR -->
+<section class="container" id="bilanError" style="display:none">
+  <div class="state-card">
+    <div class="state-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(248,113,113,1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+    </div>
+    <h2>Oups, une erreur</h2>
+    <p>Ton bilan n'a pas pu être envoyé. Vérifie ta connexion et réessaie, ou contacte Mathieu directement.</p>
+    <button class="retry-btn" onclick="retryBilan()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      Réessayer
+    </button>
+    <p class="state-partial-note"><a href="mailto:mathieunzita60@gmail.com" style="color:rgba(255,255,255,.6)">mathieunzita60@gmail.com</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="more">More Discipline</div>
+  <div class="liberte">— La clé de la liberté —</div>
+  <div class="brand">NZ 100% — Coach Mathieu Nzita</div>
+  <div style="margin-top:10px;">
+    <a href="mailto:mathieunzita60@gmail.com">mathieunzita60@gmail.com</a>
+    &nbsp;·&nbsp;
+    <a href="https://instagram.com/nzmathieu" target="_blank">@nzmathieu</a>
+    &nbsp;·&nbsp;
+    <a href="https://instagram.com/Nz.hundred" target="_blank">@Nz.hundred</a>
+  </div>
+  <div style="margin-top:12px;font-size:.68rem;color:rgba(255,255,255,.2);">© 2026 NZ 100%</div>
+</footer>
+
+<div id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="assets/js/supabaseClient.js?v=bilan-v1"></script>
+<script>
+'use strict';
+// ── Toast ──────────────────────────────────────────────────────────────────
+var _tt=null;
+function showToast(msg,type){
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.className='show'+(type==='error'?' error':'');
+  clearTimeout(_tt); _tt=setTimeout(function(){ t.className=''; },4000);
+}
+// ── Collect ────────────────────────────────────────────────────────────────
+function collectForm(){
+  var fd=new FormData(document.getElementById('bilanForm'));
+  var d={};
+  ['nom_prenom','age','email','telephone','instagram','profession','sexe',
+   'taille','poids_actuel','niveau','activite_quotidienne','sommeil','stress',
+   'poids_objectif','delai','motivation_profonde','deja_essaye','date_limite','motivation_now',
+   'blessures','medicaments','douleurs','repas','alim','allergies','point_faible_nutri','eau','complements',
+   'jours_semaine','duree_seance','lieu','peur','obstacles','echec','soutien',
+   'attentes','qui_je_suis','qui_je_veux_etre','engagement_pret','engagement',
+   'poste','aspect_basket','autre_info'
+  ].forEach(function(k){ var v=fd.get(k); if(v) d[k]=v.trim(); });
+  d.objectif=fd.getAll('objectif'); d.equipement=fd.getAll('equipement');
+  return d;
+}
+// ── Validate ───────────────────────────────────────────────────────────────
+function validate(d){
+  var m=[];
+  if(!d.nom_prenom) m.push('Nom & Prénom');
+  if(!d.email)      m.push('Email');
+  if(!d.telephone)  m.push('Téléphone');
+  if(!d.age)        m.push('Âge');
+  return m;
+}
+// ── Download (print to PDF) ────────────────────────────────────────────────
+function downloadBilan(){ window.print(); }
+// ── States ─────────────────────────────────────────────────────────────────
+function showSuccess(full){
+  document.getElementById('bilanForm').style.display='none';
+  document.querySelector('.pacte').style.display='none';
+  document.getElementById('bilanSuccess').style.display      = full  ? '' : 'none';
+  document.getElementById('bilanSuccessPartial').style.display = full ? 'none' : '';
+  document.getElementById('bilanError').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function showError(){
+  document.getElementById('bilanError').style.display='';
+  document.getElementById('bilanError').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function retryBilan(){
+  document.getElementById('bilanError').style.display='none';
+  document.getElementById('bilanForm').style.display='';
+  document.querySelector('.pacte').style.display='';
+  document.getElementById('bilan').scrollIntoView({behavior:'smooth'});
+}
+// ── Send bilan ──────────────────────────────────────────────────────────────
+async function sendBilan(){
+  var data=collectForm();
+  var missing=validate(data);
+  if(missing.length){
+    showToast('Champs requis : '+missing.join(', '),'error');
+    document.getElementById('bilan').scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  var btn=document.getElementById('submitPacteBtn');
+  if(btn){ btn.disabled=true; btn.textContent='Envoi en cours…'; }
+
+  var sb=window.NZ&&window.NZ._sb;
+  if(!sb){
+    showToast('Service indisponible. Merci de réessayer.','error');
+    if(btn){ btn.disabled=false; btn.textContent='Envoyer mon bilan'; }
+    return;
+  }
+
+  // Étape 1 : INSERT bilans
+  try {
+    var r=await sb.from('bilans').insert([{
+      nom_prenom: data.nom_prenom,
+      email:      data.email,
+      telephone:  data.telephone||null,
+      age:        data.age ? parseInt(data.age,10) : null,
+      status:     'new',
+      data:       data
+    }]);
+    if(r.error){ console.error('[NZ Bilan] insert err:',r.error.message); showError(); return; }
+  } catch(e){ console.error('[NZ Bilan] insert ex:',e.message); showError(); return; }
+
+  // Étape 2 : Notif admin
+  try {
+    await sb.functions.invoke('send-lead-notification',{body:{mode:'direct',lead:{
+      first_name: data.nom_prenom.split(' ')[0]||data.nom_prenom,
+      last_name:  data.nom_prenom.split(' ').slice(1).join(' ')||'',
+      email:      data.email,
+      phone:      data.telephone||null,
+      program_interest: 'Bilan Personnalisé',
+      objective:  Array.isArray(data.objectif)?data.objectif.join(', '):(data.objectif||''),
+      message:    'BILAN | Niveau: '+(data.niveau||'?')+' | Engagement: '+(data.engagement||'?')+'/10 | Attentes: '+(data.attentes||'').substring(0,100),
+      created_at: new Date().toISOString()
+    }}});
+  } catch(e){ console.warn('[NZ Bilan] admin notif ex:',e.message); }
+
+  // Étape 3 : Email client
+  var emailOk=false;
+  try {
+    var er=await sb.functions.invoke('send-email',{body:{
+      type: 'bilan_confirmation',
+      to:   data.email,
+      data: {
+        name:        data.nom_prenom,
+        objectifs:   Array.isArray(data.objectif)?data.objectif.join(', '):(data.objectif||'Non précisé'),
+        roadmap_url: window.location.origin+'/roadmap.html'
+      }
+    }});
+    if(!er.error&&er.data&&er.data.id){ emailOk=true; }
+  } catch(e){ console.warn('[NZ Bilan] email ex:',e.message); }
+
+  showSuccess(emailOk);
+}
+</script>
+
+</body>
+</html>
