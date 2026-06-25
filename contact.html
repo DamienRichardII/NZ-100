@@ -575,4 +575,13 @@ function resetContactForm(){
 }
 
 // ── Affiche l'état d'erreur et restaure le bouton ──
-function _showFormError(ms
+function _showFormError(msg, btn){
+  const errState=document.getElementById('formErrorState');
+  if(errState) errState.style.display='block';
+  if(btn){ btn.disabled=false; btn.textContent='Envoyer ma demande'; }
+  console.error('[NZ Contact] Erreur affichée:', msg);
+}
+</script>
+<script src="supabaseClient.js"></script>
+</body>
+</html>
