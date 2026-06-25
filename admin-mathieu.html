@@ -1146,7 +1146,7 @@ async function _loadReservationsTab() {
     fw.id = 'resa-pay-filter';
     fw.className = 'pay-filter';
     fw.innerHTML = [{k:'all',l:'Toutes'},{k:'unpaid',l:'Non payées'},{k:'paid',l:'Payées'},{k:'pending',l:'En attente'}]
-      .map(function(f){ return '<button class="pay-filter-btn' + (f.k==='all' ? ' active' : '') + '" onclick="_setResaFilter('' + f.k + '',this)">' + f.l + '</button>'; }).join('');
+      .map(function(f){ return '<button class="pay-filter-btn' + (f.k==='all' ? ' active' : '') + '" onclick="_setResaFilter(\'' + f.k + '\',this)">' + f.l + '</button>'; }).join('');
     container.parentNode.insertBefore(fw, container);
   }
   _applyResaFilter();
@@ -1182,10 +1182,10 @@ function _applyResaFilter() {
     var actionsHtml = '';
     if (!alreadyActed && bId) {
       actionsHtml = '<div class="presence-actions" style="margin-top:8px;">'
-        + '<button class="pa-btn pa-btn-honore" onclick="doPresenceAction('' + bId + '','honore',this)">✓ Honoré</button>'
-        + '<button class="pa-btn pa-btn-annule-veille" onclick="doPresenceAction('' + bId + '','annule_veille',this)">Annulé J-1 (50%)</button>'
-        + '<button class="pa-btn pa-btn-annule-j" onclick="doPresenceAction('' + bId + '','annule_j',this)">Annulé J (100%)</button>'
-        + '<button class="pa-btn pa-btn-noshow" onclick="doPresenceAction('' + bId + '','no_show',this)">No-show (100%)</button>'
+        + '<button class="pa-btn pa-btn-honore" onclick="doPresenceAction(\'' + bId + '\',\'honore\',this)">✓ Honoré</button>'
+        + '<button class="pa-btn pa-btn-annule-veille" onclick="doPresenceAction(\'' + bId + '\',\'annule_veille\',this)">Annulé J-1 (50%)</button>'
+        + '<button class="pa-btn pa-btn-annule-j" onclick="doPresenceAction(\'' + bId + '\',\'annule_j\',this)">Annulé J (100%)</button>'
+        + '<button class="pa-btn pa-btn-noshow" onclick="doPresenceAction(\'' + bId + '\',\'no_show\',this)">No-show (100%)</button>'
         + '</div>';
     }
     return '<div style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
