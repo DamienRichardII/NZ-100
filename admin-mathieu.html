@@ -567,8 +567,9 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
             <p style="font-size:.82rem;color:rgba(255,255,255,.45);">Cliquez sur une date pour l'ouvrir ou la bloquer. Les modifications sont sauvegardées automatiquement.</p>
           </div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <div style="display:flex;gap:6px;align-items:center;font-size:.75rem;color:rgba(255,255,255,.5);">
+            <div style="display:flex;gap:6px;align-items:center;font-size:.75rem;color:rgba(255,255,255,.5);flex-wrap:wrap;">
               <span style="width:11px;height:11px;border-radius:3px;background:#4ade80;display:inline-block;"></span>Dispo
+              <span style="width:11px;height:11px;border-radius:3px;background:rgba(74,222,128,.25);display:inline-block;margin-left:4px;opacity:.7;border:1px solid rgba(74,222,128,.3);"></span>Sa/Di (dispo par défaut)
               <span style="width:11px;height:11px;border-radius:3px;background:rgba(255,80,80,.6);display:inline-block;margin-left:8px;"></span>Bloqué
               <span style="width:11px;height:11px;border-radius:3px;background:rgba(255,255,255,.1);display:inline-block;margin-left:8px;"></span>Passé
             </div>
@@ -581,6 +582,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
           <button onclick="_availBlockPeriod(14)" class="pay-filter-btn" style="font-size:.72rem;">🔒 Bloquer 14 jours</button>
           <button onclick="_availOpenPeriod(7)" class="pay-filter-btn" style="font-size:.72rem;">✅ Ouvrir 7 jours</button>
           <button onclick="_availOpenPeriod(30)" class="pay-filter-btn" style="font-size:.72rem;">✅ Ouvrir 30 jours</button>
+          <button onclick="_availOpenWeekends()" class="pay-filter-btn" style="font-size:.72rem;">📅 Ouvrir week-ends du mois</button>
           <button onclick="_loadAvailManager()" class="pay-filter-btn" style="font-size:.72rem;">↺ Actualiser</button>
         </div>
 
@@ -1701,25 +1703,36 @@ function _renderAvailGrid() {
     var isWeekend = cellDate.getDay() === 0 || cellDate.getDay() === 6;
     var isPast = cellDate < today;
     var row = _availData[dateStr];
-    var isAvail = row ? row.is_available : !isWeekend; // par défaut: jours semaine = dispo
+    var isAvail = row ? row.is_available : true; // par défaut: tout disponible (week-ends inclus)
 
     var cell = document.createElement('div');
-    cell.style.cssText = [
-      'border-radius:10px;min-height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;',
-      'font-size:.8rem;font-weight:600;cursor:' + (isPast ? 'default' : 'pointer') + ';',
-      'transition:.15s;position:relative;border:1.5px solid transparent;',
-      isPast ? 'opacity:.3;background:rgba(255,255,255,.03);' :
-        isWeekend ? 'background:rgba(255,255,255,.03);opacity:.35;cursor:default;' :
-          isAvail ? 'background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.3);color:#4ade80;' :
-                    'background:rgba(255,60,60,.12);border-color:rgba(255,60,60,.25);color:rgba(255,100,100,.9);',
-    ].join('');
+    var _cellBg;
+    if (isPast) {
+      _cellBg = 'opacity:.3;background:rgba(255,255,255,.03);cursor:default;';
+    } else if (isAvail) {
+      // Week-ends ouverts : vert légèrement atténué pour les distinguer visuellement
+      _cellBg = isWeekend
+        ? 'background:rgba(74,222,128,.07);border-color:rgba(74,222,128,.2);color:#4ade80;opacity:.82;'
+        : 'background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.3);color:#4ade80;';
+    } else {
+      _cellBg = 'background:rgba(255,60,60,.12);border-color:rgba(255,60,60,.25);color:rgba(255,100,100,.9);';
+    }
+    cell.style.cssText = 'border-radius:10px;min-height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;cursor:' + (isPast ? 'default' : 'pointer') + ';transition:.15s;position:relative;border:1.5px solid transparent;' + _cellBg;
     cell.textContent = d;
+    // Étiquette Sa/Di pour identifier visuellement les week-ends
+    if (isWeekend && !isPast) {
+      var _wkLbl = document.createElement('div');
+      _wkLbl.style.cssText = 'font-size:.48rem;opacity:.5;margin-top:1px;letter-spacing:.03em;';
+      _wkLbl.textContent = cellDate.getDay() === 6 ? 'Sa' : 'Di';
+      cell.appendChild(_wkLbl);
+    }
     if (row && row.note) {
       var dot = document.createElement('div');
       dot.style.cssText = 'width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5);margin-top:2px;';
       cell.appendChild(dot);
     }
-    if (!isPast && !isWeekend) {
+    // Tous les jours non passés sont cliquables — week-ends inclus
+    if (!isPast) {
       (function(ds, av, c){ c.onclick = function(){ _toggleAvailDate(ds, av, c); }; })(dateStr, isAvail, cell);
     }
     grid.appendChild(cell);
@@ -1763,13 +1776,12 @@ async function _availBlockPeriod(days) {
   var rows = [];
   for (var i = 0; i < days; i++) {
     var d = new Date(today); d.setDate(d.getDate() + i);
-    if (d.getDay() === 0 || d.getDay() === 6) continue; // skip weekends
     var ds = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
     rows.push({ date: ds, is_available: false });
   }
   var { error } = await sb.from('calendar_availability').upsert(rows, { onConflict: 'date' });
   if (error) { if (status) status.textContent = '⚠ ' + error.message; return; }
-  if (status) status.textContent = '✓ ' + rows.length + ' jours bloqués';
+  if (status) status.textContent = '✓ ' + rows.length + ' jours bloqués (week-ends inclus)';
   setTimeout(function(){ if (status) status.textContent = ''; }, 2000);
   rows.forEach(function(r){ _availData[r.date] = r; });
   _renderAvailGrid();
@@ -1784,18 +1796,42 @@ async function _availOpenPeriod(days) {
   var rows = [];
   for (var i = 0; i < days; i++) {
     var d = new Date(today); d.setDate(d.getDate() + i);
-    if (d.getDay() === 0 || d.getDay() === 6) continue;
     var ds = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
     rows.push({ date: ds, is_available: true });
   }
   var { error } = await sb.from('calendar_availability').upsert(rows, { onConflict: 'date' });
   if (error) { if (status) status.textContent = '⚠ ' + error.message; return; }
-  if (status) status.textContent = '✓ ' + rows.length + ' jours ouverts';
+  if (status) status.textContent = '✓ ' + rows.length + ' jours ouverts (week-ends inclus)';
   setTimeout(function(){ if (status) status.textContent = ''; }, 2000);
   rows.forEach(function(r){ _availData[r.date] = r; });
   _renderAvailGrid();
 }
 
+
+async function _availOpenWeekends() {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  var status = document.getElementById('avail-status');
+  if (status) status.textContent = 'Ouverture des week-ends…';
+  var base = _availBaseDate();
+  var yr = base.getFullYear(), mo = base.getMonth();
+  var daysInMonth = new Date(yr, mo+1, 0).getDate();
+  var rows = [];
+  for (var d = 1; d <= daysInMonth; d++) {
+    var dt = new Date(yr, mo, d);
+    if (dt.getDay() === 0 || dt.getDay() === 6) {
+      var ds = yr + '-' + String(mo+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+      rows.push({ date: ds, is_available: true });
+    }
+  }
+  if (!rows.length) { if (status) status.textContent = 'Aucun week-end ce mois.'; return; }
+  var { error } = await sb.from('calendar_availability').upsert(rows, { onConflict: 'date' });
+  if (error) { if (status) status.textContent = '⚠ ' + error.message; return; }
+  if (status) status.textContent = '✓ ' + rows.length + ' week-ends ouverts ce mois';
+  setTimeout(function(){ if (status) status.textContent = ''; }, 2000);
+  rows.forEach(function(r){ _availData[r.date] = r; });
+  _renderAvailGrid();
+}
 
 /* ── Badge paiement ── */
 function _payBadge(status) {

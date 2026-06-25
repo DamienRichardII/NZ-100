@@ -735,16 +735,10 @@ async function _loadAvailForMonth(year, month) {
 }
 
 function _isDateAvailable(year, month, day) {
-  const dow = new Date(year, month, day).getDay();
-  const isWeekend = dow === 0 || dow === 6;
-  if (isWeekend) return false;
   const dateStr = year + '-' + String(month+1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
   const row = _calAvailCache[dateStr];
-  if (row) return row.is_available;
-  // Fallback hardcodé si Supabase pas encore chargé
-  if (year === 2026 && month === 6) return day >= 18 && day <= 25; // juillet
-  if (year === 2026 && month === 7) return day >= 1  && day <= 8;  // août
-  return true; // les autres mois sont disponibles par défaut
+  if (row) return row.is_available; // la DB fait foi (week-ends inclus)
+  return true; // par défaut : toute date disponible, y compris les week-ends
 }
 
 function renderCalendar(){
