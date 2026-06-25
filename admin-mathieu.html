@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+  <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NZ Admin — Mathieu Nzita</title>
 <link rel="icon" type="image/png" href="assets/nz_logo_nav.png">
@@ -504,7 +505,6 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
             </div>
           </div>
         </div>
-      </div>
 
         <!-- ── Derniers leads (preview dashboard) ── -->
         <div style="margin:28px 0 20px;">
@@ -528,8 +528,8 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
       <!-- ── CALENDAR TAB ─────────────────────────────────────────── -->
       <div class="tab-section" id="tab-calendar">
         <div class="page-header">
-          <h1>Calendrier</h1>
-          <p>Séances à venir et disponibilités</p>
+          <h1>Calendrier & Disponibilités</h1>
+          <p>Séances à venir · Gestion des créneaux ouverts / bloqués</p>
         </div>
 
         <div class="cal-toolbar">
@@ -557,9 +557,8 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <div id="cal-month-view" class="hidden">
           <div id="calMonthGrid" class="cal-month"></div>
         </div>
-      </div>
 
-      <!-- ── DISPONIBILITÉS MANAGER ─────────────────────────── -->
+      <!-- ── DISPONIBILITÉS MANAGER (dans tab-calendar) ────────────── -->
       <div style="margin-top:40px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
           <div>
@@ -598,6 +597,8 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 
         <div id="avail-status" style="font-size:.78rem;color:rgba(255,255,255,.45);min-height:20px;"></div>
       </div>
+
+      </div><!-- /tab-calendar -->
 
 
       <!-- ── MESSAGERIE TAB ──────────────────────────────────────── -->
@@ -698,6 +699,102 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="assets/js/supabaseClient.js?v=admin-v2"></script>
 <script>
+/* ══ UTILITAIRES GLOBAUX ═════════════════════════════════════════════ */
+
+/* Échappement HTML — utilisé partout dans les rendus */
+function escHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/* Toggle mot de passe (login screen) */
+function _togglePwd(inputId, btn) {
+  var inp = document.getElementById(inputId);
+  if (!inp) return;
+  var isHidden = inp.type === 'password';
+  inp.type = isHidden ? 'text' : 'password';
+  var open   = btn && btn.querySelector('.eye-open');
+  var closed = btn && btn.querySelector('.eye-closed');
+  if (open)   open.style.display   = isHidden ? 'none'  : '';
+  if (closed) closed.style.display = isHidden ? ''      : 'none';
+}
+
+/* Badge paiement */
+function _payBadge(status) {
+  var map = {
+    paid:    ['pay-badge-paid',    'Payé'],
+    pending: ['pay-badge-pending', 'En attente'],
+    unpaid:  ['pay-badge-unpaid',  'Non payé'],
+    failed:  ['pay-badge-failed',  'Échoué'],
+  };
+  var key = (status || 'unpaid').toLowerCase();
+  var info = map[key] || map.unpaid;
+  return '<span class="pay-badge ' + info[0] + '">' + info[1] + '</span>';
+}
+
+/* Badge statut présence */
+function _statusBadge(status) {
+  var map = {
+    honore:       ['status-badge-honore', 'Honoré'],
+    annule_veille:['status-badge-annule', 'Annulé J-1'],
+    annule_j:     ['status-badge-annule', 'Annulé J'],
+    no_show:      ['status-badge-noshow', 'No-show'],
+    pending:      ['status-badge-pending','En attente'],
+    confirmed:    ['status-badge-honore', 'Confirmé'],
+    valide:       ['status-badge-honore', 'Validé'],
+    refuse:       ['status-badge-annule', 'Refusé'],
+  };
+  var key = (status || '').toLowerCase();
+  var info = map[key];
+  if (!info) return '';
+  return '<span class="status-badge ' + info[0] + '">' + info[1] + '</span>';
+}
+
+/* Filtre bookings preview dashboard */
+var _bookingPayFilter = 'all';
+
+function _setBookingFilter(k, btn) {
+  _bookingPayFilter = k;
+  var fw = document.getElementById('admin-bookings-pay-filter');
+  if (fw) fw.querySelectorAll('.pay-filter-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.filter === k); });
+  _applyBookingFilter();
+}
+
+function _applyBookingFilter() {
+  var container = document.getElementById('admin-bookings-list');
+  if (!container) return;
+  var bookings = container._allBookings || [];
+  var filtered = bookings.filter(function(b){
+    if (_bookingPayFilter === 'all') return true;
+    return ((b.payment_status || 'unpaid').toLowerCase()) === _bookingPayFilter;
+  });
+  if (!filtered.length) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.4);">Aucune réservation pour ce filtre.</div>';
+    return;
+  }
+  container.innerHTML = filtered.map(function(b) {
+    var bStatus = (b.status || 'pending').toLowerCase();
+    var bId     = b.id || '';
+    return '<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:11px 14px;margin-bottom:5px;border-radius:12px;background:rgba(255,255,255,.04);gap:8px;">'
+      + '<div style="min-width:0;flex:1;">'
+      + '<div style="font-weight:600;font-size:.86rem;">' + escHtml(b.name||'—') + '</div>'
+      + '<div style="font-size:.75rem;color:rgba(255,255,255,.45);">' + escHtml(b.email||'') + (b.phone ? ' · ' + escHtml(b.phone) : '') + '</div>'
+      + (b.service ? '<div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:2px;">🏀 ' + escHtml(b.service) + '</div>' : '')
+      + (b.requested_date ? '<div style="font-size:.71rem;color:rgba(255,255,255,.35);">📅 ' + escHtml(b.requested_date + (b.requested_time ? ' à ' + b.requested_time : '')) + '</div>' : '')
+      + '</div>'
+      + '<div style="flex-shrink:0;text-align:right;">'
+      + '<div style="font-size:.65rem;color:rgba(255,255,255,.35);">' + _fmtDate(b.created_at) + '</div>'
+      + '<div style="margin-top:4px;">' + _payBadge(b.payment_status) + '</div>'
+      + '<div style="margin-top:3px;">' + _statusPill(bStatus) + '</div>'
+      + '</div></div>';
+  }).join('');
+}
+
 /* ══ DATA ════════════════════════════════════════════════════════════ */
 /* ══ DATA RÉELLE — Supabase ══════════════════════════════════════════ */
 var _allLeads       = [];   // leads Supabase (chargés au login)
@@ -917,7 +1014,7 @@ function _renderPendingBookings(bookings) {
     fw.id = 'admin-bookings-pay-filter';
     fw.className = 'pay-filter';
     fw.innerHTML = [{k:'all',l:'Toutes'},{k:'unpaid',l:'Non payées'},{k:'paid',l:'Payées'},{k:'pending',l:'En attente'}]
-      .map(function(f){ return '<button class="pay-filter-btn'+(f.k==='all'?' active':'')+'" onclick="_setBookingFilter(\''+f.k+'\')">'+f.l+'</button>'; }).join('');
+      .map(function(f){ return '<button class="pay-filter-btn'+(f.k==='all'?' active':'')+'" data-filter="'+f.k+'" onclick="_setBookingFilter(\''+f.k+'\',this)">'+f.l+'</button>'; }).join('');
     container.parentNode.insertBefore(fw, container);
   }
   _applyBookingFilter();
@@ -1038,7 +1135,7 @@ function showTab(id, el) {
   if (id === 'reservations') _loadReservationsTab();
   if (id === 'bilans')       _loadBilansTab();
   if (id === 'messagerie')   _loadMessagerieReal();
-  if (id === 'calendar')     _loadCalendarEvents();
+  if (id === 'calendar')     { _loadCalendarEvents(); _loadAvailManager(); }
 }
 
 
@@ -2196,7 +2293,7 @@ function _statusPill(status) {
         <div style="font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.06em;">Envoyer un mail</div>
         <div id="nzEmailModalSub" style="font-size:.75rem;color:rgba(255,255,255,.38);margin-top:2px;"></div>
       </div>
-      <button onclick="closeEmailModal()" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:30px;height:30px;cursor:pointer;color:#fff;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">×</button>
+      <button onclick="closeEmailModal()" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:30px;height:30px;cursor:pointer;color:#fff;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">Ã</button>
     </div>
     <div style="margin-bottom:16px;">
       <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:7px;">Templates rapides</div>
@@ -2208,15 +2305,15 @@ function _statusPill(status) {
     </div>
     <div style="margin-bottom:11px;">
       <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:5px;">Sujet</div>
-      <input id="nzEmailSubject" type="text" placeholder="Objet du mail…" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:9px 12px;color:#fff;font-size:.83rem;outline:none;">
+      <input id="nzEmailSubject" type="text" placeholder="Objet du mailâ¦" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:9px 12px;color:#fff;font-size:.83rem;outline:none;">
     </div>
     <div style="margin-bottom:18px;">
       <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:5px;">Message</div>
-      <textarea id="nzEmailBody" rows="7" placeholder="Votre message…" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:9px 12px;color:#fff;font-size:.82rem;outline:none;resize:vertical;font-family:inherit;line-height:1.55;"></textarea>
+      <textarea id="nzEmailBody" rows="7" placeholder="Votre messageâ¦" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:9px 12px;color:#fff;font-size:.82rem;outline:none;resize:vertical;font-family:inherit;line-height:1.55;"></textarea>
     </div>
     <div style="display:flex;gap:10px;justify-content:flex-end;">
       <button onclick="closeEmailModal()" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:10px 20px;color:#fff;cursor:pointer;font-size:.82rem;">Annuler</button>
-      <button id="nzEmailSendBtn" onclick="sendAdminEmailFinal()" style="background:#fff;color:#000;border:none;border-radius:100px;padding:10px 24px;font-weight:700;cursor:pointer;font-size:.82rem;">✉ Envoyer</button>
+      <button id="nzEmailSendBtn" onclick="sendAdminEmailFinal()" style="background:#fff;color:#000;border:none;border-radius:100px;padding:10px 24px;font-weight:700;cursor:pointer;font-size:.82rem;">â Envoyer</button>
     </div>
     <div id="nzEmailStatus" style="margin-top:11px;font-size:.76rem;color:rgba(255,255,255,.5);text-align:center;min-height:18px;"></div>
   </div>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- ══ PAGE D'ACCUEIL ══════════════════════════════════════════════ -->
+  <url>
+    <loc>https://nz-100.com/</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- ══ OFFRES DE COACHING ══════════════════════════════════════════ -->
+  <url>
+    <loc>https://nz-100.com/remise-en-forme.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://nz-100.com/retour-au-sport.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://nz-100.com/performance.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://nz-100.com/coaching-basket.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- ══ TARIFS ══════════════════════════════════════════════════════ -->
+  <url>
+    <loc>https://nz-100.com/tarifs.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://nz-100.com/tarifs-musculation.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://nz-100.com/tarifs-basket.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ══ À PROPOS / CONTACT ══════════════════════════════════════════ -->
+  <url>
+    <loc>https://nz-100.com/mon-histoire.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://nz-100.com/contact.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ══ BILAN PERSONNALISÉ (funnel public) ══════════════════════════ -->
+  <url>
+    <loc>https://nz-100.com/roadmap.html</loc>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!--
+    PAGES EXCLUES (privées / techniques — non indexables) :
+      /admin-mathieu.html     → tableau de bord admin privé
+      /reset-password.html    → page technique de réinitialisation
+      /espace-membre.html     → espace connecté (authentification requise)
+      /espace-client.html     → espace client connecté (authentification requise)
+  -->
+
+</urlset>

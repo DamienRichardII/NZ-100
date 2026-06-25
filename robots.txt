@@ -1,0 +1,16 @@
+# robots.txt — NZ 100% (https://nz-100.com)
+# Mis à jour : 2026-06-25
+
+User-agent: *
+
+# Pages publiques autorisées à l'exploration
+Allow: /
+
+# Pages privées / techniques — ne pas indexer
+Disallow: /admin-mathieu.html
+Disallow: /reset-password.html
+Disallow: /espace-membre.html
+Disallow: /espace-client.html
+
+# Sitemap
+Sitemap: https://nz-100.com/sitemap.xml
