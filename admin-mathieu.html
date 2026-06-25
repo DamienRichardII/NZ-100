@@ -354,6 +354,23 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         <div class="notif-dot"></div>
       </div>
 
+      <div class="admin-nav-label">Données</div>
+      <div class="admin-nav-item" onclick="showTab('leads',this)" id="nav-item-leads">
+        <div class="ani"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></div>
+        Leads
+        <span id="nav-leads-count" style="margin-left:auto;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:100px;background:rgba(74,222,128,.14);color:#4ade80;border:1px solid rgba(74,222,128,.28);display:none;"></span>
+      </div>
+      <div class="admin-nav-item" onclick="showTab('reservations',this)" id="nav-item-reservations">
+        <div class="ani"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        Réservations
+        <span id="nav-bookings-count" style="margin-left:auto;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:100px;background:rgba(251,191,36,.14);color:#fbbf24;border:1px solid rgba(251,191,36,.28);display:none;"></span>
+      </div>
+      <div class="admin-nav-item" onclick="showTab('bilans',this)" id="nav-item-bilans">
+        <div class="ani"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        Bilans
+        <span id="nav-bilans-count" style="margin-left:auto;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:100px;background:rgba(96,165,250,.14);color:#60a5fa;border:1px solid rgba(96,165,250,.28);display:none;"></span>
+      </div>
+
       <div class="admin-nav-label" style="margin-top:32px;">Liens rapides</div>
       <a href="index.html" class="admin-nav-item" style="text-decoration:none;">
         <div class="ani">
@@ -489,6 +506,25 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         </div>
       </div>
 
+        <!-- ── Derniers leads (preview dashboard) ── -->
+        <div style="margin:28px 0 20px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.04em;color:#fff;margin:0;">Derniers leads</h2>
+            <button onclick="showTab('leads',document.getElementById('nav-item-leads'))" style="font-size:.75rem;color:rgba(255,255,255,.45);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:100px;padding:5px 14px;cursor:pointer;font-family:'Outfit',sans-serif;transition:.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Voir tous →</button>
+          </div>
+          <div id="admin-leads-list"><div style="padding:20px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.35);">Chargement…</div></div>
+        </div>
+
+        <!-- ── Réservations récentes (preview dashboard) ── -->
+        <div style="margin-bottom:24px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.04em;color:#fff;margin:0;">Réservations basket</h2>
+            <button onclick="showTab('reservations',document.getElementById('nav-item-reservations'))" style="font-size:.75rem;color:rgba(255,255,255,.45);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:100px;padding:5px 14px;cursor:pointer;font-family:'Outfit',sans-serif;transition:.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.45)'">Voir toutes →</button>
+          </div>
+          <div id="admin-bookings-list"><div style="padding:20px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.35);">Chargement…</div></div>
+        </div>
+      </div>
+
       <!-- ── CALENDAR TAB ─────────────────────────────────────────── -->
       <div class="tab-section" id="tab-calendar">
         <div class="page-header">
@@ -559,6 +595,40 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         </div>
       </div>
 
+      <!-- ── LEADS TAB ─────────────────────────────────────────────── -->
+      <div class="tab-section" id="tab-leads">
+        <div class="page-header">
+          <h1>Leads</h1>
+          <p id="leads-count-label">Chargement…</p>
+        </div>
+        <div class="pay-filter" id="leads-filter-wrap">
+          <button class="pay-filter-btn active" onclick="_setLeadFilter('all',this)">Tous</button>
+          <button class="pay-filter-btn" onclick="_setLeadFilter('nouveau',this)">Nouveaux</button>
+          <button class="pay-filter-btn" onclick="_setLeadFilter('contacte',this)">Contactés</button>
+          <button class="pay-filter-btn" onclick="_setLeadFilter('converti',this)">Convertis</button>
+          <button class="pay-filter-btn" onclick="_setLeadFilter('archive',this)">Archivés</button>
+        </div>
+        <div id="admin-leads-list-full"><div style="padding:24px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.35);">Chargement…</div></div>
+      </div>
+
+      <!-- ── RESERVATIONS TAB ──────────────────────────────────────── -->
+      <div class="tab-section" id="tab-reservations">
+        <div class="page-header">
+          <h1>Réservations</h1>
+          <p>Demandes de séances coaching basket</p>
+        </div>
+        <div id="admin-reservations-list"><div style="padding:24px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.35);">Chargement…</div></div>
+      </div>
+
+      <!-- ── BILANS TAB ─────────────────────────────────────────────── -->
+      <div class="tab-section" id="tab-bilans">
+        <div class="page-header">
+          <h1>Bilans</h1>
+          <p>Bilans de performance reçus via le site</p>
+        </div>
+        <div id="admin-bilans-list"><div style="padding:24px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.35);">Chargement…</div></div>
+      </div>
+
     </main>
   </div>
 
@@ -576,6 +646,10 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       Messages
     </button>
+    <button class="amt-btn" onclick="showTab('leads',this)">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Leads
+    </button>
   </nav>
 
 </div><!-- /adminWrap -->
@@ -584,44 +658,17 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
 <script src="assets/js/supabaseClient.js?v=admin-v2"></script>
 <script>
 /* ══ DATA ════════════════════════════════════════════════════════════ */
-var KPI = {
-  semaine: {eleves:12,seances:8,nouveaux:3,messages:24,ca:'1 200',retention:87,basket:4,ref:4},
-  mois:    {eleves:12,seances:32,nouveaux:7,messages:96,ca:'4 840',retention:87,basket:16,ref:16}
-};
+/* ══ DATA RÉELLE — Supabase ══════════════════════════════════════════ */
+var _allLeads       = [];   // leads Supabase (chargés au login)
+var _allBookings    = [];   // booking_requests Supabase
+var _allBilans      = [];   // bilans Supabase
+var _convThreads    = [];   // threads messages Supabase (par client_id)
+var _currentThread  = null; // thread sélectionné
+var _leadFilter     = 'all';
+var _bookingPayFilter= 'all';
 
-var CONVS = [
-  {id:1,name:'Thomas D.',avatar:'T',program:'Coaching basket',status:'En ligne',unread:2,
-   messages:[
-    {from:'client',text:'Bonjour Mathieu, j\'ai une question sur les exercices de dribble de la semaine.',time:'10h14'},
-    {from:'coach',text:'Bonjour Thomas ! Bien sûr, qu\'est-ce qui te pose problème ?',time:'10h22'},
-    {from:'client',text:'L\'exercice 3 — je n\'arrive pas à garder le rythme sur la main gauche.',time:'10h31'},
-    {from:'coach',text:'C\'est tout à fait normal en début de progression. Concentre-toi sur la lenteur d\'abord, vitesse ensuite. Refais-le 10 min par jour cette semaine.',time:'10h45'},
-  ]},
-  {id:2,name:'Sarah M.',avatar:'S',program:'Remise en forme',status:'Vu il y a 2h',unread:1,
-   messages:[
-    {from:'client',text:'Salut Mathieu, j\'ai raté la séance de jeudi, est-ce qu\'on peut décaler ?',time:'08h05'},
-    {from:'coach',text:'Pas de souci, Sarah. Je te propose vendredi 10h30 ou samedi 9h. Qu\'est-ce qui t\'arrange ?',time:'08h20'},
-    {from:'client',text:'Vendredi 10h30 c\'est parfait, merci !',time:'08h33'},
-  ]},
-  {id:3,name:'Lucas B.',avatar:'L',program:'Performance',status:'Vu hier',unread:0,
-   messages:[
-    {from:'coach',text:'Lucas, comment s\'est passée la reprise après le tournoi ?',time:'Hier 18h00'},
-    {from:'client',text:'Très bien ! Les jambes sont un peu lourdes mais rien d\'anormal. Programme de récup bien suivi.',time:'Hier 18h45'},
-    {from:'coach',text:'Parfait. On reprend l\'intensité normale mercredi. Bonne récup.',time:'Hier 19h00'},
-  ]},
-  {id:4,name:'Aïssa K.',avatar:'A',program:'Retour au sport',status:'Vu il y a 3j',unread:0,
-   messages:[
-    {from:'client',text:'Mathieu, le genou va beaucoup mieux. Je commence à courir en ligne droite sans douleur.',time:'Il y a 3j'},
-    {from:'coach',text:'Excellente nouvelle, Aïssa ! On va progressivement introduire les changements de direction la semaine prochaine. Tu es dans les temps.',time:'Il y a 3j'},
-  ]},
-  {id:5,name:'Julien R.',avatar:'J',program:'Coaching basket',status:'Vu il y a 5j',unread:2,
-   messages:[
-    {from:'client',text:'Est-ce que tu as la vidéo du module tir à 3 points ?',time:'Il y a 5j'},
-    {from:'client',text:'J\'arrive pas à la trouver dans l\'espace client.',time:'Il y a 5j'},
-  ]},
-];
+var currentConvId = null; // compatibilité legacy
 
-var currentConvId = 1;
 
 /* ══ AUTH ════════════════════════════════════════════════════════════ */
 function showAdminForgot() {
@@ -707,231 +754,134 @@ function _enterAdminDashboard() {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('adminWrap').style.display = 'block';
   initAdmin();
-  // Charger les vraies données si NZ disponible
-  if (window.NZ && window.NZ.fetchAdminDashboard) {
-    _loadAdminKPIs();
+}
+
+/* ── KPIs Supabase réels ── */
+async function _loadAdminKPIs() {
+  try {
+    var sb = window.NZ && window.NZ._sb;
+    if (!sb) return;
+
+    var weekAgo  = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
+    var monthAgo = new Date(); monthAgo.setDate(monthAgo.getDate() - 30);
+    var weekStr  = weekAgo.toISOString();
+    var monthStr = monthAgo.toISOString();
+
+    var [leadsRes, clientsRes, bookingsRes, messagesRes, paymentsRes, bilansRes] = await Promise.all([
+      sb.from('leads').select('id, status, created_at'),
+      sb.from('profiles').select('id').eq('role', 'client'),
+      sb.from('booking_requests').select('id, service, status, payment_status, created_at'),
+      sb.from('messages').select('id, is_read').eq('is_read', false),
+      sb.from('payments').select('amount_eur, status, created_at'),
+      sb.from('bilans').select('id, status, created_at'),
+    ]);
+
+    var leads       = leadsRes.data    || [];
+    var clients     = clientsRes.data  || [];
+    var bookings    = bookingsRes.data || [];
+    var unreadMsgs  = (messagesRes.data || []).length;
+    var payments    = (paymentsRes.data || []).filter(function(p){ return p.status === 'paid'; });
+    var bilans      = bilansRes.data   || [];
+
+    var leadsWeek   = leads.filter(function(l){ return l.created_at >= weekStr; }).length;
+    var bookWeek    = bookings.filter(function(b){ return b.created_at >= weekStr; }).length;
+    var basketWeek  = bookings.filter(function(b){ return b.created_at >= weekStr && (b.service||'').toLowerCase().includes('basket'); }).length;
+    var refWeek     = bookings.filter(function(b){ return b.created_at >= weekStr && !(b.service||'').toLowerCase().includes('basket'); }).length;
+    var caWeek      = payments.filter(function(p){ return p.created_at >= weekStr; }).reduce(function(s,p){ return s+(p.amount_eur||0); }, 0) / 100;
+
+    document.getElementById('kpi-eleves').textContent   = clients.length;
+    document.getElementById('kpi-seances').textContent  = bookWeek;
+    document.getElementById('kpi-nouveaux').textContent = leadsWeek;
+    document.getElementById('kpi-messages').textContent = unreadMsgs;
+    document.getElementById('kpi-ca').textContent       = caWeek > 0 ? _fmtEur(caWeek) : '0';
+    document.getElementById('kpi-basket').textContent   = basketWeek;
+    document.getElementById('kpi-ref').textContent      = refWeek;
+    document.getElementById('kpi-messages-sub').textContent = unreadMsgs === 0 ? 'Aucun non lu' : unreadMsgs + ' non lu' + (unreadMsgs > 1 ? 's' : '');
+
+    var newLeads = leads.filter(function(l){ return l.status === 'nouveau'; }).length;
+    var badge = document.getElementById('nav-leads-count');
+    if (badge) { badge.textContent = newLeads; badge.style.display = newLeads > 0 ? 'inline' : 'none'; }
+
+    var newBilans = bilans.filter(function(b){ return b.status === 'new'; }).length;
+    var bilanBadge = document.getElementById('nav-bilans-count');
+    if (bilanBadge && newBilans > 0) { bilanBadge.textContent = newBilans; bilanBadge.style.display = 'inline'; }
+
+    _allLeads    = leads;
+    _allBookings = bookings;
+    _allBilans   = bilans;
+
+    _loadRecentLeadsPreview();
+    _loadRecentBookingsPreview();
+    console.log('[NZ Admin] KPIs chargés — leads:' + leads.length + ' clients:' + clients.length + ' bookings:' + bookings.length);
+  } catch(err) {
+    console.warn('[NZ Admin] _loadAdminKPIs:', err.message || err);
   }
 }
 
-async function _loadAdminKPIs() {
-  try {
-    var data = await window.NZ.fetchAdminDashboard();
-    // Mise à jour des KPIs principaux
-    var kpiEleves = document.getElementById('kpi-eleves');
-    var kpiNouveaux = document.getElementById('kpi-nouveaux');
-    var kpiMessages = document.getElementById('kpi-messages');
-    if (kpiEleves)   kpiEleves.textContent = data.clients_count;
-    if (kpiNouveaux) kpiNouveaux.textContent = data.leads_count;
-    if (kpiMessages) kpiMessages.textContent = data.bookings_pending;
-    // Leads récents
-    _renderRecentLeads(data.recent_leads);
-    // Réservations en attente
-    _renderPendingBookings(data.recent_bookings);
-  } catch(err) { console.warn('[NZ] _loadAdminKPIs:', err); }
+function _fmtEur(n) {
+  return n >= 1000 ? (Math.round(n/10)/100).toFixed(1).replace('.',',') + 'k' : Math.round(n).toString();
+}
+
+async function _loadRecentLeadsPreview() {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  var { data } = await sb.from('leads')
+    .select('id, first_name, last_name, email, phone, program_interest, status, created_at')
+    .order('created_at', {ascending:false}).limit(5);
+  _renderRecentLeads(data || []);
+}
+
+async function _loadRecentBookingsPreview() {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  var { data } = await sb.from('booking_requests')
+    .select('id, name, email, service, requested_date, requested_time, status, payment_status, created_at')
+    .order('created_at', {ascending:false}).limit(5);
+  _renderPendingBookings(data || []);
 }
 
 function _renderRecentLeads(leads) {
   var container = document.getElementById('admin-leads-list');
-  if (!container || !leads || !leads.length) return;
-  container.innerHTML = leads.map(function(l){
-    var date = new Date(l.created_at).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'});
-    var statusClass = l.status === 'new' ? 'green' : l.status === 'converted' ? 'blue' : 'amber';
-    return '<div class="conv-item" style="padding:12px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
-      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;">'
-      + '<div><div style="font-weight:600;font-size:.88rem;">'+escHtml(((l.first_name||'')+' '+(l.last_name||'')).trim()||l.email||'')+'</div>'
-      + '<div style="font-size:.78rem;color:rgba(255,255,255,.5);">'+escHtml(l.email||'')+'</div>'
-      + (l.program_interest?'<div style="font-size:.75rem;color:rgba(255,255,255,.4);margin-top:2px;">'+escHtml(l.program_interest)+'</div>':'')
+  if (!container) return;
+  if (!leads || !leads.length) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.4);">Aucun lead pour le moment.</div>';
+    return;
+  }
+  container.innerHTML = leads.map(function(l) {
+    var date = _fmtDate(l.created_at);
+    var name = escHtml(((l.first_name||'')+' '+(l.last_name||'')).trim() || l.email || '—');
+    var statusColors = {nouveau:'#4ade80',contacte:'#fbbf24',converti:'#60a5fa',archive:'rgba(255,255,255,.3)'};
+    var sc = statusColors[l.status] || 'rgba(255,255,255,.3)';
+    return '<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:11px 14px;margin-bottom:5px;border-radius:12px;background:rgba(255,255,255,.04);gap:8px;">'
+      + '<div style="min-width:0;flex:1;">'
+      + '<div style="font-weight:600;font-size:.86rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + name + '</div>'
+      + '<div style="font-size:.75rem;color:rgba(255,255,255,.45);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escHtml(l.email||'') + '</div>'
+      + (l.program_interest ? '<div style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:2px;">' + escHtml(l.program_interest) + '</div>' : '')
       + '</div>'
-      + '<div style="text-align:right"><div style="font-size:.72rem;color:rgba(255,255,255,.4);">'+date+'</div>'
-      + '<span style="font-size:.68rem;padding:3px 8px;border-radius:20px;background:rgba(255,255,255,.07);margin-top:4px;display:inline-block;">'+l.status+'</span>'
-      + '</div></div></div>';
+      + '<div style="flex-shrink:0;text-align:right;">'
+      + '<div style="font-size:.68rem;color:rgba(255,255,255,.38);">' + date + '</div>'
+      + '<span style="font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:100px;background:rgba(255,255,255,.06);color:' + sc + ';display:inline-block;margin-top:3px;">' + (l.status||'—') + '</span>'
+      + '</div>'
+      + '</div>';
   }).join('');
 }
-
-/* ── Mapping badge paiement ─── */
-function _payBadge(status) {
-  var map = {
-    unpaid:  ['unpaid',  'Non payé'],
-    pending: ['pending', 'En attente'],
-    paid:    ['paid',    'Payé'],
-    failed:  ['failed',  'Échec'],
-  };
-  var s = (status || 'unpaid').toLowerCase();
-  var info = map[s] || map['unpaid'];
-  return '<span class="pay-badge pay-badge-'+info[0]+'">'+info[1]+'</span>';
-}
-
-/* ── Badge statut présence ─── */
-function _statusBadge(status) {
-  var map = {
-    honore:        ['honore',  '✓ Honoré'],
-    annule_veille: ['annule',  'Annulé J-1'],
-    annule_j:      ['annule',  'Annulé J'],
-    no_show:       ['noshow',  'No-show'],
-    confirmed:     ['honore',  'Confirmé'],
-  };
-  var s = (status || '').toLowerCase();
-  var info = map[s];
-  if (!info) return '';
-  return '<span class="status-badge status-badge-'+info[0]+'">'+info[1]+'</span>';
-}
-
-/* ── Action présence / annulation ─── */
-async function doPresenceAction(bookingId, action, btn) {
-  if (!confirm(_confirmMsg(action))) return;
-  var allBtns = btn.closest('.presence-actions').querySelectorAll('.pa-btn');
-  allBtns.forEach(function(b){ b.disabled = true; });
-  btn.textContent = 'Mise à jour…';
-  try {
-    var sb = window.NZ && window.NZ._sb;
-    if (!sb) throw new Error('Supabase non initialisé');
-    var retentionPct = {honore:0, annule_veille:50, annule_j:100, no_show:100}[action] || 0;
-    var { error } = await sb.from('booking_requests')
-      .update({
-        status:          action,
-        retention_pct:   retentionPct,
-        actioned_at:     new Date().toISOString(),
-      })
-      .eq('id', bookingId);
-    if (error) throw error;
-    // Ajouter une note retention si applicable
-    if (retentionPct > 0) {
-      await sb.from('retention_logs').insert([{
-        booking_request_id: bookingId,
-        action:             action,
-        retention_pct:      retentionPct,
-        logged_at:          new Date().toISOString(),
-      }]);
-    }
-    // Mettre à jour visuellement sans recharger
-    var card = btn.closest('.conv-item');
-    if (card) {
-      var actionsDiv = card.querySelector('.presence-actions');
-      if (actionsDiv) {
-        var note = retentionPct > 0
-          ? '<p class="retention-note">'+retentionPct+'% retenus — enregistré</p>'
-          : '<p class="retention-note">Séance honorée — merci !</p>';
-        actionsDiv.outerHTML = _statusBadge(action) + note;
-      }
-    }
-  } catch(err) {
-    allBtns.forEach(function(b){ b.disabled = false; });
-    btn.textContent = 'Erreur — réessayer';
-    setTimeout(function(){ btn.textContent = _btnLabel(action); }, 2000);
-    alert('Erreur : ' + err.message);
-  }
-}
-
-function _confirmMsg(action) {
-  var msgs = {
-    honore:        'Marquer cette séance comme honorée ?',
-    annule_veille: 'Annulation la veille — 50% du montant sera retenu. Confirmer ?',
-    annule_j:      'Annulation le jour J — 100% du montant sera retenu. Confirmer ?',
-    no_show:       'Marquer comme no-show — 100% retenu. Confirmer ?',
-  };
-  return msgs[action] || 'Confirmer cette action ?';
-}
-function _btnLabel(action) {
-  var l = {honore:'✓ Honoré', annule_veille:'Annulé J-1 (50%)', annule_j:'Annulé J (100%)', no_show:'No-show (100%)'};
-  return l[action] || action;
-}
-
-/* ── État actuel du filtre ─── */
-var _bookingPayFilter = 'all';
 
 function _renderPendingBookings(bookings) {
   var container = document.getElementById('admin-bookings-list');
   if (!container) return;
-
-  // Stocker pour re-filtrage
   container._allBookings = bookings || [];
-
-  // Injecter les boutons filtre si pas encore présents
   var filterWrap = document.getElementById('admin-bookings-pay-filter');
   if (!filterWrap) {
     var fw = document.createElement('div');
     fw.id = 'admin-bookings-pay-filter';
     fw.className = 'pay-filter';
-    fw.innerHTML = [
-      {k:'all',   l:'Toutes'},
-      {k:'unpaid',l:'Non payées'},
-      {k:'paid',  l:'Payées'},
-      {k:'pending',l:'En attente'},
-    ].map(function(f){
-      return '<button class="pay-filter-btn'+(f.k===_bookingPayFilter?' active':'')+'" onclick="_setBookingFilter(\''+f.k+'\')">'+f.l+'</button>';
-    }).join('');
+    fw.innerHTML = [{k:'all',l:'Toutes'},{k:'unpaid',l:'Non payées'},{k:'paid',l:'Payées'},{k:'pending',l:'En attente'}]
+      .map(function(f){ return '<button class="pay-filter-btn'+(f.k==='all'?' active':'')+'" onclick="_setBookingFilter(\''+f.k+'\')">'+f.l+'</button>'; }).join('');
     container.parentNode.insertBefore(fw, container);
   }
-
   _applyBookingFilter();
 }
 
-function _setBookingFilter(filter) {
-  _bookingPayFilter = filter;
-  // Mettre à jour l'état actif des boutons
-  var fw = document.getElementById('admin-bookings-pay-filter');
-  if (fw) fw.querySelectorAll('.pay-filter-btn').forEach(function(btn){
-    btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === {
-      all:'toutes',unpaid:'non payées',paid:'payées',pending:'en attente'
-    }[filter]);
-  });
-  _applyBookingFilter();
-}
-
-function _applyBookingFilter() {
-  var container = document.getElementById('admin-bookings-list');
-  if (!container) return;
-  var bookings = container._allBookings || [];
-
-  var filtered = bookings.filter(function(b){
-    if (_bookingPayFilter === 'all') return true;
-    var ps = (b.payment_status || 'unpaid').toLowerCase();
-    return ps === _bookingPayFilter;
-  });
-
-  if (!filtered.length) {
-    container.innerHTML = '<div style="padding:20px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.4);">Aucune réservation pour ce filtre.</div>';
-    return;
-  }
-
-  container.innerHTML = filtered.map(function(b){
-    var date = new Date(b.created_at).toLocaleDateString('fr-FR',{day:'2-digit',month:'short'});
-    var payStatus = (b.payment_status || 'unpaid').toLowerCase();
-    var isUnpaid  = payStatus === 'unpaid' || payStatus === 'failed';
-    // Avertissement si on essaie de confirmer sans paiement
-    var confirmNote = isUnpaid
-      ? '<div style="font-size:.72rem;color:rgba(255,190,50,.75);margin-top:4px;">⚠ Acompte non reçu — confirmer avec précaution</div>'
-      : '';
-    var bId = escHtml(b.id || '');
-    var bStatus = (b.status || '').toLowerCase();
-    var alreadyActed = ['honore','annule_veille','annule_j','no_show','confirmed'].indexOf(bStatus) >= 0;
-    var statusBadge = alreadyActed ? _statusBadge(b.status) : '';
-    var actionsHtml = '';
-    if (!alreadyActed && bId) {
-      actionsHtml = '<div class="presence-actions">'
-        + '<button class="pa-btn pa-btn-honore" onclick="doPresenceAction(\''+bId+'\',\'honore\',this)" title="Séance effectuée">✓ Honoré</button>'
-        + '<button class="pa-btn pa-btn-annule-veille" onclick="doPresenceAction(\''+bId+'\',\'annule_veille\',this)" title="Annulation la veille — 50% retenus">Annulé J-1 (50%)</button>'
-        + '<button class="pa-btn pa-btn-annule-j" onclick="doPresenceAction(\''+bId+'\',\'annule_j\',this)" title="Annulation le jour J — 100% retenus">Annulé J (100%)</button>'
-        + '<button class="pa-btn pa-btn-noshow" onclick="doPresenceAction(\''+bId+'\',\'no_show\',this)" title="No-show — 100% retenus">No-show (100%)</button>'
-        + '</div>';
-    }
-    return '<div class="conv-item" style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
-      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'
-      + '<div style="flex:1;min-width:0;">'
-      + '<div style="font-weight:600;font-size:.88rem;">'+escHtml(b.name||'')+'</div>'
-      + '<div style="font-size:.78rem;color:rgba(255,255,255,.5);">'+escHtml(b.service||b.session_type||'')+'</div>'
-      + (b.requested_date||b.preferred_date?'<div style="font-size:.75rem;color:rgba(255,255,255,.4);">'+escHtml((b.requested_date||b.preferred_date||'')+(b.requested_time?' '+b.requested_time:''))+'</div>':'')
-      + confirmNote
-      + actionsHtml
-      + '</div>'
-      + '<div style="text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px;">'
-      + '<div style="font-size:.72rem;color:rgba(255,255,255,.4);">'+date+'</div>'
-      + _payBadge(b.payment_status)
-      + statusBadge
-      + '</div>'
-      + '</div></div>';
-  }).join('');
-}
 
 async function doLogout() {
   if (window.NZ && window.NZ.signOutClient) {
@@ -959,74 +909,342 @@ window.addEventListener('DOMContentLoaded', checkAdminSession);
 function initAdmin() {
   var now = new Date();
   var opts = {weekday:'long',year:'numeric',month:'long',day:'numeric'};
-  document.getElementById('kpi-date-label').textContent =
-    now.toLocaleDateString('fr-FR', opts);
+  document.getElementById('kpi-date-label').textContent = now.toLocaleDateString('fr-FR', opts);
   setNextSeance();
-  buildConvList();
-  selectConv(1);
   buildCalWeek(now);
   buildCalMonth(now);
+  // Charger les vraies données Supabase
+  _loadAdminKPIs();
+  _loadLeadsTab();
+  _loadReservationsTab();
+  _loadBilansTab();
+  _loadMessagerieReal();
 }
 
-/* ══ KPI ═════════════════════════════════════════════════════════════ */
+/* ══ KPI PÉRIODE (UI uniquement) ═════════════════════════════════════ */
 var currentPeriod = 'semaine';
 function setPeriod(p, btn) {
   currentPeriod = p;
   document.querySelectorAll('.kpi-period-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
-  var d = KPI[p];
-  document.getElementById('kpi-eleves').textContent = d.eleves;
-  document.getElementById('kpi-eleves-sub').textContent = p==='semaine' ? 'Programmes en cours' : 'Total actifs ce mois';
-  document.getElementById('kpi-seances').textContent = d.seances;
-  document.getElementById('kpi-seances-sub').textContent = p==='semaine' ? 'Sur 7 jours' : 'Sur 30 jours';
-  document.getElementById('kpi-nouveaux').textContent = d.nouveaux;
-  document.getElementById('kpi-nouveaux-sub').textContent = p==='semaine' ? 'Inscrits cette semaine' : 'Inscrits ce mois';
-  document.getElementById('kpi-messages').textContent = d.messages;
-  document.getElementById('kpi-ca-label').textContent = p==='semaine' ? 'CA semaine' : 'CA mois';
-  document.getElementById('kpi-ca').textContent = d.ca;
-  document.getElementById('kpi-retention').textContent = d.retention;
-  document.getElementById('kpi-basket').textContent = d.basket;
-  document.getElementById('kpi-ref').textContent = d.ref;
+  // Recalcul depuis les données déjà chargées
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  var cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - (p === 'mois' ? 30 : 7));
+  var cutoffStr = cutoff.toISOString();
+  var bookings = _allBookings || [];
+  var bookPeriod  = bookings.filter(function(b){ return b.created_at >= cutoffStr; }).length;
+  var basket = bookings.filter(function(b){ return b.created_at >= cutoffStr && (b.service||'').toLowerCase().includes('basket'); }).length;
+  var ref    = bookings.filter(function(b){ return b.created_at >= cutoffStr && !(b.service||'').toLowerCase().includes('basket'); }).length;
+  document.getElementById('kpi-seances').textContent  = bookPeriod;
+  document.getElementById('kpi-seances-sub').textContent = p==='mois' ? 'Sur 30 jours' : 'Sur 7 jours';
+  document.getElementById('kpi-basket').textContent   = basket;
+  document.getElementById('kpi-ref').textContent      = ref;
+  document.getElementById('kpi-ca-label').textContent = p==='mois' ? 'CA mois' : 'CA semaine';
 }
 
 function setNextSeance() {
-  var now = new Date();
-  var next = new Date(now);
-  // Find next working day
-  next.setDate(next.getDate() + 1);
-  while (next.getDay() === 0) { next.setDate(next.getDate() + 1); }
-  var days = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
-  document.getElementById('kpi-next-seance').textContent =
-    days[next.getDay()] + ' — 9h00 Thomas D.';
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) { document.getElementById('kpi-next-seance').textContent = '—'; return; }
+  sb.from('booking_requests')
+    .select('id, name, service, requested_date, requested_time, status')
+    .in('status', ['pending','confirmed'])
+    .gte('requested_date', new Date().toISOString().split('T')[0])
+    .order('requested_date', {ascending:true})
+    .limit(1)
+    .then(function(res) {
+      var next = (res.data||[])[0];
+      if (next) {
+        var d = next.requested_date ? new Date(next.requested_date).toLocaleDateString('fr-FR',{weekday:'short',day:'2-digit',month:'short'}) : '?';
+        document.getElementById('kpi-next-seance').textContent = d + (next.name ? ' — ' + next.name.split(' ')[0] : '');
+      } else {
+        document.getElementById('kpi-next-seance').textContent = 'Aucune planifiée';
+      }
+    });
 }
 
 /* ══ TABS ════════════════════════════════════════════════════════════ */
 function showTab(id, el) {
   document.querySelectorAll('.tab-section').forEach(function(s){ s.classList.remove('active'); });
-  document.getElementById('tab-' + id).classList.add('active');
+  var tabEl = document.getElementById('tab-' + id);
+  if (tabEl) tabEl.classList.add('active');
   document.querySelectorAll('.admin-nav-item').forEach(function(n){ n.classList.remove('active'); });
-  // Update sidebar
-  var sideItems = document.querySelectorAll('.admin-sidebar .admin-nav-item');
-  sideItems.forEach(function(item){
-    if ((id==='kpi' && item.textContent.includes('Tableau')) ||
-        (id==='calendar' && item.textContent.includes('Calendrier')) ||
-        (id==='messagerie' && item.textContent.includes('Messagerie'))) {
-      item.classList.add('active');
-    }
+  // Sidebar active
+  var tabNames = {kpi:'Tableau',calendar:'Calendrier',messagerie:'Messagerie',leads:'Leads',reservations:'Réservations',bilans:'Bilans'};
+  document.querySelectorAll('.admin-sidebar .admin-nav-item').forEach(function(item){
+    if (item.textContent.trim().startsWith(tabNames[id]||'___')) item.classList.add('active');
   });
-  // Update mobile tabs
+  if (el && el.id && el.id.startsWith('nav-item-')) el.classList.add('active');
+  // Mobile tabs
   document.querySelectorAll('.amt-btn').forEach(function(b){ b.classList.remove('active'); });
-  if (el && el.classList && el.classList.contains('amt-btn')) { el.classList.add('active'); }
-  else if (el && el.classList && el.classList.contains('admin-nav-item')) {
-    document.querySelectorAll('.amt-btn').forEach(function(b){
-      if ((id==='kpi'&&b.textContent.includes('KPI'))||
-          (id==='calendar'&&b.textContent.includes('Cal'))||
-          (id==='messagerie'&&b.textContent.includes('Mess'))) {
-        b.classList.add('active');
+  if (el && el.classList && el.classList.contains('amt-btn')) el.classList.add('active');
+  // Chargement à la demande
+  if (id === 'leads')        _loadLeadsTab();
+  if (id === 'reservations') _loadReservationsTab();
+  if (id === 'bilans')       _loadBilansTab();
+  if (id === 'messagerie')   _loadMessagerieReal();
+}
+
+/* ══ LEADS TAB (données réelles) ════════════════════════════════════ */
+var _leadFilter = 'all';
+var _leadsCache = [];
+
+async function _loadLeadsTab() {
+  var container = document.getElementById('admin-leads-list-full');
+  if (!container) return;
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  container.innerHTML = '<div style="padding:24px;text-align:center;color:rgba(255,255,255,.4);font-size:.84rem;">Chargement…</div>';
+  var { data, error } = await sb.from('leads')
+    .select('id, first_name, last_name, email, phone, program_interest, objective, message, status, source, created_at')
+    .order('created_at', {ascending:false}).limit(100);
+  if (error) { container.innerHTML = '<div style="padding:20px;color:rgba(255,100,100,.7);">Erreur: ' + escHtml(error.message) + '</div>'; return; }
+  _leadsCache = data || [];
+  var lbl = document.getElementById('leads-count-label');
+  if (lbl) lbl.textContent = _leadsCache.length + ' lead' + (_leadsCache.length > 1 ? 's' : '') + ' au total';
+  _renderLeadsTab();
+}
+
+function _setLeadFilter(f, btn) {
+  _leadFilter = f;
+  document.querySelectorAll('#leads-filter-wrap .pay-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  _renderLeadsTab();
+}
+
+function _renderLeadsTab() {
+  var container = document.getElementById('admin-leads-list-full');
+  if (!container) return;
+  var filtered = _leadsCache.filter(function(l){ return _leadFilter === 'all' || l.status === _leadFilter; });
+  if (!filtered.length) {
+    container.innerHTML = '<div style="padding:24px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.35);">Aucun lead pour ce filtre.</div>';
+    return;
+  }
+  container.innerHTML = filtered.map(function(l) {
+    var date = _fmtDate(l.created_at);
+    var name = escHtml(((l.first_name||'')+' '+(l.last_name||'')).trim() || l.email || '—');
+    var statusColors = {nouveau:'#4ade80',contacte:'#fbbf24',converti:'#60a5fa',archive:'rgba(255,255,255,.3)'};
+    var sc = statusColors[l.status] || 'rgba(255,255,255,.4)';
+    var lid = escHtml(l.id||'');
+    return '<div style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">'
+      + '<div style="flex:1;min-width:0;">'
+      + '<div style="font-weight:700;font-size:.88rem;">' + name + '</div>'
+      + '<div style="font-size:.77rem;color:rgba(255,255,255,.5);margin-top:1px;">' + escHtml(l.email||'') + (l.phone ? ' · ' + escHtml(l.phone) : '') + '</div>'
+      + (l.program_interest ? '<div style="font-size:.74rem;color:rgba(255,255,255,.4);margin-top:3px;">🎯 ' + escHtml(l.program_interest) + '</div>' : '')
+      + (l.objective ? '<div style="font-size:.74rem;color:rgba(255,255,255,.35);margin-top:2px;">' + escHtml(l.objective) + '</div>' : '')
+      + '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">'
+      + '<button onclick="_changeLeadStatus(\'' + lid + '\',\'contacte\',this)" style="font-size:.65rem;padding:3px 10px;border-radius:100px;background:rgba(251,191,36,.1);color:#fbbf24;border:1px solid rgba(251,191,36,.25);cursor:pointer;font-family:\'Outfit\',sans-serif;">✉ Contacté</button>'
+      + '<button onclick="_changeLeadStatus(\'' + lid + '\',\'converti\',this)" style="font-size:.65rem;padding:3px 10px;border-radius:100px;background:rgba(96,165,250,.1);color:#60a5fa;border:1px solid rgba(96,165,250,.25);cursor:pointer;font-family:\'Outfit\',sans-serif;">✓ Converti</button>'
+      + '<button onclick="_changeLeadStatus(\'' + lid + '\',\'archive\',this)" style="font-size:.65rem;padding:3px 10px;border-radius:100px;background:rgba(255,255,255,.04);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);cursor:pointer;font-family:\'Outfit\',sans-serif;">🗄 Archiver</button>'
+      + '</div></div>'
+      + '<div style="flex-shrink:0;text-align:right;">'
+      + '<div style="font-size:.68rem;color:rgba(255,255,255,.38);">' + date + '</div>'
+      + '<span style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;padding:3px 8px;border-radius:100px;background:rgba(255,255,255,.06);color:' + sc + ';display:inline-block;margin-top:4px;">' + (l.status||'—') + '</span>'
+      + '</div></div></div>';
+  }).join('');
+}
+
+async function _changeLeadStatus(leadId, newStatus, btn) {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb || !leadId) return;
+  btn.disabled = true; btn.textContent = '…';
+  var { error } = await sb.from('leads').update({ status: newStatus }).eq('id', leadId);
+  if (error) { btn.disabled = false; btn.textContent = '!Erreur'; return; }
+  // Mettre à jour localement
+  _leadsCache = _leadsCache.map(function(l){ return l.id === leadId ? Object.assign({}, l, {status:newStatus}) : l; });
+  _renderLeadsTab();
+  _loadRecentLeadsPreview();
+  var newLeads = _leadsCache.filter(function(l){ return l.status === 'nouveau'; }).length;
+  var badge = document.getElementById('nav-leads-count');
+  if (badge) { badge.textContent = newLeads; badge.style.display = newLeads > 0 ? 'inline' : 'none'; }
+}
+
+/* ══ RESERVATIONS TAB ════════════════════════════════════════════════ */
+async function _loadReservationsTab() {
+  var container = document.getElementById('admin-reservations-list');
+  if (!container) return;
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  container.innerHTML = '<div style="padding:24px;text-align:center;color:rgba(255,255,255,.4);font-size:.84rem;">Chargement…</div>';
+  var { data, error } = await sb.from('booking_requests')
+    .select('id, name, email, phone, service, requested_date, requested_time, message, status, payment_status, created_at')
+    .order('created_at', {ascending:false}).limit(100);
+  if (error) { container.innerHTML = '<div style="padding:20px;color:rgba(255,100,100,.7);">Erreur: ' + escHtml(error.message) + '</div>'; return; }
+  var bookings = data || [];
+  if (!bookings.length) {
+    container.innerHTML = '<div style="padding:32px;text-align:center;font-size:.9rem;color:rgba(255,255,255,.4);">Aucune réservation pour le moment.</div>';
+    return;
+  }
+  container._allBookings = bookings;
+  _renderPendingBookings(bookings);
+}
+
+/* ══ BILANS TAB ══════════════════════════════════════════════════════ */
+async function _loadBilansTab() {
+  var container = document.getElementById('admin-bilans-list');
+  if (!container) return;
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  container.innerHTML = '<div style="padding:24px;text-align:center;color:rgba(255,255,255,.4);font-size:.84rem;">Chargement…</div>';
+  var { data, error } = await sb.from('bilans')
+    .select('id, nom_prenom, email, telephone, age, status, data, created_at')
+    .order('created_at', {ascending:false}).limit(100);
+  if (error) { container.innerHTML = '<div style="padding:20px;color:rgba(255,100,100,.7);">Erreur: ' + escHtml(error.message) + '</div>'; return; }
+  var bilans = data || [];
+  if (!bilans.length) {
+    container.innerHTML = '<div style="padding:32px;text-align:center;font-size:.9rem;color:rgba(255,255,255,.4);">Aucun bilan reçu pour le moment.</div>';
+    return;
+  }
+  container.innerHTML = bilans.map(function(b) {
+    var date = _fmtDate(b.created_at);
+    var statusColors = {new:'#4ade80',read:'#fbbf24',treated:'#60a5fa',archived:'rgba(255,255,255,.3)'};
+    var sc = statusColors[b.status] || '#4ade80';
+    return '<div style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">'
+      + '<div style="flex:1;min-width:0;">'
+      + '<div style="font-weight:700;font-size:.88rem;">' + escHtml(b.nom_prenom||'—') + '</div>'
+      + '<div style="font-size:.77rem;color:rgba(255,255,255,.5);">' + escHtml(b.email||'') + (b.telephone ? ' · ' + escHtml(b.telephone) : '') + (b.age ? ' · ' + b.age + ' ans' : '') + '</div>'
+      + '</div>'
+      + '<div style="flex-shrink:0;text-align:right;">'
+      + '<div style="font-size:.68rem;color:rgba(255,255,255,.38);">' + date + '</div>'
+      + '<span style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;padding:3px 8px;border-radius:100px;background:rgba(255,255,255,.06);color:' + sc + ';display:inline-block;margin-top:4px;">' + (b.status||'new') + '</span>'
+      + '</div></div></div>';
+  }).join('');
+}
+
+/* ══ MESSAGERIE — données réelles Supabase ═══════════════════════════ */
+async function _loadMessagerieReal() {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) { buildConvList(); return; }
+  try {
+    var { data } = await sb.from('messages')
+      .select('id, client_id, sender_type, body, is_read, created_at, profiles!messages_client_id_fkey(id, full_name, email)')
+      .order('created_at', {ascending:false})
+      .limit(200);
+    var msgs = data || [];
+    // Déduplique par client_id (garde le plus récent par thread)
+    var threads = {};
+    msgs.forEach(function(m) {
+      if (!threads[m.client_id]) {
+        threads[m.client_id] = {
+          client_id: m.client_id,
+          profile: m.profiles || {full_name: 'Inconnu', email: ''},
+          last_msg: m,
+          unread: 0,
+          all_msgs: []
+        };
       }
+      if (!m.is_read && m.sender_type === 'client') threads[m.client_id].unread++;
     });
+    // Remplir les messages de chaque thread (ordre chrono)
+    var byClient = {};
+    msgs.slice().reverse().forEach(function(m){ if (!byClient[m.client_id]) byClient[m.client_id] = []; byClient[m.client_id].push(m); });
+    Object.keys(threads).forEach(function(cid){ threads[cid].all_msgs = byClient[cid] || []; });
+    _convThreads = Object.values(threads);
+    _renderConvList(_convThreads);
+    if (_convThreads.length > 0) _selectThread(_convThreads[0].client_id);
+  } catch(err) {
+    console.warn('[NZ Admin] _loadMessagerieReal:', err.message || err);
+    buildConvList(); // fallback
   }
 }
+
+function _renderConvList(threads) {
+  var container = document.getElementById('convItems');
+  if (!container) return;
+  if (!threads.length) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;font-size:.82rem;color:rgba(255,255,255,.35);">Aucune conversation</div>';
+    return;
+  }
+  container.innerHTML = threads.map(function(t) {
+    var name = t.profile.full_name || t.profile.email || 'Client';
+    var avatar = (name[0]||'?').toUpperCase();
+    var last = t.last_msg;
+    var preview = last ? escHtml(last.body.substring(0, 42)) + '…' : '';
+    var time = last ? _fmtTime(last.created_at) : '';
+    var isActive = _currentThread && _currentThread.client_id === t.client_id;
+    return '<div class="msg-conv-item' + (isActive ? ' active' : '') + '" data-client="' + t.client_id + '" onclick="_selectThread(\'' + t.client_id + '\')">'
+      + '<div class="msg-conv-avatar">' + avatar + '</div>'
+      + '<div class="msg-conv-body">'
+      + '<div class="msg-conv-name">' + escHtml(name) + '</div>'
+      + '<div class="msg-conv-preview">' + preview + '</div>'
+      + '</div>'
+      + '<div class="msg-conv-meta">'
+      + '<span class="msg-conv-time">' + time + '</span>'
+      + '<span class="msg-conv-badge">' + (t.unread || '') + '</span>'
+      + '</div></div>';
+  }).join('');
+}
+
+async function _selectThread(clientId) {
+  var thread = _convThreads.find(function(t){ return t.client_id === clientId; });
+  if (!thread) return;
+  _currentThread = thread;
+  thread.unread = 0;
+  _renderConvList(_convThreads);
+  var name = thread.profile.full_name || thread.profile.email || 'Client';
+  document.getElementById('threadAvatar').textContent = (name[0]||'?').toUpperCase();
+  document.getElementById('threadName').textContent = name;
+  document.getElementById('threadStatus').textContent = thread.profile.email || '';
+  var prog = document.getElementById('threadProgram');
+  prog.textContent = ''; prog.style.display = 'none';
+  var msgThread = document.getElementById('msgThread');
+  msgThread.innerHTML = '';
+  thread.all_msgs.forEach(function(m) {
+    var isCoach = m.sender_type === 'admin';
+    var row = document.createElement('div');
+    row.className = 'msg-bubble-row ' + (isCoach ? 'from-coach' : 'from-client');
+    row.innerHTML = '<div class="msg-bav">' + (isCoach ? 'M' : (name[0]||'?').toUpperCase()) + '</div>'
+      + '<div><div class="msg-bubble">' + escHtml(m.body) + '</div>'
+      + '<div class="msg-time">' + _fmtTime(m.created_at) + '</div></div>';
+    msgThread.appendChild(row);
+  });
+  msgThread.scrollTop = msgThread.scrollHeight;
+  // Marquer comme lus
+  var sb = window.NZ && window.NZ._sb;
+  if (sb) sb.from('messages').update({is_read:true}).eq('client_id', clientId).eq('is_read', false).then(function(){});
+}
+
+async function sendAdminMsg() {
+  var input = document.getElementById('msgInput');
+  var text = (input.value || '').trim();
+  if (!text || !_currentThread) return;
+  var sb = window.NZ && window.NZ._sb;
+  var user = await (window.NZ && window.NZ.getCurrentUser());
+  if (!sb || !user) return;
+  var { error } = await sb.from('messages').insert({
+    client_id:   _currentThread.client_id,
+    sender_id:   user.id,
+    sender_type: 'admin',
+    body:        text
+  });
+  if (error) { console.error('[NZ Admin] sendAdminMsg:', error.message); return; }
+  var now = new Date().toISOString();
+  var newMsg = {id: 'tmp', client_id: _currentThread.client_id, sender_type:'admin', body:text, is_read:true, created_at:now};
+  _currentThread.all_msgs.push(newMsg);
+  _currentThread.last_msg = newMsg;
+  _selectThread(_currentThread.client_id);
+  input.value = ''; input.style.height = 'auto';
+}
+
+function _fmtDate(iso) {
+  if (!iso) return '—';
+  var d = new Date(iso);
+  return d.toLocaleDateString('fr-FR', {day:'2-digit', month:'short'});
+}
+
+function _fmtTime(iso) {
+  if (!iso) return '';
+  var d = new Date(iso);
+  var now = new Date();
+  var diff = now - d;
+  if (diff < 86400000 && d.getDate() === now.getDate()) return String(d.getHours()).padStart(2,'0') + 'h' + String(d.getMinutes()).padStart(2,'0');
+  if (diff < 172800000) return 'Hier';
+  return d.toLocaleDateString('fr-FR', {day:'2-digit', month:'short'});
+}
+
 
 /* ══ CALENDAR ════════════════════════════════════════════════════════ */
 var calOffset = 0; // weeks or months from today
@@ -1205,89 +1423,131 @@ function setCalView(v, btn) {
 }
 
 /* ══ MESSAGERIE ══════════════════════════════════════════════════════ */
-function buildConvList() {
-  var container = document.getElementById('convItems');
-  container.innerHTML = '';
-  CONVS.forEach(function(c){
-    var lastMsg = c.messages[c.messages.length - 1];
-    var item = document.createElement('div');
-    item.className = 'msg-conv-item' + (c.id === currentConvId ? ' active' : '');
-    item.setAttribute('data-id', c.id);
-    item.innerHTML =
-      '<div class="msg-conv-avatar">' + c.avatar + '</div>' +
-      '<div class="msg-conv-body">' +
-        '<div class="msg-conv-name">' + c.name + '</div>' +
-        '<div class="msg-conv-preview">' + (lastMsg ? lastMsg.text.substring(0,42) + '…' : '') + '</div>' +
-      '</div>' +
-      '<div class="msg-conv-meta">' +
-        '<span class="msg-conv-time">' + (lastMsg ? lastMsg.time : '') + '</span>' +
-        '<span class="msg-conv-badge">' + (c.unread || '') + '</span>' +
-      '</div>';
-    item.onclick = function(){ selectConv(c.id); };
-    container.appendChild(item);
+/* ── Badge paiement ── */
+function _payBadge(status) {
+  var map = {unpaid:['unpaid','Non payé'],pending:['pending','En attente'],paid:['paid','Payé'],failed:['failed','Échec']};
+  var s = (status||'unpaid').toLowerCase();
+  var info = map[s] || map['unpaid'];
+  return '<span class="pay-badge pay-badge-'+info[0]+'">'+info[1]+'</span>';
+}
+
+/* ── Badge statut présence ── */
+function _statusBadge(status) {
+  var map = {honore:['honore','✓ Honoré'],annule_veille:['annule','Annulé J-1'],annule_j:['annule','Annulé J'],no_show:['noshow','No-show'],confirmed:['honore','Confirmé']};
+  var s = (status||'').toLowerCase();
+  var info = map[s];
+  if (!info) return '';
+  return '<span class="status-badge status-badge-'+info[0]+'">'+info[1]+'</span>';
+}
+
+/* ── Action présence / annulation ── */
+async function doPresenceAction(bookingId, action, btn) {
+  if (!confirm(_confirmMsg(action))) return;
+  var allBtns = btn.closest('.presence-actions').querySelectorAll('.pa-btn');
+  allBtns.forEach(function(b){ b.disabled = true; });
+  btn.textContent = 'Mise à jour…';
+  try {
+    var sb = window.NZ && window.NZ._sb;
+    if (!sb) throw new Error('Supabase non initialisé');
+    var retentionPct = {honore:0, annule_veille:50, annule_j:100, no_show:100}[action] || 0;
+    var { error } = await sb.from('booking_requests').update({
+      status: action,
+    }).eq('id', bookingId);
+    if (error) throw error;
+    var card = btn.closest('[style*="border-radius:14px"]') || btn.closest('.conv-item');
+    if (card) {
+      var actionsDiv = card.querySelector('.presence-actions');
+      if (actionsDiv) {
+        var note = retentionPct > 0
+          ? '<p class="retention-note">'+retentionPct+'% retenus — enregistré</p>'
+          : '<p class="retention-note">Séance honorée ✓</p>';
+        actionsDiv.outerHTML = _statusBadge(action) + note;
+      }
+    }
+  } catch(err) {
+    allBtns.forEach(function(b){ b.disabled = false; });
+    btn.textContent = 'Erreur — réessayer';
+    setTimeout(function(){ btn.textContent = _btnLabel(action); }, 2000);
+    alert('Erreur : ' + err.message);
+  }
+}
+
+function _confirmMsg(action) {
+  var msgs = {
+    honore:'Marquer cette séance comme honorée ?',
+    annule_veille:'Annulation la veille — 50% du montant sera retenu. Confirmer ?',
+    annule_j:'Annulation le jour J — 100% du montant sera retenu. Confirmer ?',
+    no_show:'Marquer comme no-show — 100% retenu. Confirmer ?',
+  };
+  return msgs[action] || 'Confirmer cette action ?';
+}
+
+function _btnLabel(action) {
+  var l = {honore:'✓ Honoré',annule_veille:'Annulé J-1 (50%)',annule_j:'Annulé J (100%)',no_show:'No-show (100%)'};
+  return l[action] || action;
+}
+
+/* ── Filtre réservations ── */
+function _setBookingFilter(filter) {
+  _bookingPayFilter = filter;
+  var fw = document.getElementById('admin-bookings-pay-filter');
+  if (fw) fw.querySelectorAll('.pay-filter-btn').forEach(function(btn){
+    btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === {all:'toutes',unpaid:'non payées',paid:'payées',pending:'en attente'}[filter]);
   });
+  _applyBookingFilter();
 }
 
-function selectConv(id) {
-  currentConvId = id;
-  var conv = CONVS.find(function(c){ return c.id === id; });
-  if (!conv) return;
-  conv.unread = 0;
-  // Update conv list
-  buildConvList();
-  // Update thread header
-  document.getElementById('threadAvatar').textContent = conv.avatar;
-  document.getElementById('threadName').textContent = conv.name;
-  document.getElementById('threadStatus').textContent = conv.status;
-  var prog = document.getElementById('threadProgram');
-  prog.textContent = conv.program;
-  prog.style.display = 'block';
-  // Build messages
-  var thread = document.getElementById('msgThread');
-  thread.innerHTML = '';
-  conv.messages.forEach(function(msg){
-    appendMsg(thread, msg.from, msg.text, msg.time, conv.avatar);
+function _applyBookingFilter() {
+  var container = document.getElementById('admin-bookings-list');
+  if (!container) return;
+  var bookings = container._allBookings || [];
+  var filtered = bookings.filter(function(b){
+    if (_bookingPayFilter === 'all') return true;
+    return ((b.payment_status||'unpaid').toLowerCase()) === _bookingPayFilter;
   });
-  thread.scrollTop = thread.scrollHeight;
+  if (!filtered.length) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.4);">Aucune réservation pour ce filtre.</div>';
+    return;
+  }
+  container.innerHTML = filtered.map(function(b) {
+    var date = _fmtDate(b.created_at);
+    var payStatus = (b.payment_status||'unpaid').toLowerCase();
+    var isUnpaid  = payStatus === 'unpaid' || payStatus === 'failed';
+    var confirmNote = isUnpaid ? '<div style="font-size:.72rem;color:rgba(255,190,50,.75);margin-top:4px;">⚠ Acompte non reçu</div>' : '';
+    var bId = escHtml(b.id||'');
+    var bStatus = (b.status||'').toLowerCase();
+    var alreadyActed = ['honore','annule_veille','annule_j','no_show','confirmed'].indexOf(bStatus) >= 0;
+    var actionsHtml = '';
+    if (!alreadyActed && bId) {
+      actionsHtml = '<div class="presence-actions">'
+        + '<button class="pa-btn pa-btn-honore" onclick="doPresenceAction(\''+bId+'\',\'honore\',this)">✓ Honoré</button>'
+        + '<button class="pa-btn pa-btn-annule-veille" onclick="doPresenceAction(\''+bId+'\',\'annule_veille\',this)">Annulé J-1 (50%)</button>'
+        + '<button class="pa-btn pa-btn-annule-j" onclick="doPresenceAction(\''+bId+'\',\'annule_j\',this)">Annulé J (100%)</button>'
+        + '<button class="pa-btn pa-btn-noshow" onclick="doPresenceAction(\''+bId+'\',\'no_show\',this)">No-show (100%)</button>'
+        + '</div>';
+    }
+    return '<div style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'
+      + '<div style="flex:1;min-width:0;">'
+      + '<div style="font-weight:600;font-size:.88rem;">' + escHtml(b.name||'') + '</div>'
+      + '<div style="font-size:.78rem;color:rgba(255,255,255,.5);">' + escHtml(b.service||'') + '</div>'
+      + (b.requested_date ? '<div style="font-size:.75rem;color:rgba(255,255,255,.4);">' + escHtml(b.requested_date+(b.requested_time?' '+b.requested_time:'')) + '</div>' : '')
+      + confirmNote + actionsHtml
+      + '</div>'
+      + '<div style="text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;">'
+      + '<div style="font-size:.72rem;color:rgba(255,255,255,.4);">' + date + '</div>'
+      + _payBadge(b.payment_status)
+      + (alreadyActed ? _statusBadge(b.status) : '')
+      + '</div></div></div>';
+  }).join('');
 }
 
-function appendMsg(thread, from, text, time, avatar) {
-  var isCoach = from === 'coach';
-  var row = document.createElement('div');
-  row.className = 'msg-bubble-row ' + (isCoach ? 'from-coach' : 'from-client');
-  var avText = isCoach ? 'M' : avatar;
-  row.innerHTML =
-    '<div class="msg-bav">' + avText + '</div>' +
-    '<div>' +
-      '<div class="msg-bubble">' + escHtml(text) + '</div>' +
-      '<div class="msg-time">' + time + '</div>' +
-    '</div>';
-  thread.appendChild(row);
-}
-
-function sendAdminMsg() {
-  var input = document.getElementById('msgInput');
-  var text = input.value.trim();
-  if (!text || currentConvId < 0) return;
-  var conv = CONVS.find(function(c){ return c.id === currentConvId; });
-  if (!conv) return;
-  var now = new Date();
-  var time = String(now.getHours()).padStart(2,'0') + 'h' + String(now.getMinutes()).padStart(2,'0');
-  var msg = {from:'coach', text:text, time:time};
-  conv.messages.push(msg);
-  var thread = document.getElementById('msgThread');
-  appendMsg(thread, 'coach', text, time, conv.avatar);
-  thread.scrollTop = thread.scrollHeight;
-  input.value = '';
-  input.style.height = 'auto';
-  buildConvList();
-}
-
+/* ── filterConvs (recherche messagerie) ── */
 function filterConvs(q) {
-  q = q.toLowerCase();
+  q = (q||'').toLowerCase();
   document.querySelectorAll('.msg-conv-item').forEach(function(item){
-    var name = item.querySelector('.msg-conv-name').textContent.toLowerCase();
-    item.style.display = name.includes(q) ? '' : 'none';
+    var name = (item.querySelector('.msg-conv-name')||{}).textContent || '';
+    item.style.display = name.toLowerCase().includes(q) ? '' : 'none';
   });
 }
 
@@ -1295,6 +1555,7 @@ function autoResize(el) {
   el.style.height = 'auto';
   el.style.height = Math.min(el.scrollHeight, 120) + 'px';
 }
+
 
 function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
