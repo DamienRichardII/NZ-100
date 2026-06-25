@@ -1161,6 +1161,9 @@ function _setResaFilter(f, btn) {
   _applyResaFilter();
 }
 
+/* lookup global — accessible depuis les onclick inline */
+window._nzResaById  = {};
+
 function _applyResaFilter() {
   var container = document.getElementById('admin-reservations-list');
   if (!container) return;
@@ -1173,45 +1176,79 @@ function _applyResaFilter() {
     container.innerHTML = '<div style="padding:32px;text-align:center;font-size:.9rem;color:rgba(255,255,255,.4);">Aucune réservation pour ce filtre.</div>';
     return;
   }
+  window._nzResaById = {};
   container.innerHTML = filtered.map(function(b) {
-    var date = _fmtDate(b.created_at);
-    var payStatus = (b.payment_status||'unpaid').toLowerCase();
-    var isUnpaid = payStatus === 'unpaid' || payStatus === 'failed';
-    var confirmNote = isUnpaid ? '<div style="font-size:.72rem;color:rgba(255,190,50,.75);margin-top:4px;">⚠ Acompte non reçu</div>' : '';
-    var bId = escHtml(b.id||'');
-    var bStatus = (b.status||'').toLowerCase();
-    var alreadyActed = ['honore','annule_veille','annule_j','no_show','confirmed'].indexOf(bStatus) >= 0;
-    var actionsHtml = '';
-    if (!alreadyActed && bId) {
-      actionsHtml = '<div class="presence-actions" style="margin-top:8px;">'
+    var bId  = b.id || '';
+    window._nzResaById[bId] = b;
+    var bStatus    = (b.status || 'pending').toLowerCase();
+    var payStatus  = (b.payment_status || 'unpaid').toLowerCase();
+    var isUnpaid   = payStatus === 'unpaid' || payStatus === 'failed';
+    var isPending  = ['pending','en_attente','nouveau','new'].indexOf(bStatus) >= 0;
+    var isValide   = ['valide','confirmed'].indexOf(bStatus) >= 0;
+    var isFinished = ['honore','annule_veille','annule_j','no_show','termine'].indexOf(bStatus) >= 0;
+    var isRefused  = bStatus === 'refuse';
+
+    /* ─ Bloc message client ─ */
+    var msgHtml = b.message
+      ? '<div style="font-size:.75rem;color:rgba(255,255,255,.38);margin-top:5px;padding:7px 10px;background:rgba(255,255,255,.03);border-radius:8px;border-left:2px solid rgba(255,255,255,.08);line-height:1.45;white-space:pre-wrap;">' + escHtml(b.message) + '</div>'
+      : '';
+
+    /* ─ Boutons statut (modifiable si en attente) ─ */
+    var statusBtns = '';
+    if (isPending && bId) {
+      statusBtns = '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;">'
+        + '<button class="pa-btn" style="background:rgba(74,222,128,.15);border-color:rgba(74,222,128,.35);color:#4ade80;font-size:.68rem;" onclick="_changeBookingStatus(\'' + bId + '\',\'valide\',this)">✅ Valider</button>'
+        + '<button class="pa-btn" style="background:rgba(251,191,36,.1);border-color:rgba(251,191,36,.3);color:#fbbf24;font-size:.68rem;" onclick="_changeBookingStatus(\'' + bId + '\',\'en_attente\',this)">⏳ En attente</button>'
+        + '<button class="pa-btn" style="background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.3);color:#f87171;font-size:.68rem;" onclick="_changeBookingStatus(\'' + bId + '\',\'refuse\',this)">❌ Refuser</button>'
+        + '</div>';
+    }
+
+    /* ─ Actions présence (si validé et pas encore acté) ─ */
+    var presenceBtns = '';
+    if ((isValide || bStatus === 'valide') && bId) {
+      presenceBtns = '<div class="presence-actions" style="margin-top:8px;">'
         + '<button class="pa-btn pa-btn-honore" onclick="doPresenceAction(\'' + bId + '\',\'honore\',this)">✓ Honoré</button>'
         + '<button class="pa-btn pa-btn-annule-veille" onclick="doPresenceAction(\'' + bId + '\',\'annule_veille\',this)">Annulé J-1 (50%)</button>'
         + '<button class="pa-btn pa-btn-annule-j" onclick="doPresenceAction(\'' + bId + '\',\'annule_j\',this)">Annulé J (100%)</button>'
         + '<button class="pa-btn pa-btn-noshow" onclick="doPresenceAction(\'' + bId + '\',\'no_show\',this)">No-show (100%)</button>'
         + '</div>';
     }
-    return '<div style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
-      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'
-      + '<div style="flex:1;min-width:0;">'
-      + '<div style="font-weight:600;font-size:.88rem;">' + escHtml(b.name||'—') + '</div>'
-      + '<div style="font-size:.78rem;color:rgba(255,255,255,.5);">'
-      +   escHtml(b.email||'') + (b.phone ? ' · ' + escHtml(b.phone) : '') + '</div>'
-      + '<div style="font-size:.78rem;color:rgba(255,255,255,.4);">' + escHtml(b.service||'') + '</div>'
-      + (b.requested_date ? '<div style="font-size:.75rem;color:rgba(255,255,255,.45);margin-top:2px;">📅 '
-        + escHtml(b.requested_date + (b.requested_time ? ' à ' + b.requested_time : '')) + '</div>' : '')
-      + confirmNote + actionsHtml
+
+    /* ─ Bouton mail ─ */
+    var mailBtn = bId ? '<button onclick="openEmailModal(window._nzResaById[\'' + bId + '\'] && {email:window._nzResaById[\'' + bId + '\'].email,name:window._nzResaById[\'' + bId + '\'].name,service:window._nzResaById[\'' + bId + '\'].service,requested_date:window._nzResaById[\'' + bId + '\'].requested_date,requested_time:window._nzResaById[\'' + bId + '\'].requested_time,mode:\'booking\',defaultType:\'booking_confirmation\'})" style="margin-top:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:5px 11px;color:rgba(255,255,255,.65);cursor:pointer;font-size:.68rem;">✉ Envoyer un mail</button>' : '';
+
+    return '<div style="padding:16px;margin-bottom:8px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,' + (isPending ? '.1' : '.05') + ');">'
+      /* header */
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px;">'
+      +   '<div style="flex:1;min-width:0;">'
+      +     '<div style="font-weight:700;font-size:.9rem;">' + escHtml(b.name||'—') + '</div>'
+      +     '<div style="font-size:.76rem;color:rgba(255,255,255,.5);margin-top:2px;">' + escHtml(b.email||'—') + (b.phone ? ' &nbsp;·&nbsp; ' + escHtml(b.phone) : '') + '</div>'
+      +   '</div>'
+      +   '<div style="text-align:right;flex-shrink:0;">'
+      +     '<div style="font-size:.65rem;color:rgba(255,255,255,.35);">' + _fmtDate(b.created_at) + '</div>'
+      +     '<div style="margin-top:4px;">' + _statusPill(bStatus) + '</div>'
+      +   '</div>'
       + '</div>'
-      + '<div style="text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;">'
-      + '<div style="font-size:.72rem;color:rgba(255,255,255,.4);">' + date + '</div>'
-      + _payBadge(b.payment_status)
-      + (alreadyActed ? _statusBadge(b.status) : '')
-      + '</div></div></div>';
+      /* détails */
+      + (b.service ? '<div style="font-size:.76rem;color:rgba(255,255,255,.45);">🏀 ' + escHtml(b.service) + '</div>' : '')
+      + (b.requested_date ? '<div style="font-size:.74rem;color:rgba(255,255,255,.42);margin-top:2px;">📅 ' + escHtml(b.requested_date + (b.requested_time ? ' à ' + b.requested_time : '')) + '</div>' : '')
+      + (isUnpaid ? '<div style="font-size:.7rem;color:rgba(255,190,50,.75);margin-top:3px;">⚠ Acompte non reçu</div>' : '')
+      /* payment badge */
+      + '<div style="margin-top:5px;">' + _payBadge(b.payment_status) + '</div>'
+      + msgHtml
+      /* actions */
+      + statusBtns
+      + presenceBtns
+      + mailBtn
+      + '</div>';
   }).join('');
 }
 
 
 
 /* ══ BILANS TAB ══════════════════════════════════════════════════════ */
+window._nzBilanById = {};
+
 async function _loadBilansTab() {
   var container = document.getElementById('admin-bilans-list');
   if (!container) return;
@@ -1221,26 +1258,88 @@ async function _loadBilansTab() {
   var { data, error } = await sb.from('bilans')
     .select('id, nom_prenom, email, telephone, age, status, data, created_at')
     .order('created_at', {ascending:false}).limit(100);
-  if (error) { container.innerHTML = '<div style="padding:20px;color:rgba(255,100,100,.7);">Erreur: ' + escHtml(error.message) + '</div>'; return; }
+  if (error) {
+    container.innerHTML = '<div style="padding:20px;color:rgba(255,100,100,.7);">Erreur: ' + escHtml(error.message) + '</div>';
+    return;
+  }
   var bilans = data || [];
   if (!bilans.length) {
     container.innerHTML = '<div style="padding:32px;text-align:center;font-size:.9rem;color:rgba(255,255,255,.4);">Aucun bilan reçu pour le moment.</div>';
     return;
   }
+  window._nzBilanById = {};
   container.innerHTML = bilans.map(function(b) {
-    var date = _fmtDate(b.created_at);
-    var statusColors = {new:'#4ade80',read:'#fbbf24',treated:'#60a5fa',archived:'rgba(255,255,255,.3)'};
-    var sc = statusColors[b.status] || '#4ade80';
-    return '<div style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
-      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">'
-      + '<div style="flex:1;min-width:0;">'
-      + '<div style="font-weight:700;font-size:.88rem;">' + escHtml(b.nom_prenom||'—') + '</div>'
-      + '<div style="font-size:.77rem;color:rgba(255,255,255,.5);">' + escHtml(b.email||'') + (b.telephone ? ' · ' + escHtml(b.telephone) : '') + (b.age ? ' · ' + b.age + ' ans' : '') + '</div>'
+    var bId     = b.id || '';
+    window._nzBilanById[bId] = b;
+    var bStatus = (b.status || 'new').toLowerCase();
+    var isNew   = ['new','nouveau'].indexOf(bStatus) >= 0;
+    var isLu    = bStatus === 'lu';
+    var canAct  = isNew || isLu || bStatus === 'contacte';
+
+    /* ─ Extraire champs JSONB ─ */
+    var d = b.data || {};
+    var objective = d.objectif || d.objective || '';
+    var niveau    = d.niveau   || d.level     || '';
+    var sport     = d.sport    || '';
+    var position  = d.position || '';
+    var equipe    = d.equipe   || d.team      || '';
+    var situation = d.situation || '';
+    var motivation= d.motivation || '';
+
+    /* ─ Extrait données affichées ─ */
+    var detailsHtml = '';
+    if (objective)  detailsHtml += '<div style="font-size:.74rem;color:rgba(255,255,255,.45);margin-top:2px;">🎯 ' + escHtml(objective) + '</div>';
+    if (niveau)     detailsHtml += '<div style="font-size:.72rem;color:rgba(255,255,255,.38);">📊 Niveau : ' + escHtml(niveau) + (sport ? ' · ' + escHtml(sport) : '') + (position ? ' · ' + escHtml(position) : '') + '</div>';
+    if (equipe)     detailsHtml += '<div style="font-size:.72rem;color:rgba(255,255,255,.35);">🏀 ' + escHtml(equipe) + '</div>';
+    if (situation)  detailsHtml += '<div style="font-size:.72rem;color:rgba(255,255,255,.35);">👤 ' + escHtml(situation) + '</div>';
+    if (motivation) detailsHtml += '<div style="font-size:.72rem;color:rgba(255,255,255,.32);margin-top:4px;padding:6px 9px;background:rgba(255,255,255,.03);border-radius:7px;border-left:2px solid rgba(255,255,255,.07);line-height:1.45;white-space:pre-wrap;">' + escHtml(motivation) + '</div>';
+
+    /* ─ Boutons d'action selon statut ─ */
+    var actionBtns = '';
+    if (bId && (isNew || isLu)) {
+      actionBtns = '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;">'
+        + '<button class="pa-btn" style="background:rgba(74,222,128,.15);border-color:rgba(74,222,128,.35);color:#4ade80;font-size:.68rem;" onclick="_changeBilanStatus(\'' + bId + '\',\'valide\',this)">✅ Valider</button>'
+        + '<button class="pa-btn" style="background:rgba(249,115,22,.12);border-color:rgba(249,115,22,.3);color:#f97316;font-size:.68rem;" onclick="_changeBilanStatus(\'' + bId + '\',\'contacte\',this)">📞 Contacter</button>'
+        + '<button class="pa-btn" style="background:rgba(129,140,248,.12);border-color:rgba(129,140,248,.3);color:#818cf8;font-size:.68rem;" onclick="_changeBilanStatus(\'' + bId + '\',\'planifie\',this)">📅 Planifié</button>'
+        + '<button class="pa-btn" style="background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.3);color:#f87171;font-size:.68rem;" onclick="_changeBilanStatus(\'' + bId + '\',\'refuse\',this)">❌ Refuser</button>'
+        + '</div>';
+    } else if (bId && bStatus === 'contacte') {
+      actionBtns = '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;">'
+        + '<button class="pa-btn" style="background:rgba(74,222,128,.15);border-color:rgba(74,222,128,.35);color:#4ade80;font-size:.68rem;" onclick="_changeBilanStatus(\'' + bId + '\',\'valide\',this)">✅ Valider</button>'
+        + '<button class="pa-btn" style="background:rgba(129,140,248,.12);border-color:rgba(129,140,248,.3);color:#818cf8;font-size:.68rem;" onclick="_changeBilanStatus(\'' + bId + '\',\'planifie\',this)">📅 Planifié</button>'
+        + '<button class="pa-btn" style="background:rgba(100,100,100,.15);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.45);font-size:.68rem;" onclick="_changeBilanStatus(\'' + bId + '\',\'archive\',this)">📁 Archiver</button>'
+        + '</div>';
+    } else if (bId && ['valide','planifie'].indexOf(bStatus) >= 0) {
+      actionBtns = '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:9px;">'
+        + '<button class="pa-btn" style="background:rgba(100,100,100,.15);border-color:rgba(255,255,255,.12);color:rgba(255,255,255,.45);font-size:.68rem;" onclick="_changeBilanStatus(\'' + bId + '\',\'archive\',this)">📁 Archiver</button>'
+        + '</div>';
+    }
+
+    /* ─ Bouton mail ─ */
+    var mailBtn = bId ? '<button onclick="openEmailModal({email:window._nzBilanById[\'' + bId + '\'].email,name:window._nzBilanById[\'' + bId + '\'].nom_prenom,objective:(window._nzBilanById[\'' + bId + '\'].data||{}).objectif||\'\',mode:\'bilan\',defaultType:\'bilan_contacted\'})" style="margin-top:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:5px 11px;color:rgba(255,255,255,.65);cursor:pointer;font-size:.68rem;">✉ Envoyer un mail</button>' : '';
+
+    return '<div style="padding:16px;margin-bottom:8px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,' + (isNew ? '.1' : '.05') + ');">'
+      /* header */
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:5px;">'
+      +   '<div style="flex:1;min-width:0;">'
+      +     '<div style="font-weight:700;font-size:.9rem;">' + escHtml(b.nom_prenom||'—') + '</div>'
+      +     '<div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-top:2px;">'
+      +       escHtml(b.email||'—')
+      +       (b.telephone ? ' &nbsp;·&nbsp; ' + escHtml(b.telephone) : '')
+      +       (b.age ? ' &nbsp;·&nbsp; ' + b.age + ' ans' : '')
+      +     '</div>'
+      +   '</div>'
+      +   '<div style="flex-shrink:0;text-align:right;">'
+      +     '<div style="font-size:.65rem;color:rgba(255,255,255,.35);">' + _fmtDate(b.created_at) + '</div>'
+      +     '<div style="margin-top:4px;">' + _statusPill(bStatus) + '</div>'
+      +   '</div>'
       + '</div>'
-      + '<div style="flex-shrink:0;text-align:right;">'
-      + '<div style="font-size:.68rem;color:rgba(255,255,255,.38);">' + date + '</div>'
-      + '<span style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;padding:3px 8px;border-radius:100px;background:rgba(255,255,255,.06);color:' + sc + ';display:inline-block;margin-top:4px;">' + (b.status||'new') + '</span>'
-      + '</div></div></div>';
+      /* données bilan */
+      + detailsHtml
+      /* actions */
+      + actionBtns
+      + mailBtn
+      + '</div>';
   }).join('');
 }
 
@@ -1800,13 +1899,12 @@ async function _availOpenPeriod(days) {
     rows.push({ date: ds, is_available: true });
   }
   var { error } = await sb.from('calendar_availability').upsert(rows, { onConflict: 'date' });
-  if (error) { if (status) status.textContent = '⚠ ' + error.message; return; }
-  if (status) status.textContent = '✓ ' + rows.length + ' jours ouverts (week-ends inclus)';
+  if (error) { if (status) status.textContent = '\u26a0 ' + error.message; return; }
+  if (status) status.textContent = '\u2713 ' + rows.length + ' jours ouverts (week-ends inclus)';
   setTimeout(function(){ if (status) status.textContent = ''; }, 2000);
   rows.forEach(function(r){ _availData[r.date] = r; });
   _renderAvailGrid();
 }
-
 
 async function _availOpenWeekends() {
   var sb = window.NZ && window.NZ._sb;
@@ -1826,60 +1924,28 @@ async function _availOpenWeekends() {
   }
   if (!rows.length) { if (status) status.textContent = 'Aucun week-end ce mois.'; return; }
   var { error } = await sb.from('calendar_availability').upsert(rows, { onConflict: 'date' });
-  if (error) { if (status) status.textContent = '⚠ ' + error.message; return; }
-  if (status) status.textContent = '✓ ' + rows.length + ' week-ends ouverts ce mois';
+  if (error) { if (status) status.textContent = '\u26a0 ' + error.message; return; }
+  if (status) status.textContent = '\u2713 ' + rows.length + ' week-ends ouverts ce mois';
   setTimeout(function(){ if (status) status.textContent = ''; }, 2000);
   rows.forEach(function(r){ _availData[r.date] = r; });
   _renderAvailGrid();
 }
 
-/* ── Badge paiement ── */
-function _payBadge(status) {
-  var map = {unpaid:['unpaid','Non payé'],pending:['pending','En attente'],paid:['paid','Payé'],failed:['failed','Échec']};
-  var s = (status||'unpaid').toLowerCase();
-  var info = map[s] || map['unpaid'];
-  return '<span class="pay-badge pay-badge-'+info[0]+'">'+info[1]+'</span>';
-}
-
-/* ── Badge statut présence ── */
-function _statusBadge(status) {
-  var map = {honore:['honore','✓ Honoré'],annule_veille:['annule','Annulé J-1'],annule_j:['annule','Annulé J'],no_show:['noshow','No-show'],confirmed:['honore','Confirmé']};
-  var s = (status||'').toLowerCase();
-  var info = map[s];
-  if (!info) return '';
-  return '<span class="status-badge status-badge-'+info[0]+'">'+info[1]+'</span>';
-}
-
-/* ── Action présence / annulation ── */
+/* ══ PRÉSENCE / NO-SHOW ═════════════════════════════════════════ */
 async function doPresenceAction(bookingId, action, btn) {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb || !bookingId) return;
   if (!confirm(_confirmMsg(action))) return;
-  var allBtns = btn.closest('.presence-actions').querySelectorAll('.pa-btn');
-  allBtns.forEach(function(b){ b.disabled = true; });
-  btn.textContent = 'Mise à jour…';
-  try {
-    var sb = window.NZ && window.NZ._sb;
-    if (!sb) throw new Error('Supabase non initialisé');
-    var retentionPct = {honore:0, annule_veille:50, annule_j:100, no_show:100}[action] || 0;
-    var { error } = await sb.from('booking_requests').update({
-      status: action,
-    }).eq('id', bookingId);
-    if (error) throw error;
-    var card = btn.closest('[style*="border-radius:14px"]') || btn.closest('.conv-item');
-    if (card) {
-      var actionsDiv = card.querySelector('.presence-actions');
-      if (actionsDiv) {
-        var note = retentionPct > 0
-          ? '<p class="retention-note">'+retentionPct+'% retenus — enregistré</p>'
-          : '<p class="retention-note">Séance honorée ✓</p>';
-        actionsDiv.outerHTML = _statusBadge(action) + note;
-      }
-    }
-  } catch(err) {
-    allBtns.forEach(function(b){ b.disabled = false; });
-    btn.textContent = 'Erreur — réessayer';
-    setTimeout(function(){ btn.textContent = _btnLabel(action); }, 2000);
-    alert('Erreur : ' + err.message);
+  if (btn) { btn.disabled = true; btn.textContent = '…'; }
+  var { error } = await sb.from('booking_requests')
+    .update({ status: action, updated_at: new Date().toISOString() })
+    .eq('id', bookingId);
+  if (error) {
+    if (btn) { btn.disabled = false; btn.textContent = _btnLabel(action); }
+    alert('Erreur : ' + error.message);
+    return;
   }
+  _loadReservationsTab();
 }
 
 function _confirmMsg(action) {
@@ -1893,96 +1959,267 @@ function _confirmMsg(action) {
 }
 
 function _btnLabel(action) {
-  var l = {honore:'✓ Honoré',annule_veille:'Annulé J-1 (50%)',annule_j:'Annulé J (100%)',no_show:'No-show (100%)'};
+  var l = {honore:'\u2713 Honoré',annule_veille:'Annulé J-1 (50%)',annule_j:'Annulé J (100%)',no_show:'No-show (100%)'};
   return l[action] || action;
 }
 
-/* ── Filtre réservations ── */
-function _setBookingFilter(filter) {
-  _bookingPayFilter = filter;
-  var fw = document.getElementById('admin-bookings-pay-filter');
-  if (fw) fw.querySelectorAll('.pay-filter-btn').forEach(function(btn){
-    btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === {all:'toutes',unpaid:'non payées',paid:'payées',pending:'en attente'}[filter]);
-  });
-  _applyBookingFilter();
+/* ══ EMAIL MODAL ════════════════════════════════════════════════════ */
+var _emailModalCtx = {};
+var _emailSending  = false;
+
+var _EMAIL_TEMPLATES = {
+  booking: [
+    { id:'booking_confirmation', label:'✅ RDV confirmé'   },
+    { id:'booking_waiting',      label:'⏳ En attente'           },
+    { id:'booking_refused',      label:'❌ Refusé'         },
+    { id:'booking_info',         label:'📋 Infos requises' },
+    { id:'booking_reminder',     label:'🔔 Rappel séance' },
+    { id:'custom',               label:'✏ Personnalisé'   },
+  ],
+  bilan: [
+    { id:'bilan_confirmation', label:'✅ Bilan confirmé'      },
+    { id:'bilan_contacted',    label:'📞 Prise de contact'   },
+    { id:'bilan_refused',      label:'❌ Refusé'             },
+    { id:'bilan_info',         label:'📋 Infos requises'    },
+    { id:'custom',             label:'✏ Personnalisé'        },
+  ],
+};
+
+var _EMAIL_SUBJECTS = {
+  booking_confirmation: '✅ Votre RDV de coaching est confirmé — NZ 100%',
+  booking_waiting:      "Votre demande de coaching est en cours d\'\u00e9tude — NZ 100%",
+  booking_refused:      'Concernant votre demande de coaching — NZ 100%',
+  booking_info:         'Informations complémentaires requises — NZ 100%',
+  booking_reminder:     '🔔 Rappel : votre séance de coaching approche — NZ 100%',
+  bilan_confirmation:   '✅ Votre bilan de performance est confirmé — NZ 100%',
+  bilan_contacted:      'Suite à votre demande de bilan — NZ 100%',
+  bilan_refused:        'Concernant votre demande de bilan — NZ 100%',
+  bilan_info:           'Informations complémentaires requises — NZ 100%',
+  custom:               '',
+};
+
+function _getEmailBody(type, ctx) {
+  var n   = ctx.name || 'Prénom';
+  var svc = ctx.service || 'Coaching Basket';
+  var dt  = ctx.requested_date ? ctx.requested_date + (ctx.requested_time ? ' à ' + ctx.requested_time : '') : '';
+  var tpl = {
+    booking_confirmation: 'Bonjour ' + n + ',\n\nVotre rendez-vous de coaching est bien confirmé' + (dt ? ' le ' + dt : '') + '.\n\nService : ' + svc + "\n\nN'hésitez pas à me contacter si vous avez des questions.\n\nÀ très vite !\nMathieu — NZ 100%",
+    booking_waiting:      "Bonjour " + n + ",\n\nJ'ai bien reçu votre demande et je reviens vers vous rapidement pour confirmer votre créneau.\n\nMerci pour votre patience.\n\nÀ bientôt,\nMathieu — NZ 100%",
+    booking_refused:      "Bonjour " + n + ",\n\nMerci de l'intérêt que vous portez à NZ 100%.\n\nMalheureusement, je ne suis pas disponible pour ce créneau. N'hésitez pas à me recontacter.\n\nCordialement,\nMathieu — NZ 100%",
+    booking_info:         "Bonjour " + n + ",\n\nAfin de traiter votre demande, j'aurais besoin de quelques informations complémentaires.\n\nMerci de me répondre directement à cet email.\n\nMathieu — NZ 100%",
+    booking_reminder:     'Bonjour ' + n + ',\n\nJe vous rappelle que votre séance est prévue' + (dt ? ' le ' + dt : '') + ".\n\nN'oubliez pas vos équipements.\n\nÀ très vite !\nMathieu — NZ 100%",
+    bilan_confirmation:   'Bonjour ' + n + ",\n\nVotre demande de bilan de performance a été validée.\n\nJe vous contacterai très prochainement pour convenir des modalités.\n\nÀ bientôt !\nMathieu — NZ 100%",
+    bilan_contacted:      'Bonjour ' + n + ",\n\nMerci pour votre demande de bilan. Je prends contact avec vous pour planifier votre rendez-vous.\n\nCordialement,\nMathieu — NZ 100%",
+    bilan_refused:        "Bonjour " + n + ",\n\nMerci de l'intérêt que vous portez à NZ 100%.\n\nAprès étude, je ne suis pas en mesure de traiter votre demande pour le moment.\n\nCordialement,\nMathieu — NZ 100%",
+    bilan_info:           "Bonjour " + n + ",\n\nAfin de mieux préparer votre bilan, j'aurais besoin de quelques informations supplémentaires.\n\nMerci de me répondre directement.\n\nMathieu — NZ 100%",
+    custom:               'Bonjour ' + n + ',\n\n\n\nCordialement,\nMathieu — NZ 100%',
+  };
+  return tpl[type] || tpl.custom;
 }
 
-function _applyBookingFilter() {
-  var container = document.getElementById('admin-bookings-list');
-  if (!container) return;
-  var bookings = container._allBookings || [];
-  var filtered = bookings.filter(function(b){
-    if (_bookingPayFilter === 'all') return true;
-    return ((b.payment_status||'unpaid').toLowerCase()) === _bookingPayFilter;
-  });
-  if (!filtered.length) {
-    container.innerHTML = '<div style="padding:20px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.4);">Aucune réservation pour ce filtre.</div>';
-    return;
+function openEmailModal(ctx) {
+  _emailModalCtx = ctx || {};
+  var modal = document.getElementById('nzEmailModal');
+  if (!modal) return;
+  var to   = document.getElementById('nzEmailTo');
+  var subj = document.getElementById('nzEmailSubject');
+  var body = document.getElementById('nzEmailBody');
+  var sub  = document.getElementById('nzEmailModalSub');
+  var btns = document.getElementById('nzEmailTemplateBtns');
+  if (to)   to.value   = ctx.email || '';
+  if (subj) subj.value = _EMAIL_SUBJECTS[ctx.defaultType || 'custom'] || '';
+  if (body) body.value = ctx.defaultType ? _getEmailBody(ctx.defaultType, ctx) : _getEmailBody('custom', ctx);
+  if (sub)  sub.textContent = '→ ' + (ctx.name || '') + (ctx.email ? ' <' + ctx.email + '>' : '');
+  if (btns) {
+    var tmpls = _EMAIL_TEMPLATES[ctx.mode || 'booking'];
+    btns.innerHTML = (tmpls||[]).map(function(t){
+      return '<button class="pay-filter-btn" style="font-size:.68rem;" onclick="_applyEmailTemplate(\'' + t.id + '\')">' + t.label + '</button>';
+    }).join('');
   }
-  container.innerHTML = filtered.map(function(b) {
-    var date = _fmtDate(b.created_at);
-    var payStatus = (b.payment_status||'unpaid').toLowerCase();
-    var isUnpaid  = payStatus === 'unpaid' || payStatus === 'failed';
-    var confirmNote = isUnpaid ? '<div style="font-size:.72rem;color:rgba(255,190,50,.75);margin-top:4px;">⚠ Acompte non reçu</div>' : '';
-    var bId = escHtml(b.id||'');
-    var bStatus = (b.status||'').toLowerCase();
-    var alreadyActed = ['honore','annule_veille','annule_j','no_show','confirmed'].indexOf(bStatus) >= 0;
-    var actionsHtml = '';
-    if (!alreadyActed && bId) {
-      actionsHtml = '<div class="presence-actions">'
-        + '<button class="pa-btn pa-btn-honore" onclick="doPresenceAction(\''+bId+'\',\'honore\',this)">✓ Honoré</button>'
-        + '<button class="pa-btn pa-btn-annule-veille" onclick="doPresenceAction(\''+bId+'\',\'annule_veille\',this)">Annulé J-1 (50%)</button>'
-        + '<button class="pa-btn pa-btn-annule-j" onclick="doPresenceAction(\''+bId+'\',\'annule_j\',this)">Annulé J (100%)</button>'
-        + '<button class="pa-btn pa-btn-noshow" onclick="doPresenceAction(\''+bId+'\',\'no_show\',this)">No-show (100%)</button>'
-        + '</div>';
+  document.getElementById('nzEmailStatus').textContent = '';
+  modal.style.display = 'flex';
+}
+
+function closeEmailModal() {
+  var modal = document.getElementById('nzEmailModal');
+  if (modal) modal.style.display = 'none';
+  _emailModalCtx = {};
+  _emailSending  = false;
+}
+
+function _applyEmailTemplate(type) {
+  var ctx = _emailModalCtx;
+  var s = document.getElementById('nzEmailSubject');
+  var b = document.getElementById('nzEmailBody');
+  if (s) s.value = _EMAIL_SUBJECTS[type] || '';
+  if (b) b.value = _getEmailBody(type, ctx);
+}
+
+async function sendAdminEmailFinal() {
+  if (_emailSending) return;
+  var to   = (document.getElementById('nzEmailTo').value    || '').trim();
+  var subj = (document.getElementById('nzEmailSubject').value|| '').trim();
+  var body = (document.getElementById('nzEmailBody').value   || '').trim();
+  var st   = document.getElementById('nzEmailStatus');
+  if (!to || !subj || !body) { if (st) st.textContent = '⚠ Tous les champs sont requis.'; return; }
+  _emailSending = true;
+  var btn = document.getElementById('nzEmailSendBtn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Envoi…'; }
+  if (st) st.textContent = 'Envoi en cours…';
+  var ok = await _callSendEmail({ type:'custom', to:to, name:_emailModalCtx.name||'', subject:subj, message:body });
+  _emailSending = false;
+  if (btn) { btn.disabled = false; btn.textContent = '✉ Envoyer'; }
+  if (ok) {
+    if (st) st.textContent = '✅ Mail envoyé avec succès';
+    setTimeout(closeEmailModal, 1500);
+  } else {
+    if (st) st.textContent = "❌ Erreur lors de l'envoi — vérifier la config Resend.";
+  }
+}
+
+async function _callSendEmail(payload) {
+  try {
+    var sb = window.NZ && window.NZ._sb;
+    if (!sb) return false;
+    var { error } = await sb.functions.invoke('send-email', { body: payload });
+    if (error) { console.error('[NZ Admin] _callSendEmail:', error.message || error); return false; }
+    return true;
+  } catch(err) {
+    console.error('[NZ Admin] _callSendEmail:', err.message || err);
+    return false;
+  }
+}
+
+/* ══ STATUS CHANGE — RÉSERVATIONS ═════════════════════════════════ */
+window._nzResaById  = window._nzResaById  || {};
+window._nzBilanById = window._nzBilanById || {};
+
+async function _changeBookingStatus(bookingId, newStatus, btn) {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb || !bookingId) return;
+  var labels = { valide:'Valider', en_attente:'En attente', refuse:'Refuser' };
+  var msg = {
+    valide:     'Confirmer ce RDV et envoyer un email au client ?',
+    en_attente: 'Mettre en attente et notifier le client ?',
+    refuse:     'Refuser cette demande ?'
+  };
+  if (!confirm(msg[newStatus] || 'Confirmer ?')) return;
+  if (btn) { btn.disabled = true; btn.textContent = '…'; }
+  try {
+    var { data, error } = await sb.from('booking_requests')
+      .update({ status: newStatus, updated_at: new Date().toISOString() })
+      .eq('id', bookingId)
+      .select('id,name,email,service,requested_date,requested_time')
+      .single();
+    if (error) throw error;
+    if (newStatus === 'valide' && data && data.email) {
+      await _callSendEmail({ type:'booking_confirmation', to:data.email, name:data.name||'', service:data.service||'', requested_date:data.requested_date||'', requested_time:data.requested_time||'' });
+      await _callSendEmail({ type:'admin_booking_confirmed', to:'mathieunzita60@gmail.com', client_name:data.name||'', client_email:data.email, service:data.service||'', requested_date:data.requested_date||'', requested_time:data.requested_time||'' });
     }
-    return '<div style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
-      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'
-      + '<div style="flex:1;min-width:0;">'
-      + '<div style="font-weight:600;font-size:.88rem;">' + escHtml(b.name||'') + '</div>'
-      + '<div style="font-size:.78rem;color:rgba(255,255,255,.5);">' + escHtml(b.service||'') + '</div>'
-      + (b.requested_date ? '<div style="font-size:.75rem;color:rgba(255,255,255,.4);">' + escHtml(b.requested_date+(b.requested_time?' '+b.requested_time:'')) + '</div>' : '')
-      + confirmNote + actionsHtml
-      + '</div>'
-      + '<div style="text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;">'
-      + '<div style="font-size:.72rem;color:rgba(255,255,255,.4);">' + date + '</div>'
-      + _payBadge(b.payment_status)
-      + (alreadyActed ? _statusBadge(b.status) : '')
-      + '</div></div></div>';
-  }).join('');
+    if (newStatus === 'en_attente' && data && data.email) {
+      await _callSendEmail({ type:'booking_waiting', to:data.email, name:data.name||'' });
+    }
+    _loadReservationsTab();
+  } catch(err) {
+    if (btn) { btn.disabled = false; btn.textContent = labels[newStatus]||newStatus; }
+    alert('Erreur : ' + err.message);
+  }
 }
 
-/* ── filterConvs (recherche messagerie) ── */
-function filterConvs(q) {
-  q = (q||'').toLowerCase();
-  document.querySelectorAll('.msg-conv-item').forEach(function(item){
-    var name = (item.querySelector('.msg-conv-name')||{}).textContent || '';
-    item.style.display = name.toLowerCase().includes(q) ? '' : 'none';
-  });
+async function _changeBilanStatus(bilanId, newStatus, btn) {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb || !bilanId) return;
+  var msg = {
+    valide:   'Valider ce bilan et envoyer un email au client ?',
+    contacte: 'Marquer comme contacté ?',
+    planifie: 'Marquer comme planifié ?',
+    refuse:   'Refuser cette demande ?',
+    archive:  'Archiver ce bilan ?'
+  };
+  if (!confirm(msg[newStatus] || 'Confirmer ?')) return;
+  if (btn) { btn.disabled = true; btn.textContent = '…'; }
+  try {
+    var { data, error } = await sb.from('bilans')
+      .update({ status: newStatus })
+      .eq('id', bilanId)
+      .select('id,nom_prenom,email,data')
+      .single();
+    if (error) throw error;
+    if (newStatus === 'valide' && data && data.email) {
+      var obj = (data.data && (data.data.objectif || data.data.objective)) || '';
+      await _callSendEmail({ type:'bilan_confirmation', to:data.email, name:data.nom_prenom||'', objective:obj });
+      await _callSendEmail({ type:'admin_bilan_confirmed', to:'mathieunzita60@gmail.com', client_name:data.nom_prenom||'', client_email:data.email, objective:obj });
+    }
+    if (newStatus === 'contacte' && data && data.email) {
+      await _callSendEmail({ type:'bilan_contacted', to:data.email, name:data.nom_prenom||'' });
+    }
+    _loadBilansTab();
+  } catch(err) {
+    if (btn) { btn.disabled = false; btn.textContent = '…'; }
+    alert('Erreur : ' + err.message);
+  }
 }
 
-function autoResize(el) {
-  el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+/* —— Helpers statut —— */
+function _statusLabelFull(status) {
+  var l = {
+    pending:'En attente', en_attente:'En attente', valide:'Validé ✓', confirmed:'Confirmé ✓',
+    refuse:'Refusé', honore:'Honoré ✓', annule_veille:'Annulé J-1', annule_j:'Annulé J',
+    no_show:'No-show', termine:'Terminé', new:'Nouveau', lu:'Lu',
+    contacte:'Contacté', planifie:'Planifié', archive:'Archivé',
+    archived:'Archivé', treated:'Traité'
+  };
+  return l[status] || status;
+}
+function _statusColor(status) {
+  var c = {
+    pending:'#fbbf24', en_attente:'#f97316', valide:'#4ade80', confirmed:'#4ade80',
+    refuse:'#f87171', honore:'#60a5fa', annule_veille:'#a78bfa', annule_j:'#f87171',
+    no_show:'#f87171', termine:'#60a5fa', new:'#fbbf24', lu:'#94a3b8',
+    contacte:'#f97316', planifie:'#818cf8', archive:'rgba(255,255,255,.3)',
+    archived:'rgba(255,255,255,.3)', treated:'#60a5fa'
+  };
+  return c[status] || 'rgba(255,255,255,.4)';
+}
+function _statusPill(status) {
+  return '<span style="font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;padding:3px 9px;border-radius:100px;background:rgba(255,255,255,.06);color:' + _statusColor(status) + ';display:inline-block;">' + _statusLabelFull(status) + '</span>';
 }
 
-
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-/* ── Toggle visibilité mot de passe ── */
-function _togglePwd(inputId, btn) {
-  var inp = document.getElementById(inputId);
-  if (!inp) return;
-  var show = inp.type === 'password';
-  inp.type = show ? 'text' : 'password';
-  btn.setAttribute('aria-label', show ? 'Masquer le mot de passe' : 'Afficher le mot de passe');
-  var eyeOpen   = btn.querySelector('.eye-open');
-  var eyeClosed = btn.querySelector('.eye-closed');
-  if (eyeOpen)   eyeOpen.style.display   = show ? 'none'   : 'inline';
-  if (eyeClosed) eyeClosed.style.display = show ? 'inline' : 'none';
-}
 </script>
 </body>
+
+<!-- ══ MODAL EMAIL ═════════════════════════════════════════════════════ -->
+<div id="nzEmailModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.8);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:16px;">
+  <div style="background:rgba(14,14,20,.98);border:1px solid rgba(255,255,255,.12);border-radius:22px;width:100%;max-width:540px;max-height:92vh;overflow-y:auto;padding:28px 24px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;">
+      <div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.25rem;letter-spacing:.06em;">Envoyer un mail</div>
+        <div id="nzEmailModalSub" style="font-size:.75rem;color:rgba(255,255,255,.38);margin-top:2px;"></div>
+      </div>
+      <button onclick="closeEmailModal()" style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:30px;height:30px;cursor:pointer;color:#fff;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">×</button>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:7px;">Templates rapides</div>
+      <div id="nzEmailTemplateBtns" style="display:flex;gap:5px;flex-wrap:wrap;"></div>
+    </div>
+    <div style="margin-bottom:11px;">
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:5px;">Destinataire</div>
+      <input id="nzEmailTo" type="email" readonly style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:9px 12px;color:rgba(255,255,255,.55);font-size:.83rem;outline:none;">
+    </div>
+    <div style="margin-bottom:11px;">
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:5px;">Sujet</div>
+      <input id="nzEmailSubject" type="text" placeholder="Objet du mail…" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:9px 12px;color:#fff;font-size:.83rem;outline:none;">
+    </div>
+    <div style="margin-bottom:18px;">
+      <div style="font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.3);margin-bottom:5px;">Message</div>
+      <textarea id="nzEmailBody" rows="7" placeholder="Votre message…" style="width:100%;box-sizing:border-box;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:9px 12px;color:#fff;font-size:.82rem;outline:none;resize:vertical;font-family:inherit;line-height:1.55;"></textarea>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button onclick="closeEmailModal()" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:10px 20px;color:#fff;cursor:pointer;font-size:.82rem;">Annuler</button>
+      <button id="nzEmailSendBtn" onclick="sendAdminEmailFinal()" style="background:#fff;color:#000;border:none;border-radius:100px;padding:10px 24px;font-weight:700;cursor:pointer;font-size:.82rem;">✉ Envoyer</button>
+    </div>
+    <div id="nzEmailStatus" style="margin-top:11px;font-size:.76rem;color:rgba(255,255,255,.5);text-align:center;min-height:18px;"></div>
+  </div>
+</div>
+
 </html>
