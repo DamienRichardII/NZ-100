@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — Mathieu Nzita Coach</title>
 <meta name="description" content="Contactez Mathieu Nzita pour réserver votre bilan ou votre accompagnement. Remise en forme, retour au sport, performance, coaching basket.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NZ 100%">
+<meta property="og:title" content="Réserver un bilan — NZ 100%">
+<meta property="og:description" content="Réserve ton bilan gratuit avec Mathieu Nzita. Coaching remise en forme, retour au sport, performance. Paris & Île-de-France.">
+<meta property="og:image" content="https://nz-100.vercel.app/assets/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://nz-100.vercel.app/contact.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Réserver un bilan — NZ 100%">
+<meta name="twitter:description" content="Réserve ton bilan gratuit avec Mathieu Nzita. Coaching remise en forme, retour au sport, performance. Paris & Île-de-France.">
+<meta name="twitter:image" content="https://nz-100.vercel.app/assets/og-image.jpg">
 <link rel="icon" type="image/png" href="assets/nz_logo_nav.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -563,83 +575,4 @@ function resetContactForm(){
 }
 
 // ── Affiche l'état d'erreur et restaure le bouton ──
-function _showFormError(msg, btn){
-  // Afficher l'inline error en haut du formulaire
-  const errEl=document.getElementById('formError');
-  if(errEl){ errEl.textContent=msg; errEl.style.display='block'; }
-  if(btn){ btn.disabled=false; btn.textContent='Envoyer ma demande'; }
-  // Scroll vers l'erreur
-  if(errEl) errEl.scrollIntoView({behavior:'smooth',block:'center'});
-}
-</script>
-<script>
-/* NZ100 — VIDEO RELIABILITY — mobile + Safari */
-(function(){
-  'use strict';
-
-  function tryPlay(v){
-    if(!v||v.paused===false) return;
-    var p=v.play();
-    if(p&&typeof p.catch==='function') p.catch(function(){});
-  }
-
-  /* ── HERO VIDEO : démarre à 5s, reboucle à 5s ── */
-  var heroSel=['.hero-video-wrap video','.page-hero-video','.page-header-video'];
-  var hv=null;
-  for(var si=0;si<heroSel.length;si++){
-    hv=document.querySelector(heroSel[si]);
-    if(hv) break;
-  }
-  if(hv){
-    hv.removeAttribute('loop');
-    function heroGo(){
-      hv.currentTime=5;
-      tryPlay(hv);
-    }
-    hv.addEventListener('loadedmetadata',heroGo);
-    hv.addEventListener('ended',heroGo);
-    hv.addEventListener('timeupdate',function(){
-      if(hv.duration>0&&hv.currentTime>=hv.duration-0.4){
-        hv.currentTime=5;
-        tryPlay(hv);
-      }
-    });
-    // iOS Safari suspend/stall recovery
-    hv.addEventListener('suspend',function(){ if(!document.hidden) tryPlay(hv); });
-    hv.addEventListener('stalled',function(){ if(!document.hidden) tryPlay(hv); });
-    if(hv.readyState>=1) heroGo();
-  }
-
-  /* ── SECTION VIDEOS : seance-vid + avis-vid ── */
-  var svids=document.querySelectorAll('.seance-vid,.avis-vid');
-  svids.forEach(function(vid){
-    vid.addEventListener('loadedmetadata',function(){ tryPlay(vid); });
-    vid.addEventListener('suspend',function(){ if(!document.hidden) tryPlay(vid); });
-    vid.addEventListener('stalled',function(){ if(!document.hidden) tryPlay(vid); });
-    if(vid.readyState>=2) tryPlay(vid);
-  });
-
-  /* ── IntersectionObserver : play quand visible, pause hors champ ── */
-  if('IntersectionObserver' in window && svids.length){
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ tryPlay(e.target); }
-        else{ if(!e.target.paused) e.target.pause(); }
-      });
-    },{threshold:0.15,rootMargin:'0px'});
-    svids.forEach(function(v){ io.observe(v); });
-  }
-
-  /* ── Visibilité page : relancer au retour au premier plan ── */
-  document.addEventListener('visibilitychange',function(){
-    if(!document.hidden){
-      if(hv) tryPlay(hv);
-      svids.forEach(function(v){ tryPlay(v); });
-    }
-  });
-})();
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="assets/js/supabaseClient.js?v=leads-v6"></script>
-</body>
-</html>
+function _showFormError(ms
