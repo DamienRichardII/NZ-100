@@ -559,6 +559,45 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
         </div>
       </div>
 
+      <!-- ── DISPONIBILITÉS MANAGER ─────────────────────────── -->
+      <div style="margin-top:40px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;margin-bottom:4px;">Gérer les disponibilités</h2>
+            <p style="font-size:.82rem;color:rgba(255,255,255,.45);">Cliquez sur une date pour l'ouvrir ou la bloquer. Les modifications sont sauvegardées automatiquement.</p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <div style="display:flex;gap:6px;align-items:center;font-size:.75rem;color:rgba(255,255,255,.5);">
+              <span style="width:11px;height:11px;border-radius:3px;background:#4ade80;display:inline-block;"></span>Dispo
+              <span style="width:11px;height:11px;border-radius:3px;background:rgba(255,80,80,.6);display:inline-block;margin-left:8px;"></span>Bloqué
+              <span style="width:11px;height:11px;border-radius:3px;background:rgba(255,255,255,.1);display:inline-block;margin-left:8px;"></span>Passé
+            </div>
+          </div>
+        </div>
+
+        <!-- Raccourcis période -->
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+          <button onclick="_availBlockPeriod(7)" class="pay-filter-btn" style="font-size:.72rem;">🔒 Bloquer 7 jours</button>
+          <button onclick="_availBlockPeriod(14)" class="pay-filter-btn" style="font-size:.72rem;">🔒 Bloquer 14 jours</button>
+          <button onclick="_availOpenPeriod(7)" class="pay-filter-btn" style="font-size:.72rem;">✅ Ouvrir 7 jours</button>
+          <button onclick="_availOpenPeriod(30)" class="pay-filter-btn" style="font-size:.72rem;">✅ Ouvrir 30 jours</button>
+          <button onclick="_loadAvailManager()" class="pay-filter-btn" style="font-size:.72rem;">↺ Actualiser</button>
+        </div>
+
+        <!-- Navigation mois dispo -->
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <button onclick="_availNavMonth(-1)" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:32px;height:32px;cursor:pointer;color:#fff;font-size:.9rem;display:flex;align-items:center;justify-content:center;">‹</button>
+          <span id="avail-month-label" style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.06em;"></span>
+          <button onclick="_availNavMonth(1)" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:50%;width:32px;height:32px;cursor:pointer;color:#fff;font-size:.9rem;display:flex;align-items:center;justify-content:center;">›</button>
+        </div>
+
+        <!-- Grille disponibilités -->
+        <div id="avail-grid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:20px;"></div>
+
+        <div id="avail-status" style="font-size:.78rem;color:rgba(255,255,255,.45);min-height:20px;"></div>
+      </div>
+
+
       <!-- ── MESSAGERIE TAB ──────────────────────────────────────── -->
       <div class="tab-section" id="tab-messagerie">
         <div class="page-header">
@@ -969,25 +1008,40 @@ function showTab(id, el) {
   document.querySelectorAll('.tab-section').forEach(function(s){ s.classList.remove('active'); });
   var tabEl = document.getElementById('tab-' + id);
   if (tabEl) tabEl.classList.add('active');
-  document.querySelectorAll('.admin-nav-item').forEach(function(n){ n.classList.remove('active'); });
-  // Sidebar active
-  var tabNames = {kpi:'Tableau',calendar:'Calendrier',messagerie:'Messagerie',leads:'Leads',reservations:'Réservations',bilans:'Bilans'};
+
+  // ── Sidebar active ──────────────────────────────────
   document.querySelectorAll('.admin-sidebar .admin-nav-item').forEach(function(item){
-    if (item.textContent.trim().startsWith(tabNames[id]||'___')) item.classList.add('active');
+    item.classList.remove('active');
   });
+  var sidebarId = {kpi:'', calendar:'', messagerie:'', leads:'nav-item-leads', reservations:'nav-item-reservations', bilans:'nav-item-bilans'};
+  // items avec id précis
+  if (sidebarId[id]) {
+    var sideEl = document.getElementById(sidebarId[id]);
+    if (sideEl) sideEl.classList.add('active');
+  } else {
+    // items sans id — match par data-tab attribute ou position
+    var tabOrder = ['kpi','calendar','messagerie','leads','reservations','bilans'];
+    var idx = tabOrder.indexOf(id);
+    var allItems = document.querySelectorAll('.admin-sidebar .admin-nav-item[onclick]');
+    if (allItems[idx]) allItems[idx].classList.add('active');
+  }
   if (el && el.id && el.id.startsWith('nav-item-')) el.classList.add('active');
-  // Mobile tabs
+
+  // ── Mobile tabs ──────────────────────────────────────
   document.querySelectorAll('.amt-btn').forEach(function(b){ b.classList.remove('active'); });
   if (el && el.classList && el.classList.contains('amt-btn')) el.classList.add('active');
-  // Chargement à la demande
+
+  // ── Chargement à la demande ──────────────────────────
   if (id === 'leads')        _loadLeadsTab();
   if (id === 'reservations') _loadReservationsTab();
   if (id === 'bilans')       _loadBilansTab();
   if (id === 'messagerie')   _loadMessagerieReal();
+  if (id === 'calendar')     _loadCalendarEvents();
 }
 
+
 /* ══ LEADS TAB (données réelles) ════════════════════════════════════ */
-var _leadFilter = 'all';
+// _leadFilter déclaré ci-dessus dans le bloc DATA
 var _leadsCache = [];
 
 async function _loadLeadsTab() {
@@ -1062,24 +1116,98 @@ async function _changeLeadStatus(leadId, newStatus, btn) {
 }
 
 /* ══ RESERVATIONS TAB ════════════════════════════════════════════════ */
+/* ══ RESERVATIONS TAB ════════════════════════════════════════════════ */
+var _resaFilter = 'all';
+
 async function _loadReservationsTab() {
   var container = document.getElementById('admin-reservations-list');
   if (!container) return;
   var sb = window.NZ && window.NZ._sb;
   if (!sb) return;
+  // Éviter rechargement si déjà chargé et données présentes
+  if (container._loaded && container._allBookings && container._allBookings.length) {
+    _applyResaFilter(); return;
+  }
   container.innerHTML = '<div style="padding:24px;text-align:center;color:rgba(255,255,255,.4);font-size:.84rem;">Chargement…</div>';
   var { data, error } = await sb.from('booking_requests')
     .select('id, name, email, phone, service, requested_date, requested_time, message, status, payment_status, created_at')
     .order('created_at', {ascending:false}).limit(100);
-  if (error) { container.innerHTML = '<div style="padding:20px;color:rgba(255,100,100,.7);">Erreur: ' + escHtml(error.message) + '</div>'; return; }
-  var bookings = data || [];
-  if (!bookings.length) {
-    container.innerHTML = '<div style="padding:32px;text-align:center;font-size:.9rem;color:rgba(255,255,255,.4);">Aucune réservation pour le moment.</div>';
+  if (error) {
+    container.innerHTML = '<div style="padding:20px;color:rgba(255,100,100,.7);font-size:.84rem;">Erreur chargement : ' + escHtml(error.message) + '</div>';
     return;
   }
-  container._allBookings = bookings;
-  _renderPendingBookings(bookings);
+  container._allBookings = data || [];
+  container._loaded = true;
+
+  // Ajouter filtre paiement si absent
+  var fw = document.getElementById('resa-pay-filter');
+  if (!fw) {
+    fw = document.createElement('div');
+    fw.id = 'resa-pay-filter';
+    fw.className = 'pay-filter';
+    fw.innerHTML = [{k:'all',l:'Toutes'},{k:'unpaid',l:'Non payées'},{k:'paid',l:'Payées'},{k:'pending',l:'En attente'}]
+      .map(function(f){ return '<button class="pay-filter-btn' + (f.k==='all' ? ' active' : '') + '" onclick="_setResaFilter('' + f.k + '',this)">' + f.l + '</button>'; }).join('');
+    container.parentNode.insertBefore(fw, container);
+  }
+  _applyResaFilter();
 }
+
+function _setResaFilter(f, btn) {
+  _resaFilter = f;
+  document.querySelectorAll('#resa-pay-filter .pay-filter-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  _applyResaFilter();
+}
+
+function _applyResaFilter() {
+  var container = document.getElementById('admin-reservations-list');
+  if (!container) return;
+  var bookings = container._allBookings || [];
+  var filtered = bookings.filter(function(b){
+    if (_resaFilter === 'all') return true;
+    return ((b.payment_status||'unpaid').toLowerCase()) === _resaFilter;
+  });
+  if (!filtered.length) {
+    container.innerHTML = '<div style="padding:32px;text-align:center;font-size:.9rem;color:rgba(255,255,255,.4);">Aucune réservation pour ce filtre.</div>';
+    return;
+  }
+  container.innerHTML = filtered.map(function(b) {
+    var date = _fmtDate(b.created_at);
+    var payStatus = (b.payment_status||'unpaid').toLowerCase();
+    var isUnpaid = payStatus === 'unpaid' || payStatus === 'failed';
+    var confirmNote = isUnpaid ? '<div style="font-size:.72rem;color:rgba(255,190,50,.75);margin-top:4px;">⚠ Acompte non reçu</div>' : '';
+    var bId = escHtml(b.id||'');
+    var bStatus = (b.status||'').toLowerCase();
+    var alreadyActed = ['honore','annule_veille','annule_j','no_show','confirmed'].indexOf(bStatus) >= 0;
+    var actionsHtml = '';
+    if (!alreadyActed && bId) {
+      actionsHtml = '<div class="presence-actions" style="margin-top:8px;">'
+        + '<button class="pa-btn pa-btn-honore" onclick="doPresenceAction('' + bId + '','honore',this)">✓ Honoré</button>'
+        + '<button class="pa-btn pa-btn-annule-veille" onclick="doPresenceAction('' + bId + '','annule_veille',this)">Annulé J-1 (50%)</button>'
+        + '<button class="pa-btn pa-btn-annule-j" onclick="doPresenceAction('' + bId + '','annule_j',this)">Annulé J (100%)</button>'
+        + '<button class="pa-btn pa-btn-noshow" onclick="doPresenceAction('' + bId + '','no_show',this)">No-show (100%)</button>'
+        + '</div>';
+    }
+    return '<div style="padding:14px 16px;margin-bottom:6px;border-radius:14px;background:rgba(255,255,255,.04);">'
+      + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">'
+      + '<div style="flex:1;min-width:0;">'
+      + '<div style="font-weight:600;font-size:.88rem;">' + escHtml(b.name||'—') + '</div>'
+      + '<div style="font-size:.78rem;color:rgba(255,255,255,.5);">'
+      +   escHtml(b.email||'') + (b.phone ? ' · ' + escHtml(b.phone) : '') + '</div>'
+      + '<div style="font-size:.78rem;color:rgba(255,255,255,.4);">' + escHtml(b.service||'') + '</div>'
+      + (b.requested_date ? '<div style="font-size:.75rem;color:rgba(255,255,255,.45);margin-top:2px;">📅 '
+        + escHtml(b.requested_date + (b.requested_time ? ' à ' + b.requested_time : '')) + '</div>' : '')
+      + confirmNote + actionsHtml
+      + '</div>'
+      + '<div style="text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;">'
+      + '<div style="font-size:.72rem;color:rgba(255,255,255,.4);">' + date + '</div>'
+      + _payBadge(b.payment_status)
+      + (alreadyActed ? _statusBadge(b.status) : '')
+      + '</div></div></div>';
+  }).join('');
+}
+
+
 
 /* ══ BILANS TAB ══════════════════════════════════════════════════════ */
 async function _loadBilansTab() {
@@ -1115,22 +1243,41 @@ async function _loadBilansTab() {
 }
 
 /* ══ MESSAGERIE — données réelles Supabase ═══════════════════════════ */
+/* ══ MESSAGERIE — données réelles Supabase ═══════════════════════════ */
 async function _loadMessagerieReal() {
   var sb = window.NZ && window.NZ._sb;
-  if (!sb) { buildConvList(); return; }
+  if (!sb) {
+    _renderConvList([]);
+    return;
+  }
   try {
-    var { data } = await sb.from('messages')
+    // Essai avec join profil — si FK échoue, on retente sans join
+    var res = await sb.from('messages')
       .select('id, client_id, sender_type, body, is_read, created_at, profiles!messages_client_id_fkey(id, full_name, email)')
       .order('created_at', {ascending:false})
       .limit(200);
-    var msgs = data || [];
-    // Déduplique par client_id (garde le plus récent par thread)
+
+    var msgs = res.data || [];
+    var joinOk = msgs.length === 0 || (msgs[0] && msgs[0].profiles !== undefined);
+
+    // Fallback sans join si FK inconnue
+    if (!joinOk || res.error) {
+      var res2 = await sb.from('messages')
+        .select('id, client_id, sender_type, body, is_read, created_at')
+        .order('created_at', {ascending:false})
+        .limit(200);
+      msgs = res2.data || [];
+    }
+
+    if (!msgs.length) { _renderConvList([]); return; }
+
+    // Construire threads par client_id
     var threads = {};
     msgs.forEach(function(m) {
       if (!threads[m.client_id]) {
         threads[m.client_id] = {
           client_id: m.client_id,
-          profile: m.profiles || {full_name: 'Inconnu', email: ''},
+          profile: (m.profiles) || {full_name: 'Client ' + m.client_id.slice(0,6), email: ''},
           last_msg: m,
           unread: 0,
           all_msgs: []
@@ -1138,18 +1285,39 @@ async function _loadMessagerieReal() {
       }
       if (!m.is_read && m.sender_type === 'client') threads[m.client_id].unread++;
     });
-    // Remplir les messages de chaque thread (ordre chrono)
+
+    // Remplir all_msgs en ordre chrono (msgs est desc, on reverse)
     var byClient = {};
-    msgs.slice().reverse().forEach(function(m){ if (!byClient[m.client_id]) byClient[m.client_id] = []; byClient[m.client_id].push(m); });
+    msgs.slice().reverse().forEach(function(m){
+      if (!byClient[m.client_id]) byClient[m.client_id] = [];
+      byClient[m.client_id].push(m);
+    });
     Object.keys(threads).forEach(function(cid){ threads[cid].all_msgs = byClient[cid] || []; });
+
+    // Charger les noms depuis profiles si join absent
+    var missingProfiles = Object.values(threads).filter(function(t){ return !t.profile.full_name || t.profile.full_name.startsWith('Client '); });
+    if (missingProfiles.length > 0) {
+      var clientIds = missingProfiles.map(function(t){ return t.client_id; });
+      var profRes = await sb.from('profiles').select('id, full_name, email').in('id', clientIds);
+      if (profRes.data) {
+        profRes.data.forEach(function(p){
+          if (threads[p.id]) threads[p.id].profile = p;
+        });
+      }
+    }
+
     _convThreads = Object.values(threads);
     _renderConvList(_convThreads);
-    if (_convThreads.length > 0) _selectThread(_convThreads[0].client_id);
+    if (_convThreads.length > 0 && !_currentThread) {
+      _selectThread(_convThreads[0].client_id);
+    }
   } catch(err) {
-    console.warn('[NZ Admin] _loadMessagerieReal:', err.message || err);
-    buildConvList(); // fallback
+    console.warn('[NZ Admin] _loadMessagerieReal erreur:', err.message || err);
+    _renderConvList([]);
   }
 }
+
+
 
 function _renderConvList(threads) {
   var container = document.getElementById('convItems');
@@ -1250,14 +1418,45 @@ function _fmtTime(iso) {
 var calOffset = 0; // weeks or months from today
 var calView = 'week';
 
-var SEANCES = [
-  {day:1,h:9,  dur:1.5, name:'Thomas D.', type:'Basket',   color:'blue'},
-  {day:2,h:10.5,dur:1,  name:'Sarah M.',  type:'Remise en forme', color:'green'},
-  {day:3,h:14, dur:1.5, name:'Lucas B.',  type:'Performance',     color:'amber'},
-  {day:4,h:8,  dur:1,   name:'Aïssa K.', type:'Retour sport',    color:'purple'},
-  {day:5,h:11, dur:1,   name:'Julien R.', type:'Basket',   color:'blue'},
-  {day:6,h:9,  dur:1.5, name:'Marie L.',  type:'Remise en forme', color:'green'},
-];
+var SEANCES = []; // Chargé depuis Supabase (booking_requests)
+
+async function _loadCalendarEvents() {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  var today = new Date(); today.setHours(0,0,0,0);
+  var fromStr = new Date(today.getFullYear(), today.getMonth() - 1, 1).toISOString().split('T')[0];
+  var toStr   = new Date(today.getFullYear(), today.getMonth() + 3, 0).toISOString().split('T')[0];
+  var { data, error } = await sb.from('booking_requests')
+    .select('id, name, service, requested_date, requested_time, status, payment_status')
+    .gte('requested_date', fromStr)
+    .lte('requested_date', toStr)
+    .not('status', 'in', '(annule_j,annule_veille,no_show)')
+    .order('requested_date', {ascending: true})
+    .limit(200);
+  if (error) { console.warn('[NZ Admin] _loadCalendarEvents:', error.message); return; }
+  var seances = (data || []).map(function(b) {
+    if (!b.requested_date) return null;
+    var d = new Date(b.requested_date + 'T00:00:00');
+    var dow = d.getDay(); // 0=Sun
+    // Convertir en index 1=Mon..6=Sat (notre grille)
+    var day = dow === 0 ? 7 : dow;
+    var h = 10;
+    if (b.requested_time) {
+      var t = b.requested_time.replace('h',':').replace('H',':');
+      var parts = t.split(':');
+      h = parseInt(parts[0]) || 10;
+    }
+    var colorMap = {'Coaching basket individuel':'blue','Bilan de performance':'amber','Remise en forme':'green'};
+    var color = colorMap[b.service] || 'blue';
+    return {day:day, h:h, dur:1.5, name:(b.name||'').split(' ')[0], type:b.service||'Coaching', color:color, date:b.requested_date};
+  }).filter(Boolean);
+  SEANCES = seances;
+  var base = new Date();
+  if (calView === 'week') buildCalWeek(base);
+  else buildCalMonth(base);
+}
+
+
 
 var DAYS_FR = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
 var MONTHS_FR = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
@@ -1423,6 +1622,181 @@ function setCalView(v, btn) {
 }
 
 /* ══ MESSAGERIE ══════════════════════════════════════════════════════ */
+/* ══ DISPONIBILITÉS CALENDRIER — Supabase ═══════════════════════════ */
+var _availData = {};         // {date_str: {is_available, note}}
+var _availMonthOffset = 0;   // mois depuis aujourd'hui
+var _availSaving = false;
+var _MONTHS_AVAIL = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+async function _loadAvailManager() {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  var lbl = document.getElementById('avail-month-label');
+  if (lbl) { var d = _availBaseDate(); lbl.textContent = _MONTHS_AVAIL[d.getMonth()] + ' ' + d.getFullYear(); }
+
+  var d0 = _availBaseDate();
+  var fromStr = new Date(d0.getFullYear(), d0.getMonth(), 1).toISOString().split('T')[0];
+  var toStr   = new Date(d0.getFullYear(), d0.getMonth() + 1, 0).toISOString().split('T')[0];
+
+  var status = document.getElementById('avail-status');
+  if (status) status.textContent = 'Chargement…';
+
+  var { data, error } = await sb.from('calendar_availability')
+    .select('date, is_available, note')
+    .gte('date', fromStr).lte('date', toStr);
+
+  if (error && error.code !== 'PGRST116') {
+    console.warn('[NZ Admin] calendar_availability:', error.message);
+    if (status) status.textContent = 'Erreur: ' + error.message;
+  }
+  _availData = {};
+  (data || []).forEach(function(row){ _availData[row.date] = row; });
+  if (status) status.textContent = '';
+  _renderAvailGrid();
+}
+
+function _availBaseDate() {
+  var d = new Date();
+  d.setDate(1);
+  d.setMonth(d.getMonth() + _availMonthOffset);
+  return d;
+}
+
+function _availNavMonth(dir) {
+  _availMonthOffset += dir;
+  _loadAvailManager();
+}
+
+function _renderAvailGrid() {
+  var grid = document.getElementById('avail-grid');
+  if (!grid) return;
+  var base = _availBaseDate();
+  var yr = base.getFullYear(), mo = base.getMonth();
+  var today = new Date(); today.setHours(0,0,0,0);
+
+  // Mise à jour label
+  var lbl = document.getElementById('avail-month-label');
+  if (lbl) lbl.textContent = _MONTHS_AVAIL[mo] + ' ' + yr;
+
+  grid.innerHTML = '';
+  var days = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
+  days.forEach(function(d){
+    var h = document.createElement('div');
+    h.textContent = d;
+    h.style.cssText = 'text-align:center;font-size:.65rem;color:rgba(255,255,255,.4);font-weight:600;text-transform:uppercase;padding:4px 0;letter-spacing:.06em;';
+    grid.appendChild(h);
+  });
+
+  var first = new Date(yr, mo, 1);
+  var firstDow = first.getDay() === 0 ? 6 : first.getDay() - 1; // 0=Lun
+  var daysInMonth = new Date(yr, mo+1, 0).getDate();
+
+  for (var i = 0; i < firstDow; i++) {
+    var emp = document.createElement('div'); emp.style.cssText = 'min-height:44px;'; grid.appendChild(emp);
+  }
+
+  for (var d = 1; d <= daysInMonth; d++) {
+    var cellDate = new Date(yr, mo, d); cellDate.setHours(0,0,0,0);
+    var dateStr = yr + '-' + String(mo+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    var isWeekend = cellDate.getDay() === 0 || cellDate.getDay() === 6;
+    var isPast = cellDate < today;
+    var row = _availData[dateStr];
+    var isAvail = row ? row.is_available : !isWeekend; // par défaut: jours semaine = dispo
+
+    var cell = document.createElement('div');
+    cell.style.cssText = [
+      'border-radius:10px;min-height:44px;display:flex;flex-direction:column;align-items:center;justify-content:center;',
+      'font-size:.8rem;font-weight:600;cursor:' + (isPast ? 'default' : 'pointer') + ';',
+      'transition:.15s;position:relative;border:1.5px solid transparent;',
+      isPast ? 'opacity:.3;background:rgba(255,255,255,.03);' :
+        isWeekend ? 'background:rgba(255,255,255,.03);opacity:.35;cursor:default;' :
+          isAvail ? 'background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.3);color:#4ade80;' :
+                    'background:rgba(255,60,60,.12);border-color:rgba(255,60,60,.25);color:rgba(255,100,100,.9);',
+    ].join('');
+    cell.textContent = d;
+    if (row && row.note) {
+      var dot = document.createElement('div');
+      dot.style.cssText = 'width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.5);margin-top:2px;';
+      cell.appendChild(dot);
+    }
+    if (!isPast && !isWeekend) {
+      (function(ds, av, c){ c.onclick = function(){ _toggleAvailDate(ds, av, c); }; })(dateStr, isAvail, cell);
+    }
+    grid.appendChild(cell);
+  }
+}
+
+async function _toggleAvailDate(dateStr, currentlyAvail, cell) {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb || _availSaving) return;
+  _availSaving = true;
+  var newAvail = !currentlyAvail;
+  cell.style.opacity = '0.5';
+  var status = document.getElementById('avail-status');
+  if (status) status.textContent = 'Sauvegarde…';
+
+  var { error } = await sb.from('calendar_availability').upsert({
+    date: dateStr,
+    is_available: newAvail
+  }, { onConflict: 'date' });
+
+  _availSaving = false;
+  cell.style.opacity = '1';
+
+  if (error) {
+    if (status) status.textContent = '⚠ Erreur: ' + error.message;
+    console.error('[NZ Admin] _toggleAvailDate:', error.message);
+  } else {
+    if (status) status.textContent = '✓ ' + dateStr + ' → ' + (newAvail ? 'Ouvert' : 'Bloqué');
+    setTimeout(function(){ if (status) status.textContent = ''; }, 2000);
+    _availData[dateStr] = { date: dateStr, is_available: newAvail };
+    _renderAvailGrid();
+  }
+}
+
+async function _availBlockPeriod(days) {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  var today = new Date(); today.setHours(0,0,0,0);
+  var status = document.getElementById('avail-status');
+  if (status) status.textContent = 'Blocage en cours…';
+  var rows = [];
+  for (var i = 0; i < days; i++) {
+    var d = new Date(today); d.setDate(d.getDate() + i);
+    if (d.getDay() === 0 || d.getDay() === 6) continue; // skip weekends
+    var ds = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    rows.push({ date: ds, is_available: false });
+  }
+  var { error } = await sb.from('calendar_availability').upsert(rows, { onConflict: 'date' });
+  if (error) { if (status) status.textContent = '⚠ ' + error.message; return; }
+  if (status) status.textContent = '✓ ' + rows.length + ' jours bloqués';
+  setTimeout(function(){ if (status) status.textContent = ''; }, 2000);
+  rows.forEach(function(r){ _availData[r.date] = r; });
+  _renderAvailGrid();
+}
+
+async function _availOpenPeriod(days) {
+  var sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  var today = new Date(); today.setHours(0,0,0,0);
+  var status = document.getElementById('avail-status');
+  if (status) status.textContent = 'Ouverture en cours…';
+  var rows = [];
+  for (var i = 0; i < days; i++) {
+    var d = new Date(today); d.setDate(d.getDate() + i);
+    if (d.getDay() === 0 || d.getDay() === 6) continue;
+    var ds = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    rows.push({ date: ds, is_available: true });
+  }
+  var { error } = await sb.from('calendar_availability').upsert(rows, { onConflict: 'date' });
+  if (error) { if (status) status.textContent = '⚠ ' + error.message; return; }
+  if (status) status.textContent = '✓ ' + rows.length + ' jours ouverts';
+  setTimeout(function(){ if (status) status.textContent = ''; }, 2000);
+  rows.forEach(function(r){ _availData[r.date] = r; });
+  _renderAvailGrid();
+}
+
+
 /* ── Badge paiement ── */
 function _payBadge(status) {
   var map = {unpaid:['unpaid','Non payé'],pending:['pending','En attente'],paid:['paid','Payé'],failed:['failed','Échec']};

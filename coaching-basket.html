@@ -703,12 +703,49 @@ const reveals=document.querySelectorAll(".reveal");
 const observer=new IntersectionObserver((entries)=>{entries.forEach((entry,i)=>{if(entry.isIntersecting){setTimeout(()=>entry.target.classList.add("visible"),i*80);observer.unobserve(entry.target)}})},{threshold:.1});
 reveals.forEach(el=>observer.observe(el));
 
-// CALENDAR
+// CALENDAR — Disponibilités depuis Supabase (table calendar_availability)
 let currentDate=new Date();
 let selectedDate=null;
 let selectedCreneau=null;
 const MONTHS=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
 const DAYS=['Lu','Ma','Me','Je','Ve','Sa','Di'];
+
+// Cache des disponibilités chargées depuis Supabase
+// { 'YYYY-MM-DD': { is_available: bool, note: string|null } }
+let _calAvailCache = {};
+let _calAvailLoaded = {}; // mois déjà chargés { 'YYYY-M': true }
+
+async function _loadAvailForMonth(year, month) {
+  const key = year + '-' + month;
+  if (_calAvailLoaded[key]) return; // déjà en cache
+  const sb = window.NZ && window.NZ._sb;
+  if (!sb) return;
+  const fromStr = year + '-' + String(month+1).padStart(2,'0') + '-01';
+  const toStr   = new Date(year, month+1, 0).toISOString().split('T')[0];
+  try {
+    const { data } = await sb.from('calendar_availability')
+      .select('date, is_available, note')
+      .gte('date', fromStr).lte('date', toStr);
+    (data || []).forEach(row => { _calAvailCache[row.date] = row; });
+    _calAvailLoaded[key] = true;
+    renderCalendar(); // re-render avec données réelles
+  } catch(e) {
+    console.warn('[NZ] calendar_availability:', e.message);
+  }
+}
+
+function _isDateAvailable(year, month, day) {
+  const dow = new Date(year, month, day).getDay();
+  const isWeekend = dow === 0 || dow === 6;
+  if (isWeekend) return false;
+  const dateStr = year + '-' + String(month+1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+  const row = _calAvailCache[dateStr];
+  if (row) return row.is_available;
+  // Fallback hardcodé si Supabase pas encore chargé
+  if (year === 2026 && month === 6) return day >= 18 && day <= 25; // juillet
+  if (year === 2026 && month === 7) return day >= 1  && day <= 8;  // août
+  return true; // les autres mois sont disponibles par défaut
+}
 
 function renderCalendar(){
   const year=currentDate.getFullYear(),month=currentDate.getMonth();
@@ -725,21 +762,14 @@ function renderCalendar(){
   for(let d=1;d<=daysInMonth;d++){
     const el=document.createElement('div');
     const cellDate=new Date(year,month,d);cellDate.setHours(0,0,0,0);
-    const dow=cellDate.getDay();
-    const isWeekend=dow===0||dow===6;
     const isPast=cellDate<today;
-    // Disponibilités : 18-25 juillet / 1-8 août — tout le reste indisponible
-    const isJuil=(year===2026&&month===6);
-    const isAout=(year===2026&&month===7);
-    let isBlocked=false;
-    if(isJuil){ isBlocked=!(d>=18&&d<=25); }
-    else if(isAout){ isBlocked=!(d>=1&&d<=8); }
-    if(isPast||isWeekend||isBlocked){
-      el.className='date-cell past';
-      if(isBlocked&&!isPast&&!isWeekend){
-        el.className='date-cell past blocked-date';
-        const msg=isJuil?'Indisponible en juillet (dispo : 18–25)':isAout?'Indisponible en août (dispo : 1–8)':'Indisponible';
-        el.title=msg;
+    const isAvail=_isDateAvailable(year,month,d);
+    const dateStr=year+'-'+String(month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const row=_calAvailCache[dateStr];
+    if(isPast||!isAvail){
+      el.className='date-cell past'+((!isPast&&!isAvail)?' blocked-date':'');
+      if(!isPast&&!isAvail){
+        el.title=(row&&row.note)?row.note:'Indisponible';
       }
       el.textContent=d;
     }
@@ -752,6 +782,8 @@ function renderCalendar(){
     }
     grid.appendChild(el);
   }
+  // Charger les données Supabase pour ce mois (async, re-render auto)
+  _loadAvailForMonth(year, month);
 }
 function changeMonth(dir){currentDate.setMonth(currentDate.getMonth()+dir);renderCalendar()}
 function selectDate(date,el){
