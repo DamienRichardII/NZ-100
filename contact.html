@@ -546,6 +546,32 @@ async function nzHandleContact(e){
     console.error('[NZ Contact] send-lead-notification exception:', err.message||err);
   }
 
+  // ── Étape 2b : Email de confirmation client ──
+  let clientEmailOk=false;
+  if(leadSaved){
+    try{
+      const { data: emailData, error: emailError } = await window.NZ._sb.functions.invoke('send-email',{
+        body:{
+          type: 'contact_confirmation',
+          to:   email.trim(),
+          data: {
+            name:    (prenom.trim()+' '+nom.trim()).trim(),
+            service: service||'Demande de contact',
+            email:   email.trim()
+          }
+        }
+      });
+      if(!emailError && emailData && (emailData.sent || emailData.id)){
+        clientEmailOk=true;
+        console.log('[NZ Contact] ✓ Email client envoyé');
+      } else {
+        console.warn('[NZ Contact] Email client — réponse:', emailData, emailError);
+      }
+    }catch(err){
+      console.error('[NZ Contact] Email client exception:', err.message||err);
+    }
+  }
+
   // ── Étape 3 : Affichage du résultat ──
   form.style.display='none';
 

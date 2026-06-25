@@ -1,11 +1,13 @@
 /**
- * NZ-100 — Edge Function : send-email
- * ──────────────────────────────────────
+ * NZ-100 — Edge Function : send-email v4
+ * ──────────────────────────────────────────
  * Envoie des emails transactionnels via Resend.
+ * RÈGLE : retourne TOUJOURS 200.
+ * Erreurs Resend → { sent: false, resend_status, reason } — jamais de 500.
  *
  * Secrets requis :
  *   RESEND_API_KEY  = re_...   (depuis resend.com)
- *   FROM_EMAIL      = noreply@votre-domaine.com
+ *   FROM_EMAIL      = contact@nz-100.com  (domaine vérifié Resend)
  *   ADMIN_EMAIL     = mathieunzita60@gmail.com
  *
  * Invocation :
@@ -21,6 +23,7 @@
  *   - notif_admin_reservation
  *   - bilan_confirmation
  *   - bilan_admin
+ *   - contact_confirmation   ← NOUVEAU : email client après formulaire contact
  */
 
 interface EmailPayload {
@@ -34,10 +37,16 @@ Deno.serve(async (req: Request): Promise<Response> => {
   if (req.method !== 'POST') return jsonError(405, 'Méthode non autorisée');
 
   const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
-  const FROM_EMAIL     = Deno.env.get('FROM_EMAIL') || 'NZ-100 <noreply@nz-100.vercel.app>';
+  const FROM_EMAIL     = Deno.env.get('FROM_EMAIL') || 'onboarding@resend.dev';
   const ADMIN_EMAIL    = Deno.env.get('ADMIN_EMAIL') || 'mathieunzita60@gmail.com';
 
-  if (!RESEND_API_KEY) return jsonError(500, 'RESEND_API_KEY manquante');
+  console.log('[send-email] RESEND_API_KEY:', RESEND_API_KEY ? `présent (${RESEND_API_KEY.length}c)` : '⚠ ABSENT');
+  console.log('[send-email] FROM_EMAIL:', FROM_EMAIL, '| ADMIN_EMAIL:', ADMIN_EMAIL);
+
+  if (!RESEND_API_KEY) {
+    console.error('[send-email] ✗ RESEND_API_KEY manquante');
+    return jsonOk({ sent: false, reason: 'RESEND_API_KEY_MISSING' });
+  }
 
   let payload: EmailPayload;
   try { payload = await req.json(); } catch { return jsonError(400, 'JSON invalide'); }
@@ -45,12 +54,16 @@ Deno.serve(async (req: Request): Promise<Response> => {
   const { type, to, data = {} } = payload;
   if (!type || !to) return jsonError(400, 'type et to sont requis');
 
+  console.log('[send-email] type:', type, '| to:', to);
+
   const template = getTemplate(type, data, ADMIN_EMAIL);
   if (!template) return jsonError(400, `Type d'email inconnu : ${type}`);
 
-  // Destinataires
+  // Destinataires : types admin → ADMIN_EMAIL, tous les autres → to
   const adminOnly = type === 'notif_admin_reservation' || type === 'bilan_admin';
   const recipients = adminOnly ? [ADMIN_EMAIL] : [to];
+
+  console.log('[send-email] ▶ Appel Resend | from:', FROM_EMAIL, '| to:', recipients);
 
   try {
     const res = await fetch('https://api.resend.com/emails', {
@@ -58,20 +71,29 @@ Deno.serve(async (req: Request): Promise<Response> => {
       headers: { 'Authorization': `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({ from: FROM_EMAIL, to: recipients, subject: template.subject, html: template.html }),
     });
+
+    const resBody = await res.text();
+    console.log('[send-email] Resend status:', res.status, '| body:', resBody.slice(0, 400));
+
     if (!res.ok) {
-      const err = await res.text();
-      return jsonError(500, `Resend error: ${err}`);
+      console.error('[send-email] ✗ Resend rejeté — status:', res.status, '| body:', resBody.slice(0, 300));
+      return jsonOk({ sent: false, resend_status: res.status, resend_error: resBody.slice(0, 300), reason: resendErrorReason(res.status) });
     }
-    const result = await res.json();
-    return jsonSuccess({ id: result.id, type, to });
+
+    let result: { id?: string } = {};
+    try { result = JSON.parse(resBody); } catch { /* ignore */ }
+    console.log('[send-email] ✓ Email envoyé — Resend id:', result.id || '?', '| type:', type, '| to:', to);
+    return jsonOk({ sent: true, id: result.id, type, to });
+
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : 'Erreur inconnue';
-    return jsonError(500, msg);
+    console.error('[send-email] ✗ Exception réseau Resend:', msg);
+    return jsonOk({ sent: false, reason: 'NETWORK_ERROR', error: msg });
   }
 });
 
 // ─── Templates ────────────────────────────────────────────────────────────────
-function getTemplate(type: string, d: Record<string,string>, adminEmail: string): { subject: string; html: string } | null {
+function getTemplate(type: string, d: Record<string,string>, _adminEmail: string): { subject: string; html: string } | null {
   const base = (body: string) => `
 <!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
 <style>body{font-family:'Helvetica Neue',Arial,sans-serif;background:#0a0a0a;color:#fff;margin:0;padding:0}
@@ -93,10 +115,23 @@ p{color:rgba(255,255,255,.7);font-size:.93rem;line-height:1.75;margin:0 0 16px}
 <body><div class="wrap">
 <div class="logo">NZ 100%</div>
 <div class="card">${body}</div>
-<div class="footer">Mathieu Nzita — Coaching &amp; Performance<br>mathieunzita60@gmail.com — Île-de-France<br><br>Vous recevez cet email car vous êtes client NZ-100.</div>
+<div class="footer">Mathieu Nzita — Coaching &amp; Performance<br>mathieunzita60@gmail.com — Île-de-France<br><br>Vous recevez cet email car vous avez contacté NZ 100%.</div>
 </div></body></html>`;
 
   switch(type) {
+
+    case 'contact_confirmation': return {
+      subject: 'Mathieu a bien reçu ta demande — NZ 100%',
+      html: base(`
+        <span class="tag tag-green">✓ Demande reçue</span>
+        <h1 style="margin-top:16px">C'est bien reçu, ${d.name||''} !</h1>
+        <p>Mathieu a bien reçu ta demande pour <strong style="color:#fff">${d.service||'un accompagnement coaching'}</strong>.</p>
+        <p>Il te recontacte sous <strong style="color:#fff">24h</strong> avec une proposition adaptée à ton profil et à tes objectifs.</p>
+        <p style="color:rgba(255,255,255,.55);font-size:.88rem">En attendant, tu peux télécharger ta roadmap NZ 100% — un guide personnalisé offert par Mathieu pour démarrer dans les meilleures conditions.</p>
+        <a href="https://nz-100.com/roadmap.html" class="btn">↓ Télécharger ma roadmap →</a>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.35);margin-top:24px">More Discipline — La clé de la liberté.</p>
+      `)
+    };
 
     case 'confirmation_compte': return {
       subject: 'Bienvenue dans NZ 100% — Confirmez votre compte',
@@ -157,7 +192,7 @@ p{color:rgba(255,255,255,.7);font-size:.93rem;line-height:1.75;margin:0 0 16px}
         <h1 style="margin-top:16px">Votre paiement n'a pas pu être traité.</h1>
         <p>Bonjour ${d.name||''}, malheureusement votre tentative de paiement pour <strong>${d.offer||''}</strong> n'a pas abouti.</p>
         <p style="color:rgba(255,255,255,.5)">Cela peut arriver pour plusieurs raisons : fonds insuffisants, limite de carte, ou erreur temporaire. <strong style="color:rgba(255,255,255,.8)">Votre compte n'a pas été débité.</strong></p>
-        <a href="${d.retry_url||'https://nz-100.vercel.app/tarifs.html'}" class="btn">Réessayer →</a>
+        <a href="${d.retry_url||'https://nz-100.com/tarifs.html'}" class="btn">Réessayer →</a>
         <p style="font-size:.8rem;color:rgba(255,255,255,.4)">Si le problème persiste, contactez votre banque ou écrivez à mathieunzita60@gmail.com.</p>
       `)
     };
@@ -190,7 +225,7 @@ p{color:rgba(255,255,255,.7);font-size:.93rem;line-height:1.75;margin:0 0 16px}
           <div class="info-row"><span class="info-label">Créneau demandé</span><span class="info-val">${d.date||''} ${d.time||''}</span></div>
           <div class="info-row"><span class="info-label">Paiement</span><span class="info-val">${d.payment_status||''}</span></div>
         </div>
-        <a href="https://nz-100.vercel.app/admin-mathieu.html" class="btn">Gérer dans l'admin →</a>
+        <a href="https://nz-100.com/admin-mathieu.html" class="btn">Gérer dans l'admin →</a>
       `)
     };
 
@@ -202,7 +237,7 @@ p{color:rgba(255,255,255,.7);font-size:.93rem;line-height:1.75;margin:0 0 16px}
         <p>Mathieu a bien reçu ton bilan personnalisé. Il l'analyse et te recontacte sous <strong style="color:#fff">24h</strong> pour construire ton programme sur mesure.</p>
         ${d.objectifs ? `<div style="margin:20px 0"><div class="info-row"><span class="info-label">Objectif(s)</span><span class="info-val">${d.objectifs}</span></div></div>` : ''}
         <p style="color:rgba(255,255,255,.6);font-size:.88rem">En attendant, tu peux télécharger ta roadmap NZ 100% ci-dessous — un guide de référence pour démarrer dans les meilleures conditions.</p>
-        <a href="${d.roadmap_url||'https://nz-100.vercel.app/roadmap.html'}" class="btn">↓ Télécharger ma roadmap →</a>
+        <a href="${d.roadmap_url||'https://nz-100.com/roadmap.html'}" class="btn">↓ Télécharger ma roadmap →</a>
         <p style="font-size:.8rem;color:rgba(255,255,255,.35);margin-top:20px">More Discipline — La clé de la liberté.</p>
       `)
     };
@@ -223,7 +258,7 @@ p{color:rgba(255,255,255,.7);font-size:.93rem;line-height:1.75;margin:0 0 16px}
           <div class="info-row"><span class="info-label">Lieu</span><span class="info-val">${d.lieu||'—'}</span></div>
           <div class="info-row"><span class="info-label">Attentes</span><span class="info-val" style="font-size:.82rem">${d.attentes||'—'}</span></div>
         </div>
-        <a href="https://nz-100.vercel.app/admin-mathieu.html" class="btn">Voir dans l'admin →</a>
+        <a href="https://nz-100.com/admin-mathieu.html" class="btn">Voir dans l'admin →</a>
       `)
     };
 
@@ -231,7 +266,17 @@ p{color:rgba(255,255,255,.7);font-size:.93rem;line-height:1.75;margin:0 0 16px}
   }
 }
 
-function jsonSuccess(data: object): Response {
+function resendErrorReason(status: number): string {
+  switch (status) {
+    case 401: return 'RESEND_INVALID_API_KEY';
+    case 403: return 'RESEND_FORBIDDEN';
+    case 422: return 'RESEND_DOMAIN_NOT_VERIFIED_OR_BAD_FROM';
+    case 429: return 'RESEND_RATE_LIMIT';
+    default:  return `RESEND_HTTP_${status}`;
+  }
+}
+
+function jsonOk(data: object): Response {
   return new Response(JSON.stringify(data), { status: 200, headers: { ...corsHeaders(), 'Content-Type': 'application/json' } });
 }
 function jsonError(status: number, message: string): Response {

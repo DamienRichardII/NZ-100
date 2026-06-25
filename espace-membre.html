@@ -710,7 +710,7 @@ async function doForgotPassword() {
       '<button class="login-btn" style="margin-top:16px" onclick="showLogin()">← Retour à la connexion</button>' +
       '</div>';
   } catch(err) {
-    showAuthError(err.message || 'Erreur lors de l'envoi. Vérifiez l'email.');
+    showAuthError(err.message || "Erreur lors de l'envoi. Vérifiez l'email.");
     btn.disabled = false; btn.textContent = 'Envoyer le lien';
   }
 }
