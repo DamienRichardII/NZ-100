@@ -155,6 +155,10 @@ section{padding:100px 24px;position:relative}
 .form-group label{display:block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.45);margin-bottom:8px}
 .form-group input,.form-group textarea,.form-group select{width:100%;padding:13px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:14px;color:#fff;font-family:'Outfit',sans-serif;font-size:.9rem;transition:var(--transition);outline:none;-webkit-appearance:none}
 .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.08)}
+.form-group input.field-error,.form-group textarea.field-error,.form-group select.field-error{border-color:rgba(239,68,68,.7)!important;background:rgba(239,68,68,.06)!important;animation:shake .35s ease;}
+.field-error-msg{font-size:.72rem;color:#f87171;margin-top:5px;display:none;}
+.field-error-msg.show{display:block;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
 .form-group textarea{resize:vertical;min-height:100px}
 .form-group select option{background:#111;color:#fff}
 .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.28)}
@@ -549,17 +553,17 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
           </div>
           <form class="resa-form" onsubmit="submitResa(event)">
             <div class="form-row-2">
-              <div class="form-group"><label>Pr&eacute;nom *</label><input type="text" id="prenom" placeholder="Ton pr&eacute;nom" required></div>
-              <div class="form-group"><label>Nom *</label><input type="text" id="nom" placeholder="Ton nom" required></div>
+              <div class="form-group"><label>Pr&eacute;nom *</label><input type="text" id="prenom" placeholder="Ton pr&eacute;nom"><span class="field-error-msg" id="err-prenom">Champ obligatoire</span></div>
+              <div class="form-group"><label>Nom *</label><input type="text" id="nom" placeholder="Ton nom"><span class="field-error-msg" id="err-nom">Champ obligatoire</span></div>
             </div>
             <div class="form-row-2">
-              <div class="form-group"><label>Email *</label><input type="email" id="email" placeholder="ton@email.com" required></div>
-              <div class="form-group"><label>T&eacute;l&eacute;phone / WhatsApp *</label><input type="tel" id="tel" placeholder="06 XX XX XX XX" required></div>
+              <div class="form-group"><label>Email *</label><input type="email" id="email" placeholder="ton@email.com"><span class="field-error-msg" id="err-email">Email invalide ou manquant</span></div>
+              <div class="form-group"><label>T&eacute;l&eacute;phone / WhatsApp *</label><input type="tel" id="tel" placeholder="06 XX XX XX XX"><span class="field-error-msg" id="err-tel">Champ obligatoire</span></div>
             </div>
             <div class="form-row-2">
-              <div class="form-group"><label>&Acirc;ge du joueur *</label><input type="number" id="age" placeholder="Ex : 17" min="8" max="60" required></div>
+              <div class="form-group"><label>&Acirc;ge du joueur *</label><input type="number" id="age" placeholder="Ex : 17" min="8" max="60"><span class="field-error-msg" id="err-age">Champ obligatoire</span></div>
               <div class="form-group"><label>Niveau *</label>
-                <select id="niveau" required>
+                <select id="niveau">
                   <option value="" disabled selected>Ton niveau actuel</option>
                   <option>D&eacute;butant</option>
                   <option>Loisir / Amateur</option>
@@ -568,6 +572,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
                   <option>Semi-pro</option>
                   <option>Professionnel</option>
                 </select>
+                <span class="field-error-msg" id="err-niveau">Veuillez s&eacute;lectionner ton niveau</span>
               </div>
             </div>
             <div class="form-row-2">
@@ -575,7 +580,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
               <div class="form-group"><label>Club actuel</label><input type="text" id="club" placeholder="Ton club (si applicable)"></div>
             </div>
             <div class="form-group"><label>Objectif principal de la s&eacute;ance *</label>
-              <select id="objectif" required>
+              <select id="objectif">
                 <option value="" disabled selected>Qu'est-ce que tu veux travailler ?</option>
                 <option>Technique individuelle (dribble, shoot, finitions)</option>
                 <option>Jeu de pieds et d&eacute;placements</option>
@@ -586,6 +591,7 @@ body::after{content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointe
                 <option>Pr&eacute;paration avant comp&eacute;tition</option>
                 <option>Bilan g&eacute;n&eacute;ral &mdash; Mathieu choisit le contenu</option>
               </select>
+              <span class="field-error-msg" id="err-objectif">Veuillez choisir un objectif</span>
             </div>
             <div class="form-group"><label>Message compl&eacute;mentaire</label><textarea id="message" placeholder="Pr&eacute;cise ton niveau, ta situation, tes attentes, des blessures en cours..."></textarea></div>
 
@@ -803,10 +809,32 @@ function updateRecap(){
   const recap=document.getElementById('resaRecap');
   if(selectedDate&&selectedCreneau){recap.classList.add('visible')}
 }
+function _clearFieldErrors(){
+  document.querySelectorAll('.field-error,.field-error-msg.show').forEach(el=>{
+    el.classList.remove('field-error','show');
+  });
+}
+function _showFieldError(fieldId,errId){
+  var f=document.getElementById(fieldId);
+  var e=document.getElementById(errId);
+  if(f)f.classList.add('field-error');
+  if(e)e.classList.add('show');
+}
 async function submitResa(e){
   e.preventDefault();
-  if(!selectedDate){alert('Veuillez choisir une date.');return;}
-  if(!selectedCreneau){alert('Veuillez choisir un créneau.');return;}
+  _clearFieldErrors();
+
+  // Validation date/créneau
+  if(!selectedDate){
+    var calEl=document.getElementById('calendarGrid');
+    if(calEl){calEl.style.animation='none';calEl.offsetHeight;calEl.style.animation='shake .35s ease';}
+    alert('Choisis d\'abord une date disponible.');
+    return;
+  }
+  if(!selectedCreneau){
+    alert('Choisis un créneau horaire.');
+    return;
+  }
 
   const prenom  = (document.getElementById('prenom')||{}).value||'';
   const nom     = (document.getElementById('nom')||{}).value||'';
@@ -818,6 +846,22 @@ async function submitResa(e){
   const club    = (document.getElementById('club')||{}).value||'';
   const objectif= (document.getElementById('objectif')||{}).value||'';
   const message = (document.getElementById('message')||{}).value||'';
+
+  // Validation custom — feedback rouge visible
+  var hasError=false;
+  if(!prenom.trim()){_showFieldError('prenom','err-prenom');hasError=true;}
+  if(!nom.trim()){_showFieldError('nom','err-nom');hasError=true;}
+  if(!email.trim()||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())){_showFieldError('email','err-email');hasError=true;}
+  if(!tel.trim()){_showFieldError('tel','err-tel');hasError=true;}
+  if(!age){_showFieldError('age','err-age');hasError=true;}
+  if(!niveau){_showFieldError('niveau','err-niveau');hasError=true;}
+  if(!objectif){_showFieldError('objectif','err-objectif');hasError=true;}
+  if(hasError){
+    // Scroll vers le premier champ en erreur
+    var first=document.querySelector('.field-error');
+    if(first)first.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
 
   const btn=document.getElementById('submitBtn');
   btn.disabled=true;btn.textContent='Envoi en cours...';
@@ -875,6 +919,22 @@ async function submitResa(e){
   }
 }
 renderCalendar();
+
+// Effacer l'erreur dès que le client commence à corriger un champ
+['prenom','nom','email','tel','age','niveau','objectif'].forEach(function(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.addEventListener('input',function(){
+    el.classList.remove('field-error');
+    var err=document.getElementById('err-'+id);
+    if(err)err.classList.remove('show');
+  });
+  el.addEventListener('change',function(){
+    el.classList.remove('field-error');
+    var err=document.getElementById('err-'+id);
+    if(err)err.classList.remove('show');
+  });
+});
 </script>
 <script>
 /* NZ100 — VIDEO RELIABILITY — mobile + Safari */
