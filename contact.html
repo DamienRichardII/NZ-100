@@ -563,15 +563,14 @@ async function nzHandleContact(e){
   let clientEmailOk=false;
   if(leadSaved){
     try{
+      const clientName = (prenom.trim()+' '+nom.trim()).trim();
       const { data: emailData, error: emailError } = await window.NZ._sb.functions.invoke('send-email',{
         body:{
-          type: 'contact_confirmation',
-          to:   email.trim(),
-          data: {
-            name:    (prenom.trim()+' '+nom.trim()).trim(),
-            service: service||'Demande de contact',
-            email:   email.trim()
-          }
+          type:    'custom',
+          to:      email.trim(),
+          name:    clientName,
+          subject: 'Mathieu a bien reçu ta demande — NZ 100%',
+          message: `Bonjour ${clientName},\n\nJ'ai bien reçu ta demande et je te réponds sous 24h avec une proposition adaptée à ton profil.\n\nDemande : ${service||'Demande de contact'}\n\nÀ très vite !\nMathieu — NZ 100%`
         }
       });
       if(!emailError && emailData && (emailData.sent || emailData.id)){
