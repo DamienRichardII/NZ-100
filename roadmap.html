@@ -763,7 +763,7 @@ async function sendBilan(){
     if(r.error){ console.error('[NZ Bilan] insert err:',r.error.message); showError(); return; }
   } catch(e){ console.error('[NZ Bilan] insert ex:',e.message); showError(); return; }
 
-  // Étape 2 : Notif admin
+  // Étape 2 : Notif admin (push/SMS rapide)
   try {
     await sb.functions.invoke('send-lead-notification',{body:{mode:'direct',lead:{
       first_name: data.nom_prenom.split(' ')[0]||data.nom_prenom,
@@ -776,6 +776,61 @@ async function sendBilan(){
       created_at: new Date().toISOString()
     }}});
   } catch(e){ console.warn('[NZ Bilan] admin notif ex:',e.message); }
+
+  // Étape 2b : Email complet du bilan à Mathieu
+  try {
+    var bilanMsg = [
+      '📋 NOUVEAU BILAN REÇU',
+      '══════════════════════',
+      '👤 IDENTITÉ',
+      'Nom & Prénom : ' + (data.nom_prenom||'—'),
+      'Âge : ' + (data.age||'—'),
+      'Email : ' + (data.email||'—'),
+      'Téléphone : ' + (data.telephone||'—'),
+      'Instagram : ' + (data.instagram||'—'),
+      'Profession : ' + (data.profession||'—'),
+      'Sexe : ' + (data.sexe||'—'),
+      '',
+      '📏 PHYSIQUE',
+      'Taille : ' + (data.taille||'—'),
+      'Poids actuel : ' + (data.poids_actuel||'—'),
+      'Poids cible : ' + (data.poids_cible||'—'),
+      '',
+      '🎯 OBJECTIFS & NIVEAU',
+      'Niveau : ' + (data.niveau||'—'),
+      'Objectif(s) : ' + (Array.isArray(data.objectif)?data.objectif.join(', '):(data.objectif||'—')),
+      'Attentes : ' + (data.attentes||'—'),
+      'Engagement (/10) : ' + (data.engagement||'—'),
+      '',
+      '🏃 QUOTIDIEN',
+      'Activité quotidienne : ' + (data.activite_quotidienne||'—'),
+      'Sommeil : ' + (data.sommeil||'—'),
+      'Stress : ' + (data.stress||'—'),
+      '',
+      '🍽️ ALIMENTATION',
+      'Régime alimentaire : ' + (data.regime||'—'),
+      'Repas/jour : ' + (data.repas_par_jour||'—'),
+      'Restrictions : ' + (data.restrictions||'—'),
+      '',
+      '🏋️ ENTRAÎNEMENT',
+      'Séances/semaine : ' + (data.seances_par_semaine||'—'),
+      'Équipement : ' + (data.equipement||'—'),
+      'Blessures/contraintes : ' + (data.blessures||'—'),
+      '',
+      '💬 MOTIVATION',
+      'Pourquoi maintenant : ' + (data.pourquoi_maintenant||'—'),
+      'Blocage actuel : ' + (data.blocage||'—'),
+      '══════════════════════',
+      'Soumis le : ' + new Date().toLocaleString('fr-FR')
+    ].join('\n');
+    await sb.functions.invoke('send-email',{body:{
+      type:    'custom',
+      to:      'mathieunzita@gmail.com',
+      name:    'Mathieu',
+      subject: '📋 Nouveau bilan — ' + data.nom_prenom + ' (' + (data.niveau||'?') + ')',
+      message: bilanMsg
+    }});
+  } catch(e){ console.warn('[NZ Bilan] admin email ex:',e.message); }
 
   // Étape 3 : Email client
   var emailOk=false;
